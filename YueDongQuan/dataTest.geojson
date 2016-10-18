@@ -1,0 +1,62 @@
+{"code":"1",
+    "data" : [{
+    "type": "image",
+    "name": "型格志style",
+    "avatar": "http://tp4.sinaimg.cn/5747171147/50/5741401933/0",
+    "content": "春天卫衣的正确打开方式~\n\n\n\n哈哈哈哈,oops~",
+    "date": "1459668442",
+    "imgs": [
+             "http://ww2.sinaimg.cn/mw690/006gWxKPgw1f2jeloxwhnj30fu0g0ta5.jpg",
+             "http://ww3.sinaimg.cn/mw690/006gWxKPgw1f2jelpn9bdj30b40gkgmh.jpg",
+             "http://ww1.sinaimg.cn/mw690/006gWxKPgw1f2jelriw1bj30fz0g175g.jpg",
+             "http://ww3.sinaimg.cn/mw690/006gWxKPgw1f2jelt1kh5j30b10gmt9o.jpg",
+             "http://ww4.sinaimg.cn/mw690/006gWxKPgw1f2jeluxjcrj30fw0fz0tx.jpg",
+             "http://ww3.sinaimg.cn/mw690/006gWxKPgw1f2jelzxngwj30b20godgn.jpg",
+             "http://ww2.sinaimg.cn/mw690/006gWxKPgw1f2jelwmsoej30fx0fywfq.jpg",
+             "http://ww4.sinaimg.cn/mw690/006gWxKPgw1f2jem32ccrj30xm0sdwjt.jpg",
+             "http://ww4.sinaimg.cn/mw690/006gWxKPgw1f2jelyhutwj30fz0fxwfr.jpg"
+             ],
+    "statusID": "8",
+    "commentList": [
+                    {
+                    "from": "SIZE潮流生活",
+                    "to": "waynezxcv",
+                    "content": "nice~使用Gallop。支持异步绘制，让滚动如丝般顺滑。"
+                    }
+                    ],
+    "isLike": false,
+    "likeList": [
+                 "waynezxcv"
+                 ]
+              },
+              {
+              "type": "image",
+              "name": "型格志style",
+              "avatar": "http://tp4.sinaimg.cn/5747171147/50/5741401933/0",
+              "content": "春天卫衣的正确打开方式~\n\n\n\n哈哈哈哈,oops~",
+              "date": "1459668442",
+              "imgs": [
+                       "http://ww2.sinaimg.cn/mw690/006gWxKPgw1f2jeloxwhnj30fu0g0ta5.jpg",
+                       "http://ww3.sinaimg.cn/mw690/006gWxKPgw1f2jelpn9bdj30b40gkgmh.jpg",
+                       "http://ww1.sinaimg.cn/mw690/006gWxKPgw1f2jelriw1bj30fz0g175g.jpg",
+                       "http://ww3.sinaimg.cn/mw690/006gWxKPgw1f2jelt1kh5j30b10gmt9o.jpg",
+                       "http://ww4.sinaimg.cn/mw690/006gWxKPgw1f2jeluxjcrj30fw0fz0tx.jpg",
+                       "http://ww3.sinaimg.cn/mw690/006gWxKPgw1f2jelzxngwj30b20godgn.jpg",
+                       "http://ww2.sinaimg.cn/mw690/006gWxKPgw1f2jelwmsoej30fx0fywfq.jpg",
+                       "http://ww4.sinaimg.cn/mw690/006gWxKPgw1f2jem32ccrj30xm0sdwjt.jpg",
+                       "http://ww4.sinaimg.cn/mw690/006gWxKPgw1f2jelyhutwj30fz0fxwfr.jpg"
+                       ],
+              "statusID": "8",
+              "commentList": [
+                              {
+                              "from": "SIZE潮流生活",
+                              "to": "waynezxcv",
+                              "content": "nice~使用Gallop。支持异步绘制，让滚动如丝般顺滑。"
+                              }
+                              ],
+              "isLike": false,
+              "likeList": [
+                           "waynezxcv"
+                           ]
+              }]
+}
