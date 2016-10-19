@@ -8,15 +8,27 @@
 
 import UIKit
 import SnapKit
+import Alamofire
+import SwiftyJSON
 
-class EditorFieldViewController: UIViewController {
-
+class EditorFieldViewController: UIViewController{
+    
     var fieldImage = UIImageView()
+    var imagePicker : UIImagePickerController!
+    var imageUrl : UIImage?
+    var editModel : FieldImageModel?
+    
+    var field_Name = ""
+    var field_Tel = ""
+    var field_Price = ""
+    var field_Id : Int = 0
+    
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.view.backgroundColor = UIColor ( red: 0.9961, green: 1.0, blue: 1.0, alpha: 1.0 )
         setNav()
         setUI()
@@ -31,7 +43,7 @@ class EditorFieldViewController: UIViewController {
         
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
         let imgView = UIImageView(frame:leftView.frame)
-        imgView.image = UIImage(named: "CDEditBack.jpg")
+        imgView.image = UIImage(named: "")
         imgView.contentMode = .Center
         leftView.addSubview(imgView)
         
@@ -47,7 +59,73 @@ class EditorFieldViewController: UIViewController {
     
     func clickSelectImage(){
         NSLog("点击选择照片")
+        
+        let actionSheetController: UIAlertController = UIAlertController(title: "请选择", message:nil, preferredStyle: .ActionSheet)
+        
+        //取消按钮
+        let cancelAction: UIAlertAction = UIAlertAction(title: "取消", style: .Cancel) { action -> Void in
+            //Just dismiss the action sheet
+        }
+        
+        actionSheetController.addAction(cancelAction)
+        
+        //拍照
+        let takePictureAction: UIAlertAction = UIAlertAction(title: "拍照", style: .Default)
+        { action -> Void in
+            
+            
+            self.initWithImagePickView("拍照")
+            
+        }
+        
+        actionSheetController.addAction(takePictureAction)
+        
+        //相册选择
+        let choosePictureAction: UIAlertAction = UIAlertAction(title: "相册", style: .Default)
+        { action -> Void in
+            
+            self.initWithImagePickView("相册")
+            
+        }
+        
+        actionSheetController.addAction(choosePictureAction)
+        
+        
+        self.presentViewController(actionSheetController, animated: true) {
+            
+        }
+        
     }
+    
+    func initWithImagePickView(type:NSString){
+        
+        self.imagePicker = UIImagePickerController()
+        self.imagePicker.delegate      = self;
+        self.imagePicker.allowsEditing = true;
+        
+        switch type{
+        case "拍照":
+            self.imagePicker.sourceType = .Camera
+            break
+        case "相册":
+            self.imagePicker.sourceType = .PhotoLibrary
+            break
+            
+            
+        default:
+            print("error")
+            break
+        }
+        
+        presentViewController(self.imagePicker, animated: true, completion: nil)
+    }
+    
+    
+    
+    
+    
+    
+    
     func setUI(){
         
         
@@ -133,7 +211,9 @@ class EditorFieldViewController: UIViewController {
         }
         fieldNameText.placeholder = "请输入场地名称"
         fieldNameText.textColor = UIColor ( red: 0.5922, green: 0.5922, blue: 0.5922, alpha: 1.0 )
-        
+        fieldNameText.delegate = self
+        fieldNameText.tag = 100
+        fieldNameText.addTarget(self, action: #selector(getTextField(_:)), forControlEvents: UIControlEvents.AllEditingEvents)
         
         
         let lineView2 = UIView()
@@ -159,6 +239,7 @@ class EditorFieldViewController: UIViewController {
         fieldTelLabel.textAlignment = .Left
         fieldTelLabel.textColor = UIColor ( red: 0.1882, green: 0.1922, blue: 0.1961, alpha: 1.0 )
         
+        
         let fieldTelText = UITextField()
         self.view.addSubview(fieldTelText)
         fieldTelText.snp_makeConstraints { (make) in
@@ -169,6 +250,10 @@ class EditorFieldViewController: UIViewController {
         }
         fieldTelText.placeholder = "请输入场地订场电话"
         fieldTelText.textColor = UIColor ( red: 0.5922, green: 0.5922, blue: 0.5922, alpha: 1.0 )
+        fieldTelText.delegate = self
+        fieldTelText.keyboardType = .PhonePad
+        fieldTelText.tag = 200
+        fieldTelText.addTarget(self, action: #selector(getTextField(_:)), forControlEvents: UIControlEvents.AllEditingEvents)
         
         let lineView3 = UIView()
         self.view.addSubview(lineView3)
@@ -205,6 +290,7 @@ class EditorFieldViewController: UIViewController {
         priceOfHours.textAlignment = .Right
         
         
+        
         let fieldPriceText = UITextField()
         self.view.addSubview(fieldPriceText)
         fieldPriceText.snp_makeConstraints { (make) in
@@ -215,6 +301,10 @@ class EditorFieldViewController: UIViewController {
         }
         fieldPriceText.placeholder = "请输入场地价格"
         fieldPriceText.textColor = UIColor ( red: 0.5922, green: 0.5922, blue: 0.5922, alpha: 1.0 )
+        fieldPriceText.delegate = self
+        fieldPriceText.keyboardType = .NumberPad
+        fieldPriceText.tag = 300
+        fieldPriceText.addTarget(self, action: #selector(getTextField(_:)), forControlEvents: UIControlEvents.AllEditingEvents)
         
         let lineView4 = UIView()
         self.view.addSubview(lineView4)
@@ -251,6 +341,40 @@ class EditorFieldViewController: UIViewController {
     
     func clickSaveFieldInfoBtn(){
         NSLog("点击了保存信息")
+        var imageId : Int = 0
+        
+        if self.editModel == nil {
+            
+        }else{
+            imageId = (self.editModel?.data.id)!
+        }
+
+        
+        requestToEditorFieldInfo(self.field_Id.description, imageId: imageId, phone: self.field_Tel, cost: self.field_Price, name: self.field_Name)
+        
+        
+        
+//        if self.imageUrl == nil {
+//            return
+//        }else{
+//            requestUpfile()
+//        }
+    }
+    
+    func getTextField(textField:UITextField){
+        switch textField.tag {
+        case 100:
+            print(textField.text)
+            self.field_Name = textField.text!
+        case 200:
+            print(textField.text)
+            self.field_Tel = textField.text!
+        case 300:
+            print(textField.text)
+            self.field_Price = textField.text!
+        default:
+            break
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -259,13 +383,124 @@ class EditorFieldViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         self.tabBarController?.hidesBottomBarWhenPushed = false
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
     
-
+    
+    
 }
+
+
+extension EditorFieldViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if  textField.isFirstResponder() {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+}
+
+
+extension EditorFieldViewController : UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate{
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        print(info.description)
+        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let data = UIImageJPEGRepresentation(image!, 0.5)
+        self.fieldImage.image =  UIImage(data: data!);
+        self.imageUrl = image
+        self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
+        requestUpfile(image!)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.imagePicker.dismissViewControllerAnimated(true) {
+            
+        }
+    }
+    
+    
+    func requestUpfile(image:UIImage){
+        //        let fileURL = NSBundle.mainBundle().URLForResource("image", withExtension: "jpg")
+        
+        
+        
+        
+        Alamofire.upload(.POST, NSURL(string: kURL + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
+            
+            let data = UIImageJPEGRepresentation(self.imageUrl!, 0.5)
+            let imageName = String(NSDate().timeIntervalSince1970*100000) + ".png"
+            
+            
+            multipartFormData.appendBodyPart(data: data!, name: "file",fileName: imageName,mimeType: "image/png")
+            
+            let para = ["v":v,"uid":"1","file":""]
+            
+            
+            for (key,value) in para {
+                multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key )
+            }
+            
+            
+        }) { (encodingResult) in
+            switch encodingResult {
+            case .Success(let upload, _, _):
+                upload.responseString(completionHandler: { (response) in
+                    
+                    
+                    
+                    let json = JSON(data: response.data!)
+                    print(json)
+                    let str = json.object
+                    
+                    self.editModel = FieldImageModel.init(fromDictionary: str as! NSDictionary )
+                    
+                     
+                })
+            case .Failure(let error):
+                print(error)
+            }
+        }
+
+    }
+    
+    
+    func requestToEditorFieldInfo(siteId:String,imageId:Int,phone:String,cost:String,name:String){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":1,"siteId":siteId,"imageId":imageId,"phone":phone,"cost":cost,"name":name]
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string: kURL + "/updatesiteinfo")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                print(json)
+                let str = (json.object) as! NSDictionary
+                print(str["code"])
+                
+                print(str["flag"])
+                
+                if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    
+    
+    
+    
+}
+
+
+

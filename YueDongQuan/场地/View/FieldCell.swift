@@ -61,10 +61,12 @@ class FieldCell: UITableViewCell {
         distanceLabel.snp_makeConstraints { (make) in
             make.top.equalTo(15)
             make.right.equalTo(-10)
-            make.width.equalTo(60)
+            make.width.equalTo(80)
             make.height.equalTo(20)
         }
         distanceLabel.text = "290m"
+        distanceLabel.font = UIFont.systemFontOfSize(12)
+        distanceLabel.textAlignment = .Right
         
         name.snp_makeConstraints { (make) in
             make.left.equalTo(imgView.snp_right).offset(10)
@@ -151,6 +153,17 @@ class FieldCell: UITableViewCell {
         
     }
     
+    func configWithModel(model:FieldArray){
+        self.name.text = model.name
+        self.distanceLabel.text = String(format: "%0.2fm",model.distance)
+        self.priceLabel.text = String(format: "%0.2f元/时",model.cost)
+        self.imgView.sd_setImageWithURL(NSURL(string: model.thumbnailSrc))
+        self.imgView.sd_setImageWithURL(NSURL(string:"http://g.hiphotos.baidu.com/zhidao/pic/item/cb8065380cd7912331f61f30ab345982b2b78064.jpg"))
+    }
+    
+    
+    
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -171,5 +184,5 @@ class FieldCell: UITableViewCell {
         self.delegate?.clickSiginFieldBtn(index)
     }
     
-
+    
 }

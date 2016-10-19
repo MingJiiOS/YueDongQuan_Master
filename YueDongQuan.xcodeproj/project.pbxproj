@@ -34,6 +34,17 @@
 		5C3B9A031D9D17A900AF7CFE /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3B9A021D9D17A900AF7CFE /* SearchResultCell.swift */; };
 		5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4396CF1D9E135200F40749 /* SourceAnimation.swift */; };
 		5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */; };
+		5C7C3A031DB5CE3F00EA598B /* DiscoveryCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */; };
+		5C7C3A041DB5CE3F00EA598B /* DiscoveryArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A001DB5CE3F00EA598B /* DiscoveryArray.swift */; };
+		5C7C3A051DB5CE3F00EA598B /* DiscoveryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A011DB5CE3F00EA598B /* DiscoveryData.swift */; };
+		5C7C3A061DB5CE3F00EA598B /* DiscoveryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A021DB5CE3F00EA598B /* DiscoveryModel.swift */; };
+		5C7C3A0A1DB5CECC00EA598B /* UIView+LQXkeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A081DB5CECC00EA598B /* UIView+LQXkeyboard.m */; };
+		5C7C3A0B1DB5CECC00EA598B /* YHMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A091DB5CECC00EA598B /* YHMessageView.swift */; };
+		5C7C3A0F1DB5CF3400EA598B /* FieldArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A0C1DB5CF3400EA598B /* FieldArray.swift */; };
+		5C7C3A101DB5CF3400EA598B /* FieldData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A0D1DB5CF3400EA598B /* FieldData.swift */; };
+		5C7C3A111DB5CF3400EA598B /* FieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A0E1DB5CF3400EA598B /* FieldModel.swift */; };
+		5C7C3A141DB6069800EA598B /* FieldImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A121DB6069800EA598B /* FieldImageData.swift */; };
+		5C7C3A151DB6069800EA598B /* FieldImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A131DB6069800EA598B /* FieldImageModel.swift */; };
 		5C8C3C651D9276F500D756FF /* SignSportsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8C3C641D9276F500D756FF /* SignSportsCell.swift */; };
 		5C8C3C671D92771600D756FF /* SignPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8C3C661D92771600D756FF /* SignPersonCell.swift */; };
 		5C8C3C691D927FAD00D756FF /* SignCellForHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8C3C681D927FAD00D756FF /* SignCellForHeader.swift */; };
@@ -323,6 +334,18 @@
 		5C4396CF1D9E135200F40749 /* SourceAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceAnimation.swift; sourceTree = "<group>"; };
 		5C68263E1DAC91250032B66E /* NSObject+EncodingString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+EncodingString.h"; sourceTree = "<group>"; };
 		5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+EncodingString.m"; sourceTree = "<group>"; };
+		5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryCommentModel.swift; sourceTree = "<group>"; };
+		5C7C3A001DB5CE3F00EA598B /* DiscoveryArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryArray.swift; sourceTree = "<group>"; };
+		5C7C3A011DB5CE3F00EA598B /* DiscoveryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryData.swift; sourceTree = "<group>"; };
+		5C7C3A021DB5CE3F00EA598B /* DiscoveryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryModel.swift; sourceTree = "<group>"; };
+		5C7C3A071DB5CECC00EA598B /* UIView+LQXkeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LQXkeyboard.h"; sourceTree = "<group>"; };
+		5C7C3A081DB5CECC00EA598B /* UIView+LQXkeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LQXkeyboard.m"; sourceTree = "<group>"; };
+		5C7C3A091DB5CECC00EA598B /* YHMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YHMessageView.swift; sourceTree = "<group>"; };
+		5C7C3A0C1DB5CF3400EA598B /* FieldArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldArray.swift; sourceTree = "<group>"; };
+		5C7C3A0D1DB5CF3400EA598B /* FieldData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldData.swift; sourceTree = "<group>"; };
+		5C7C3A0E1DB5CF3400EA598B /* FieldModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldModel.swift; sourceTree = "<group>"; };
+		5C7C3A121DB6069800EA598B /* FieldImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldImageData.swift; sourceTree = "<group>"; };
+		5C7C3A131DB6069800EA598B /* FieldImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldImageModel.swift; sourceTree = "<group>"; };
 		5C8C3C641D9276F500D756FF /* SignSportsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignSportsCell.swift; sourceTree = "<group>"; };
 		5C8C3C661D92771600D756FF /* SignPersonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignPersonCell.swift; sourceTree = "<group>"; };
 		5C8C3C681D927FAD00D756FF /* SignCellForHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignCellForHeader.swift; sourceTree = "<group>"; };
@@ -1084,6 +1107,11 @@
 		BFC65D301D86A05D004E7E99 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5C7C3A0C1DB5CF3400EA598B /* FieldArray.swift */,
+				5C7C3A0D1DB5CF3400EA598B /* FieldData.swift */,
+				5C7C3A0E1DB5CF3400EA598B /* FieldModel.swift */,
+				5C7C3A121DB6069800EA598B /* FieldImageData.swift */,
+				5C7C3A131DB6069800EA598B /* FieldImageModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1179,6 +1207,10 @@
 		BFC65D381D86A05D004E7E99 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */,
+				5C7C3A001DB5CE3F00EA598B /* DiscoveryArray.swift */,
+				5C7C3A011DB5CE3F00EA598B /* DiscoveryData.swift */,
+				5C7C3A021DB5CE3F00EA598B /* DiscoveryModel.swift */,
 				5CC5F93C1DAF8A450088A61E /* HKFCellModel.swift */,
 				5CC5F93D1DAF8A450088A61E /* HKFCell_Cell.swift */,
 				5C2A956A1D8D86B2006D1462 /* CellModel.h */,
@@ -1190,6 +1222,9 @@
 		BFC65D391D86A05D004E7E99 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5C7C3A071DB5CECC00EA598B /* UIView+LQXkeyboard.h */,
+				5C7C3A081DB5CECC00EA598B /* UIView+LQXkeyboard.m */,
+				5C7C3A091DB5CECC00EA598B /* YHMessageView.swift */,
 				5CC5F9441DAF8A600088A61E /* DisplayView.swift */,
 				5CC5F9451DAF8A600088A61E /* Extension_String.swift */,
 				5CC5F9401DAF8A550088A61E /* HKFCommentCell.swift */,
@@ -1550,6 +1585,7 @@
 				5C019B401D92708900BAAAC1 /* SignHeaderView.swift in Sources */,
 				5CE4A7E91D8AC1ED00F25CF6 /* HMSegmentedControl.m in Sources */,
 				BFC65D4A1D86A14F004E7E99 /* MiddleViewController.swift in Sources */,
+				5C7C3A0B1DB5CECC00EA598B /* YHMessageView.swift in Sources */,
 				BF071EFF1D9A0D5F000551F7 /* SubContentViewController.swift in Sources */,
 				5CC5F9431DAF8A550088A61E /* HKFTableViewCell.swift in Sources */,
 				BF071F3B1D9A0D68000551F7 /* MJTextFeild.swift in Sources */,
@@ -1564,6 +1600,7 @@
 				BF071EFB1D9A0D5F000551F7 /* ParterDataViewController.swift in Sources */,
 				5CC5F9421DAF8A550088A61E /* HKFCommentCell.swift in Sources */,
 				BF071F341D9A0D68000551F7 /* ConfirmOldPw.swift in Sources */,
+				5C7C3A151DB6069800EA598B /* FieldImageModel.swift in Sources */,
 				BF3CAC461DB22E15008A5C51 /* myCircleArray.swift in Sources */,
 				5C90F13B1D8FCFA0005E16AF /* YJTabBarButton.m in Sources */,
 				BF071EF71D9A0D5F000551F7 /* ChatViewController.swift in Sources */,
@@ -1580,6 +1617,7 @@
 				5C90F1391D8FCFA0005E16AF /* UIView+Frame.m in Sources */,
 				BF2F6C9A1DAE16510050B437 /* RegistModel.swift in Sources */,
 				BFA3273D1D9CF7200003AA4D /* MJGreenAnnotationView.swift in Sources */,
+				5C7C3A051DB5CE3F00EA598B /* DiscoveryData.swift in Sources */,
 				5C90F1371D8FCFA0005E16AF /* UIBarButtonItem+YJItem.m in Sources */,
 				BFC65D5A1D86A1AF004E7E99 /* YXCustomActionSheet.m in Sources */,
 				5C24BB721D9A5C9C00A6D25F /* HKFPostVideoVC.m in Sources */,
@@ -1591,6 +1629,7 @@
 				5C10E1261D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift in Sources */,
 				BF071F081D9A0D5F000551F7 /* MJHeadImageCell.swift in Sources */,
 				5C072B621D8F9C6C00420F6D /* EditorFieldViewController.swift in Sources */,
+				5C7C3A111DB5CF3400EA598B /* FieldModel.swift in Sources */,
 				BF071F2F1D9A0D68000551F7 /* SetNewPasswordViewController.swift in Sources */,
 				5C24BB741D9A5F4400A6D25F /* HKFPostRecruitmentVC.swift in Sources */,
 				5CD981061D96546A007828E2 /* XTimer.m in Sources */,
@@ -1598,6 +1637,7 @@
 				BFC126A41DB48C2B00E11088 /* HistoryDongdouModel.swift in Sources */,
 				BF2F6C9D1DAE25280050B437 /* imData.swift in Sources */,
 				5C10E1281D9B5B34008AFAAF /* HKFPostActivityVC.swift in Sources */,
+				5C7C3A0F1DB5CF3400EA598B /* FieldArray.swift in Sources */,
 				5CA4EA391D8E7453001A8E8D /* UITableView+HYBCacheHeight.m in Sources */,
 				5C2A956F1D8D86C3006D1462 /* DynamicCell.m in Sources */,
 				BF071F3A1D9A0D68000551F7 /* MJDatePikerView.swift in Sources */,
@@ -1610,12 +1650,14 @@
 				5C2A956C1D8D86B2006D1462 /* CellModel.m in Sources */,
 				BF071F431D9A10DA000551F7 /* QuanZiViewController.swift in Sources */,
 				BF071F381D9A0D68000551F7 /* MJAlertView.swift in Sources */,
+				5C7C3A061DB5CE3F00EA598B /* DiscoveryModel.swift in Sources */,
 				BFC126A21DB48C2B00E11088 /* HistoryDongdouArray.swift in Sources */,
 				5CC5F93F1DAF8A450088A61E /* HKFCell_Cell.swift in Sources */,
 				5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */,
 				BF140EE31DAF2C930029DC25 /* myFoundImage.swift in Sources */,
 				5CA4EA401D8EC5EE001A8E8D /* FieldCell.swift in Sources */,
 				BF071F3E1D9A0D68000551F7 /* SendPhoneNumberView.swift in Sources */,
+				5C7C3A031DB5CE3F00EA598B /* DiscoveryCommentModel.swift in Sources */,
 				BF071F2E1D9A0D68000551F7 /* SendPhoneViewController.swift in Sources */,
 				BF071EFD1D9A0D5F000551F7 /* SelectChangDiViewController.swift in Sources */,
 				5CA4EA3A1D8E7453001A8E8D /* UITableViewCell+HYBMasonryAutoCellHeight.m in Sources */,
@@ -1623,6 +1665,7 @@
 				BFC1269D1DB4792F00E11088 /* CirclesData.swift in Sources */,
 				BF071F0A1D9A0D5F000551F7 /* MJNoticeCell.swift in Sources */,
 				BF071F391D9A0D68000551F7 /* MJContextRef.swift in Sources */,
+				5C7C3A0A1DB5CECC00EA598B /* UIView+LQXkeyboard.m in Sources */,
 				BF071F061D9A0D5F000551F7 /* MJAllParterView.swift in Sources */,
 				BF2F6C9E1DAE25280050B437 /* imModel.swift in Sources */,
 				BF9739D11D9F81ED00E1B3EB /* TempLeftViewController.swift in Sources */,
@@ -1632,6 +1675,7 @@
 				BF071F091D9A0D5F000551F7 /* MJHeadimageWithSubimageView.swift in Sources */,
 				BF140EE21DAF2C930029DC25 /* myFoundData.swift in Sources */,
 				5C3B9A011D9D0A0400AF7CFE /* QuanZiCell.swift in Sources */,
+				5C7C3A041DB5CE3F00EA598B /* DiscoveryArray.swift in Sources */,
 				BFDB2A9C1DA600BB00A65DAD /* LoginRegisterView.swift in Sources */,
 				BF071F3C1D9A0D68000551F7 /* MyDongdouTableViewCell.swift in Sources */,
 				BF7DDC9F1DA0AAC700772366 /* publishNoticeViewController.swift in Sources */,
@@ -1644,12 +1688,14 @@
 				BFC65D4E1D86A160004E7E99 /* DiscoverViewController.swift in Sources */,
 				BF071F401D9A0D68000551F7 /* SubPersonCell.swift in Sources */,
 				BF071F301D9A0D68000551F7 /* SubPersonDataViewController.swift in Sources */,
+				5C7C3A101DB5CF3400EA598B /* FieldData.swift in Sources */,
 				5C2A95771D8D86EC006D1462 /* NSString+Extension.m in Sources */,
 				5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */,
 				BFC1269E1DB4792F00E11088 /* CirclesModel.swift in Sources */,
 				BF9739CF1D9F71A100E1B3EB /* MJNetWorkHelper.swift in Sources */,
 				BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */,
 				5CD980EA1D9615FF007828E2 /* CircleAnimation.swift in Sources */,
+				5C7C3A141DB6069800EA598B /* FieldImageData.swift in Sources */,
 				BF071F0E1D9A0D5F000551F7 /* QRCodeView.swift in Sources */,
 				BF071F041D9A0D5F000551F7 /* CircleDataView.swift in Sources */,
 				5C24BB6F1D9A4BEB00A6D25F /* CustomTextField.m in Sources */,

@@ -38,6 +38,8 @@
 #import "XTimer.h"
 #import "LxGridViewFlowLayout.h"
 #import "TZTestCell.h"
+#import "UIView+LQXkeyboard.h"
+
 
 
 
