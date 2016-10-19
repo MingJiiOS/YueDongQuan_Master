@@ -20,6 +20,25 @@
 		5C24BB741D9A5F4400A6D25F /* HKFPostRecruitmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24BB731D9A5F4400A6D25F /* HKFPostRecruitmentVC.swift */; };
 		5C24BB771D9A709100A6D25F /* BRPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C24BB761D9A709100A6D25F /* BRPlaceholderTextView.m */; };
 		5C24BB791D9A7D2800A6D25F /* HKFPostMatchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24BB781D9A7D2800A6D25F /* HKFPostMatchVC.swift */; };
+		5C27BAF01DB761D9005A2F8D /* MBProgressHUD+PY.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BAD11DB761D9005A2F8D /* MBProgressHUD+PY.m */; };
+		5C27BAF11DB761D9005A2F8D /* UIView+PYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BAD31DB761D9005A2F8D /* UIView+PYExtension.m */; };
+		5C27BAF21DB761D9005A2F8D /* PYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BAD61DB761D9005A2F8D /* PYNavigationController.m */; };
+		5C27BAF31DB761D9005A2F8D /* PYPhotosPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BAD81DB761D9005A2F8D /* PYPhotosPreviewController.m */; };
+		5C27BAF41DB761D9005A2F8D /* PYPhotosReaderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BADA1DB761D9005A2F8D /* PYPhotosReaderController.m */; };
+		5C27BAF51DB761D9005A2F8D /* PYPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BADC1DB761D9005A2F8D /* PYPhotosViewController.m */; };
+		5C27BAF61DB761D9005A2F8D /* PYPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BADF1DB761D9005A2F8D /* PYPhoto.m */; };
+		5C27BAF71DB761D9005A2F8D /* PYConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BAE21DB761D9005A2F8D /* PYConst.m */; };
+		5C27BAF81DB761D9005A2F8D /* PYProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BAE41DB761D9005A2F8D /* PYProgressView.m */; };
+		5C27BAF91DB761D9005A2F8D /* PYPhotosView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C27BAE61DB761D9005A2F8D /* PYPhotosView.bundle */; };
+		5C27BAFA1DB761D9005A2F8D /* PYPhotoBrowseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BAE91DB761D9005A2F8D /* PYPhotoBrowseView.m */; };
+		5C27BAFB1DB761D9005A2F8D /* PYPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BAEB1DB761D9005A2F8D /* PYPhotoCell.m */; };
+		5C27BAFC1DB761D9005A2F8D /* PYPhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BAED1DB761D9005A2F8D /* PYPhotosView.m */; };
+		5C27BAFD1DB761D9005A2F8D /* PYPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BAEF1DB761D9005A2F8D /* PYPhotoView.m */; };
+		5C27BB071DB761F2005A2F8D /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BB001DB761F2005A2F8D /* DACircularProgressView.m */; };
+		5C27BB081DB761F2005A2F8D /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BB021DB761F2005A2F8D /* DALabeledCircularProgressView.m */; };
+		5C27BB091DB761F2005A2F8D /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C27BB041DB761F2005A2F8D /* MBProgressHUD.bundle */; };
+		5C27BB0A1DB761F2005A2F8D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BB061DB761F2005A2F8D /* MBProgressHUD.m */; };
+		5C27BB0C1DB7638D005A2F8D /* HKFPostPictureSayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BB0B1DB7638D005A2F8D /* HKFPostPictureSayVC.swift */; };
 		5C2A955C1D8D1C56006D1462 /* dataTest.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 5C2A955B1D8D1C56006D1462 /* dataTest.geojson */; };
 		5C2A956C1D8D86B2006D1462 /* CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A956B1D8D86B2006D1462 /* CellModel.m */; };
 		5C2A956F1D8D86C3006D1462 /* DynamicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A956E1D8D86C3006D1462 /* DynamicCell.m */; };
@@ -314,6 +333,42 @@
 		5C24BB751D9A709100A6D25F /* BRPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPlaceholderTextView.h; sourceTree = "<group>"; };
 		5C24BB761D9A709100A6D25F /* BRPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPlaceholderTextView.m; sourceTree = "<group>"; };
 		5C24BB781D9A7D2800A6D25F /* HKFPostMatchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostMatchVC.swift; sourceTree = "<group>"; };
+		5C27BAD01DB761D9005A2F8D /* MBProgressHUD+PY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+PY.h"; sourceTree = "<group>"; };
+		5C27BAD11DB761D9005A2F8D /* MBProgressHUD+PY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+PY.m"; sourceTree = "<group>"; };
+		5C27BAD21DB761D9005A2F8D /* UIView+PYExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PYExtension.h"; sourceTree = "<group>"; };
+		5C27BAD31DB761D9005A2F8D /* UIView+PYExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PYExtension.m"; sourceTree = "<group>"; };
+		5C27BAD51DB761D9005A2F8D /* PYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYNavigationController.h; sourceTree = "<group>"; };
+		5C27BAD61DB761D9005A2F8D /* PYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYNavigationController.m; sourceTree = "<group>"; };
+		5C27BAD71DB761D9005A2F8D /* PYPhotosPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosPreviewController.h; sourceTree = "<group>"; };
+		5C27BAD81DB761D9005A2F8D /* PYPhotosPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosPreviewController.m; sourceTree = "<group>"; };
+		5C27BAD91DB761D9005A2F8D /* PYPhotosReaderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosReaderController.h; sourceTree = "<group>"; };
+		5C27BADA1DB761D9005A2F8D /* PYPhotosReaderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosReaderController.m; sourceTree = "<group>"; };
+		5C27BADB1DB761D9005A2F8D /* PYPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosViewController.h; sourceTree = "<group>"; };
+		5C27BADC1DB761D9005A2F8D /* PYPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosViewController.m; sourceTree = "<group>"; };
+		5C27BADE1DB761D9005A2F8D /* PYPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhoto.h; sourceTree = "<group>"; };
+		5C27BADF1DB761D9005A2F8D /* PYPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhoto.m; sourceTree = "<group>"; };
+		5C27BAE11DB761D9005A2F8D /* PYConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYConst.h; sourceTree = "<group>"; };
+		5C27BAE21DB761D9005A2F8D /* PYConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYConst.m; sourceTree = "<group>"; };
+		5C27BAE31DB761D9005A2F8D /* PYProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYProgressView.h; sourceTree = "<group>"; };
+		5C27BAE41DB761D9005A2F8D /* PYProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYProgressView.m; sourceTree = "<group>"; };
+		5C27BAE51DB761D9005A2F8D /* PYPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoBrowser.h; sourceTree = "<group>"; };
+		5C27BAE61DB761D9005A2F8D /* PYPhotosView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PYPhotosView.bundle; sourceTree = "<group>"; };
+		5C27BAE81DB761D9005A2F8D /* PYPhotoBrowseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoBrowseView.h; sourceTree = "<group>"; };
+		5C27BAE91DB761D9005A2F8D /* PYPhotoBrowseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotoBrowseView.m; sourceTree = "<group>"; };
+		5C27BAEA1DB761D9005A2F8D /* PYPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoCell.h; sourceTree = "<group>"; };
+		5C27BAEB1DB761D9005A2F8D /* PYPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotoCell.m; sourceTree = "<group>"; };
+		5C27BAEC1DB761D9005A2F8D /* PYPhotosView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotosView.h; sourceTree = "<group>"; };
+		5C27BAED1DB761D9005A2F8D /* PYPhotosView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotosView.m; sourceTree = "<group>"; };
+		5C27BAEE1DB761D9005A2F8D /* PYPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhotoView.h; sourceTree = "<group>"; };
+		5C27BAEF1DB761D9005A2F8D /* PYPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhotoView.m; sourceTree = "<group>"; };
+		5C27BAFF1DB761F2005A2F8D /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
+		5C27BB001DB761F2005A2F8D /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		5C27BB011DB761F2005A2F8D /* DALabeledCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DALabeledCircularProgressView.h; sourceTree = "<group>"; };
+		5C27BB021DB761F2005A2F8D /* DALabeledCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DALabeledCircularProgressView.m; sourceTree = "<group>"; };
+		5C27BB041DB761F2005A2F8D /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
+		5C27BB051DB761F2005A2F8D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		5C27BB061DB761F2005A2F8D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		5C27BB0B1DB7638D005A2F8D /* HKFPostPictureSayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostPictureSayVC.swift; sourceTree = "<group>"; };
 		5C2A955B1D8D1C56006D1462 /* dataTest.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dataTest.geojson; sourceTree = "<group>"; };
 		5C2A956A1D8D86B2006D1462 /* CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellModel.h; sourceTree = "<group>"; };
 		5C2A956B1D8D86B2006D1462 /* CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellModel.m; sourceTree = "<group>"; };
@@ -720,6 +775,102 @@
 				5C072B5F1D8F8D2500420F6D /* YoYoAlertView.swift */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		5C27BACE1DB761D9005A2F8D /* PYPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				5C27BACF1DB761D9005A2F8D /* Category */,
+				5C27BAD41DB761D9005A2F8D /* Controller */,
+				5C27BADD1DB761D9005A2F8D /* Model */,
+				5C27BAE01DB761D9005A2F8D /* Other */,
+				5C27BAE51DB761D9005A2F8D /* PYPhotoBrowser.h */,
+				5C27BAE61DB761D9005A2F8D /* PYPhotosView.bundle */,
+				5C27BAE71DB761D9005A2F8D /* View */,
+			);
+			path = PYPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		5C27BACF1DB761D9005A2F8D /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				5C27BAD01DB761D9005A2F8D /* MBProgressHUD+PY.h */,
+				5C27BAD11DB761D9005A2F8D /* MBProgressHUD+PY.m */,
+				5C27BAD21DB761D9005A2F8D /* UIView+PYExtension.h */,
+				5C27BAD31DB761D9005A2F8D /* UIView+PYExtension.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		5C27BAD41DB761D9005A2F8D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5C27BAD51DB761D9005A2F8D /* PYNavigationController.h */,
+				5C27BAD61DB761D9005A2F8D /* PYNavigationController.m */,
+				5C27BAD71DB761D9005A2F8D /* PYPhotosPreviewController.h */,
+				5C27BAD81DB761D9005A2F8D /* PYPhotosPreviewController.m */,
+				5C27BAD91DB761D9005A2F8D /* PYPhotosReaderController.h */,
+				5C27BADA1DB761D9005A2F8D /* PYPhotosReaderController.m */,
+				5C27BADB1DB761D9005A2F8D /* PYPhotosViewController.h */,
+				5C27BADC1DB761D9005A2F8D /* PYPhotosViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5C27BADD1DB761D9005A2F8D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5C27BADE1DB761D9005A2F8D /* PYPhoto.h */,
+				5C27BADF1DB761D9005A2F8D /* PYPhoto.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5C27BAE01DB761D9005A2F8D /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				5C27BAE11DB761D9005A2F8D /* PYConst.h */,
+				5C27BAE21DB761D9005A2F8D /* PYConst.m */,
+				5C27BAE31DB761D9005A2F8D /* PYProgressView.h */,
+				5C27BAE41DB761D9005A2F8D /* PYProgressView.m */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		5C27BAE71DB761D9005A2F8D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5C27BAE81DB761D9005A2F8D /* PYPhotoBrowseView.h */,
+				5C27BAE91DB761D9005A2F8D /* PYPhotoBrowseView.m */,
+				5C27BAEA1DB761D9005A2F8D /* PYPhotoCell.h */,
+				5C27BAEB1DB761D9005A2F8D /* PYPhotoCell.m */,
+				5C27BAEC1DB761D9005A2F8D /* PYPhotosView.h */,
+				5C27BAED1DB761D9005A2F8D /* PYPhotosView.m */,
+				5C27BAEE1DB761D9005A2F8D /* PYPhotoView.h */,
+				5C27BAEF1DB761D9005A2F8D /* PYPhotoView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5C27BAFE1DB761F2005A2F8D /* DACircularProgress */ = {
+			isa = PBXGroup;
+			children = (
+				5C27BAFF1DB761F2005A2F8D /* DACircularProgressView.h */,
+				5C27BB001DB761F2005A2F8D /* DACircularProgressView.m */,
+				5C27BB011DB761F2005A2F8D /* DALabeledCircularProgressView.h */,
+				5C27BB021DB761F2005A2F8D /* DALabeledCircularProgressView.m */,
+			);
+			path = DACircularProgress;
+			sourceTree = "<group>";
+		};
+		5C27BB031DB761F2005A2F8D /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				5C27BB041DB761F2005A2F8D /* MBProgressHUD.bundle */,
+				5C27BB051DB761F2005A2F8D /* MBProgressHUD.h */,
+				5C27BB061DB761F2005A2F8D /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		5C68263D1DAC910B0032B66E /* Tools */ = {
@@ -1146,6 +1297,7 @@
 			isa = PBXGroup;
 			children = (
 				BFC65D491D86A14F004E7E99 /* MiddleViewController.swift */,
+				5C27BB0B1DB7638D005A2F8D /* HKFPostPictureSayVC.swift */,
 				5C24BB731D9A5F4400A6D25F /* HKFPostRecruitmentVC.swift */,
 				5C24BB781D9A7D2800A6D25F /* HKFPostMatchVC.swift */,
 				5C10E1251D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift */,
@@ -1260,6 +1412,9 @@
 		BFC65D421D86A0C6004E7E99 /* 第三方 */ = {
 			isa = PBXGroup;
 			children = (
+				5C27BAFE1DB761F2005A2F8D /* DACircularProgress */,
+				5C27BB031DB761F2005A2F8D /* MBProgressHUD */,
+				5C27BACE1DB761D9005A2F8D /* PYPhotoBrowser */,
 				BFC5728F1DA8EB04002E1995 /* 等待视图 */,
 				BF1E16A71DA74518007985F3 /* 正则匹配 */,
 				BFDB2A891DA5EA4300A65DAD /* SinaWeiboSDK */,
@@ -1441,6 +1596,7 @@
 				BF2F6C461DAE0D640050B437 /* cool－8（被拖移）.tiff in Resources */,
 				BF2F6C501DAE0D640050B437 /* cool－18（被拖移）.tiff in Resources */,
 				BF2F6C701DAE0D640050B437 /* cool－50（被拖移）.tiff in Resources */,
+				5C27BAF91DB761D9005A2F8D /* PYPhotosView.bundle in Resources */,
 				BF2F6C6C1DAE0D640050B437 /* cool－46（被拖移）.tiff in Resources */,
 				BF2F6C741DAE0D640050B437 /* cool－54（被拖移）.tiff in Resources */,
 				BF2F6C4C1DAE0D640050B437 /* cool－14（被拖移）.tiff in Resources */,
@@ -1503,6 +1659,7 @@
 				BF2F6C811DAE0D640050B437 /* cool－67（被拖移）.tiff in Resources */,
 				BF2F6C891DAE0D640050B437 /* cool－75（被拖移）.tiff in Resources */,
 				BF2F6C571DAE0D640050B437 /* cool－25（被拖移）.tiff in Resources */,
+				5C27BB091DB761F2005A2F8D /* MBProgressHUD.bundle in Resources */,
 				BF2F6C8E1DAE0D640050B437 /* cool－80（被拖移）.tiff in Resources */,
 				BF2F6C6D1DAE0D640050B437 /* cool－47（被拖移）.tiff in Resources */,
 				BF2F6C431DAE0D640050B437 /* cool－5（被拖移）.tiff in Resources */,
@@ -1569,13 +1726,16 @@
 				5C8C3C691D927FAD00D756FF /* SignCellForHeader.swift in Sources */,
 				46315AFE1D882BBC00B9D846 /* CustomNavigationBar.swift in Sources */,
 				5CC5F9471DAF8A600088A61E /* Extension_String.swift in Sources */,
+				5C27BB071DB761F2005A2F8D /* DACircularProgressView.m in Sources */,
 				BF2F6B561DADEF440050B437 /* LoginData.swift in Sources */,
 				5C2A95761D8D86EC006D1462 /* GlobalUI.m in Sources */,
 				BFCD98D11DAC7B0700AF915C /* DataSource.swift in Sources */,
+				5C27BAF01DB761D9005A2F8D /* MBProgressHUD+PY.m in Sources */,
 				5C24BB791D9A7D2800A6D25F /* HKFPostMatchVC.swift in Sources */,
 				BFC65D591D86A1AF004E7E99 /* YXActionSheetButton.m in Sources */,
 				BF071EF81D9A0D5F000551F7 /* MyQuanZiViewController.swift in Sources */,
 				5C3439FE1D90E6EA0077BFDD /* SignRankingCOntroller.swift in Sources */,
+				5C27BAF51DB761D9005A2F8D /* PYPhotosViewController.m in Sources */,
 				BF9739CC1D9F714500E1B3EB /* MJGetToken.swift in Sources */,
 				BF140EE61DAF6A390029DC25 /* updateNameModel.swift in Sources */,
 				BF071F011D9A0D5F000551F7 /* MJModel.swift in Sources */,
@@ -1584,9 +1744,12 @@
 				BF071F021D9A0D5F000551F7 /* MJNoticeModel.swift in Sources */,
 				5C019B401D92708900BAAAC1 /* SignHeaderView.swift in Sources */,
 				5CE4A7E91D8AC1ED00F25CF6 /* HMSegmentedControl.m in Sources */,
+				5C27BAF31DB761D9005A2F8D /* PYPhotosPreviewController.m in Sources */,
 				BFC65D4A1D86A14F004E7E99 /* MiddleViewController.swift in Sources */,
 				5C7C3A0B1DB5CECC00EA598B /* YHMessageView.swift in Sources */,
+				5C27BAFB1DB761D9005A2F8D /* PYPhotoCell.m in Sources */,
 				BF071EFF1D9A0D5F000551F7 /* SubContentViewController.swift in Sources */,
+				5C27BAFA1DB761D9005A2F8D /* PYPhotoBrowseView.m in Sources */,
 				5CC5F9431DAF8A550088A61E /* HKFTableViewCell.swift in Sources */,
 				BF071F3B1D9A0D68000551F7 /* MJTextFeild.swift in Sources */,
 				BF071F031D9A0D5F000551F7 /* MJQuanZiModel.swift in Sources */,
@@ -1603,12 +1766,14 @@
 				5C7C3A151DB6069800EA598B /* FieldImageModel.swift in Sources */,
 				BF3CAC461DB22E15008A5C51 /* myCircleArray.swift in Sources */,
 				5C90F13B1D8FCFA0005E16AF /* YJTabBarButton.m in Sources */,
+				5C27BAF71DB761D9005A2F8D /* PYConst.m in Sources */,
 				BF071EF71D9A0D5F000551F7 /* ChatViewController.swift in Sources */,
 				5C90F1281D8FCD03005E16AF /* HKFTableBarController.swift in Sources */,
 				5CC5F9461DAF8A600088A61E /* DisplayView.swift in Sources */,
 				BF071F361D9A0D68000551F7 /* likeButton.swift in Sources */,
 				5C24BB771D9A709100A6D25F /* BRPlaceholderTextView.m in Sources */,
 				BF071F451D9A110B000551F7 /* PersonalViewController.swift in Sources */,
+				5C27BAF11DB761D9005A2F8D /* UIView+PYExtension.m in Sources */,
 				BF071EF61D9A0D5F000551F7 /* AllNoticeViewController.swift in Sources */,
 				5C072B601D8F8D2500420F6D /* YoYoAlertView.swift in Sources */,
 				5CC48A041D9CECF8009C4AFE /* SearchController.swift in Sources */,
@@ -1634,8 +1799,10 @@
 				5C24BB741D9A5F4400A6D25F /* HKFPostRecruitmentVC.swift in Sources */,
 				5CD981061D96546A007828E2 /* XTimer.m in Sources */,
 				BFC126A31DB48C2B00E11088 /* HistoryDongdouData.swift in Sources */,
+				5C27BAF21DB761D9005A2F8D /* PYNavigationController.m in Sources */,
 				BFC126A41DB48C2B00E11088 /* HistoryDongdouModel.swift in Sources */,
 				BF2F6C9D1DAE25280050B437 /* imData.swift in Sources */,
+				5C27BAFD1DB761D9005A2F8D /* PYPhotoView.m in Sources */,
 				5C10E1281D9B5B34008AFAAF /* HKFPostActivityVC.swift in Sources */,
 				5C7C3A0F1DB5CF3400EA598B /* FieldArray.swift in Sources */,
 				5CA4EA391D8E7453001A8E8D /* UITableView+HYBCacheHeight.m in Sources */,
@@ -1656,6 +1823,7 @@
 				5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */,
 				BF140EE31DAF2C930029DC25 /* myFoundImage.swift in Sources */,
 				5CA4EA401D8EC5EE001A8E8D /* FieldCell.swift in Sources */,
+				5C27BAF41DB761D9005A2F8D /* PYPhotosReaderController.m in Sources */,
 				BF071F3E1D9A0D68000551F7 /* SendPhoneNumberView.swift in Sources */,
 				5C7C3A031DB5CE3F00EA598B /* DiscoveryCommentModel.swift in Sources */,
 				BF071F2E1D9A0D68000551F7 /* SendPhoneViewController.swift in Sources */,
@@ -1688,12 +1856,14 @@
 				BFC65D4E1D86A160004E7E99 /* DiscoverViewController.swift in Sources */,
 				BF071F401D9A0D68000551F7 /* SubPersonCell.swift in Sources */,
 				BF071F301D9A0D68000551F7 /* SubPersonDataViewController.swift in Sources */,
+				5C27BB0C1DB7638D005A2F8D /* HKFPostPictureSayVC.swift in Sources */,
 				5C7C3A101DB5CF3400EA598B /* FieldData.swift in Sources */,
 				5C2A95771D8D86EC006D1462 /* NSString+Extension.m in Sources */,
 				5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */,
 				BFC1269E1DB4792F00E11088 /* CirclesModel.swift in Sources */,
 				BF9739CF1D9F71A100E1B3EB /* MJNetWorkHelper.swift in Sources */,
 				BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */,
+				5C27BB081DB761F2005A2F8D /* DALabeledCircularProgressView.m in Sources */,
 				5CD980EA1D9615FF007828E2 /* CircleAnimation.swift in Sources */,
 				5C7C3A141DB6069800EA598B /* FieldImageData.swift in Sources */,
 				BF071F0E1D9A0D5F000551F7 /* QRCodeView.swift in Sources */,
@@ -1704,20 +1874,24 @@
 				BFC65D1D1D869FD1004E7E99 /* AppDelegate.swift in Sources */,
 				BFC126A61DB4A42200E11088 /* MJKeyChainHelper.swift in Sources */,
 				BF2F6CA21DAE32B50050B437 /* myInfoModel.swift in Sources */,
+				5C27BAFC1DB761D9005A2F8D /* PYPhotosView.m in Sources */,
 				BFA6DDC71D895C11009017DE /* UIControl+Custom.m in Sources */,
 				5C8C3C651D9276F500D756FF /* SignSportsCell.swift in Sources */,
 				BFC126AF1DB4ADCA00E11088 /* TokenModel.swift in Sources */,
 				5CA4EA3E1D8EC59A001A8E8D /* FieldViewController.swift in Sources */,
 				BF071F2D1D9A0D68000551F7 /* MyDongDouViewController.swift in Sources */,
+				5C27BAF61DB761D9005A2F8D /* PYPhoto.m in Sources */,
 				BF071F001D9A0D5F000551F7 /* MJAutoHeightCell.swift in Sources */,
 				BF071F2C1D9A0D68000551F7 /* ChangeNameViewController.swift in Sources */,
 				5C343A021D91361C0077BFDD /* KYCircularProgress.swift in Sources */,
 				BFC65D481D86A0F9004E7E99 /* MainViewController.swift in Sources */,
 				BF071F0B1D9A0D5F000551F7 /* MJOtherQuanZiView.swift in Sources */,
+				5C27BAF81DB761D9005A2F8D /* PYProgressView.m in Sources */,
 				BFC1269C1DB4792F00E11088 /* CirclesArray.swift in Sources */,
 				BFC572941DA8EB72002E1995 /* MJProgressHUD.swift in Sources */,
 				46315B001D882C2300B9D846 /* Pubilc.swift in Sources */,
 				BF071EFA1D9A0D5F000551F7 /* OtherQuanZiViewController.swift in Sources */,
+				5C27BB0A1DB761F2005A2F8D /* MBProgressHUD.m in Sources */,
 				BFAD63281D9E3E34006234E1 /* ConversationListViewController.m in Sources */,
 				BF071F071D9A0D5F000551F7 /* MJBlacklistView.swift in Sources */,
 				BFDB2A461DA3D77500A65DAD /* MJShareSDkHelper.swift in Sources */,

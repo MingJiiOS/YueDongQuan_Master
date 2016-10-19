@@ -194,62 +194,7 @@ extension DiscoverViewController : UIScrollViewDelegate {
 }
 
 
-extension DiscoverViewController {
-    func requestData(){
-        let para = ["v":"-130%-7200%-7180%-7190%-7240%-7180%-7270%-7180%-7190%87100%","Uid":1,"typeId":"","pageNo":1,"pageSize":10]
-        
-        Alamofire.request(.POST, NSURL(string: "http://ctyundong.com:8088/redong/found")!, parameters: para).responseString { response -> Void in
-            switch response.result {
-            case .Success:
-                let json = JSON(data: response.data!)
-                let str = json.object
-                
-                self.testModel = DiscoveryModel(fromDictionary: str as! NSDictionary)
-                
-                print(self.testModel?.code)
-                print(self.testModel?.data.array[0].address)
-                print(self.testModel?.data.array[0].aname)
-                print(self.testModel?.data.array[0].content)
-                print(self.testModel?.data.array[0].id)
-                print(self.testModel?.data.array[0].typeId)
-                print(self.testModel?.data.array[0].thumbnailSrc)
-                self.datasource = (self.testModel?.data.array)!
-                for item in self.tableViews {
-                    item.reloadData()
-                }
-            case .Failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    //评论说说
-    func requestCommentSay(commentId: String,content:String,foundId:Int){
-        let v = NSObject.getEncodeString("20160901")
-        
-        let para = ["v":v,"uid":1,"commentId":commentId,"content":content,"foundId":foundId]
-        
-        print(para.description)
-        
-        Alamofire.request(.POST, NSURL(string: "http://192.168.3.22:8080/redong/commentfound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
-            switch response.result {
-            case .Success:
-                let json = JSON(data: response.data!)
-                let str = json.object
-                
-                print(str)
-                for item in self.tableViews {
-                    item.reloadData()
-                }
-            case .Failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    
-    
-}
+
 
 
 extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKFTableViewCellDelegate {
@@ -326,6 +271,11 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         self.sayId = sayId
     }
     
+    
+    func clickDianZanBtnAtIndexPath(indexPath: NSIndexPath) {
+        let foundId = self.testModel?.data.array[indexPath.row].id
+        requestDianZan(foundId!)
+    }
     
     
 }
@@ -499,9 +449,91 @@ extension DiscoverViewController {
         return (degress*3.14159265)/180.0
     }
     
+    
+    
+    
 }
 
-
+extension DiscoverViewController {
+    func requestData(){
+        let para = ["v":"-130%-7200%-7180%-7190%-7240%-7180%-7270%-7180%-7190%87100%","Uid":1,"typeId":"","pageNo":1,"pageSize":10]
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                let str = json.object
+                
+                self.testModel = DiscoveryModel(fromDictionary: str as! NSDictionary)
+                
+                print(self.testModel?.code)
+                print(self.testModel?.data.array[0].address)
+                print(self.testModel?.data.array[0].aname)
+                print(self.testModel?.data.array[0].content)
+                print(self.testModel?.data.array[0].id)
+                print(self.testModel?.data.array[0].typeId)
+                print(self.testModel?.data.array[0].thumbnailSrc)
+                print(self.testModel?.data.array[0].time)
+                self.datasource = (self.testModel?.data.array)!
+                for item in self.tableViews {
+                    item.reloadData()
+                }
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    //评论说说
+    func requestCommentSay(commentId: String,content:String,foundId:Int){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":1,"commentId":commentId,"content":content,"foundId":foundId]
+        
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string: "http://192.168.3.22:8080/redong/commentfound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                let str = json.object
+                
+                print(str)
+                for item in self.tableViews {
+                    item.reloadData()
+                }
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    
+    func requestDianZan(foundId:Int){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":1,"foundId":foundId]
+        
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string: kURL + "/praise")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                let str = json.object
+                
+                print(str)
+//                for item in self.tableViews {
+//                    item.reloadData()
+//                }
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    
+}
 
 
 

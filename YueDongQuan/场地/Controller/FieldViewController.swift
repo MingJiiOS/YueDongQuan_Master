@@ -308,7 +308,7 @@ extension FieldViewController : FieldCellDelegate {
         
     }
     func clickSiginFieldBtn(indexPath: NSIndexPath) {
-        NSLog("点击了签到")
+        NSLog("点击了签到排行榜")
         let signVC = SignRankingCOntroller()
         signVC.siteId = (self.fieldModel?.data.array[indexPath.section].id)!
         signVC.hidesBottomBarWhenPushed = true

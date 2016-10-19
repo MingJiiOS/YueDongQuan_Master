@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 
+
 class HKFPostRecruitmentVC: UIViewController {
     
     
@@ -76,6 +77,7 @@ class HKFPostRecruitmentVC: UIViewController {
         
         let showLocationTap = UITapGestureRecognizer(target: self, action: #selector(showLocationClick))
         showLocationView.addGestureRecognizer(showLocationTap)
+        
         
         
         
