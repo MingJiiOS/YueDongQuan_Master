@@ -40,7 +40,7 @@ class DataSource: NSObject {
     //MARK:解析我的信息数据
     func getmyinfoData(datasource:NSDictionary) -> myInfoModel {
          let myInfo = myInfoModel(fromDictionary: datasource)
-          userInfo.sex = myInfo.data.sex
+          
         return myInfo
     }
     func getmyfound(datasource:NSDictionary) -> myFoundModel {
