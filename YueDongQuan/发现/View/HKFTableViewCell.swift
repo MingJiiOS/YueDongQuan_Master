@@ -16,6 +16,7 @@ protocol HKFTableViewCellDelegate {
     func reloadCellHeightForModelAndAtIndexPath(model : DiscoveryArray,indexPath : NSIndexPath)
     func createPingLunView(indexPath:NSIndexPath,sayId:Int,type:PingLunType)
     func selectCellPinglun(indexPath:NSIndexPath,commentIndexPath:NSIndexPath,sayId: Int,model:DiscoveryCommentModel,type:PingLunType)
+    func clickDianZanBtnAtIndexPath(indexPath:NSIndexPath)
 }
 
 
@@ -33,7 +34,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     var headImageView : UIImageView?//头像
     var headTypeView : UIImageView?//是否认证
     
-    var timeStatus : UILabel?//时间
+    private var timeStatus : UILabel?//时间
     var distanceLabel : UILabel?//距离
     var typeStatusView : UIImageView?//类型
     var displayView = DisplayView()//照片或者视频显示
@@ -130,7 +131,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.left.equalTo((weakSelf?.timeStatus?.snp_right)!)
             make.top.equalTo((weakSelf?.titleLabel?.snp_bottom)!)
             make.height.equalTo(14)
-            make.width.equalTo(screenWidth/4)
+            make.width.equalTo(screenWidth/3)
         })
         self.distanceLabel?.text = "离我1000km"
         self.distanceLabel?.backgroundColor = UIColor.whiteColor()
@@ -214,6 +215,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.dianzanBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -screenWidth/12)
         self.dianzanBtn.titleEdgeInsets = UIEdgeInsetsMake(0, screenWidth/12, 0, 0)
         self.operateView.addSubview(self.dianzanBtn)
+        self.dianzanBtn.addTarget(self, action: #selector(clickDianZanBtn), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.pinglunBtn.frame = CGRect(x: screenWidth/5*2, y: 0, width: screenWidth/6, height: 24)
         self.pinglunBtn.backgroundColor = UIColor.blueColor()
@@ -266,10 +268,14 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     func configCellWithModelAndIndexPath(model : DiscoveryArray,indexPath : NSIndexPath){
         self.indexPath = indexPath
         self.titleLabel?.text =  model.aname
-        self.descLabel?.text = model.content
+        
+        self.descLabel?.text = String(format: "%@", model.content)
         self.locationLabel.text = model.address
         self.headImageView?.sd_setImageWithURL(NSURL(string: "http://scs.ganjistatic1.com/gjfs01/M00/89/F4/CgEHklWmXzvov6K-AABrKnXXM9U624_600-0_6-0.jpg"))
         self.testModel = model
+        
+        self.timeStatus?.text = getTimeString(model.time)
+        
         
         //        let h1 = cellHeightByData1(model.imgArray.count)
         //        print(h1)
@@ -348,15 +354,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         
         self.delegate?.selectCellPinglun(self.indexPath!, commentIndexPath: indexPath,sayId: id!, model: selectModel!, type: PingLunType.selectCell)
-        
-        //        let model = HKFCell_Cell()
-        //        model.name = "hukuanfu"
-        //        model.reply = "哈哈哈哈"
-        //        model.comment = "明天出太阳123明天回家休息休息休息徐我休息UI徐我虚我虚我虚我徐唏嘘西 "
-        //        model.cid = String(format: "commonModel%ld",(self.testModel?.commentModels.count)! + 1)
-        //        self.testModel?.commentModels.append(model)
-        //
-        //        self.testModel?.shouldUpdateCache = true
+       
         self.delegate?.reloadCellHeightForModelAndAtIndexPath(self.testModel!, indexPath: self.indexPath!)
         
         
@@ -365,6 +363,10 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     func clickPingLun(){
         let id = self.testModel?.id
         self.delegate?.createPingLunView(self.indexPath!,sayId: id!, type: PingLunType.pinglun)
+    }
+    
+    func clickDianZanBtn(){
+        self.delegate?.clickDianZanBtnAtIndexPath(self.indexPath!)
     }
     
     
@@ -391,8 +393,70 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
     }
     
+    func getTimeString(time:Int) -> String{
+//        let currentTime = NSDate().timeIntervalSince1970
+//        print(currentTime)
+//        let createTime = Double(time/1000)
+//        print(createTime)
+////        let timer = currentTime - createTime
+////        
+////        print(timer)
+        
+        let timeTemp = NSDate.init(timeIntervalSince1970: Double(time/1000))
+        print(timeTemp)
+        let timeInterval = timeTemp.timeIntervalSince1970
+        print(timeInterval)
+        let timer = NSDate().timeIntervalSince1970 - timeInterval//currentTime - createTime
+        
+        print(timer)
+        
+        let second = timer
+        if second < 60 {
+            let result = String(format: "%ld秒前", Int(second))
+            return result
+        }
+        
+        let minute = timer/60
+        if minute < 60 {
+            let result = String(format: "%ld分钟前", Int(minute))
+            return result
+        }
+        
+        let hours = timer/3600
+        
+        if hours < 24 {
+            let result = String(format: "%ld小时前", Int(hours))
+            return result
+        }
+        let days = timer/3600/24
+        
+        if days < 30 {
+            let result = String(format: "%ld天前", Int(days))
+            return result
+        }
+        
+        let months = timer/3600/24/30
+        if months < 12 {
+            let result = String(format: "%ld月前", Int(months))
+            return result
+        }
+        
+        let years = timer/3600/24/30
+        
+        let result = String(format: "%ld年前", Int(years))
+        
+        
+        
+        return result
+        
+//        let temp = timer - time
+    }
     
     
+    func getStringForHeight(text:String) -> CGFloat {
+        let size = text.stringHeightWith(14, width: ScreenWidth - 40)
+        return size
+    }
     
     
 }

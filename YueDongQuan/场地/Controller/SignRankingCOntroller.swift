@@ -137,7 +137,7 @@ extension SignRankingCOntroller {
         let para = ["v":v,"uid":1,"siteId":siteId,"pageSize":pageSize]
         print(para.description)
         
-        Alamofire.request(.POST, NSURL(string: kURL + "/updatesiteinfo")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: kURL + "/signranking")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)

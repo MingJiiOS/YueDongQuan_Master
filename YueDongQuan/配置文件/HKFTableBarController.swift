@@ -88,9 +88,9 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         switch btn.tag {
         case 0:
             NSLog("第\(0)个按钮被点击了")
-            let postImageVC = HKFPostImageVC()
+            let postImageVC = HKFPostPictureSayVC()
             let nav = CustomNavigationBar(rootViewController: postImageVC)
-            self.presentViewController(nav, animated: true, completion: {
+            self.presentViewController(nav, animated: false, completion: {
                 
             })
 //            postImageVC.hidesBottomBarWhenPushed = true
@@ -102,35 +102,35 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
             NSLog("第\(1)个按钮被点击了")
             let postVideo = HKFPostVideoVC()
             let nav = CustomNavigationBar(rootViewController: postVideo)
-            self.presentViewController(nav, animated: true, completion: {
+            self.presentViewController(nav, animated: false, completion: {
                 
             })
         case 2:
             NSLog("第\(2)个按钮被点击了")
             let postZhaoMu = HKFPostRecruitmentVC()
             let nav = CustomNavigationBar(rootViewController: postZhaoMu)
-            self.presentViewController(nav, animated: true, completion: {
+            self.presentViewController(nav, animated: false, completion: {
                 
             })
         case 3:
             NSLog("第\(3)个按钮被点击了")
             let postJoin = HKFPostMatchVC()
             let nav = CustomNavigationBar(rootViewController: postJoin)
-            self.presentViewController(nav, animated: true, completion: {
+            self.presentViewController(nav, animated: false, completion: {
                 
             })
         case 4:
             NSLog("第\(4)个按钮被点击了")
             let postJoinTeam = HKFPostJoinTeamVC()
             let nav = CustomNavigationBar(rootViewController: postJoinTeam)
-            self.presentViewController(nav, animated: true, completion: {
+            self.presentViewController(nav, animated: false, completion: {
                 
             })
         case 5:
             NSLog("第\(5)个按钮被点击了")
             let postActivity = HKFPostActivityVC()
             let nav = CustomNavigationBar(rootViewController: postActivity)
-            self.presentViewController(nav, animated: true, completion: {
+            self.presentViewController(nav, animated: false, completion: {
                 
             })
         default:

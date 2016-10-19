@@ -13,5 +13,133 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/SignRankingCOntroller.swift"
+            timestampString = "498550582.788697"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/SignRankingCOntroller.swift"
+            timestampString = "498550590.073175"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "requestRankingData(_:pageSize:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YueDongQuan.SignRankingCOntroller.requestRankingData (Swift.Int, pageSize : Swift.String) -&gt; ()"
+                  moduleName = "YueDongQuan"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/YueDongQuan_Master/YueDongQuan/%E5%9C%BA%E5%9C%B0/Controller/SignRankingCOntroller.swift"
+                  timestampString = "498565194.339507"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
+                  offsetFromSymbolStart = "1463">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YueDongQuan.SignRankingCOntroller.(requestRankingData (Swift.Int, pageSize : Swift.String) -&gt; ()).(closure #1)"
+                  moduleName = "YueDongQuan"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/YueDongQuan_Master/YueDongQuan/%E5%9C%BA%E5%9C%B0/Controller/SignRankingCOntroller.swift"
+                  timestampString = "498565194.339752"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "141"
+                  endingLineNumber = "141"
+                  offsetFromSymbolStart = "161">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/FieldViewController.swift"
+            timestampString = "498550809.829549"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
+            landmarkName = "clickQianDaoImageTap(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/FieldViewController.swift"
+            timestampString = "498550933.016641"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
+            landmarkName = "clickSiginFieldBtn(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YueDongQuan.FieldViewController.clickSiginFieldBtn (__ObjC.NSIndexPath) -&gt; ()"
+                  moduleName = "YueDongQuan"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/YueDongQuan_Master/YueDongQuan/%E5%9C%BA%E5%9C%B0/Controller/FieldViewController.swift"
+                  timestampString = "498565194.343533"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "313"
+                  endingLineNumber = "313"
+                  offsetFromSymbolStart = "124">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YueDongQuan.FieldViewController.clickSiginFieldBtn (__ObjC.NSIndexPath) -&gt; ()"
+                  moduleName = "YueDongQuan"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/YueDongQuan_Master/YueDongQuan/%E5%9C%BA%E5%9C%B0/Controller/FieldViewController.swift"
+                  timestampString = "498565194.34373"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "313"
+                  endingLineNumber = "313"
+                  offsetFromSymbolStart = "995">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

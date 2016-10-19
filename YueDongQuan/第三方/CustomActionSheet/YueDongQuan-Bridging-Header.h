@@ -39,8 +39,8 @@
 #import "LxGridViewFlowLayout.h"
 #import "TZTestCell.h"
 #import "UIView+LQXkeyboard.h"
-
-
+#import "PYPhotoBrowser.h"
+#import "PYPhotosPreviewController.h"
 
 
 
