@@ -188,6 +188,11 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
         //退出登录操作
         if indexPath.section == 5 {
             userInfo.isLogin = false
+            let defaults = NSUserDefaults.standardUserDefaults()
+            for (key,_) in defaults.dictionaryRepresentation() {
+                defaults.removeObjectForKey(key)
+            }
+            defaults.synchronize()
             RCIM.sharedRCIM().disconnect()
             self.navigationController?.popToRootViewControllerAnimated(true)
         }

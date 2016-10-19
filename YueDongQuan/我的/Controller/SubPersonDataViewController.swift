@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import Alamofire
+import SwiftyJSON
 class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     var tableView : UITableView!
     
@@ -157,7 +158,34 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         self.dismissViewControllerAnimated(true, completion: nil)
         //MARK:更换头像
-        updateHeadImage()
+        Alamofire.upload(.POST, NSURL(string: kURL + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
+            
+            let data = UIImageJPEGRepresentation(image, 0.5)
+            let imageName = String(NSDate()) + ".png"
+            multipartFormData.appendBodyPart(data: data!, name: "file",fileName: imageName,mimeType: "image/png")
+            
+            let para = ["v":v,"uid":userInfo.uid,"file":""]
+            
+            
+            for (key,value) in para {
+                multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key as! String )
+            }
+            
+            
+        }) { (encodingResult) in
+            switch encodingResult {
+            case .Success(let upload, _, _):
+                upload.responseString(completionHandler: { (response) in
+                    let json = JSON(data: response.data!)
+                    let str = json.object
+                    
+                    print(str)
+                    
+                })
+            case .Failure(let error):
+                print(error)
+            }
+        }
         
     }
     //点击取消

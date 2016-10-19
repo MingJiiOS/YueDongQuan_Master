@@ -63,13 +63,17 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
                     if loginmodel.code != "200"{
                         self.showMJProgressHUD("密码错误")
                     }else{
-                        MJKeyChainHelper().saveUserName(self.userModel.phone, userNameService: KEY_USERNAME, pwd: self.userModel.pw, pwdService: KEY_PASSWORD)
+                        
+                        var defaults = NSUserDefaults.standardUserDefaults()
                         
                         MJGetToken().requestTokenFromServeris(getToken
                             , success: { (responseDic, success) in
                                 let model = TokenModel(fromDictionary: responseDic)
                                 userInfo.token = model.data.token
-                                
+                                defaults.setValue(self.userModel.phone, forKey: "phone")
+                                defaults.setObject(self.userModel.pw, forKey: "pw")
+                                defaults.setValue(userInfo.token, forKey: "token")
+                                defaults.synchronize()
                                 let helper = MJLoginOpreationHelper()
                                 if helper.IMConnectStatus == .ConnectionStatus_Connected{
                                     return
