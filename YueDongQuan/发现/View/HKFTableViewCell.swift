@@ -13,13 +13,19 @@ import HYBMasonryAutoCellHeight
 
 
 protocol HKFTableViewCellDelegate {
-    func reloadCellHeightForModelAndAtIndexPath(model : HKFCellModel,indexPath : NSIndexPath)
+    func reloadCellHeightForModelAndAtIndexPath(model : DiscoveryArray,indexPath : NSIndexPath)
+    func createPingLunView(indexPath:NSIndexPath,sayId:Int,type:PingLunType)
+    func selectCellPinglun(indexPath:NSIndexPath,commentIndexPath:NSIndexPath,sayId: Int,model:DiscoveryCommentModel,type:PingLunType)
+}
+
+
+enum PingLunType {
+    case pinglun
+    case selectCell
 }
 
 
 class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource {
-    
-    var expensionFlag = false
     
     
     var titleLabel : UILabel?//name
@@ -40,7 +46,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     let pinglunBtn = UIButton()//评论按钮
     let jubaoBtn = UIButton()//举报按钮
     
-    var testModel : HKFCellModel?//模型
+    var testModel : DiscoveryArray?//模型
     var indexPath : NSIndexPath?
     var delegate : HKFTableViewCellDelegate?
     
@@ -56,6 +62,8 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        
+        
         let screenWidth = UIScreen.mainScreen().bounds.size.width
         self.selectionStyle = .None
         //头像
@@ -67,7 +75,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.left.equalTo(15)
             make.width.height.equalTo(40)
         })
-        self.headImageView?.backgroundColor = UIColor.brownColor()
+        self.headImageView?.backgroundColor = UIColor.whiteColor()
         self.headImageView?.layer.masksToBounds = true
         self.headImageView?.layer.cornerRadius = 20
         
@@ -84,7 +92,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.headTypeView?.layer.cornerRadius = 7
         self.headTypeView?.layer.borderWidth = 1
         self.headTypeView?.layer.borderColor = UIColor.whiteColor().CGColor
-        self.headTypeView?.backgroundColor = UIColor.redColor()
+        self.headTypeView?.backgroundColor = UIColor.whiteColor()
         
         //昵称
         self.titleLabel = UILabel()
@@ -99,7 +107,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.width.equalTo(screenWidth/2)
             make.height.equalTo(26)
         })
-        self.titleLabel?.backgroundColor = UIColor.redColor()
+        self.titleLabel?.backgroundColor = UIColor.whiteColor()
         
         //时间
         self.timeStatus = UILabel()
@@ -112,8 +120,8 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.width.equalTo(screenWidth/6)
         })
         self.timeStatus?.text = "六分钟前"
-        self.timeStatus?.backgroundColor = UIColor.magentaColor()
-        self.timeStatus?.textAlignment = .Center
+        self.timeStatus?.backgroundColor = UIColor.whiteColor()
+        self.timeStatus?.textAlignment = .Left
         //距离
         self.distanceLabel = UILabel()
         self.contentView.addSubview(self.distanceLabel!)
@@ -125,9 +133,9 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.width.equalTo(screenWidth/4)
         })
         self.distanceLabel?.text = "离我1000km"
-        self.distanceLabel?.backgroundColor = UIColor.magentaColor()
-        self.distanceLabel?.textAlignment = .Center
-
+        self.distanceLabel?.backgroundColor = UIColor.whiteColor()
+        self.distanceLabel?.textAlignment = .Left
+        
         ///说说类型
         self.typeStatusView = UIImageView()
         self.contentView.addSubview(self.typeStatusView!)
@@ -138,7 +146,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.width.equalTo(40)
         })
         
-        self.typeStatusView?.backgroundColor = UIColor.redColor()
+        self.typeStatusView?.backgroundColor = UIColor.whiteColor()
         self.typeStatusView?.layer.masksToBounds = true
         self.typeStatusView?.layer.cornerRadius = 10
         //说说内容
@@ -174,7 +182,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         locationImg.backgroundColor = UIColor.blackColor()
         self.locationView.addSubview(locationImg)
         
-        self.locationLabel.frame = CGRect(x: 16, y: 0, width: 200, height: 14)
+        self.locationLabel.frame = CGRect(x: 16, y: 1, width: screenWidth - 36, height: 12)
         self.locationLabel.backgroundColor = UIColor.redColor()
         self.locationLabel.font = UIFont.systemFontOfSize(10)
         self.locationLabel.text = "重庆市渝北区大龙上"
@@ -214,8 +222,9 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.pinglunBtn.setImage(UIImage(named: ""), forState: UIControlState.Normal)
         self.pinglunBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -screenWidth/12)
         self.pinglunBtn.titleEdgeInsets = UIEdgeInsetsMake(0, screenWidth/12, 0, 0)
+        self.pinglunBtn.addTarget(self, action: #selector(clickPingLun), forControlEvents: UIControlEvents.TouchUpInside)
         self.operateView.addSubview(self.pinglunBtn)
-
+        
         self.operateView.addSubview(self.jubaoBtn)
         self.jubaoBtn.snp_makeConstraints { (make) in
             make.top.bottom.equalTo(0)
@@ -244,8 +253,9 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         
         
-        
     }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -253,29 +263,37 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     
     
-    func configCellWithModelAndIndexPath(model : HKFCellModel,indexPath : NSIndexPath){
+    func configCellWithModelAndIndexPath(model : DiscoveryArray,indexPath : NSIndexPath){
         self.indexPath = indexPath
-        self.titleLabel?.text =  model.title
-        self.descLabel?.text = model.desc
-        self.headImageView?.image = UIImage(named: model.headImage)
+        self.titleLabel?.text =  model.aname
+        self.descLabel?.text = model.content
+        self.locationLabel.text = model.address
+        self.headImageView?.sd_setImageWithURL(NSURL(string: "http://scs.ganjistatic1.com/gjfs01/M00/89/F4/CgEHklWmXzvov6K-AABrKnXXM9U624_600-0_6-0.jpg"))
         self.testModel = model
         
-        let h1 = cellHeightByData1(model.imgArray.count)
-        print(h1)
+        //        let h1 = cellHeightByData1(model.imgArray.count)
+        //        print(h1)
         
         self.displayView.snp_updateConstraints(closure: { (make) in
-            make.height.equalTo(h1)
+            make.height.equalTo(0)
         })
+        
+        //        if model.address == "" {
+        //            self.locationView.snp_updateConstraints(closure: { (make) in
+        //                make.height.equalTo(0)
+        //            })
+        //        }
+        
         
         var tableViewHeight :CGFloat = 0
         
-        for item  in model.commentModels {
+        for item  in model.comment {
             let cellHeight = HKFCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell : UITableViewCell!) in
                 
                 let cell = sourceCell as! HKFCommentCell
                 cell.configCellWithModel(item)
                 }, cache: { () -> [NSObject : AnyObject]! in
-                    return [kHYBCacheUniqueKey:item.cid,kHYBCacheStateKey:"",kHYBRecalculateForStateKey:(false)]
+                    return [kHYBCacheUniqueKey:item.uid,kHYBCacheStateKey:"",kHYBRecalculateForStateKey:(false)]
             })
             tableViewHeight += cellHeight
             
@@ -296,22 +314,22 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell : HKFCommentCell = tableView.dequeueReusableCellWithIdentifier("HKFCommentCell", forIndexPath: indexPath) as! HKFCommentCell
         
-        let model = self.testModel?.commentModels[indexPath.row]
+        let model = self.testModel?.comment[indexPath.row]
         cell.configCellWithModel(model!)
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.testModel?.commentModels.count)!
+        return (self.testModel?.comment.count)!
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let model = self.testModel?.commentModels[indexPath.row]
+        let model = self.testModel?.comment[indexPath.row]
         let h =  HKFCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell : UITableViewCell!) in
             let cell = sourceCell as! HKFCommentCell
             cell.configCellWithModel(model!)
             }, cache: { () -> [NSObject : AnyObject]! in
-                return [kHYBCacheUniqueKey:model!.cid,kHYBCacheStateKey:"",kHYBRecalculateForStateKey:(true)]
+                return [kHYBCacheUniqueKey:model!.uid,kHYBCacheStateKey:"",kHYBRecalculateForStateKey:(true)]
         })
         
         
@@ -324,29 +342,29 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let model = HKFCell_Cell()
-        model.name = "hukuanfu"
-        model.reply = "哈哈哈哈"
-        model.comment = "明天出太阳123明天回家休息休息休息徐我休息UI徐我虚我虚我虚我徐唏嘘西 "
-        model.cid = String(format: "commonModel%ld",(self.testModel?.commentModels.count)! + 1)
-        self.testModel?.commentModels.append(model)
+        let selectModel = self.testModel?.comment[indexPath.row]
         
-        self.testModel?.shouldUpdateCache = true
+        let id = self.testModel?.id
+        
+        
+        self.delegate?.selectCellPinglun(self.indexPath!, commentIndexPath: indexPath,sayId: id!, model: selectModel!, type: PingLunType.selectCell)
+        
+        //        let model = HKFCell_Cell()
+        //        model.name = "hukuanfu"
+        //        model.reply = "哈哈哈哈"
+        //        model.comment = "明天出太阳123明天回家休息休息休息徐我休息UI徐我虚我虚我虚我徐唏嘘西 "
+        //        model.cid = String(format: "commonModel%ld",(self.testModel?.commentModels.count)! + 1)
+        //        self.testModel?.commentModels.append(model)
+        //
+        //        self.testModel?.shouldUpdateCache = true
         self.delegate?.reloadCellHeightForModelAndAtIndexPath(self.testModel!, indexPath: self.indexPath!)
         
         
     }
     
     func clickPingLun(){
-        let model = HKFCell_Cell()
-        model.name = "木头人123"
-        model.reply = ""
-        model.comment = "直接回复的内容 "
-        model.cid = String(format: "commonModel%ld",(self.testModel?.commentModels.count)! + 1)
-        self.testModel?.commentModels.append(model)
-        
-        self.testModel?.shouldUpdateCache = true
-        self.delegate?.reloadCellHeightForModelAndAtIndexPath(self.testModel!, indexPath: self.indexPath!)
+        let id = self.testModel?.id
+        self.delegate?.createPingLunView(self.indexPath!,sayId: id!, type: PingLunType.pinglun)
     }
     
     
@@ -354,7 +372,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     func cellHeightByData1(imageNum:Int)->CGFloat{
         let totalWidth = self.bounds.size.width
-//        let lines:CGFloat = (CGFloat(imageNum))/3
+        //        let lines:CGFloat = (CGFloat(imageNum))/3
         var picHeight:CGFloat = 0
         switch imageNum{
         case 1...3:
@@ -372,18 +390,9 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         return picHeight
         
     }
-
     
     
     
     
     
-    
-    
-    
-    
-    
-    
-    
-
 }

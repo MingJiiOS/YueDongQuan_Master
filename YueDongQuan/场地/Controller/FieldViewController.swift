@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import Alamofire
+import SwiftyJSON
 
 
 class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationManagerDelegate ,UITableViewDelegate,UITableViewDataSource{
@@ -20,6 +22,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     
     var zoomCount : Double = 12
     var manger = AMapLocationManager()
+    var fieldModel : FieldModel?
     
     
     override func viewDidLoad() {
@@ -34,7 +37,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
         
         
-   
+        
         _mapView = MAMapView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenWidth*2/3))
         _mapView?.delegate = self
         _mapView?.showsUserLocation = true
@@ -45,7 +48,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         manger.delegate = self
         manger.startUpdatingLocation()
         
-
+        
         let locationBtn = UIButton(frame: CGRect(x: 20, y: CGRectGetMaxY(_mapView!.frame) - 40, width: 25, height: 25))
         locationBtn.backgroundColor = UIColor.brownColor()
         locationBtn.addTarget(self, action: #selector(clickLocationBtn), forControlEvents: UIControlEvents.TouchUpInside)
@@ -134,6 +137,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        manger.startUpdatingLocation()
         setNav()
         
     }
@@ -150,7 +154,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
     }
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -166,7 +170,10 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     
     func amapLocationManager(manager: AMapLocationManager!, didUpdateLocation location: CLLocation!) {
         _mapView?.setCenterCoordinate(CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), animated: true)
+        request(location.coordinate.latitude, longitude: location.coordinate.longitude)
+        manger.stopUpdatingLocation()
     }
+    
     
     
     func mapView(mapView: MAMapView!, didUpdateUserLocation userLocation: MAUserLocation!) {
@@ -204,11 +211,16 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
         return nil
     }
-     /********************************************/
+    /********************************************/
     
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 10
+        
+        guard self.fieldModel?.data.array.count > 0 else{
+            return 0
+        }
+        
+        return (self.fieldModel?.data.array.count)!
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -243,23 +255,26 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         cell.selectionStyle = .None
         cell.index = indexPath
         cell.delegate = self
+        let model = self.fieldModel?.data.array[indexPath.section]
+        cell.configWithModel(model!)
+        
         return cell
         
     }
-
+    
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
     }
     
-
+    
 }
 
 
 extension FieldViewController : FieldCellDelegate {
     func clickConfirmFieldBtn(indexPath: NSIndexPath) {
         NSLog("点击了预定")
-        
+        let tel = (self.fieldModel?.data.array[indexPath.section].id)!
         let telNumber = "18798812521"
         
         let alertView = YoYoAlertView(title: "我要订场", message: telNumber, cancelButtonTitle: "取消", sureButtonTitle: "确定")
@@ -281,18 +296,21 @@ extension FieldViewController : FieldCellDelegate {
         let vc = EditorFieldViewController()
         vc.hidesBottomBarWhenPushed = true
         
+        vc.field_Id = (self.fieldModel?.data.array[indexPath.section].id)!
+        
         self.navigationController?.pushViewController(vc, animated: true)
         vc.hidesBottomBarWhenPushed = false
-//        let nvc1 : UINavigationController = CustomNavigationBar(rootViewController: vc)
-//        
-//        self.navigationController?.presentViewController(nvc1, animated: true, completion: {
-//            
-//        })
+        //        let nvc1 : UINavigationController = CustomNavigationBar(rootViewController: vc)
+        //
+        //        self.navigationController?.presentViewController(nvc1, animated: true, completion: {
+        //
+        //        })
         
     }
     func clickSiginFieldBtn(indexPath: NSIndexPath) {
         NSLog("点击了签到")
         let signVC = SignRankingCOntroller()
+        signVC.siteId = (self.fieldModel?.data.array[indexPath.section].id)!
         signVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(signVC, animated: true)
         signVC.hidesBottomBarWhenPushed = false
@@ -302,6 +320,7 @@ extension FieldViewController : FieldCellDelegate {
     
     func clickQianDaoImageTap(indexPath:NSIndexPath){
         let signvc = SignRankBtnController()
+        signvc.siteId = (self.fieldModel?.data.array[indexPath.section].id)!
         signvc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(signvc, animated: true)
         signvc.hidesBottomBarWhenPushed = false
@@ -315,6 +334,36 @@ extension FieldViewController : FieldCellDelegate {
     }
     
     
+}
+
+
+extension FieldViewController {
+    func request(latitude:Double,longitude:Double){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":1,"latitude":latitude,"longitude":longitude,"pageSize":"10"]
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string: kURL + "/sites")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                let str = json.object
+                self.fieldModel = FieldModel.init(fromDictionary: str as! NSDictionary)
+                
+                print(self.fieldModel?.code)
+                print(self.fieldModel?.flag)
+                if ((self.fieldModel?.code)! == "200" && self.fieldModel?.flag == "1" ){
+                    self.fieldTable.reloadData()
+                }
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+        
+        
+    }
 }
 
 

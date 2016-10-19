@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import Alamofire
+import SwiftyJSON
 
 class SignRankBtnController: UIViewController,SignHeaderViewDelegate {
     
@@ -18,6 +20,7 @@ class SignRankBtnController: UIViewController,SignHeaderViewDelegate {
     var timer : XTimer!
     var leftView : UIView!
     var imgView : UIImageView!
+    var siteId = Int()
     
     
     
@@ -54,7 +57,7 @@ class SignRankBtnController: UIViewController,SignHeaderViewDelegate {
         
         
             
-        
+            requestExitFieldSignData(self.siteId)
             imgView.image = UIImage(named: "ic_lanqiu")
             imgView.userInteractionEnabled = true
             timer.invalidate()
@@ -138,6 +141,7 @@ class SignRankBtnController: UIViewController,SignHeaderViewDelegate {
         
         imgView.image = UIImage(named: "")
         imgView.userInteractionEnabled = false
+        requestFieldSignData(self.siteId)
 
     }
     override func viewWillDisappear(animated: Bool) {
@@ -214,6 +218,67 @@ extension SignRankBtnController : UITableViewDelegate,UITableViewDataSource {
     
 }
 
+
+extension SignRankBtnController {
+    func requestFieldSignData(siteId:Int){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":1,"siteId":siteId]
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string: "http://192.168.3.22:8080/redong" + "/sitesign")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                NSLog("json1=\(json)")
+                let str = (json.object) as! NSDictionary
+                print(str["code"])
+                
+                print(str["flag"])
+                
+                //                if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
+                //                    self.navigationController?.popViewControllerAnimated(true)
+                //                }
+                
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+        
+    }
+    
+    
+    func requestExitFieldSignData(siteId:Int){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":1,"signId":siteId]
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string: "http://192.168.3.22:8080/redong" + "/exitsite")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                
+                NSLog("json2=\(json)")
+                let str = (json.object) as! NSDictionary
+                print(str["code"])
+                
+                print(str["flag"])
+                
+                //                if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
+                //                    self.navigationController?.popViewControllerAnimated(true)
+                //                }
+                
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+        
+    }
+    
+}
 
 
 

@@ -9,7 +9,7 @@
 import UIKit
 
 class HKFCommentCell: UITableViewCell {
-
+    
     var contentLabel : UILabel?
     
     
@@ -21,10 +21,10 @@ class HKFCommentCell: UITableViewCell {
         self.contentLabel?.preferredMaxLayoutWidth  = UIScreen.mainScreen().bounds.width - 110
         self.contentLabel?.numberOfLines = 0
         self.contentLabel?.font = UIFont.systemFontOfSize(13)
-//        weak var weakSelf = self
+        weak var weakSelf = self
         self.contentLabel?.snp_makeConstraints(closure: { (make) in
-//            make.edges.equalTo((weakSelf?.contentView)!)
-            make.left.right.top.equalTo(0)
+            make.edges.equalTo((weakSelf?.contentView)!)
+            //            make.left.right.top.equalTo(0)
         })
         self.hyb_lastViewInCell = self.contentLabel
         self.hyb_bottomOffsetToCell  = 1
@@ -36,20 +36,20 @@ class HKFCommentCell: UITableViewCell {
     }
     
     
-    func configCellWithModel(model : HKFCell_Cell) {
-        let str = String(format: "%@回复%@：%@",model.name,model.reply,model.comment)
-        let h = cellHeightByData(str)
-        self.contentLabel?.snp_updateConstraints(closure: { (make) in
-            make.height.equalTo(h)
-        })
+    func configCellWithModel(model : DiscoveryCommentModel) {
+        let str = String(format: "%@回复%@：%@",model.netName,model.reply!,model.content)
+        //        let h = cellHeightByData(str)
+        //        self.contentLabel?.snp_updateConstraints(closure: { (make) in
+        //            make.height.equalTo(h)
+        //        })
         
         
         let text = NSMutableAttributedString(string: str)
         
-        text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.name.characters.count))
-        text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.name.characters.count + 2, model.reply.characters.count))
+        text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))
+        text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, model.reply!.characters.count))
         self.contentLabel!.attributedText = text
         
     }
-
+    
 }

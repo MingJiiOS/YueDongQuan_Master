@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class SignRankingCOntroller: UIViewController {
     
     var signTableView : UITableView!
+    var siteId = Int()
     
 
     override func viewDidLoad() {
@@ -59,6 +62,8 @@ class SignRankingCOntroller: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.hidesBottomBarWhenPushed = true
+        requestRankingData(self.siteId, pageSize: "100")
+        
     }
     override func viewWillDisappear(animated: Bool) {
         self.tabBarController?.hidesBottomBarWhenPushed = false
@@ -68,6 +73,8 @@ class SignRankingCOntroller: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+
     
 
 
@@ -120,6 +127,37 @@ extension SignRankingCOntroller : UITableViewDelegate,UITableViewDataSource {
     }
     
     
+}
+
+
+extension SignRankingCOntroller {
+    func requestRankingData(siteId:Int,pageSize:String){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":1,"siteId":siteId,"pageSize":pageSize]
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string: kURL + "/updatesiteinfo")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                print(json)
+                let str = (json.object) as! NSDictionary
+                print(str["code"])
+                
+                print(str["flag"])
+                
+//                if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
+//                    self.navigationController?.popViewControllerAnimated(true)
+//                }
+                
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+
+    }
 }
 
 
