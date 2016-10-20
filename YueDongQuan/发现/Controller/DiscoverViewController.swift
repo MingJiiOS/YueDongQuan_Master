@@ -375,14 +375,14 @@ extension DiscoverViewController:UITextFieldDelegate {
             print(self.textField.text)
             
             let model = DiscoveryCommentModel()
-            model.netName = ""
-            model.commentId = 1
+            model.netName = userInfo.name
+            model.commentId = 0
             model.content = self.textField.text!
-            model.foundId = 10
-            model.id = 111
+            model.foundId = self.sayId
+            model.id = self.commentModel?.id
             model.reply = ""
-            model.time = 1234334234
-            model.uid = 88
+            model.time = Int(NSDate().timeIntervalSince1970)
+            model.uid = userInfo.uid
             
             self.datasource[(index?.row)!].comment.append(model)
             
@@ -394,14 +394,14 @@ extension DiscoverViewController:UITextFieldDelegate {
             
         case .selectCell :
             let model = DiscoveryCommentModel()
-            model.netName = "2222"
-            model.commentId = 109
+            model.netName = userInfo.name
+            model.commentId = self.commentModel?.commentId
             model.content = self.textField.text!
-            model.foundId = 100
-            model.id = 1110
+            model.foundId = self.sayId
+            model.id = self.commentModel?.id
             model.reply = self.commentModel?.netName
-            model.time = 1234334234
-            model.uid = 880
+            model.time = Int(NSDate().timeIntervalSince1970)
+            model.uid = userInfo.uid
             
             self.datasource[(index?.row)!].comment.append(model)
             
@@ -456,24 +456,18 @@ extension DiscoverViewController {
 
 extension DiscoverViewController {
     func requestData(){
-        let para = ["v":"-130%-7200%-7180%-7190%-7240%-7180%-7270%-7180%-7190%87100%","Uid":1,"typeId":"","pageNo":1,"pageSize":10]
+        let para = ["v":"-130%-7200%-7180%-7190%-7240%-7180%-7270%-7180%-7190%87100%","Uid":userInfo.uid.description,"typeId":"","pageNo":1,"pageSize":10]
         
-        Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
+                NSLog("Say-json = \(json)")
+                
                 let str = json.object
                 
                 self.testModel = DiscoveryModel(fromDictionary: str as! NSDictionary)
                 
-                print(self.testModel?.code)
-                print(self.testModel?.data.array[0].address)
-                print(self.testModel?.data.array[0].aname)
-                print(self.testModel?.data.array[0].content)
-                print(self.testModel?.data.array[0].id)
-                print(self.testModel?.data.array[0].typeId)
-                print(self.testModel?.data.array[0].thumbnailSrc)
-                print(self.testModel?.data.array[0].time)
                 self.datasource = (self.testModel?.data.array)!
                 for item in self.tableViews {
                     item.reloadData()
@@ -488,17 +482,16 @@ extension DiscoverViewController {
     func requestCommentSay(commentId: String,content:String,foundId:Int){
         let v = NSObject.getEncodeString("20160901")
         
-        let para = ["v":v,"uid":1,"commentId":commentId,"content":content,"foundId":foundId]
+        let para = ["v":v,"uid":userInfo.uid.description,"commentId":commentId,"content":content,"foundId":foundId]
         
-        print(para.description)
         
-        Alamofire.request(.POST, NSURL(string: "http://192.168.3.22:8080/redong/commentfound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        
+        Alamofire.request(.POST, NSURL(string: kURL + "/commentfound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
                 let str = json.object
                 
-                print(str)
                 for item in self.tableViews {
                     item.reloadData()
                 }
@@ -512,9 +505,9 @@ extension DiscoverViewController {
     func requestDianZan(foundId:Int){
         let v = NSObject.getEncodeString("20160901")
         
-        let para = ["v":v,"uid":1,"foundId":foundId]
+        let para = ["v":v,"uid":userInfo.uid.description,"foundId":foundId]
         
-        print(para.description)
+        
         
         Alamofire.request(.POST, NSURL(string: kURL + "/praise")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
@@ -523,9 +516,7 @@ extension DiscoverViewController {
                 let str = json.object
                 
                 print(str)
-//                for item in self.tableViews {
-//                    item.reloadData()
-//                }
+
             case .Failure(let error):
                 print(error)
             }

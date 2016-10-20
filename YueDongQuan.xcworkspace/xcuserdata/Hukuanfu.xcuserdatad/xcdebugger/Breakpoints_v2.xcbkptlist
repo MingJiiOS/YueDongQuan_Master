@@ -52,12 +52,12 @@
                   moduleName = "YueDongQuan"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/YueDongQuan_Master/YueDongQuan/%E5%9C%BA%E5%9C%B0/Controller/SignRankingCOntroller.swift"
-                  timestampString = "498565194.339507"
+                  timestampString = "498649250.844476"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "140"
                   endingLineNumber = "140"
-                  offsetFromSymbolStart = "1463">
+                  offsetFromSymbolStart = "1172">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -67,12 +67,12 @@
                   moduleName = "YueDongQuan"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/YueDongQuan_Master/YueDongQuan/%E5%9C%BA%E5%9C%B0/Controller/SignRankingCOntroller.swift"
-                  timestampString = "498565194.339752"
+                  timestampString = "498649250.844612"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "141"
                   endingLineNumber = "141"
-                  offsetFromSymbolStart = "161">
+                  offsetFromSymbolStart = "164">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -116,12 +116,12 @@
                   moduleName = "YueDongQuan"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/YueDongQuan_Master/YueDongQuan/%E5%9C%BA%E5%9C%B0/Controller/FieldViewController.swift"
-                  timestampString = "498565194.343533"
+                  timestampString = "498649250.860239"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "313"
                   endingLineNumber = "313"
-                  offsetFromSymbolStart = "124">
+                  offsetFromSymbolStart = "120">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -131,14 +131,30 @@
                   moduleName = "YueDongQuan"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/YueDongQuan_Master/YueDongQuan/%E5%9C%BA%E5%9C%B0/Controller/FieldViewController.swift"
-                  timestampString = "498565194.34373"
+                  timestampString = "498649250.860381"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "313"
                   endingLineNumber = "313"
-                  offsetFromSymbolStart = "995">
+                  offsetFromSymbolStart = "1016">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x53d1;&#x5e03;/Controller/HKFPostVideoSayVC.swift"
+            timestampString = "498648273.709212"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
+            landmarkName = "requestUpfile(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
