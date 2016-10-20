@@ -13,19 +13,20 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
     
     var newChangDi = UIButton()
     var sureSelect = UIButton()
-    //场地名闭包
-    typealias  circleNameBlock = (nameString:NSString) -> Void
-    var nameBlock: circleNameBlock?
-    //闭包方法
-    func nameblock(Block:circleNameBlock?)  {
-        nameBlock = Block
+    typealias secondValueClosure = (name:String)->Void
+    //声明一个闭包
+    var myClosure:secondValueClosure?
+    //下面这个方法需要传入上个界面的someFunctionThatTakesAClosure函数指针
+    func initWithClosure(closure:secondValueClosure?){
+        //将函数指针赋值给myClosure闭包，该闭包中涵盖了someFunctionThatTakesAClosure函数中的局部变量等的引用
+        myClosure = closure
     }
     //场馆名字
-    var changGuanName : NSString!
+    var changGuanName : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜选择场地", style: .Plain, target: self, action: #selector(pop))
         
         tableView = UITableView(frame: CGRectZero, style: .Grouped)
@@ -56,7 +57,7 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
         sureSelect.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         sureSelect .addTarget(self, action: #selector(sureSelectChangguan), forControlEvents: UIControlEvents.TouchUpInside)
     }
-   
+    
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
@@ -68,7 +69,7 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     //MARK dataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 9
@@ -78,16 +79,16 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
         tableView.allowsSelection = false
         cell = UITableViewCell(style:.Subtitle, reuseIdentifier: "cell")
         cell?.imageView?.image = UIImage(named: "img_message_2x")
-        cell?.textLabel?.text = "重庆江南体育馆"
+        cell?.textLabel?.text = String(format: "重庆江南体育馆%d",indexPath.row)
         cell?.detailTextLabel?.text = "离你 300m"
         cell?.detailTextLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
         cell?.textLabel?.textColor = UIColor.grayColor()
-       let btn = MHRadioButton(groupId: "firstGroup", atIndex: 0)
+        let btn = MHRadioButton(groupId: "firstGroup", atIndex: 0)
         MHRadioButton.addObserver(self, forFroupId: "firstGroup")
         btn.backgroundColor = UIColor.whiteColor()
         
         cell?.accessoryView = btn
-
+        
         return cell!
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -99,18 +100,15 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
     //MARK: 单选按钮选择代理
     func radioButtonSelectedAtIndex(index: UInt, inGroup groupID: String!, button: UIButton!) {
         let cell = button.superview as! UITableViewCell
-//        let path = tableView.indexPathForCell(cell)
-//        circleNameBlock!(nameString:(cell.textLabel?.text)!)
         changGuanName = cell.textLabel?.text
-    }
-    //MARK:确定选择场馆
-    func sureSelectChangguan()  {
-        if (nameBlock != nil) {
-            nameBlock!(nameString: changGuanName)
-//            self.navigationController?.popViewControllerAnimated(true)
-        }else{
+        if (myClosure != nil) {
+            myClosure!(name:changGuanName)
             
         }
     }
-
+    //MARK:确定选择场馆
+    func sureSelectChangguan()  {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
 }

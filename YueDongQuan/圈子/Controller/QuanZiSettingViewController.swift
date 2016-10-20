@@ -13,31 +13,39 @@ let cellIdentifier = "MJAutoHeightCellIdentifier"
 class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITableViewDataSource,MHRadioButtonDelegate {
     var dataSource = [MJNoticeModel]()
     var tableView = UITableView(frame: CGRectZero, style: .Grouped)
+    
+    var circleId : String?
+    var circleinfoModel : CircleInfoModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜设置",
                                                                 style: .Plain,
                                                                 target: self,
                                                                 action: #selector(pop))
-        self.addDatas()
+        
         self.creatView()
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData()
+        print(self.circleId)
     }
     deinit{
         print("deinit")
     }
     func addDatas()  {
         for i in 0 ..< 20 {
-           let model = MJNoticeModel()
+            let model = MJNoticeModel()
             model.uId = i + 1
             model.noticeTitle = "自动行高"
             model.content = "作者博客名称：标哥的技术博客，网址：http://www.henishuo.com，欢迎大家关注。这里有很多的专题，包括动画、自动布局、swift、runtime、socket、开源库、面试等文章，都是精品哦。大家可以关注微信公众号：iOSDevShares，加入有问必答QQ群：324400294，群快满了，若加不上，对不起，您来晚了"
             dataSource.append(model)
             
             model.isExpand = true
- 
+            
         }
-        tableView.reloadData()
     }
     
     func creatView()  {
@@ -57,31 +65,39 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if  indexPath.section == 2 {
-            let model = self.dataSource[indexPath.row]
+            
             
             var stateKey = ""
-            
-            if model.isExpand {
-                stateKey = "expand"
-            }else{
-                stateKey = "unExpand"
+            if self.circleinfoModel != nil {
+                if self.circleinfoModel!.isExpand {
+                    stateKey = "expand"
+                }else{
+                    stateKey = "unExpand"
+                }
             }
             
-            return MJAutoHeightCell.hyb_cellHeight(forTableView: tableView, config: { (cell) in
-                let itemCell = cell as! MJAutoHeightCell
-                itemCell.config(noticeModel: model)
-                }, updateCacheIfNeeded: { () -> (key: String, stateKey: String, shouldUpdate: Bool) in
-                    return (String(model.uId), stateKey, false)
+            
+            return MJAutoHeightCell.hyb_cellHeight(forTableView: tableView,
+                                                   config: { (cell) in
+                                                    let itemCell = cell as! MJAutoHeightCell
+                                                    if self.circleinfoModel != nil{
+                                                        itemCell.config(noticeModel: self.circleinfoModel!,
+                                                            indexpath: indexPath)
+                                                    }
+                                                    
+                }, updateCacheIfNeeded: { () -> (key: String,
+                    stateKey: String, shouldUpdate: Bool) in
+                    return (userInfo.uid.description, stateKey, false)
             })
-
+            
         }
-      return 60
+        return 60
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
             
-         return 2
+            return 2
         }
         if section == 2 {
             return 1
@@ -91,13 +107,13 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
         }
         
         return 1
-
-
+        
+        
         
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-       let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-      
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
+        
         if indexPath.section == 2 {
             var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? MJAutoHeightCell
             cell?.accessoryType = .DisclosureIndicator
@@ -106,50 +122,58 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                 cell?.selectionStyle = .None
             }
             
-            let model = self.dataSource[indexPath.row]
             
-            cell?.config(noticeModel: model)
-            
-            cell?.expandBlock = { ( isExpand: Bool) -> Void in
-                    model.isExpand = isExpand
+            if self.circleinfoModel != nil {
+                cell?.config(noticeModel: self.circleinfoModel!, indexpath: indexPath)
+                cell?.expandBlock = { ( isExpand: Bool) -> Void in
+                    self.circleinfoModel!.isExpand = isExpand
+                    
+                    tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                }
                 
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                if indexPath.row >= self.dataSource.count - 1 {
+                    //                self.addDatas()
+                }
+                
             }
             
-            if indexPath.row >= self.dataSource.count - 1 {
-                self.addDatas()
-            }
             
             return cell!
-
+            
         }
         switch indexPath.section {
         case 0:
             let cell = UITableViewCell(style: .Value1, reuseIdentifier: cellIdentifier)
             cell.textLabel?.text  = "圈子资料"
-            cell.detailTextLabel?.text = "重庆江南体育馆"
-            return cell
-            case 1:
-                if indexPath.row == 1 {
-                    let cell = UITableViewCell(style: .Value1, reuseIdentifier: cellIdentifier)
-                    cell.textLabel?.text  = "圈子二维码"
-                    let btn = MHRadioButton(groupId: "firstGroup", atIndex: 0)
-                    MHRadioButton.addObserver(self, forFroupId: "firstGroup")
-                    cell.accessoryView = btn
-                    cell.accessoryType = .DisclosureIndicator
-                    return cell
+            if self.circleinfoModel != nil {
+                cell.detailTextLabel?.text = self.circleinfoModel?.data.name
             }
-            case 3:
+            
+            return cell
+        case 1:
+            if indexPath.row == 1 {
+                let cell = UITableViewCell(style: .Value1, reuseIdentifier: cellIdentifier)
+                cell.textLabel?.text  = "圈子二维码"
+                let btn = MHRadioButton(groupId: "firstGroup", atIndex: 0)
+                MHRadioButton.addObserver(self, forFroupId: "firstGroup")
+                cell.accessoryView = btn
+                cell.accessoryType = .DisclosureIndicator
+                return cell
+            }
+        case 3:
             let cell = UITableViewCell(style: .Value1, reuseIdentifier: cellIdentifier)
             let array = ["转让圈主","黑名单"]
             cell.textLabel?.text = array[indexPath.row]
             if indexPath.row == 1 {
-                cell.detailTextLabel?.text = "8"
+                if  self.circleinfoModel != nil {
+                    cell.detailTextLabel?.text = self.circleinfoModel?.data.blacklist.description
+                }
+                
                 cell.detailTextLabel?.textColor = UIColor.grayColor()
             }
             cell.accessoryType = .DisclosureIndicator
             return cell
-            case 4:
+        case 4:
             let cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
             cell.textLabel?.text = "清除聊天记录"
             return cell
@@ -170,9 +194,9 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
         default:
             break
         }
-          return cell
+        return cell
     }
-
+    
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 6
@@ -186,7 +210,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.section == 2 {
-           if indexPath.row == 0{
+            if indexPath.row == 0{
                 let all = AllNoticeViewController()
                 self.push(all)
             }
@@ -206,5 +230,21 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
         let path = tableView.indexPathForCell(cell)
         print("index row%d", path?.row);
     }
-
+    
+}
+extension QuanZiSettingViewController {
+    func loadData()  {
+        
+        let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
+                                       "uid":userInfo.uid,
+                                       "circleId":self.circleId!]
+        MJNetWorkHelper().circleinfo(circleinfo, circleinfoModel: dict, success: { (responseDic, success) in
+            let model = DataSource().getcircleinfoData(responseDic)
+            self.circleinfoModel = model
+            self.tableView.reloadData()
+            
+        }) { (error) in
+            
+        }
+    }
 }

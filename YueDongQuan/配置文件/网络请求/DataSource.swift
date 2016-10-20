@@ -279,13 +279,9 @@ class DataSource: NSObject {
         return model!
     }
     //MARK:解析圈子信息数据
-    func getcircleinfoData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getcircleinfoData(datasource:NSDictionary) -> CircleInfoModel {
+        let model = CircleInfoModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析查询附近的圈子数据
     func getcirclesData(datasource:NSDictionary) -> CirclesModel {
