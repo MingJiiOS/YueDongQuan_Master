@@ -412,7 +412,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         let second = timer
         if second < 60 {
-            let result = String(format: "%ld秒前", Int(second))
+            let result = String(format: "刚刚")
             return result
         }
         

@@ -100,7 +100,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
             
         case 1:
             NSLog("第\(1)个按钮被点击了")
-            let postVideo = HKFPostVideoVC()
+            let postVideo = HKFPostVideoSayVC()
             let nav = CustomNavigationBar(rootViewController: postVideo)
             self.presentViewController(nav, animated: false, completion: {
                 
