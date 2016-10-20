@@ -9,11 +9,11 @@
 import UIKit
 import HYBSnapkitAutoCellHeight
 class MJAutoHeightCell: UITableViewCell {
-   //圈子名称
+    //圈子名称
     private var titleLabel = UILabel()
     //圈子公告
     private var contentLabel = UILabel()
-   
+    
     private var isExpand = true
     
     
@@ -23,10 +23,10 @@ class MJAutoHeightCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
@@ -62,11 +62,10 @@ class MJAutoHeightCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func config(noticeModel model:MJNoticeModel) {
-//        print("配置数据")
-        titleLabel.text = model.noticeTitle
-        contentLabel.text = model.content
-        
+    func config(noticeModel model:CircleInfoModel,indexpath:NSIndexPath) {
+        //        print("配置数据")
+        titleLabel.text = "公告"
+        contentLabel.text = model.data.announcement
         if model.isExpand != self.isExpand {
             self.isExpand = model.isExpand
         }
@@ -76,7 +75,7 @@ class MJAutoHeightCell: UITableViewCell {
                 make.height.lessThanOrEqualTo(55)
             })
         }else{
-           
+            
             contentLabel.snp_remakeConstraints(closure: { (make) in
                 make.left.equalTo(15)
                 make.top.equalTo(titleLabel.snp_bottom).offset(10)

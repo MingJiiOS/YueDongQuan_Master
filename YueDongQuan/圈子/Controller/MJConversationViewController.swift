@@ -9,7 +9,7 @@
 import UIKit
 
 class MJConversationViewController: RCConversationViewController {
-
+    
     typealias clickButton = (ButtonTag: Int) -> Void //声明闭包，点击按钮传值
     //把申明的闭包设置成属性
     var clickClosure: clickButton?
@@ -18,19 +18,24 @@ class MJConversationViewController: RCConversationViewController {
         //将函数指针赋值给myClosure闭包
         clickClosure = closure
     }
-//    var userinfo = UserInfo()
-    
+    //    var userinfo = UserInfo()
+    var circleid : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.clickButtonTagClosure { (ButtonTag) in
             if ButtonTag == 3{
                 let notice = QuanZiSettingViewController()
+                notice.circleId = self.circleid
                 self.push(notice)
             }
             if ButtonTag == 2{
-                self.push(publishNoticeViewController())
+                
+                let push = publishNoticeViewController()
+                push.circleId = self.circleid
+                
+                self.push(push)
             }
-//            print("userinfo = ",self.userinfo)
+            //            print("userinfo = ",self.userinfo)
         }
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
@@ -65,14 +70,14 @@ class MJConversationViewController: RCConversationViewController {
         print("点击了",sender.tag)
         
     }
- 
+    
     func push(viewController:UIViewController)  {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     func pop()  {
         self.navigationController?.popViewControllerAnimated(true)
     }
-
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -82,6 +87,6 @@ class MJConversationViewController: RCConversationViewController {
         super.viewDidDisappear(animated)
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
     }
-
-
+    
+    
 }

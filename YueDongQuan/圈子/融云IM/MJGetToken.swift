@@ -20,9 +20,9 @@ class MJGetToken: NSObject {
     var token : NSString!
     func requestTokenFromServeris(interfaceName:String,success:SuccessBlock,fail:AFNErrorBlock) {
         let v = NSObject.getEncodeString("20160901")
-        let imId = "a" + userInfo.uid.description
+        let uid = userInfo.uid.description
         
-        Alamofire.request(.POST, kURL + "/" + interfaceName, parameters: ["v":v,"imId":imId]).responseString { response -> Void in
+        Alamofire.request(.POST, kURL + "/" + interfaceName, parameters: ["v":v,"uid":uid]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)

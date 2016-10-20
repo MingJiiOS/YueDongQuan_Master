@@ -280,6 +280,12 @@
 		BFAD63281D9E3E34006234E1 /* ConversationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD63261D9E3E34006234E1 /* ConversationListViewController.m */; };
 		BFAD632A1D9E47BC006234E1 /* MJConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD63291D9E47BC006234E1 /* MJConversationViewController.swift */; };
 		BFAD632C1D9E4BD0006234E1 /* MJMyInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD632B1D9E4BD0006234E1 /* MJMyInfoModel.swift */; };
+		BFAF23C11DB85EBC00294988 /* CircleInfoArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23BE1DB85EBC00294988 /* CircleInfoArray.swift */; };
+		BFAF23C21DB85EBC00294988 /* CircleInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23BF1DB85EBC00294988 /* CircleInfoData.swift */; };
+		BFAF23C31DB85EBC00294988 /* CircleInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C01DB85EBC00294988 /* CircleInfoModel.swift */; };
+		BFAF23C61DB85F6800294988 /* MJAmapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C51DB85F6800294988 /* MJAmapHelper.swift */; };
+		BFAF23C91DB8600800294988 /* uploadImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C71DB8600800294988 /* uploadImageData.swift */; };
+		BFAF23CA1DB8600800294988 /* uploadImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C81DB8600800294988 /* uploadImageModel.swift */; };
 		BFC1269C1DB4792F00E11088 /* CirclesArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC126991DB4792F00E11088 /* CirclesArray.swift */; };
 		BFC1269D1DB4792F00E11088 /* CirclesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1269A1DB4792F00E11088 /* CirclesData.swift */; };
 		BFC1269E1DB4792F00E11088 /* CirclesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1269B1DB4792F00E11088 /* CirclesModel.swift */; };
@@ -457,8 +463,8 @@
 		BF071EE71D9A0D5F000551F7 /* MJNoticeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJNoticeModel.swift; sourceTree = "<group>"; };
 		BF071EE81D9A0D5F000551F7 /* MJQuanZiModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJQuanZiModel.swift; sourceTree = "<group>"; };
 		BF071EEA1D9A0D5F000551F7 /* CircleDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleDataView.swift; sourceTree = "<group>"; };
-		BF071EEB1D9A0D5F000551F7 /* MHRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHRadioButton.h; sourceTree = "<group>"; };
-		BF071EEC1D9A0D5F000551F7 /* MHRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHRadioButton.m; sourceTree = "<group>"; };
+		BF071EEB1D9A0D5F000551F7 /* MHRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHRadioButton.h; path = ../MHRadioButton.h; sourceTree = "<group>"; };
+		BF071EEC1D9A0D5F000551F7 /* MHRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHRadioButton.m; path = ../MHRadioButton.m; sourceTree = "<group>"; };
 		BF071EED1D9A0D5F000551F7 /* MJAllParterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJAllParterView.swift; sourceTree = "<group>"; };
 		BF071EEE1D9A0D5F000551F7 /* MJBlacklistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJBlacklistView.swift; sourceTree = "<group>"; };
 		BF071EEF1D9A0D5F000551F7 /* MJHeadImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJHeadImageCell.swift; sourceTree = "<group>"; };
@@ -599,14 +605,14 @@
 		BF3CAC441DB22E15008A5C51 /* myCircleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleData.swift; sourceTree = "<group>"; };
 		BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleModel.swift; sourceTree = "<group>"; };
 		BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesTableViewCell.swift; sourceTree = "<group>"; };
-		BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJAnnotation.swift; sourceTree = "<group>"; };
+		BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MJAnnotation.swift; path = ../MJAnnotation.swift; sourceTree = "<group>"; };
 		BF7DDC9E1DA0AAC700772366 /* publishNoticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = publishNoticeViewController.swift; sourceTree = "<group>"; };
 		BF9739C91D9F6AD800E1B3EB /* MJClearCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJClearCache.swift; sourceTree = "<group>"; };
 		BF9739CB1D9F714500E1B3EB /* MJGetToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJGetToken.swift; sourceTree = "<group>"; };
 		BF9739CE1D9F71A100E1B3EB /* MJNetWorkHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJNetWorkHelper.swift; sourceTree = "<group>"; };
 		BF9739D01D9F81ED00E1B3EB /* TempLeftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempLeftViewController.swift; sourceTree = "<group>"; };
 		BF9739D21D9F89CF00E1B3EB /* InterfaceFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceFile.swift; sourceTree = "<group>"; };
-		BFA3273C1D9CF7200003AA4D /* MJGreenAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJGreenAnnotationView.swift; sourceTree = "<group>"; };
+		BFA3273C1D9CF7200003AA4D /* MJGreenAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MJGreenAnnotationView.swift; path = ../MJGreenAnnotationView.swift; sourceTree = "<group>"; };
 		BFA6DDB91D88EC91009017DE /* PchFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PchFile.swift; sourceTree = "<group>"; };
 		BFA6DDC51D895C11009017DE /* UIControl+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+Custom.h"; sourceTree = "<group>"; };
 		BFA6DDC61D895C11009017DE /* UIControl+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Custom.m"; sourceTree = "<group>"; };
@@ -635,6 +641,12 @@
 		BFAD63271D9E3E34006234E1 /* ConversationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListViewController.h; sourceTree = "<group>"; };
 		BFAD63291D9E47BC006234E1 /* MJConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJConversationViewController.swift; sourceTree = "<group>"; };
 		BFAD632B1D9E4BD0006234E1 /* MJMyInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJMyInfoModel.swift; sourceTree = "<group>"; };
+		BFAF23BE1DB85EBC00294988 /* CircleInfoArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoArray.swift; sourceTree = "<group>"; };
+		BFAF23BF1DB85EBC00294988 /* CircleInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoData.swift; sourceTree = "<group>"; };
+		BFAF23C01DB85EBC00294988 /* CircleInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoModel.swift; sourceTree = "<group>"; };
+		BFAF23C51DB85F6800294988 /* MJAmapHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJAmapHelper.swift; sourceTree = "<group>"; };
+		BFAF23C71DB8600800294988 /* uploadImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uploadImageData.swift; sourceTree = "<group>"; };
+		BFAF23C81DB8600800294988 /* uploadImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uploadImageModel.swift; sourceTree = "<group>"; };
 		BFC126991DB4792F00E11088 /* CirclesArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesArray.swift; sourceTree = "<group>"; };
 		BFC1269A1DB4792F00E11088 /* CirclesData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesData.swift; sourceTree = "<group>"; };
 		BFC1269B1DB4792F00E11088 /* CirclesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesModel.swift; sourceTree = "<group>"; };
@@ -958,6 +970,11 @@
 		BF071EE41D9A0D5F000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BFAF23C71DB8600800294988 /* uploadImageData.swift */,
+				BFAF23C81DB8600800294988 /* uploadImageModel.swift */,
+				BFAF23BE1DB85EBC00294988 /* CircleInfoArray.swift */,
+				BFAF23BF1DB85EBC00294988 /* CircleInfoData.swift */,
+				BFAF23C01DB85EBC00294988 /* CircleInfoModel.swift */,
 				BFC126991DB4792F00E11088 /* CirclesArray.swift */,
 				BFC1269A1DB4792F00E11088 /* CirclesData.swift */,
 				BFC1269B1DB4792F00E11088 /* CirclesModel.swift */,
@@ -975,10 +992,8 @@
 		BF071EE91D9A0D5F000551F7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */,
+				BFAF23C41DB85F5000294988 /* MJ工具类 */,
 				BF071EEA1D9A0D5F000551F7 /* CircleDataView.swift */,
-				BF071EEB1D9A0D5F000551F7 /* MHRadioButton.h */,
-				BF071EEC1D9A0D5F000551F7 /* MHRadioButton.m */,
 				BF071EED1D9A0D5F000551F7 /* MJAllParterView.swift */,
 				BF071EEE1D9A0D5F000551F7 /* MJBlacklistView.swift */,
 				BF071EEF1D9A0D5F000551F7 /* MJHeadImageCell.swift */,
@@ -988,7 +1003,6 @@
 				BF071EF31D9A0D5F000551F7 /* MJParterDataView.swift */,
 				BF071EF41D9A0D5F000551F7 /* MJQRCodeView.swift */,
 				BF071EF51D9A0D5F000551F7 /* QRCodeView.swift */,
-				BFA3273C1D9CF7200003AA4D /* MJGreenAnnotationView.swift */,
 				BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */,
 			);
 			path = View;
@@ -1182,6 +1196,18 @@
 				BFAD63231D9E13BE006234E1 /* MJLoginOpreationHelper.swift */,
 			);
 			path = "融云IM";
+			sourceTree = "<group>";
+		};
+		BFAF23C41DB85F5000294988 /* MJ工具类 */ = {
+			isa = PBXGroup;
+			children = (
+				BFAF23C51DB85F6800294988 /* MJAmapHelper.swift */,
+				BFA3273C1D9CF7200003AA4D /* MJGreenAnnotationView.swift */,
+				BF071EEB1D9A0D5F000551F7 /* MHRadioButton.h */,
+				BF071EEC1D9A0D5F000551F7 /* MHRadioButton.m */,
+				BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */,
+			);
+			path = "MJ工具类";
 			sourceTree = "<group>";
 		};
 		BFC5728F1DA8EB04002E1995 /* 等待视图 */ = {
@@ -1747,6 +1773,7 @@
 				5C27BAF31DB761D9005A2F8D /* PYPhotosPreviewController.m in Sources */,
 				BFC65D4A1D86A14F004E7E99 /* MiddleViewController.swift in Sources */,
 				5C7C3A0B1DB5CECC00EA598B /* YHMessageView.swift in Sources */,
+				BFAF23C31DB85EBC00294988 /* CircleInfoModel.swift in Sources */,
 				5C27BAFB1DB761D9005A2F8D /* PYPhotoCell.m in Sources */,
 				BF071EFF1D9A0D5F000551F7 /* SubContentViewController.swift in Sources */,
 				5C27BAFA1DB761D9005A2F8D /* PYPhotoBrowseView.m in Sources */,
@@ -1765,6 +1792,7 @@
 				BF071F341D9A0D68000551F7 /* ConfirmOldPw.swift in Sources */,
 				5C7C3A151DB6069800EA598B /* FieldImageModel.swift in Sources */,
 				BF3CAC461DB22E15008A5C51 /* myCircleArray.swift in Sources */,
+				BFAF23C61DB85F6800294988 /* MJAmapHelper.swift in Sources */,
 				5C90F13B1D8FCFA0005E16AF /* YJTabBarButton.m in Sources */,
 				5C27BAF71DB761D9005A2F8D /* PYConst.m in Sources */,
 				BF071EF71D9A0D5F000551F7 /* ChatViewController.swift in Sources */,
@@ -1776,6 +1804,7 @@
 				5C27BAF11DB761D9005A2F8D /* UIView+PYExtension.m in Sources */,
 				BF071EF61D9A0D5F000551F7 /* AllNoticeViewController.swift in Sources */,
 				5C072B601D8F8D2500420F6D /* YoYoAlertView.swift in Sources */,
+				BFAF23C91DB8600800294988 /* uploadImageData.swift in Sources */,
 				5CC48A041D9CECF8009C4AFE /* SearchController.swift in Sources */,
 				BF071EF91D9A0D5F000551F7 /* NewQuanZiViewController.swift in Sources */,
 				BF6FD5241D9BAF0D00F52C48 /* MJAnnotation.swift in Sources */,
@@ -1788,8 +1817,10 @@
 				5C24BB721D9A5C9C00A6D25F /* HKFPostVideoVC.m in Sources */,
 				5C8C3C671D92771600D756FF /* SignPersonCell.swift in Sources */,
 				BF9739CA1D9F6AD800E1B3EB /* MJClearCache.swift in Sources */,
+				BFAF23CA1DB8600800294988 /* uploadImageModel.swift in Sources */,
 				BF071F411D9A0D68000551F7 /* TotalDongdouCell.swift in Sources */,
 				BF071F0C1D9A0D5F000551F7 /* MJParterDataView.swift in Sources */,
+				BFAF23C21DB85EBC00294988 /* CircleInfoData.swift in Sources */,
 				BF071EFE1D9A0D5F000551F7 /* SettingViewController.swift in Sources */,
 				5C10E1261D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift in Sources */,
 				BF071F081D9A0D5F000551F7 /* MJHeadImageCell.swift in Sources */,
@@ -1816,6 +1847,7 @@
 				5C3B9A031D9D17A900AF7CFE /* SearchResultCell.swift in Sources */,
 				5C2A956C1D8D86B2006D1462 /* CellModel.m in Sources */,
 				BF071F431D9A10DA000551F7 /* QuanZiViewController.swift in Sources */,
+				BFAF23C11DB85EBC00294988 /* CircleInfoArray.swift in Sources */,
 				BF071F381D9A0D68000551F7 /* MJAlertView.swift in Sources */,
 				5C7C3A061DB5CE3F00EA598B /* DiscoveryModel.swift in Sources */,
 				BFC126A21DB48C2B00E11088 /* HistoryDongdouArray.swift in Sources */,

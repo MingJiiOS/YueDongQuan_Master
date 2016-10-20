@@ -10,8 +10,12 @@ import UIKit
 
 class publishNoticeViewController: MainViewController,UITextViewDelegate{
     
-   lazy var numerLabel = UILabel()
+    lazy var numerLabel = UILabel()
     var  strLength : Int!
+    
+    var circleId : String?
+    
+    var content : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor ( red: 0.9176,
@@ -31,20 +35,21 @@ class publishNoticeViewController: MainViewController,UITextViewDelegate{
             make.left.equalTo(textView.snp_left)
             make.height.equalTo(15)
         }
-
+        
         numerLabel.textColor = UIColor.grayColor()
         numerLabel.textAlignment = .Right
         numerLabel.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
         numerLabel.attributedText = NSMutableAttributedString(string: "\(0)/300")
         
-        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: .Plain, target: self, action: #selector(publish))
         
         
     }
     //MARK:textView delegate
     func textViewDidChange(textView: UITextView) {
-        
+        content = textView.text
         strLength = NSString(string: textView.text).length
+        
         let attributeString = NSMutableAttributedString(string: "\(strLength)/300")
         numerLabel.attributedText = attributeString
     }
@@ -53,15 +58,29 @@ class publishNoticeViewController: MainViewController,UITextViewDelegate{
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+}
+extension publishNoticeViewController {
+    //MARK:发布公告
+    func publish()  {
+        
+        if strLength != 0 {
+            let dict:[String:AnyObject] = ["v":v,
+                                           "uid":userInfo.uid,
+                                           "circleId":self.circleId!,
+                                           "content":self.content!]
+            MJNetWorkHelper().publishannouncement(publishannouncement, publishannouncementModel: dict, success: { (responseDic, success) in
+                //如果成功，就返回
+                self.navigationController?.popViewControllerAnimated(true)
+            }) { (error) in
+                self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～")
+            }
+        }else{
+           self.navigationItem.rightBarButtonItem?.enabled = false
+        }
+        
+        
+        
+        
     }
-    */
-
 }

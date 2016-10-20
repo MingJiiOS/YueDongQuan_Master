@@ -7,12 +7,17 @@
 //
 
 import UIKit
-
+import Alamofire
+import SwiftyJSON
 class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
-lazy var  quanZiImage = UIImageView()
+    lazy var  quanZiImage = UIImageView()
     lazy var quanZiBtn = UIButton()
+    //圈子名
     var quanZiNameField = MJTextFeild()
+    //主场名
     var zhuChangName = MJTextFeild()
+    //圈子密码控件
+    var circlePasswordFeild = MJTextFeild()
     //上面的线
     var line = UIView()
     //创建圈子按钮
@@ -20,11 +25,22 @@ lazy var  quanZiImage = UIImageView()
     //选择场地 是一个透明的按钮
     var clearBtn = UIButton(type: UIButtonType.Custom)
     //圈子名
-    var circleName : NSString!
+    var circleName : String!
+    //圈子密码
+    var circlePw : String!
+    
+    //上传头像
+    var uploadimgaemodel : uploadImageModel?
+    
+    //经度
+    var longdu : Double?
+    //纬度
+    var ladu : Double?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜新建圈子", style: .Plain, target: self, action: #selector(back))
         self.createView()
     }
@@ -37,6 +53,9 @@ lazy var  quanZiImage = UIImageView()
             make.centerX.equalTo(self.view.snp_centerX)
         }
         quanZiImage.backgroundColor = UIColor.grayColor()
+        //        if self.uploadimgaemodel != nil {
+        quanZiImage.sd_setImageWithURL(NSURL(string: "http://feizhuliu.vipyl.com/attached/image/20130306/20130306165523102310.jpg"))
+        //        }
         quanZiBtn.snp_makeConstraints { (make) in
             make.bottom.equalTo(quanZiImage.snp_bottom)
             make.width.equalTo(quanZiImage.snp_width)
@@ -59,16 +78,17 @@ lazy var  quanZiImage = UIImageView()
             make.height.equalTo(44)
             make.top.equalTo(quanZiImage.snp_bottom).offset(60)
         }
-       
+        
         let label1 = UILabel(frame:CGRectMake(0, 0, (ScreenWidth-20)/4, 30) )
         label1.text = "圈子名"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(circleNameSaved), name: UITextFieldTextDidChangeNotification, object: nil)
         quanZiNameField.placeholder = "请填写圈子名"
         quanZiNameField.leftView = label1
         quanZiNameField.leftViewMode = .Always
+        quanZiNameField.tag = 10
         self.view .addSubview(zhuChangName)
         zhuChangName.snp_makeConstraints { (make) in
-           make.top.equalTo(quanZiNameField.snp_bottom)
+            make.top.equalTo(quanZiNameField.snp_bottom)
             make.left.equalTo(10)
             make.right.equalTo(-10)
             make.height.equalTo(44)
@@ -80,7 +100,22 @@ lazy var  quanZiImage = UIImageView()
         zhuChangName.delegate = self
         zhuChangName.leftView = label2
         zhuChangName.leftViewMode = .Always
-       self.view .addSubview(clearBtn)
+        self.view .addSubview(circlePasswordFeild)
+        circlePasswordFeild.snp_makeConstraints { (make) in
+            make.top.equalTo(zhuChangName.snp_bottom)
+            make.left.equalTo(10)
+            make.right.equalTo(-10)
+            make.height.equalTo(44)
+        }
+        let label3 = UILabel(frame:CGRectMake(0, 0, (ScreenWidth-20)/4, 30) )
+        label3.text = "密码"
+        label3.textColor = UIColor.blackColor()
+        circlePasswordFeild.placeholder = "此圈子为私密圈子,需要密码"
+        circlePasswordFeild.delegate = self
+        circlePasswordFeild.leftView = label3
+        circlePasswordFeild.leftViewMode = .Always
+        circlePasswordFeild.tag = 20
+        self.view .addSubview(clearBtn)
         let width = ScreenWidth - (ScreenWidth-20)/4 - 40
         clearBtn.snp_makeConstraints { (make) in
             make.left.equalTo((ScreenWidth-20)/4)
@@ -102,7 +137,7 @@ lazy var  quanZiImage = UIImageView()
         initNewChangDi.snp_makeConstraints { (make) in
             make.left.equalTo(ScreenWidth/8)
             make.right.equalTo(-ScreenWidth/8)
-            make.top.equalTo(zhuChangName.snp_bottom).offset(ScreenHeight/8)
+            make.top.equalTo(circlePasswordFeild.snp_bottom).offset(ScreenHeight/8)
             make.height.equalTo(ScreenWidth/8)
         }
         initNewChangDi.backgroundColor = kBlueColor
@@ -111,26 +146,35 @@ lazy var  quanZiImage = UIImageView()
         initNewChangDi.setTitle("创建圈子", forState: UIControlState.Normal)
         initNewChangDi.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         initNewChangDi .addTarget(self, action: #selector(createNewCircle), forControlEvents: UIControlEvents.TouchUpInside)
+        let helper = MJAmapHelper()
+        
+        helper.coordataBlockValue { (longitude, latitude) in
+            print(longitude)
+            print(latitude)
+            self.longdu = longitude
+            self.ladu = latitude
+            //            self.performSelectorOnMainThread(#selector(createNewCircle), withObject: [self.longdu], waitUntilDone: true)
+        }
+        
     }
     func back(){
         self.navigationController?.popViewControllerAnimated(true)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
-
+    //MARK:MARK 跳转到选择场地
     func turn()  {
         let select = SelectChangDiViewController()
+        select.initWithClosure { (name) in
+            self.zhuChangName.text = name
+        }
         self.push(select)
     }
-
     override func viewWillAppear(animated: Bool) {
         self.view.endEditing(true)
-        let select = SelectChangDiViewController()
-        select.nameblock { (nameString) in
-            
-        }
+        
     }
     //MARK:创建新的圈子
     func selectCircleLogo() {
@@ -146,7 +190,7 @@ lazy var  quanZiImage = UIImageView()
                 self.openPicLibrary()
             }
         })
- 
+        
     }
     func addCarema()  {
         if UIImagePickerController.isSourceTypeAvailable(.Camera) {
@@ -169,7 +213,38 @@ lazy var  quanZiImage = UIImageView()
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         self.dismissViewControllerAnimated(true, completion: nil)
         //MARK:更换头像
-        updateUI()
+        Alamofire.upload(.POST, NSURL(string: kURL + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
+            
+            let data = UIImageJPEGRepresentation(image, 0.5)
+            let imageName = String(NSDate()) + ".png"
+            multipartFormData.appendBodyPart(data: data!, name: "file",fileName: imageName,mimeType: "image/png")
+            
+            let para = ["v":v,"uid":userInfo.uid.description,"file":""]
+            
+            
+            for (key,value) in para {
+                multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key )
+            }
+            
+            
+        }) { (encodingResult) in
+            switch encodingResult {
+            case .Success(let upload, _, _):
+                upload.responseString(completionHandler: { (response) in
+                    let json = JSON(data: response.data!)
+                    let dict = json.object
+                    print(json)
+                    let model = uploadImageModel(fromDictionary: dict as! NSDictionary)
+                    self.uploadimgaemodel = model
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    
+                    
+                })
+            case .Failure(let error):
+                print(error)
+            }
+        }
+        
         
     }
     //点击取消
@@ -206,11 +281,32 @@ lazy var  quanZiImage = UIImageView()
     //MARK:获取圈子名
     func circleNameSaved(fication:NSNotification)  {
         let textfield = fication.object
-        circleName = textfield?.text
+        if textfield!.tag == 10 {
+            circleName = textfield?.text
+        }
+        if textfield!.tag == 20 {
+            circlePw = textfield?.text
+        }
+        
     }
     //MARK:创建圈子操作
     func createNewCircle()  {
+        let uid = userInfo.uid
+        let logoId = self.uploadimgaemodel?.data.id
+        let Pw = circlePw
+        let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
+                                       "name":circleName,
+                                       "uid":uid,
+                                       "logoId":logoId!,
+                                       "pw":Pw,
+                                       "longitude":self.longdu!,
+                                       "latitude":self.ladu!]
         
+        MJNetWorkHelper().createcircle(createcircle, createcircleModel: dict, success: { (responseDic, success) in
+            
+        }) { (error) in
+            
+        }
     }
-
+    
 }
