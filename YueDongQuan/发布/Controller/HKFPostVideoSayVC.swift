@@ -1,8 +1,8 @@
 //
-//  HKFPostPictureSayVC.swift
+//  HKFPostVideoSayVC.swift
 //  YueDongQuan
 //
-//  Created by HKF on 2016/10/19.
+//  Created by HKF on 2016/10/20.
 //  Copyright © 2016年 黄方果. All rights reserved.
 //
 
@@ -13,8 +13,7 @@ import TZImagePickerController
 import Alamofire
 import SwiftyJSON
 
-
-class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate{
+class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate {
 
     var selectedImages = [UIImage]()
     var imageStr = String()
@@ -28,7 +27,7 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
     var _textField : CustomTextField!
     var publishPhotosView : PYPhotosView!
     var contentText = ""
-    
+    private var videoData = NSData()
     
     private var userLatitude : Double = 0
     private var userLongitude : Double = 0
@@ -69,14 +68,14 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         self.showLocationBtn.titleLabel!.font = UIFont.systemFontOfSize(14)
         self.showLocationBtn.backgroundColor = UIColor(red: 0.9451, green: 0.949, blue: 0.9569, alpha: 1.0)
         self.view.addSubview(showLocationBtn)
-
+        
         
         
     }
     
     func setNav(){
         self.view.backgroundColor = UIColor.whiteColor()
-        self.title = "发布说说"
+        self.title = "发布视频说说"
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
         let imgView = UIImageView(frame:leftView.frame)
         imgView.image = UIImage(named: "")
@@ -104,18 +103,20 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
     }
     
     func send(){
-        if self.selectedImages.count != 0 {
-            for item in self.selectedImages {
-                
-                requestUpfile(item)
-            }
-        }else{
-            
-        }
+//        if self.selectedImages.count != 0 {
+//            for item in self.selectedImages {
+//                
+//                requestUpfile(item)
+//            }
+//        }else{
+//            
+//        }
         
+        
+        requestUpfile(self.videoData)
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -134,14 +135,11 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         manger.stopUpdatingLocation()
     }
     
-    
+
 
 }
 
-extension HKFPostPictureSayVC {
-    
-
-    
+extension HKFPostVideoSayVC {
     func photosView(photosView: PYPhotosView!, didAddImageClickedWithImages images: NSMutableArray!) {
         print("点击了")
         
@@ -154,16 +152,6 @@ extension HKFPostPictureSayVC {
         
         actionSheetController.addAction(cancelAction)
         
-        //拍照
-        let takePictureAction: UIAlertAction = UIAlertAction(title: "拍照", style: .Default)
-        { action -> Void in
-            
-            
-            
-            
-        }
-        
-        actionSheetController.addAction(takePictureAction)
         
         //相册选择
         let choosePictureAction: UIAlertAction = UIAlertAction(title: "相册", style: .Default)
@@ -179,9 +167,6 @@ extension HKFPostPictureSayVC {
         self.presentViewController(actionSheetController, animated: true) {
             
         }
-        
-        
-        
     }
     
     // 进入预览图片时调用, 可以在此获得预览控制器，实现对导航栏的自定义
@@ -200,23 +185,48 @@ extension HKFPostPictureSayVC {
         
         self.navigationController?.presentViewController(imagePickerVc, animated: true, completion: nil)
     }
-    
+
 }
 
-extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
+extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
     func imagePickerControllerDidCancel(picker: TZImagePickerController!) {
         
     }
     
     func imagePickerController(picker: TZImagePickerController!, didFinishPickingVideo coverImage: UIImage!, sourceAssets asset: AnyObject!) {
+        self.selectedImages = [coverImage]
+        self.publishPhotosView.reloadDataWithImages(NSMutableArray(array: [coverImage]))
+        self.showLocationBtn.frame = CGRectMake(0, publishPhotosView.tz_bottom + 20, ScreenWidth, 30)
+        
+//        [[TZImageManager manager] getVideoOutputPathWithAsset:asset completion:^(NSString *outputPath) {
+            // NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
+            // Export completed, send video here, send by outputPath or NSData
+            // 导出完成，在这里写上传代码，通过路径或者通过NSData上传
+            
+//             }];
+        
+        TZImageManager().getVideoOutputPathWithAsset(asset) { (outputPath:String!) in
+            NSLog("视频导出到本地完成,沙盒路径为:\(outputPath)")
+        }
+
+//        PHCachingImageManager().requestAVAssetForVideo((asset as? PHAsset)!, options: nil) { (asset:AVAsset?, audioMix:AVAudioMix?, info:[NSObject : AnyObject]?) in
+//            dispatch_async(dispatch_get_main_queue(), { 
+//                let asset = asset as? AVURLAsset
+//                let data = NSData(contentsOfURL: asset!.URL)
+//                
+//                NSLog("data = \(data?.description)")
+//                self.videoData = data!
+//            })
+//        }
+        
         
     }
     
     func imagePickerController(picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [AnyObject]!, isSelectOriginalPhoto: Bool) {
         
-        self.selectedImages = photos
-        self.publishPhotosView.reloadDataWithImages(NSMutableArray(array: photos))
-        self.showLocationBtn.frame = CGRectMake(0, publishPhotosView.tz_bottom + 20, ScreenWidth, 30)
+//        self.selectedImages = photos
+//        self.publishPhotosView.reloadDataWithImages(NSMutableArray(array: photos))
+//        self.showLocationBtn.frame = CGRectMake(0, publishPhotosView.tz_bottom + 20, ScreenWidth, 30)
     }
     
     func imagePickerController(picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [AnyObject]!, isSelectOriginalPhoto: Bool, infos: [[NSObject : AnyObject]]!) {
@@ -226,19 +236,19 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
     
     
     
-    internal func requestToPostImagesSay(content:String,latitude:Double,longitude:Double,imgs:String,address:String){
+    internal func requestToPostImagesSay(content:String,latitude:Double,longitude:Double,videoId:String,address:String){
         let v = NSObject.getEncodeString("20160901")
         
-        let para = ["v":v,"uid":userInfo.uid.description,"content":content,"latitude":latitude,"longitude":longitude,"imgs":imgs,"address":address]
+        let para = ["v":v,"uid":userInfo.uid.description,"content":content,"latitude":latitude,"longitude":longitude,"videoId":videoId,"address":address]
         print(para.description)
         
-        Alamofire.request(.POST, NSURL(string: kURL + "/imagefound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: kURL + "/videofound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
                 
                 let str = (json.object) as! NSDictionary
-            
+                
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
@@ -251,15 +261,15 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
     }
     
     
-    internal func requestUpfile(image:UIImage){
+    internal func requestUpfile(video:NSData){
         
         
         Alamofire.upload(.POST, NSURL(string: kURL + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
             
             
-            let data = UIImageJPEGRepresentation(image, 0.5)
+            
             let imageName = String(NSDate().timeIntervalSince1970*100000) + ".png"
-            multipartFormData.appendBodyPart(data: data!, name: "file",fileName: imageName,mimeType: "image/png")
+            multipartFormData.appendBodyPart(data: self.videoData, name: "file",fileName: imageName,mimeType: "video/mp4")
             
             let para = ["v":v,"uid":userInfo.uid.description,"file":""]
             for (key,value) in para {
@@ -277,13 +287,13 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
                     
                     print(str)
                     self.imageModel = FieldImageModel.init(fromDictionary: str as! NSDictionary )
-                
+                    
                     if (self.imageModel?.code == "200" && self.imageModel?.flag == "1"){
                         self.tempImageStr.append((self.imageModel?.data.id.description)!)
-                        
-                        if ((self.tempImageStr.count) == self.selectedImages.count) {
+                        NSLog("最后一张上传完成")
+                        /*if ((self.tempImageStr.count) == self.selectedImages.count) {
                             
-                            NSLog("最后一张上传完成")
+                            
                             
                             var imageIdStr = String()
                             for str in self.tempImageStr {
@@ -300,8 +310,8 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
                             
                             NSLog("图片字符串id=\(imageIdStr)")
                             
-                            self.requestToPostImagesSay(self.contentText, latitude: self.userLatitude, longitude: self.userLongitude, imgs: imageIdStr, address: "")
-                        }
+                            self.requestToPostImagesSay(self.contentText, latitude: self.userLatitude, longitude: self.userLongitude, videoId: imageIdStr, address: "")
+                        }*/
                         
                     }
                     

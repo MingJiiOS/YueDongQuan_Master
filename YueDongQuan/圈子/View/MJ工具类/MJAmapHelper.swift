@@ -101,6 +101,12 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
                     self.coordateBlock!(longitude: location.coordinate.longitude,
                                          latitude: location.coordinate.latitude)
                 }
+                if let regecode = regecode {
+                    
+                    //地址信息
+                    let address = regecode.formattedAddress
+                    
+                }
                 
             }
         }

@@ -73,7 +73,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
                         self.showMJProgressHUD("密码错误")
                     }else{
                         
-                        var defaults = NSUserDefaults.standardUserDefaults()
+                        let defaults = NSUserDefaults.standardUserDefaults()
                         
                         MJGetToken().requestTokenFromServeris(getToken
                             , success: { (responseDic, success) in

@@ -92,6 +92,7 @@
 		5CD980EA1D9615FF007828E2 /* CircleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD980E91D9615FF007828E2 /* CircleAnimation.swift */; };
 		5CD981061D96546A007828E2 /* XTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD981051D96546A007828E2 /* XTimer.m */; };
 		5CE4A7E91D8AC1ED00F25CF6 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4A7E81D8AC1ED00F25CF6 /* HMSegmentedControl.m */; };
+		5CFA5A231DB8B24000267399 /* HKFPostVideoSayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA5A221DB8B24000267399 /* HKFPostVideoSayVC.swift */; };
 		BF071EF61D9A0D5F000551F7 /* AllNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071EDA1D9A0D5F000551F7 /* AllNoticeViewController.swift */; };
 		BF071EF71D9A0D5F000551F7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071EDB1D9A0D5F000551F7 /* ChatViewController.swift */; };
 		BF071EF81D9A0D5F000551F7 /* MyQuanZiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071EDC1D9A0D5F000551F7 /* MyQuanZiViewController.swift */; };
@@ -448,6 +449,7 @@
 		5CD981051D96546A007828E2 /* XTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTimer.m; sourceTree = "<group>"; };
 		5CE4A7E71D8AC1ED00F25CF6 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		5CE4A7E81D8AC1ED00F25CF6 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
+		5CFA5A221DB8B24000267399 /* HKFPostVideoSayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostVideoSayVC.swift; sourceTree = "<group>"; };
 		8F2702782B36855A0793C813 /* Pods-YueDongQuan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YueDongQuan.release.xcconfig"; path = "Pods/Target Support Files/Pods-YueDongQuan/Pods-YueDongQuan.release.xcconfig"; sourceTree = "<group>"; };
 		BF071EDA1D9A0D5F000551F7 /* AllNoticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllNoticeViewController.swift; sourceTree = "<group>"; };
 		BF071EDB1D9A0D5F000551F7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -1327,6 +1329,7 @@
 			children = (
 				BFC65D491D86A14F004E7E99 /* MiddleViewController.swift */,
 				5C27BB0B1DB7638D005A2F8D /* HKFPostPictureSayVC.swift */,
+				5CFA5A221DB8B24000267399 /* HKFPostVideoSayVC.swift */,
 				5C24BB731D9A5F4400A6D25F /* HKFPostRecruitmentVC.swift */,
 				5C24BB781D9A7D2800A6D25F /* HKFPostMatchVC.swift */,
 				5C10E1251D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift */,
@@ -1560,7 +1563,7 @@
 				TargetAttributes = {
 					BFC65D181D869FD1004E7E99 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 27WZT2322T;
+						DevelopmentTeam = 3FXX5XTJ2H;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1855,6 +1858,7 @@
 				5C7C3A061DB5CE3F00EA598B /* DiscoveryModel.swift in Sources */,
 				BFC126A21DB48C2B00E11088 /* HistoryDongdouArray.swift in Sources */,
 				5CC5F93F1DAF8A450088A61E /* HKFCell_Cell.swift in Sources */,
+				5CFA5A231DB8B24000267399 /* HKFPostVideoSayVC.swift in Sources */,
 				5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */,
 				BF140EE31DAF2C930029DC25 /* myFoundImage.swift in Sources */,
 				5CA4EA401D8EC5EE001A8E8D /* FieldCell.swift in Sources */,
@@ -2111,7 +2115,7 @@
 					"-framework",
 					"\"XHImageViewer\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.redong.YueDongQuans;
+				PRODUCT_BUNDLE_IDENTIFIER = com.redong.YueDongQuan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/YueDongQuan/第三方/CustomActionSheet/YueDongQuan-Bridging-Header.h";
@@ -2195,7 +2199,7 @@
 					"-framework",
 					"\"XHImageViewer\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.redong.YueDongQuans;
+				PRODUCT_BUNDLE_IDENTIFIER = com.redong.YueDongQuan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/YueDongQuan/第三方/CustomActionSheet/YueDongQuan-Bridging-Header.h";
