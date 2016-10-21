@@ -52,6 +52,8 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
            
             
         }
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
         
     }
     

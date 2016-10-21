@@ -8,9 +8,10 @@
 
 import Foundation
 //MARK:接口地址
-let kURL = "http://192.168.3.20:8080/redong"
-let testUrl = "http://192.168.3.22:8080/redong"
 
+let kURL = "http://192.168.3.22:8080/redong"
+
+let testUrl = "http://192.168.3.22:8080/redong"
 
 //MARK:接口名 获取融云token
 let getToken = "getToken"
@@ -22,7 +23,7 @@ let isreg = "isreg"
 let reg = "reg"
 //MARK:接口名 我的信息
 let myinfo = "myinfo"
-//MARK:接口名 我的说书
+//MARK:接口名 我的说说
 let myfound = "myfound"
 //MARK:接口名 他的信息
 let heinfo = "heinfo"

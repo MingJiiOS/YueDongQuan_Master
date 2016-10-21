@@ -151,6 +151,14 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
             
             return cell
         case 1:
+            if indexPath.row == 0 {
+                var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)as?MJLayerContentCell
+                cell?.accessoryType = .DisclosureIndicator
+                if cell == nil {
+                    cell = MJLayerContentCell(style: .Default, reuseIdentifier: cellIdentifier)
+                }
+                return cell!
+            }
             if indexPath.row == 1 {
                 let cell = UITableViewCell(style: .Value1, reuseIdentifier: cellIdentifier)
                 cell.textLabel?.text  = "圈子二维码"

@@ -9,7 +9,8 @@
 import UIKit
 import IQKeyboardManagerSwift
 
-
+let AMAPAPIKEY = "cc7ada21dae93efe53c70dc7d6a46598"
+let RONGCLOUDAPPKEY = "ik1qhw0911hep"
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate ,UIAlertViewDelegate{
 
@@ -20,10 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,UIAlertViewDelegate{
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         //高德地图
-        AMapServices.sharedServices().apiKey = "cc7ada21dae93efe53c70dc7d6a46598"
+        AMapServices.sharedServices().apiKey = AMAPAPIKEY
         //融云
-        
-        RCIM.sharedRCIM().initWithAppKey("ik1qhw0911hep")
+        RCIM.sharedRCIM().initWithAppKey(RONGCLOUDAPPKEY)
         //初始化融云即登录
 //        MJLoginOpreationHelper()
 
