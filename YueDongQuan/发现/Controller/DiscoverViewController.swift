@@ -181,7 +181,7 @@ extension DiscoverViewController : UIScrollViewDelegate {
         print(error)
     }
     func amapLocationManager(manager: AMapLocationManager!, didUpdateLocation location: CLLocation!) {
-        print(location.coordinate.longitude)
+//        print(location.coordinate.longitude)
         
         self.userLatitude = location.coordinate.latitude
         self.userLongitude = location.coordinate.longitude
@@ -368,11 +368,11 @@ extension DiscoverViewController:UITextFieldDelegate {
             self.textField.resignFirstResponder()
         }
         
-        print(self.textField.text)
+//        print(self.textField.text)
         
         switch typeStatus! {
         case .pinglun:
-            print(self.textField.text)
+//            print(self.textField.text)
             
             let model = DiscoveryCommentModel()
             model.netName = ""
@@ -466,14 +466,14 @@ extension DiscoverViewController {
                 
                 self.testModel = DiscoveryModel(fromDictionary: str as! NSDictionary)
                 
-                print(self.testModel?.code)
-                print(self.testModel?.data.array[0].address)
-                print(self.testModel?.data.array[0].aname)
-                print(self.testModel?.data.array[0].content)
-                print(self.testModel?.data.array[0].id)
-                print(self.testModel?.data.array[0].typeId)
-                print(self.testModel?.data.array[0].thumbnailSrc)
-                print(self.testModel?.data.array[0].time)
+//                print(self.testModel?.code)
+//                print(self.testModel?.data.array[0].address)
+//                print(self.testModel?.data.array[0].aname)
+//                print(self.testModel?.data.array[0].content)
+//                print(self.testModel?.data.array[0].id)
+//                print(self.testModel?.data.array[0].typeId)
+//                print(self.testModel?.data.array[0].thumbnailSrc)
+//                print(self.testModel?.data.array[0].time)
                 self.datasource = (self.testModel?.data.array)!
                 for item in self.tableViews {
                     item.reloadData()
@@ -490,7 +490,7 @@ extension DiscoverViewController {
         
         let para = ["v":v,"uid":1,"commentId":commentId,"content":content,"foundId":foundId]
         
-        print(para.description)
+//        print(para.description)
         
         Alamofire.request(.POST, NSURL(string: "http://192.168.3.22:8080/redong/commentfound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
@@ -498,7 +498,7 @@ extension DiscoverViewController {
                 let json = JSON(data: response.data!)
                 let str = json.object
                 
-                print(str)
+//                print(str)
                 for item in self.tableViews {
                     item.reloadData()
                 }
@@ -514,7 +514,7 @@ extension DiscoverViewController {
         
         let para = ["v":v,"uid":1,"foundId":foundId]
         
-        print(para.description)
+//        print(para.description)
         
         Alamofire.request(.POST, NSURL(string: kURL + "/praise")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
@@ -522,7 +522,7 @@ extension DiscoverViewController {
                 let json = JSON(data: response.data!)
                 let str = json.object
                 
-                print(str)
+//                print(str)
 //                for item in self.tableViews {
 //                    item.reloadData()
 //                }

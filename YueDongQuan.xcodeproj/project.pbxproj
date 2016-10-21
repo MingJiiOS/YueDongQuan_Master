@@ -286,6 +286,7 @@
 		BFAF23C61DB85F6800294988 /* MJAmapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C51DB85F6800294988 /* MJAmapHelper.swift */; };
 		BFAF23C91DB8600800294988 /* uploadImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C71DB8600800294988 /* uploadImageData.swift */; };
 		BFAF23CA1DB8600800294988 /* uploadImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C81DB8600800294988 /* uploadImageModel.swift */; };
+		BFAF23CC1DB8A9D700294988 /* MJLayerContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */; };
 		BFC1269C1DB4792F00E11088 /* CirclesArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC126991DB4792F00E11088 /* CirclesArray.swift */; };
 		BFC1269D1DB4792F00E11088 /* CirclesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1269A1DB4792F00E11088 /* CirclesData.swift */; };
 		BFC1269E1DB4792F00E11088 /* CirclesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1269B1DB4792F00E11088 /* CirclesModel.swift */; };
@@ -647,6 +648,7 @@
 		BFAF23C51DB85F6800294988 /* MJAmapHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJAmapHelper.swift; sourceTree = "<group>"; };
 		BFAF23C71DB8600800294988 /* uploadImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uploadImageData.swift; sourceTree = "<group>"; };
 		BFAF23C81DB8600800294988 /* uploadImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uploadImageModel.swift; sourceTree = "<group>"; };
+		BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJLayerContentCell.swift; sourceTree = "<group>"; };
 		BFC126991DB4792F00E11088 /* CirclesArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesArray.swift; sourceTree = "<group>"; };
 		BFC1269A1DB4792F00E11088 /* CirclesData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesData.swift; sourceTree = "<group>"; };
 		BFC1269B1DB4792F00E11088 /* CirclesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesModel.swift; sourceTree = "<group>"; };
@@ -1206,6 +1208,7 @@
 				BF071EEB1D9A0D5F000551F7 /* MHRadioButton.h */,
 				BF071EEC1D9A0D5F000551F7 /* MHRadioButton.m */,
 				BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */,
+				BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */,
 			);
 			path = "MJ工具类";
 			sourceTree = "<group>";
@@ -1920,6 +1923,7 @@
 				BF071F0B1D9A0D5F000551F7 /* MJOtherQuanZiView.swift in Sources */,
 				5C27BAF81DB761D9005A2F8D /* PYProgressView.m in Sources */,
 				BFC1269C1DB4792F00E11088 /* CirclesArray.swift in Sources */,
+				BFAF23CC1DB8A9D700294988 /* MJLayerContentCell.swift in Sources */,
 				BFC572941DA8EB72002E1995 /* MJProgressHUD.swift in Sources */,
 				46315B001D882C2300B9D846 /* Pubilc.swift in Sources */,
 				BF071EFA1D9A0D5F000551F7 /* OtherQuanZiViewController.swift in Sources */,

@@ -40,6 +40,9 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TextFieldTextDidChange), name: UITextFieldTextDidChangeNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TextDidEndEditing), name: UITextFieldTextDidEndEditingNotification, object: nil)
        createTopView()
@@ -47,11 +50,17 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+        
    
     }
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
     }
     //MARK:登录和注册操作
     func loginOrRigsterAction()  {
@@ -94,6 +103,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
                         self.dismissViewControllerAnimated(true, completion: { 
                             NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
                             NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+                            NSNotificationCenter.defaultCenter().removeObserver(self)
                         })
    
                     }

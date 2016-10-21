@@ -219,6 +219,8 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
                 if let regeocode = regeocode {
                     annotation.title = regeocode.formattedAddress
                     annotation.subtitle = "\(regeocode.citycode)-\(regeocode.adcode)-\(location.horizontalAccuracy)m"
+                 
+                    
                 }
                 else {
                     annotation.title = String(format: "lat:%.6f;lon:%.6f;", arguments: [location.coordinate.latitude, location.coordinate.longitude])
