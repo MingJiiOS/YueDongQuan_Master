@@ -232,7 +232,7 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
         let para = ["v":v,"uid":userInfo.uid.description,"content":content,"latitude":latitude,"longitude":longitude,"imgs":imgs,"address":address]
         print(para.description)
         
-        Alamofire.request(.POST, NSURL(string: kURL + "/imagefound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: testUrl + "/imagefound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
@@ -254,7 +254,7 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
     internal func requestUpfile(image:UIImage){
         
         
-        Alamofire.upload(.POST, NSURL(string: kURL + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
+        Alamofire.upload(.POST, NSURL(string: testUrl + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
             
             
             let data = UIImageJPEGRepresentation(image, 0.5)

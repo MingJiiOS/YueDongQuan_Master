@@ -19,8 +19,8 @@ class DiscoveryArray{
 	var time : Int!
 	var typeId : Int!
     var thumbnailSrc : String!
-    var shouldUpdateCache = false
-
+    var shouldUpdateCache = Bool()
+    var images : [DiscoveryImage]!
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
@@ -50,7 +50,13 @@ class DiscoveryArray{
                 comment.append(model)
             }
         }
-        
+        images = [DiscoveryImage]()
+        if let imagesArray = dictionary["images"] as? [NSDictionary]{
+            for dic in imagesArray{
+                let value = DiscoveryImage(fromDictionary: dic)
+                images.append(value)
+            }
+        }
 		content = dictionary["content"] as? String
 		id = dictionary["id"] as? Int
 		latitude = dictionary["latitude"] as? Double

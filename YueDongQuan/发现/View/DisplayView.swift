@@ -21,7 +21,7 @@ extension DisplayView{
     
     /** 准备 */
     func imgsPrepare(imgs: [String], isLocal: Bool){
-       
+       NSLog("imgs = \(imgs.count)")
         let totalRow = 3
         let totalWidth = self.bounds.size.width
         let margin: CGFloat = 5
