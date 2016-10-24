@@ -13,6 +13,8 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
     
     var noticeTableView = UITableView(frame: CGRectZero, style: .Grouped)
     
+    var circleid : String?
+    var allnoticeModel : AllNoticeModel?
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         //隐藏菜单栏
@@ -22,6 +24,7 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
         super.viewDidLoad()
         
         self.addDatas()
+        loadAllNoticeData(self.circleid!)
         self.creatView()
     }
 
@@ -72,23 +75,26 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("行数",self.dataSource.count)
-               return self.dataSource.count
-    
+        if self.allnoticeModel != nil {
+            return (self.allnoticeModel?.data.array.count)!
+        }
+    return 0
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//      let MJcell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
+
         var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? MJNoticeCell
         if cell == nil {
             cell = MJNoticeCell(style: .Default, reuseIdentifier: cellIdentifier)
             cell?.selectionStyle = .None
         }
-        
-        let model = self.dataSource[indexPath.row]
-        
-        cell?.config(noticeModel: model)
+    
+        if self.allnoticeModel != nil {
+             cell?.config(noticeModel: self.allnoticeModel!, indexPath: indexPath)
+        }
+       
         
         cell?.expandBlock = { ( isExpand: Bool) -> Void in
-            model.isExpand = isExpand
+            self.allnoticeModel!.isExpand = isExpand
             
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
@@ -120,7 +126,9 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
             }
             let  height =  MJNoticeCell.hyb_cellHeight(forTableView: noticeTableView, config: { (cell) in
                 let itemCell = cell as! MJNoticeCell
-                itemCell.config(noticeModel: model)
+                if self.allnoticeModel != nil {
+                     itemCell.config(noticeModel: self.allnoticeModel!, indexPath: indexPath)
+                }
                 }, updateCacheIfNeeded: { () -> (key: String, stateKey: String, shouldUpdate: Bool) in
                     return (String(model.uId), stateKey, true)
             })
@@ -129,14 +137,54 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
         }
       return 60
     }
-  
-    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let dict = ["v":v,"id":self.allnoticeModel?.data.array[indexPath.row].id.description]
+            
+            MJNetWorkHelper().deleteannouncement(deleteannouncement,
+                                                 deleteannouncementModel: dict,
+                                                 success: { (responseDic, success) in
+                                                    if success != false{
+                                                        
+                                                        self.loadAllNoticeData(self.circleid!)
+                                                        
+                                                    }
+                                                   
+                                   
+            }) { (error) in
+                
+            }
+        }
+    }
 }
 
   //MARK:删除公告
 extension AllNoticeViewController:MJNoticeCellDelegate{
-    func deleBtnIndexPath(indexPath: NSIndexPath) {
-        
-        print("index row%d", indexPath.row);
+   
+    func deleBtnIndexPath(indexPath: NSIndexPath, noticeId: Int) {
+        let dict = ["v":v,"id":noticeId]
+        MJNetWorkHelper().deleteannouncement(deleteannouncement,
+                                             deleteannouncementModel: dict,
+                                             success: { (responseDic, success) in
+                  self.noticeTableView.reloadRowsAtIndexPaths([indexPath],
+                                                              withRowAnimation: UITableViewRowAnimation.Fade)
+            
+            }) { (error) in
+                
+        }
+    }
+    
+    func loadAllNoticeData(circleId:String)  {
+        let dict = ["v":v,"circleId":self.circleid]
+        MJNetWorkHelper().announcement(announcement, announcementModel: dict, success: { (responseDic, success) in
+            let model = DataSource().getannouncementData(responseDic)
+            self.allnoticeModel = model
+            self.noticeTableView.reloadData()
+            }) { (error) in
+                
+        }
     }
 }

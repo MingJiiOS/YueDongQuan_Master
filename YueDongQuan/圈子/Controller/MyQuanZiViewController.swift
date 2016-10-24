@@ -19,8 +19,10 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     
     var ownNameAry = NSMutableArray()
     var ownClrcleIDAry = NSMutableArray()
+    var thumbnailSrcAry = NSMutableArray()
     var joinNameAry = NSMutableArray()
     var joinClrcleIDAry = NSMutableArray()
+    var jointhumbnailSrcAry = NSMutableArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,6 +98,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                     if self.myclrclemodel?.data.array[index].permissions == 1 {
                        ownNameAry .addObject((self.myclrclemodel?.data.array[index].name)!)
                         ownClrcleIDAry .addObject((self.myclrclemodel?.data.array[index].circleId.description)!)
+                        thumbnailSrcAry .addObject((self.myclrclemodel?.data.array[index].thumbnailSrc)!)
                     } 
                 }
                  cell.textLabel?.text = ownNameAry[indexPath.row] as? String
@@ -117,9 +120,8 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                         if self.myclrclemodel?.data.array[index].permissions == 2 {
                             
                             joinNameAry .addObject((self.myclrclemodel?.data.array[index].name)!)
-                            
-                            
                             joinClrcleIDAry.addObject((self.myclrclemodel?.data.array[index].circleId.description)!)
+                            jointhumbnailSrcAry .addObject((self.myclrclemodel?.data.array[index].thumbnailSrc)!)
                         }
                     }
                     cell.textLabel?.text = joinNameAry[indexPath.row] as? String
@@ -209,6 +211,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
             chatVC.title = ownNameAry[indexPath.row] as? String
             chatVC.conversationType = .ConversationType_GROUP
             chatVC.circleid = ownClrcleIDAry[indexPath.row] as? String
+            chatVC.thumbnailSrc = thumbnailSrcAry[indexPath.row] as? String
             self.push(chatVC)
         }else{
             chatVC.targetId = joinClrcleIDAry[indexPath.row] as! String
@@ -216,6 +219,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
             chatVC.title = joinNameAry[indexPath.row] as? String
             chatVC.conversationType = .ConversationType_GROUP
             chatVC.circleid = joinClrcleIDAry[indexPath.row] as? String
+            chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
             self.push(chatVC)
         }
         

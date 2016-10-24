@@ -1,17 +1,10 @@
-//
-//  InterfaceFile.swift
-//  YueDongQuan
-//
-//  Created by 黄方果 on 16/10/1.
-//  Copyright © 2016年 黄方果. All rights reserved.
-//
 
 import Foundation
 //MARK:接口地址
 
 let kURL = "http://192.168.3.22:8080/redong"
 
-let testUrl = "http://192.168.3.22:8080/redong"
+let testUrl = "http://192.168.3.20:8080/redong"
 
 //MARK:接口名 获取融云token
 let getToken = "getToken"

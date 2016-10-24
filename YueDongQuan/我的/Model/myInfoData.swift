@@ -1,5 +1,8 @@
 //
 //	myInfoData.swift
+//
+//	Create by 方果 黄 on 22/10/2016
+//	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
@@ -7,20 +10,22 @@ import Foundation
 
 class myInfoData : NSObject, NSCoding{
 
+	var asum : Int!
+	var bsum : Int!
 	var dongdou : String!
-	var name : String!
-	var originalSrc : String!
-	var sex : String!
+	var msum : Int!
+	var psum : Int!
 
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: NSDictionary){
+		asum = dictionary["asum"] as? Int
+		bsum = dictionary["bsum"] as? Int
 		dongdou = dictionary["dongdou"] as? String
-		name = dictionary["name"] as? String
-		originalSrc = dictionary["originalSrc"] as? String
-		sex = dictionary["sex"] as? String
+		msum = dictionary["msum"] as? Int
+		psum = dictionary["psum"] as? Int
 	}
 
 	/**
@@ -28,18 +33,21 @@ class myInfoData : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
+		if asum != nil{
+			dictionary["asum"] = asum
+		}
+		if bsum != nil{
+			dictionary["bsum"] = bsum
+		}
 		if dongdou != nil{
 			dictionary["dongdou"] = dongdou
 		}
-		if name != nil{
-			dictionary["name"] = name
+		if msum != nil{
+			dictionary["msum"] = msum
 		}
-		if originalSrc != nil{
-			dictionary["originalSrc"] = originalSrc
-		}
-		if sex != nil{
-			dictionary["sex"] = sex
+		if psum != nil{
+			dictionary["psum"] = psum
 		}
 		return dictionary
 	}
@@ -50,10 +58,11 @@ class myInfoData : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
+         asum = aDecoder.decodeObjectForKey("asum") as? Int
+         bsum = aDecoder.decodeObjectForKey("bsum") as? Int
          dongdou = aDecoder.decodeObjectForKey("dongdou") as? String
-         name = aDecoder.decodeObjectForKey("name") as? String
-         originalSrc = aDecoder.decodeObjectForKey("originalSrc") as? String
-         sex = aDecoder.decodeObjectForKey("sex") as? String
+         msum = aDecoder.decodeObjectForKey("msum") as? Int
+         psum = aDecoder.decodeObjectForKey("psum") as? Int
 
 	}
 
@@ -63,17 +72,20 @@ class myInfoData : NSObject, NSCoding{
     */
     @objc func encodeWithCoder(aCoder: NSCoder)
 	{
+		if asum != nil{
+			aCoder.encodeObject(asum, forKey: "asum")
+		}
+		if bsum != nil{
+			aCoder.encodeObject(bsum, forKey: "bsum")
+		}
 		if dongdou != nil{
 			aCoder.encodeObject(dongdou, forKey: "dongdou")
 		}
-		if name != nil{
-			aCoder.encodeObject(name, forKey: "name")
+		if msum != nil{
+			aCoder.encodeObject(msum, forKey: "msum")
 		}
-		if originalSrc != nil{
-			aCoder.encodeObject(originalSrc, forKey: "originalSrc")
-		}
-		if sex != nil{
-			aCoder.encodeObject(sex, forKey: "sex")
+		if psum != nil{
+			aCoder.encodeObject(psum, forKey: "psum")
 		}
 
 	}

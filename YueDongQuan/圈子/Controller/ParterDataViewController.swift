@@ -9,29 +9,26 @@
 import UIKit
 
 class ParterDataViewController: MainViewController {
-
+    var parterView : MJParterDataView?
+    
+    var circleid : String?
+    var uid : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       let view = MJParterDataView(frame: self.view.frame)
-        self.view .addSubview(view)
+        parterView = MJParterDataView(frame: self.view.frame,circleID: self.circleid!,uid:self.uid!)
+        self.view.addSubview(parterView!)
         
     }
-
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        parterView!.loadParterData(self.circleid!,parterUid:self.uid!)
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

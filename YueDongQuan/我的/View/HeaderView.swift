@@ -14,7 +14,11 @@ class HeaderView: UIView {
     var isSelected = Bool()
     //用户头像
     let headImage = UIImageView()
-    override init(frame: CGRect) {
+     let guanZhuLabel = UILabel()
+    let changDiLabel = UILabel()
+     let huoZanLabel = UILabel()
+    let quanZiLabel = UILabel()
+   override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(headerBgView)
 //               let headerBgView = self
@@ -91,9 +95,9 @@ class HeaderView: UIView {
                                       forState: UIControlState.Normal)
                 guanZhu .addTarget(self, action: #selector(self.click(_:)),
                                    forControlEvents: UIControlEvents.TouchUpInside)
-                let guanZhuLabel = UILabel()
+    
                 guanZhuLabel.tag = 20
-                guanZhuLabel.text = "8"
+//                guanZhuLabel.text = forcusNumber.description
                 guanZhuLabel.textAlignment = .Center
                 guanZhuLabel.textColor = UIColor.whiteColor()
                 guanZhu .addSubview(guanZhuLabel)
@@ -120,9 +124,9 @@ class HeaderView: UIView {
                                       forState: UIControlState.Normal)
                 changDi .addTarget(self, action: #selector(self.click(_:)),
                                    forControlEvents: UIControlEvents.TouchUpInside)
-                let changDiLabel = UILabel()
+    
                 changDiLabel.tag = 21
-                changDiLabel.text = "9"
+//                changDiLabel.text = fanseNumber.description
                 changDiLabel.textColor = UIColor.whiteColor()
                 changDiLabel.textAlignment = .Center
                 changDi .addSubview(changDiLabel)
@@ -149,9 +153,9 @@ class HeaderView: UIView {
                                      forState: UIControlState.Normal)
                 huoZan .addTarget(self, action: #selector(self.click(_:)),
                                   forControlEvents: UIControlEvents.TouchUpInside)
-                let huoZanLabel = UILabel()
+    
                 huoZanLabel.tag = 22
-                huoZanLabel.text = "10"
+//                huoZanLabel.text = ZanNumber.description
                 huoZanLabel.textAlignment = .Center
                 huoZanLabel.textColor = UIColor.whiteColor()
                 huoZan .addSubview(huoZanLabel)
@@ -178,9 +182,9 @@ class HeaderView: UIView {
                                      forState: UIControlState.Normal)
                 quanZi .addTarget(self, action: #selector(self.click(_:)),
                                   forControlEvents: UIControlEvents.TouchUpInside)
-                let quanZiLabel = UILabel()
+    
                 quanZiLabel.tag = 23
-                quanZiLabel.text = "11"
+//                quanZiLabel.text = circleNumber.description
                 quanZiLabel.textAlignment = .Center
                 quanZiLabel.textColor = UIColor.whiteColor()
                 quanZi .addSubview(quanZiLabel)

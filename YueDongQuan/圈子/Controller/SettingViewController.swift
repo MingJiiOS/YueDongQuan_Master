@@ -70,6 +70,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
              biVcell = tableView.dequeueReusableCellWithIdentifier(cellId) as? SettingCell
             biVcell = SettingCell(style: .Default, reuseIdentifier: cellId)
             biVcell!.headImage.backgroundColor = UIColor.grayColor()
+            biVcell!.headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
             biVcell!.bigV.backgroundColor = kBlueColor
             biVcell!.userName.text = userInfo.name
             biVcell!.userSex.text = "男"

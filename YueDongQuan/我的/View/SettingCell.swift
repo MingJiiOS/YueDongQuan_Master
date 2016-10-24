@@ -69,14 +69,24 @@ class SettingCell: UITableViewCell {
         }
         userAge.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
         userSex.textAlignment = .Left
-        
+        self.accessoryType = .DisclosureIndicator
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    func config(model:memberInfoModel)  {
+        
+        bigV.backgroundColor = kBlueColor
+        headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+        userName.text = model.data.name
+        userSex.text = model.data.sex
+        
+       let age = TimeStampToDate().TimestampToAge(model.data.birthday)
+        
+        userAge.text = age
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
