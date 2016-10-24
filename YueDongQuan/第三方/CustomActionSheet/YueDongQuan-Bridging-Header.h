@@ -41,7 +41,7 @@
 #import "UIView+LQXkeyboard.h"
 #import "PYPhotoBrowser.h"
 #import "PYPhotosPreviewController.h"
-
+#import "JFCompressionVideo.h"
 
 
 //高德地图

@@ -14,6 +14,7 @@
 		5C072B621D8F9C6C00420F6D /* EditorFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C072B611D8F9C6C00420F6D /* EditorFieldViewController.swift */; };
 		5C10E1261D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C10E1251D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift */; };
 		5C10E1281D9B5B34008AFAAF /* HKFPostActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C10E1271D9B5B34008AFAAF /* HKFPostActivityVC.swift */; };
+		5C1DC7221DB9BC41000F96BD /* JFCompressionVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1DC7211DB9BC41000F96BD /* JFCompressionVideo.m */; };
 		5C24BB6B1D9A48A200A6D25F /* HKFPostImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C24BB6A1D9A48A200A6D25F /* HKFPostImageVC.m */; };
 		5C24BB6F1D9A4BEB00A6D25F /* CustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C24BB6E1D9A4BEA00A6D25F /* CustomTextField.m */; };
 		5C24BB721D9A5C9C00A6D25F /* HKFPostVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C24BB711D9A5C9C00A6D25F /* HKFPostVideoVC.m */; };
@@ -52,6 +53,7 @@
 		5C3B9A011D9D0A0400AF7CFE /* QuanZiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3B9A001D9D0A0400AF7CFE /* QuanZiCell.swift */; };
 		5C3B9A031D9D17A900AF7CFE /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3B9A021D9D17A900AF7CFE /* SearchResultCell.swift */; };
 		5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4396CF1D9E135200F40749 /* SourceAnimation.swift */; };
+		5C5DB9EF1DBB609700BF89EE /* DiscoveryImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DB9EE1DBB609700BF89EE /* DiscoveryImage.swift */; };
 		5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */; };
 		5C7C3A031DB5CE3F00EA598B /* DiscoveryCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */; };
 		5C7C3A041DB5CE3F00EA598B /* DiscoveryArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A001DB5CE3F00EA598B /* DiscoveryArray.swift */; };
@@ -330,6 +332,8 @@
 		5C072B611D8F9C6C00420F6D /* EditorFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorFieldViewController.swift; sourceTree = "<group>"; };
 		5C10E1251D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostJoinTeamVC.swift; sourceTree = "<group>"; };
 		5C10E1271D9B5B34008AFAAF /* HKFPostActivityVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostActivityVC.swift; sourceTree = "<group>"; };
+		5C1DC7201DB9BC41000F96BD /* JFCompressionVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFCompressionVideo.h; sourceTree = "<group>"; };
+		5C1DC7211DB9BC41000F96BD /* JFCompressionVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFCompressionVideo.m; sourceTree = "<group>"; };
 		5C24BB691D9A48A200A6D25F /* HKFPostImageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKFPostImageVC.h; sourceTree = "<group>"; };
 		5C24BB6A1D9A48A200A6D25F /* HKFPostImageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKFPostImageVC.m; sourceTree = "<group>"; };
 		5C24BB6C1D9A492500A6D25F /* YDQPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YDQPrefixHeader.pch; sourceTree = "<group>"; };
@@ -395,6 +399,7 @@
 		5C3B9A001D9D0A0400AF7CFE /* QuanZiCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuanZiCell.swift; path = "YueDongQuan/搜索/View/QuanZiCell.swift"; sourceTree = SOURCE_ROOT; };
 		5C3B9A021D9D17A900AF7CFE /* SearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		5C4396CF1D9E135200F40749 /* SourceAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceAnimation.swift; sourceTree = "<group>"; };
+		5C5DB9EE1DBB609700BF89EE /* DiscoveryImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryImage.swift; sourceTree = "<group>"; };
 		5C68263E1DAC91250032B66E /* NSObject+EncodingString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+EncodingString.h"; sourceTree = "<group>"; };
 		5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+EncodingString.m"; sourceTree = "<group>"; };
 		5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryCommentModel.swift; sourceTree = "<group>"; };
@@ -791,6 +796,15 @@
 				5C072B5F1D8F8D2500420F6D /* YoYoAlertView.swift */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		5C1DC71F1DB9BC41000F96BD /* JFCompressionVideoHeaper */ = {
+			isa = PBXGroup;
+			children = (
+				5C1DC7201DB9BC41000F96BD /* JFCompressionVideo.h */,
+				5C1DC7211DB9BC41000F96BD /* JFCompressionVideo.m */,
+			);
+			path = JFCompressionVideoHeaper;
 			sourceTree = "<group>";
 		};
 		5C27BACE1DB761D9005A2F8D /* PYPhotoBrowser */ = {
@@ -1317,6 +1331,7 @@
 		BFC65D321D86A05D004E7E99 /* 发布 */ = {
 			isa = PBXGroup;
 			children = (
+				5C1DC71F1DB9BC41000F96BD /* JFCompressionVideoHeaper */,
 				BFC65D331D86A05D004E7E99 /* Controller */,
 				BFC65D341D86A05D004E7E99 /* Model */,
 				BFC65D351D86A05D004E7E99 /* View */,
@@ -1393,6 +1408,7 @@
 			children = (
 				5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */,
 				5C7C3A001DB5CE3F00EA598B /* DiscoveryArray.swift */,
+				5C5DB9EE1DBB609700BF89EE /* DiscoveryImage.swift */,
 				5C7C3A011DB5CE3F00EA598B /* DiscoveryData.swift */,
 				5C7C3A021DB5CE3F00EA598B /* DiscoveryModel.swift */,
 				5CC5F93C1DAF8A450088A61E /* HKFCellModel.swift */,
@@ -1809,6 +1825,7 @@
 				BF071F451D9A110B000551F7 /* PersonalViewController.swift in Sources */,
 				5C27BAF11DB761D9005A2F8D /* UIView+PYExtension.m in Sources */,
 				BF071EF61D9A0D5F000551F7 /* AllNoticeViewController.swift in Sources */,
+				5C5DB9EF1DBB609700BF89EE /* DiscoveryImage.swift in Sources */,
 				5C072B601D8F8D2500420F6D /* YoYoAlertView.swift in Sources */,
 				BFAF23C91DB8600800294988 /* uploadImageData.swift in Sources */,
 				5CC48A041D9CECF8009C4AFE /* SearchController.swift in Sources */,
@@ -1939,6 +1956,7 @@
 				BF071F0D1D9A0D5F000551F7 /* MJQRCodeView.swift in Sources */,
 				BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */,
 				BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */,
+				5C1DC7221DB9BC41000F96BD /* JFCompressionVideo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

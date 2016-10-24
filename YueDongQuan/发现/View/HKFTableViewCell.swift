@@ -12,6 +12,7 @@ import SnapKit
 import HYBMasonryAutoCellHeight
 
 
+
 protocol HKFTableViewCellDelegate {
     func reloadCellHeightForModelAndAtIndexPath(model : DiscoveryArray,indexPath : NSIndexPath)
     func createPingLunView(indexPath:NSIndexPath,sayId:Int,type:PingLunType)
@@ -37,7 +38,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     private var timeStatus : UILabel?//时间
     var distanceLabel : UILabel?//距离
     var typeStatusView : UIImageView?//类型
-    var displayView = DisplayView()//照片或者视频显示
+    var displayView = PYPhotosView()//照片或者视频显示
     var tableView : UITableView?//评论cell
     var locationView = UIView()//有定位时显示定位，没有时隐藏
     var locationLabel = UILabel()//显示定位信息
@@ -51,12 +52,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     var indexPath : NSIndexPath?
     var delegate : HKFTableViewCellDelegate?
     
-    var imageArry = [String](){
-        didSet{
-            self.displayView.imgsPrepare(imageArry, isLocal: false)
-        }
-    }
-    
+    var imageArry = [String]()
     
     
     
@@ -153,7 +149,6 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         //说说内容
         self.descLabel = UILabel()
         self.contentView.addSubview(self.descLabel!)
-        self.descLabel?.preferredMaxLayoutWidth = screenWidth - 110
         self.descLabel?.numberOfLines = 0
         self.descLabel?.font = UIFont.systemFontOfSize(14)
         self.descLabel?.snp_makeConstraints(closure: { (make) in
@@ -164,12 +159,14 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         //照片或视频展示
         self.contentView.addSubview(self.displayView)
+        displayView.photoWidth = (ScreenWidth - 30)/3
+        displayView.photoHeight = (ScreenWidth - 30)/3
         self.displayView.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(10)
             make.right.equalTo(-10)
             make.top.equalTo((weakSelf?.descLabel?.snp_bottom)!).offset(5)
         })
-        displayView.backgroundColor = UIColor.blueColor()
+        
         //定位信息
         self.contentView.addSubview(self.locationView)
         self.locationView.snp_makeConstraints { (make) in
@@ -266,23 +263,66 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     
     func configCellWithModelAndIndexPath(model : DiscoveryArray,indexPath : NSIndexPath){
+        
         self.indexPath = indexPath
         self.titleLabel?.text =  model.aname
+        if model.address == ""{
+            self.locationView.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(0)
+            })
+            self.locationView.hidden = true
+        }else{
+            self.locationView.hidden = false
+            self.locationView.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(14)
+            })
+            self.distanceLabel?.text = model.address
+        }
+        let tempStr = "<body> " + model.content + " </body>"
         
-        self.descLabel?.text = String(format: "%@", model.content)
+        
+        let resultStr1 = tempStr.stringByReplacingOccurrencesOfString("\\n", withString: "<br/>", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        
+        
+        let data = resultStr1.dataUsingEncoding(NSUnicodeStringEncoding)
+        let options = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
+        let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
+        
+        self.descLabel?.attributedText = html
         self.locationLabel.text = model.address
         self.headImageView?.sd_setImageWithURL(NSURL(string: "http://scs.ganjistatic1.com/gjfs01/M00/89/F4/CgEHklWmXzvov6K-AABrKnXXM9U624_600-0_6-0.jpg"))
         self.testModel = model
         
         self.timeStatus?.text = getTimeString(model.time)
         
+        if model.images.count != 0 {
+            let h1 = cellHeightByData1(model.images.count)
+            print(h1)
+            self.displayView.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(h1)
+            })
+        }else{
+            self.displayView.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(0)
+            })
+        }
         
-        //        let h1 = cellHeightByData1(model.imgArray.count)
-        //        print(h1)
+        var thumbnailImageUrls = [String]()
+        var originalImageUrls = [String]()
+        if model.images.count != 0 {
+            for item in model.images {
+                thumbnailImageUrls.append(item.thumbnailSrc)
+                originalImageUrls.append(item.originalSrc)
+            }
+            displayView.thumbnailUrls = thumbnailImageUrls
+            displayView.originalUrls = originalImageUrls
+        }
         
-        self.displayView.snp_updateConstraints(closure: { (make) in
-            make.height.equalTo(0)
-        })
+        
+        
+        
+        
+        
         
         //        if model.address == "" {
         //            self.locationView.snp_updateConstraints(closure: { (make) in
@@ -403,12 +443,12 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
 ////        print(timer)
         
         let timeTemp = NSDate.init(timeIntervalSince1970: Double(time/1000))
-        print(timeTemp)
+        
         let timeInterval = timeTemp.timeIntervalSince1970
-        print(timeInterval)
+        
         let timer = NSDate().timeIntervalSince1970 - timeInterval//currentTime - createTime
         
-        print(timer)
+        
         
         let second = timer
         if second < 60 {
@@ -453,10 +493,18 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     }
     
     
-    func getStringForHeight(text:String) -> CGFloat {
+    func getStringForHeightAndWidth(text:String) -> CGFloat {
         let size = text.stringHeightWith(14, width: ScreenWidth - 40)
         return size
     }
+    
+    
+    func heightForString(textView:UITextView,width:CGFloat) -> CGFloat{
+        let sizeToFit = textView.sizeThatFits(CGSize(width: width, height: CGFloat(MAXFLOAT)))
+        return sizeToFit.height
+    }
+    
+    
     
     
 }
