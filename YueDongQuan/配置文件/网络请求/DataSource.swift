@@ -298,13 +298,9 @@ class DataSource: NSObject {
         return model!
     }
     //MARK:解析圈子成员数据
-    func getcirclememberData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getcirclememberData(datasource:NSDictionary) -> circleMemberModel {
+        let model = circleMemberModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析获取圈子权限数据
     func getgetpermissionsData(datasource:NSDictionary) -> MJResponseModel {
@@ -316,13 +312,9 @@ class DataSource: NSObject {
         return model!
     }
     //MARK:解析圈子成员资料数据
-    func getmemberinfoData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getmemberinfoData(datasource:NSDictionary) -> memberInfoModel {
+        let model = memberInfoModel(fromDictionary: datasource)
+        return model
     }
     //MARK:加入黑名单数据
     func getjoinblacklistData(datasource:NSDictionary) -> MJResponseModel {
@@ -370,13 +362,9 @@ class DataSource: NSObject {
         return model!
     }
     //MARK:解析圈子公告数据
-    func getannouncementData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getannouncementData(datasource:NSDictionary) -> AllNoticeModel {
+        let model = AllNoticeModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析发布圈子公告数据 publishannouncement
     func getpublishannouncementData(datasource:NSDictionary) -> MJResponseModel {

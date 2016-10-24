@@ -1,23 +1,23 @@
 //
-//	myFoundData.swift
+//	AllNoticeData.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class myFoundData : NSObject, NSCoding{
+class AllNoticeData : NSObject, NSCoding{
 
-	var array : [myFoundArray]!
+	var array : [AllNoticeArray]!
 
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: NSDictionary){
-		array = [myFoundArray]()
+		array = [AllNoticeArray]()
 		if let arrayArray = dictionary["array"] as? [NSDictionary]{
 			for dic in arrayArray{
-				let value = myFoundArray(fromDictionary: dic)
+				let value = AllNoticeArray(fromDictionary: dic)
 				array.append(value)
 			}
 		}
@@ -45,7 +45,7 @@ class myFoundData : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         array = aDecoder.decodeObjectForKey("array") as? [myFoundArray]
+         array = aDecoder.decodeObjectForKey("array") as? [AllNoticeArray]
 
 	}
 

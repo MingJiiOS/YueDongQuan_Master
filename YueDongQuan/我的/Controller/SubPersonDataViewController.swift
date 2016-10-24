@@ -57,6 +57,7 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
             biVcell!.accessoryType = .DisclosureIndicator
             biVcell?.textLabel?.text = "个人头像"
             biVcell?.headImage.backgroundColor = UIColor.greenColor()
+            biVcell?.headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
             return biVcell!
         case 1:
             let array = ["姓名","性别","年龄"]

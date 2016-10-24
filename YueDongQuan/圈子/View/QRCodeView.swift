@@ -24,7 +24,7 @@ class QRCodeView: UIView {
     
     
 
-    override init(frame: CGRect) {
+    init(frame: CGRect,QRstring:String) {
         super.init(frame: frame)
         self .addSubview(image)
         self .addSubview(quanZiName)
@@ -43,7 +43,7 @@ class QRCodeView: UIView {
             make.width.width.equalTo(ScreenWidth)
             make.centerY.equalTo(image.snp_centerY)
         }
-        quanZiName.text = "亚太跆拳道 2"
+        
         
             QRCodeImage.snp_makeConstraints { (make) in
                 make.width.height.equalTo(ScreenWidth/2)
@@ -52,7 +52,7 @@ class QRCodeView: UIView {
         }
         QRCodeImage.backgroundColor = UIColor.grayColor()
        let qr = MJQRCodeView()
-      QRCodeImage.image = qr.createQRForString("qwqweqwe", qrImageName: "")
+      QRCodeImage.image = qr.createQRForString(QRstring, qrImageName: "")
         ExplainLabel.snp_makeConstraints { (make) in
             make.left.right.equalTo(0)
             make.height.equalTo(20)

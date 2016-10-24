@@ -1,17 +1,14 @@
 //
-//	myInfoModel.swift
-//
-//	Create by 方果 黄 on 22/10/2016
-//	Copyright © 2016. All rights reserved.
+//	memberInfoModel.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class myInfoModel : NSObject, NSCoding{
+class memberInfoModel : NSObject, NSCoding{
 
 	var code : String!
-	var data : myInfoData!
+	var data : memberInfoData!
 	var flag : String!
 
 
@@ -21,7 +18,7 @@ class myInfoModel : NSObject, NSCoding{
 	init(fromDictionary dictionary: NSDictionary){
 		code = dictionary["code"] as? String
 		if let dataData = dictionary["data"] as? NSDictionary{
-			data = myInfoData(fromDictionary: dataData)
+			data = memberInfoData(fromDictionary: dataData)
 		}
 		flag = dictionary["flag"] as? String
 	}
@@ -51,7 +48,7 @@ class myInfoModel : NSObject, NSCoding{
     @objc required init(coder aDecoder: NSCoder)
 	{
          code = aDecoder.decodeObjectForKey("code") as? String
-         data = aDecoder.decodeObjectForKey("data") as? myInfoData
+         data = aDecoder.decodeObjectForKey("data") as? memberInfoData
          flag = aDecoder.decodeObjectForKey("flag") as? String
 
 	}

@@ -141,9 +141,6 @@
 		BF071F431D9A10DA000551F7 /* QuanZiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071F421D9A10DA000551F7 /* QuanZiViewController.swift */; };
 		BF071F451D9A110B000551F7 /* PersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071F441D9A110B000551F7 /* PersonalViewController.swift */; };
 		BF071F471D9A1705000551F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF071F461D9A1705000551F7 /* Assets.xcassets */; };
-		BF140EE21DAF2C930029DC25 /* myFoundData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF140EDF1DAF2C930029DC25 /* myFoundData.swift */; };
-		BF140EE31DAF2C930029DC25 /* myFoundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF140EE01DAF2C930029DC25 /* myFoundImage.swift */; };
-		BF140EE41DAF2C930029DC25 /* myFoundModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF140EE11DAF2C930029DC25 /* myFoundModel.swift */; };
 		BF140EE61DAF6A390029DC25 /* updateNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF140EE51DAF6A390029DC25 /* updateNameModel.swift */; };
 		BF1C0D6C1D8AAB5D009EA504 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C0D6B1D8AAB5D009EA504 /* CoreData.framework */; };
 		BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E16A91DA74518007985F3 /* validateUtils.m */; };
@@ -242,11 +239,12 @@
 		BF2F6C9A1DAE16510050B437 /* RegistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F6C991DAE16510050B437 /* RegistModel.swift */; };
 		BF2F6C9D1DAE25280050B437 /* imData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F6C9B1DAE25280050B437 /* imData.swift */; };
 		BF2F6C9E1DAE25280050B437 /* imModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F6C9C1DAE25280050B437 /* imModel.swift */; };
-		BF2F6CA11DAE32B50050B437 /* myInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F6C9F1DAE32B50050B437 /* myInfoData.swift */; };
-		BF2F6CA21DAE32B50050B437 /* myInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F6CA01DAE32B50050B437 /* myInfoModel.swift */; };
 		BF3CAC461DB22E15008A5C51 /* myCircleArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC431DB22E15008A5C51 /* myCircleArray.swift */; };
 		BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC441DB22E15008A5C51 /* myCircleData.swift */; };
 		BF3CAC481DB22E15008A5C51 /* myCircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */; };
+		BF5738831DBB10690023B7DE /* myInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738811DBB10690023B7DE /* myInfoData.swift */; };
+		BF5738841DBB10690023B7DE /* myInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738821DBB10690023B7DE /* myInfoModel.swift */; };
+		BF5738861DBB74930023B7DE /* CircleHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738851DBB74930023B7DE /* CircleHeadView.swift */; };
 		BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */; };
 		BF6FD5241D9BAF0D00F52C48 /* MJAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */; };
 		BF7DDC9F1DA0AAC700772366 /* publishNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7DDC9E1DA0AAC700772366 /* publishNoticeViewController.swift */; };
@@ -310,6 +308,18 @@
 		BFC65D591D86A1AF004E7E99 /* YXActionSheetButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC65D561D86A1AF004E7E99 /* YXActionSheetButton.m */; };
 		BFC65D5A1D86A1AF004E7E99 /* YXCustomActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC65D581D86A1AF004E7E99 /* YXCustomActionSheet.m */; };
 		BFCD98D11DAC7B0700AF915C /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCD98D01DAC7B0700AF915C /* DataSource.swift */; };
+		BFD36CBE1DB9AEF3005005A3 /* myFoundArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CBA1DB9AEF3005005A3 /* myFoundArray.swift */; };
+		BFD36CBF1DB9AEF3005005A3 /* myFoundData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CBB1DB9AEF3005005A3 /* myFoundData.swift */; };
+		BFD36CC01DB9AEF3005005A3 /* myFoundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CBC1DB9AEF3005005A3 /* myFoundImage.swift */; };
+		BFD36CC11DB9AEF3005005A3 /* myFoundModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CBD1DB9AEF3005005A3 /* myFoundModel.swift */; };
+		BFD36CC41DB9BB0C005005A3 /* circleMemberData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CC21DB9BB0C005005A3 /* circleMemberData.swift */; };
+		BFD36CC51DB9BB0C005005A3 /* circleMemberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CC31DB9BB0C005005A3 /* circleMemberModel.swift */; };
+		BFD36CC81DB9F19A005005A3 /* memberInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CC61DB9F19A005005A3 /* memberInfoData.swift */; };
+		BFD36CC91DB9F19A005005A3 /* memberInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CC71DB9F19A005005A3 /* memberInfoModel.swift */; };
+		BFD36CCB1DBA0202005005A3 /* TimeStampToDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CCA1DBA0202005005A3 /* TimeStampToDate.swift */; };
+		BFD36CCF1DBA1922005005A3 /* AllNoticeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CCC1DBA1922005005A3 /* AllNoticeArray.swift */; };
+		BFD36CD01DBA1922005005A3 /* AllNoticeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CCD1DBA1922005005A3 /* AllNoticeData.swift */; };
+		BFD36CD11DBA1922005005A3 /* AllNoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD36CCE1DBA1922005005A3 /* AllNoticeModel.swift */; };
 		BFDB2A461DA3D77500A65DAD /* MJShareSDkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB2A451DA3D77500A65DAD /* MJShareSDkHelper.swift */; };
 		BFDB2A881DA5E8F700A65DAD /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFDB2A871DA5E8F700A65DAD /* AdSupport.framework */; };
 		BFDB2A971DA5EA4300A65DAD /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFDB2A8A1DA5EA4300A65DAD /* libWeiboSDK.a */; };
@@ -503,9 +513,6 @@
 		BF071F421D9A10DA000551F7 /* QuanZiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuanZiViewController.swift; sourceTree = "<group>"; };
 		BF071F441D9A110B000551F7 /* PersonalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalViewController.swift; sourceTree = "<group>"; };
 		BF071F461D9A1705000551F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BF140EDF1DAF2C930029DC25 /* myFoundData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myFoundData.swift; sourceTree = "<group>"; };
-		BF140EE01DAF2C930029DC25 /* myFoundImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myFoundImage.swift; sourceTree = "<group>"; };
-		BF140EE11DAF2C930029DC25 /* myFoundModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myFoundModel.swift; sourceTree = "<group>"; };
 		BF140EE51DAF6A390029DC25 /* updateNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = updateNameModel.swift; sourceTree = "<group>"; };
 		BF1C0CB21D8A4CD5009EA504 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		BF1C0D6B1D8AAB5D009EA504 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -606,12 +613,13 @@
 		BF2F6C991DAE16510050B437 /* RegistModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistModel.swift; sourceTree = "<group>"; };
 		BF2F6C9B1DAE25280050B437 /* imData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = imData.swift; sourceTree = "<group>"; };
 		BF2F6C9C1DAE25280050B437 /* imModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = imModel.swift; sourceTree = "<group>"; };
-		BF2F6C9F1DAE32B50050B437 /* myInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoData.swift; sourceTree = "<group>"; };
-		BF2F6CA01DAE32B50050B437 /* myInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoModel.swift; sourceTree = "<group>"; };
 		BF3061681D9CAB5100999402 /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AMapSearchKit.framework; path = ../../../../Downloads/AMapSearchKit.framework; sourceTree = "<group>"; };
 		BF3CAC431DB22E15008A5C51 /* myCircleArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleArray.swift; sourceTree = "<group>"; };
 		BF3CAC441DB22E15008A5C51 /* myCircleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleData.swift; sourceTree = "<group>"; };
 		BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleModel.swift; sourceTree = "<group>"; };
+		BF5738811DBB10690023B7DE /* myInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoData.swift; sourceTree = "<group>"; };
+		BF5738821DBB10690023B7DE /* myInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoModel.swift; sourceTree = "<group>"; };
+		BF5738851DBB74930023B7DE /* CircleHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHeadView.swift; sourceTree = "<group>"; };
 		BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesTableViewCell.swift; sourceTree = "<group>"; };
 		BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MJAnnotation.swift; path = ../MJAnnotation.swift; sourceTree = "<group>"; };
 		BF7DDC9E1DA0AAC700772366 /* publishNoticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = publishNoticeViewController.swift; sourceTree = "<group>"; };
@@ -681,6 +689,18 @@
 		BFC65D571D86A1AF004E7E99 /* YXCustomActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXCustomActionSheet.h; sourceTree = "<group>"; };
 		BFC65D581D86A1AF004E7E99 /* YXCustomActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCustomActionSheet.m; sourceTree = "<group>"; };
 		BFCD98D01DAC7B0700AF915C /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		BFD36CBA1DB9AEF3005005A3 /* myFoundArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myFoundArray.swift; sourceTree = "<group>"; };
+		BFD36CBB1DB9AEF3005005A3 /* myFoundData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myFoundData.swift; sourceTree = "<group>"; };
+		BFD36CBC1DB9AEF3005005A3 /* myFoundImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myFoundImage.swift; sourceTree = "<group>"; };
+		BFD36CBD1DB9AEF3005005A3 /* myFoundModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myFoundModel.swift; sourceTree = "<group>"; };
+		BFD36CC21DB9BB0C005005A3 /* circleMemberData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = circleMemberData.swift; sourceTree = "<group>"; };
+		BFD36CC31DB9BB0C005005A3 /* circleMemberModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = circleMemberModel.swift; sourceTree = "<group>"; };
+		BFD36CC61DB9F19A005005A3 /* memberInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = memberInfoData.swift; sourceTree = "<group>"; };
+		BFD36CC71DB9F19A005005A3 /* memberInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = memberInfoModel.swift; sourceTree = "<group>"; };
+		BFD36CCA1DBA0202005005A3 /* TimeStampToDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeStampToDate.swift; sourceTree = "<group>"; };
+		BFD36CCC1DBA1922005005A3 /* AllNoticeArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllNoticeArray.swift; sourceTree = "<group>"; };
+		BFD36CCD1DBA1922005005A3 /* AllNoticeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllNoticeData.swift; sourceTree = "<group>"; };
+		BFD36CCE1DBA1922005005A3 /* AllNoticeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllNoticeModel.swift; sourceTree = "<group>"; };
 		BFDB2A451DA3D77500A65DAD /* MJShareSDkHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJShareSDkHelper.swift; sourceTree = "<group>"; };
 		BFDB2A871DA5E8F700A65DAD /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		BFDB2A8A1DA5EA4300A65DAD /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
@@ -988,6 +1008,13 @@
 		BF071EE41D9A0D5F000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BFD36CCC1DBA1922005005A3 /* AllNoticeArray.swift */,
+				BFD36CCD1DBA1922005005A3 /* AllNoticeData.swift */,
+				BFD36CCE1DBA1922005005A3 /* AllNoticeModel.swift */,
+				BFD36CC61DB9F19A005005A3 /* memberInfoData.swift */,
+				BFD36CC71DB9F19A005005A3 /* memberInfoModel.swift */,
+				BFD36CC21DB9BB0C005005A3 /* circleMemberData.swift */,
+				BFD36CC31DB9BB0C005005A3 /* circleMemberModel.swift */,
 				BFAF23C71DB8600800294988 /* uploadImageData.swift */,
 				BFAF23C81DB8600800294988 /* uploadImageModel.swift */,
 				BFAF23BE1DB85EBC00294988 /* CircleInfoArray.swift */,
@@ -1022,6 +1049,7 @@
 				BF071EF41D9A0D5F000551F7 /* MJQRCodeView.swift */,
 				BF071EF51D9A0D5F000551F7 /* QRCodeView.swift */,
 				BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */,
+				BF5738851DBB74930023B7DE /* CircleHeadView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1045,15 +1073,16 @@
 		BF071F151D9A0D68000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BF5738811DBB10690023B7DE /* myInfoData.swift */,
+				BF5738821DBB10690023B7DE /* myInfoModel.swift */,
+				BFD36CBA1DB9AEF3005005A3 /* myFoundArray.swift */,
+				BFD36CBB1DB9AEF3005005A3 /* myFoundData.swift */,
+				BFD36CBC1DB9AEF3005005A3 /* myFoundImage.swift */,
+				BFD36CBD1DB9AEF3005005A3 /* myFoundModel.swift */,
 				BFC1269F1DB48C2B00E11088 /* HistoryDongdouArray.swift */,
 				BFC126A01DB48C2B00E11088 /* HistoryDongdouData.swift */,
 				BFC126A11DB48C2B00E11088 /* HistoryDongdouModel.swift */,
 				BF140EE51DAF6A390029DC25 /* updateNameModel.swift */,
-				BF140EDF1DAF2C930029DC25 /* myFoundData.swift */,
-				BF140EE01DAF2C930029DC25 /* myFoundImage.swift */,
-				BF140EE11DAF2C930029DC25 /* myFoundModel.swift */,
-				BF2F6C9F1DAE32B50050B437 /* myInfoData.swift */,
-				BF2F6CA01DAE32B50050B437 /* myInfoModel.swift */,
 				BF2F6C9B1DAE25280050B437 /* imData.swift */,
 				BF2F6C9C1DAE25280050B437 /* imModel.swift */,
 				BF2F6B541DADEF440050B437 /* LoginData.swift */,
@@ -1225,6 +1254,7 @@
 				BF071EEC1D9A0D5F000551F7 /* MHRadioButton.m */,
 				BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */,
 				BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */,
+				BFD36CCA1DBA0202005005A3 /* TimeStampToDate.swift */,
 			);
 			path = "MJ工具类";
 			sourceTree = "<group>";
@@ -1773,6 +1803,7 @@
 			files = (
 				5C8C3C691D927FAD00D756FF /* SignCellForHeader.swift in Sources */,
 				46315AFE1D882BBC00B9D846 /* CustomNavigationBar.swift in Sources */,
+				BFD36CCF1DBA1922005005A3 /* AllNoticeArray.swift in Sources */,
 				5CC5F9471DAF8A600088A61E /* Extension_String.swift in Sources */,
 				5C27BB071DB761F2005A2F8D /* DACircularProgressView.m in Sources */,
 				BF2F6B561DADEF440050B437 /* LoginData.swift in Sources */,
@@ -1781,18 +1812,22 @@
 				5C27BAF01DB761D9005A2F8D /* MBProgressHUD+PY.m in Sources */,
 				5C24BB791D9A7D2800A6D25F /* HKFPostMatchVC.swift in Sources */,
 				BFC65D591D86A1AF004E7E99 /* YXActionSheetButton.m in Sources */,
+				BFD36CC51DB9BB0C005005A3 /* circleMemberModel.swift in Sources */,
 				BF071EF81D9A0D5F000551F7 /* MyQuanZiViewController.swift in Sources */,
 				5C3439FE1D90E6EA0077BFDD /* SignRankingCOntroller.swift in Sources */,
 				5C27BAF51DB761D9005A2F8D /* PYPhotosViewController.m in Sources */,
 				BF9739CC1D9F714500E1B3EB /* MJGetToken.swift in Sources */,
+				BFD36CCB1DBA0202005005A3 /* TimeStampToDate.swift in Sources */,
 				BF140EE61DAF6A390029DC25 /* updateNameModel.swift in Sources */,
 				BF071F011D9A0D5F000551F7 /* MJModel.swift in Sources */,
 				BF071F3F1D9A0D68000551F7 /* SettingCell.swift in Sources */,
 				5CBAA8F01D99011F000E21E9 /* TZTestCell.m in Sources */,
 				BF071F021D9A0D5F000551F7 /* MJNoticeModel.swift in Sources */,
 				5C019B401D92708900BAAAC1 /* SignHeaderView.swift in Sources */,
+				BF5738831DBB10690023B7DE /* myInfoData.swift in Sources */,
 				5CE4A7E91D8AC1ED00F25CF6 /* HMSegmentedControl.m in Sources */,
 				5C27BAF31DB761D9005A2F8D /* PYPhotosPreviewController.m in Sources */,
+				BFD36CC11DB9AEF3005005A3 /* myFoundModel.swift in Sources */,
 				BFC65D4A1D86A14F004E7E99 /* MiddleViewController.swift in Sources */,
 				5C7C3A0B1DB5CECC00EA598B /* YHMessageView.swift in Sources */,
 				BFAF23C31DB85EBC00294988 /* CircleInfoModel.swift in Sources */,
@@ -1805,7 +1840,6 @@
 				BF071F351D9A0D68000551F7 /* HeaderView.swift in Sources */,
 				BFAD63241D9E13BE006234E1 /* MJLoginOpreationHelper.swift in Sources */,
 				5C90F1381D8FCFA0005E16AF /* UIImage+YJImage.m in Sources */,
-				BF2F6CA11DAE32B50050B437 /* myInfoData.swift in Sources */,
 				BFDB2A9A1DA6000600A65DAD /* YDQLoginRegisterViewController.swift in Sources */,
 				BF3CAC481DB22E15008A5C51 /* myCircleModel.swift in Sources */,
 				BF071EFC1D9A0D5F000551F7 /* QuanZiSettingViewController.swift in Sources */,
@@ -1845,15 +1879,18 @@
 				BF071F0C1D9A0D5F000551F7 /* MJParterDataView.swift in Sources */,
 				BFAF23C21DB85EBC00294988 /* CircleInfoData.swift in Sources */,
 				BF071EFE1D9A0D5F000551F7 /* SettingViewController.swift in Sources */,
+				BFD36CD11DBA1922005005A3 /* AllNoticeModel.swift in Sources */,
 				5C10E1261D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift in Sources */,
 				BF071F081D9A0D5F000551F7 /* MJHeadImageCell.swift in Sources */,
 				5C072B621D8F9C6C00420F6D /* EditorFieldViewController.swift in Sources */,
+				BFD36CBE1DB9AEF3005005A3 /* myFoundArray.swift in Sources */,
 				5C7C3A111DB5CF3400EA598B /* FieldModel.swift in Sources */,
 				BF071F2F1D9A0D68000551F7 /* SetNewPasswordViewController.swift in Sources */,
 				5C24BB741D9A5F4400A6D25F /* HKFPostRecruitmentVC.swift in Sources */,
 				5CD981061D96546A007828E2 /* XTimer.m in Sources */,
 				BFC126A31DB48C2B00E11088 /* HistoryDongdouData.swift in Sources */,
 				5C27BAF21DB761D9005A2F8D /* PYNavigationController.m in Sources */,
+				BFD36CC91DB9F19A005005A3 /* memberInfoModel.swift in Sources */,
 				BFC126A41DB48C2B00E11088 /* HistoryDongdouModel.swift in Sources */,
 				BF2F6C9D1DAE25280050B437 /* imData.swift in Sources */,
 				5C27BAFD1DB761D9005A2F8D /* PYPhotoView.m in Sources */,
@@ -1866,7 +1903,6 @@
 				5C24BB6B1D9A48A200A6D25F /* HKFPostImageVC.m in Sources */,
 				5CC5F93E1DAF8A450088A61E /* HKFCellModel.swift in Sources */,
 				BF071F051D9A0D5F000551F7 /* MHRadioButton.m in Sources */,
-				BF140EE41DAF2C930029DC25 /* myFoundModel.swift in Sources */,
 				5C3B9A031D9D17A900AF7CFE /* SearchResultCell.swift in Sources */,
 				5C2A956C1D8D86B2006D1462 /* CellModel.m in Sources */,
 				BF071F431D9A10DA000551F7 /* QuanZiViewController.swift in Sources */,
@@ -1877,10 +1913,11 @@
 				5CC5F93F1DAF8A450088A61E /* HKFCell_Cell.swift in Sources */,
 				5CFA5A231DB8B24000267399 /* HKFPostVideoSayVC.swift in Sources */,
 				5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */,
-				BF140EE31DAF2C930029DC25 /* myFoundImage.swift in Sources */,
 				5CA4EA401D8EC5EE001A8E8D /* FieldCell.swift in Sources */,
+				BF5738861DBB74930023B7DE /* CircleHeadView.swift in Sources */,
 				5C27BAF41DB761D9005A2F8D /* PYPhotosReaderController.m in Sources */,
 				BF071F3E1D9A0D68000551F7 /* SendPhoneNumberView.swift in Sources */,
+				BFD36CBF1DB9AEF3005005A3 /* myFoundData.swift in Sources */,
 				5C7C3A031DB5CE3F00EA598B /* DiscoveryCommentModel.swift in Sources */,
 				BF071F2E1D9A0D68000551F7 /* SendPhoneViewController.swift in Sources */,
 				BF071EFD1D9A0D5F000551F7 /* SelectChangDiViewController.swift in Sources */,
@@ -1894,10 +1931,10 @@
 				BF2F6C9E1DAE25280050B437 /* imModel.swift in Sources */,
 				BF9739D11D9F81ED00E1B3EB /* TempLeftViewController.swift in Sources */,
 				5C90F13A1D8FCFA0005E16AF /* YJBadgeView.m in Sources */,
+				BFD36CC01DB9AEF3005005A3 /* myFoundImage.swift in Sources */,
 				BF071F3D1D9A0D68000551F7 /* MyDongdouView.swift in Sources */,
 				BFA6DDBA1D88EC91009017DE /* PchFile.swift in Sources */,
 				BF071F091D9A0D5F000551F7 /* MJHeadimageWithSubimageView.swift in Sources */,
-				BF140EE21DAF2C930029DC25 /* myFoundData.swift in Sources */,
 				5C3B9A011D9D0A0400AF7CFE /* QuanZiCell.swift in Sources */,
 				5C7C3A041DB5CE3F00EA598B /* DiscoveryArray.swift in Sources */,
 				BFDB2A9C1DA600BB00A65DAD /* LoginRegisterView.swift in Sources */,
@@ -1919,6 +1956,7 @@
 				BFC1269E1DB4792F00E11088 /* CirclesModel.swift in Sources */,
 				BF9739CF1D9F71A100E1B3EB /* MJNetWorkHelper.swift in Sources */,
 				BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */,
+				BFD36CC81DB9F19A005005A3 /* memberInfoData.swift in Sources */,
 				5C27BB081DB761F2005A2F8D /* DALabeledCircularProgressView.m in Sources */,
 				5CD980EA1D9615FF007828E2 /* CircleAnimation.swift in Sources */,
 				5C7C3A141DB6069800EA598B /* FieldImageData.swift in Sources */,
@@ -1928,8 +1966,9 @@
 				5C343A001D90E8AB0077BFDD /* SignRankCell.swift in Sources */,
 				5C343A041D91366F0077BFDD /* SignRankBtnController.swift in Sources */,
 				BFC65D1D1D869FD1004E7E99 /* AppDelegate.swift in Sources */,
+				BFD36CC41DB9BB0C005005A3 /* circleMemberData.swift in Sources */,
+				BFD36CD01DBA1922005005A3 /* AllNoticeData.swift in Sources */,
 				BFC126A61DB4A42200E11088 /* MJKeyChainHelper.swift in Sources */,
-				BF2F6CA21DAE32B50050B437 /* myInfoModel.swift in Sources */,
 				5C27BAFC1DB761D9005A2F8D /* PYPhotosView.m in Sources */,
 				BFA6DDC71D895C11009017DE /* UIControl+Custom.m in Sources */,
 				5C8C3C651D9276F500D756FF /* SignSportsCell.swift in Sources */,
@@ -1957,6 +1996,8 @@
 				BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */,
 				BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */,
 				5C1DC7221DB9BC41000F96BD /* JFCompressionVideo.m in Sources */,
+				BF5738841DBB10690023B7DE /* myInfoModel.swift in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2099,6 +2140,8 @@
 					"-l\"stdc++.6.0.9\"",
 					"-l\"z\"",
 					"-framework",
+					"\"Alamofire\"",
+					"-framework",
 					"\"AMapFoundationKit\"",
 					"-framework",
 					"\"AMapLocationKit\"",
@@ -2182,6 +2225,8 @@
 					"-l\"c++\"",
 					"-l\"stdc++.6.0.9\"",
 					"-l\"z\"",
+					"-framework",
+					"\"Alamofire\"",
 					"-framework",
 					"\"AMapFoundationKit\"",
 					"-framework",

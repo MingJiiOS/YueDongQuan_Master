@@ -69,4 +69,7 @@ class ChatViewController: ConversationListViewController {
     func pop()  {
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
+    
+    
 }

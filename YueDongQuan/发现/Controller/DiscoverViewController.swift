@@ -479,7 +479,19 @@ extension DiscoverViewController {
                 
 
 
-                self.datasource = (self.testModel?.data.array)!
+//                print(self.testModel?.code)
+//                print(self.testModel?.data.array[0].address)
+//                print(self.testModel?.data.array[0].aname)
+//                print(self.testModel?.data.array[0].content)
+//                print(self.testModel?.data.array[0].id)
+//                print(self.testModel?.data.array[0].typeId)
+//                print(self.testModel?.data.array[0].thumbnailSrc)
+//                print(self.testModel?.data.array[0].time)
+
+                if self.testModel != nil{
+                    self.datasource = (self.testModel?.data.array)!
+                }
+                
                 for item in self.tableViews {
                     item.reloadData()
                 }

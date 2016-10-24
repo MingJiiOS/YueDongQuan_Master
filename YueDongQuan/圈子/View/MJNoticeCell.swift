@@ -11,7 +11,7 @@ import HYBSnapkitAutoCellHeight
 import SDWebImage
 
 protocol MJNoticeCellDelegate {
-    func deleBtnIndexPath(indexPath : NSIndexPath)
+    func deleBtnIndexPath(indexPath : NSIndexPath,noticeId:Int)
 }
 class MJNoticeCell: UITableViewCell {
     //用户头像
@@ -28,10 +28,11 @@ class MJNoticeCell: UITableViewCell {
   private  var isExpand = true
     
     var delegate : MJNoticeCellDelegate?
+    
     var indexP : NSIndexPath?
     
     var expandBlock:((isExpand:Bool) -> Void)?
-    
+    var noticemodel : AllNoticeModel?
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -47,22 +48,22 @@ class MJNoticeCell: UITableViewCell {
         self.contentView .addSubview(headImage)
         self.contentView .addSubview(userName)
         self.contentView .addSubview(contentLabel)
-        self.contentView .addSubview(deleteBtn)
+//        self.contentView .addSubview(deleteBtn)
         
         
         //头像
         headImage.snp_makeConstraints { (make) in
-            make.top.equalTo(25)
+            make.top.equalTo(10)
             make.left.equalTo(10)
-            make.height.width.equalTo(44)
+            make.height.width.equalTo(30)
         }
-        headImage.layer.cornerRadius = 22
-        headImage.layer.masksToBounds = true
+//        headImage.layer.cornerRadius = 22
+//        headImage.layer.masksToBounds = true
         
         //昵称 + 时间
         userName.snp_makeConstraints { (make) in
             make.left.equalTo(headImage.snp_right).offset(10)
-            make.top.equalTo(0)
+            make.top.equalTo(10)
             make.width.equalTo(200)
             make.height.equalTo(15)
         }
@@ -70,7 +71,7 @@ class MJNoticeCell: UITableViewCell {
         
         // 内容
         contentLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(15)
+            make.left.equalTo(headImage.snp_right).offset(5)
             make.top.equalTo(userName.snp_bottom).offset(10)
             make.right.equalTo(-15)
         }
@@ -85,17 +86,17 @@ class MJNoticeCell: UITableViewCell {
         contentLabel.addGestureRecognizer(tap)
 
 //        //删除按钮
-        deleteBtn.snp_makeConstraints { (make) in
-            make.width.equalTo(40)
-            make.height.equalTo(20)
-            make.right.equalTo(-10)
-            make.bottom.equalTo(self.contentView.snp_bottom)
-        }
-        deleteBtn.setTitle("删除", forState: UIControlState.Normal)
-        deleteBtn.setTitleColor(kBlueColor, forState: .Normal)
-        
-        deleteBtn .addTarget(self, action: #selector(clickDelebtn), forControlEvents: UIControlEvents.TouchUpInside)
-        
+//        deleteBtn.snp_makeConstraints { (make) in
+//            make.width.equalTo(40)
+//            make.height.equalTo(20)
+//            make.right.equalTo(-10)
+//            make.bottom.equalTo(self.contentView.snp_bottom)
+//        }
+//        deleteBtn.setTitle("删除", forState: UIControlState.Normal)
+//        deleteBtn.setTitleColor(kBlueColor, forState: .Normal)
+//        
+//        deleteBtn .addTarget(self, action: #selector(clickDelebtn), forControlEvents: UIControlEvents.TouchUpInside)
+//        
         
         let lineLabel = UILabel()
         lineLabel.backgroundColor = UIColor.lightGrayColor()
@@ -114,10 +115,14 @@ class MJNoticeCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func config(noticeModel model: MJNoticeModel) {
-//        headImage.sd_setImageWithURL(NSURL.fileURLWithPath(model.headImage))
-        userNameStr = model.userName
-        putTimeStr = model.putTime
+    func config(noticeModel model: AllNoticeModel,indexPath:NSIndexPath) {
+        
+        self.noticemodel = model
+        
+        
+        headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+        userNameStr = model.data.array[indexPath.row].name
+        putTimeStr = TimeStampToDate().TimestampToDate(model.data.array[indexPath.row].time)
         let attributeString = NSMutableAttributedString(string: "\(userNameStr) \(putTimeStr)")
         //从文本0开始6个字符字体HelveticaNeue-Bold,16号
         attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Bold", size: 15)!,
@@ -134,7 +139,7 @@ class MJNoticeCell: UITableViewCell {
 
         userName.attributedText = attributeString
         
-        contentLabel.text = model.content
+        contentLabel.text = model.data.array[indexPath.row].content
         
         if model.isExpand != self.isExpand {
             self.isExpand = model.isExpand
@@ -145,7 +150,7 @@ class MJNoticeCell: UITableViewCell {
             })
         }else{
             contentLabel.snp_remakeConstraints(closure: { (make) in
-                make.left.equalTo(15)
+                make.left.equalTo(headImage.snp_right).offset(5)
                 make.top.equalTo(userName.snp_bottom).offset(10)
                 make.right.equalTo(-15)
             })
@@ -160,7 +165,8 @@ class MJNoticeCell: UITableViewCell {
     }
     
     func clickDelebtn()  {
-        self.delegate?.deleBtnIndexPath(indexP!)
+        
+        self.delegate?.deleBtnIndexPath(self.indexP!,noticeId: self.noticemodel!.data.array[indexP!.row].id)
     }
     
 }

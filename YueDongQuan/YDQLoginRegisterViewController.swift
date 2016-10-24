@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
+class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource {
     
     var registModel : RegistModel!
     
@@ -43,22 +43,22 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
         
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TextFieldTextDidChange), name: UITextFieldTextDidChangeNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TextDidEndEditing), name: UITextFieldTextDidEndEditingNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TextFieldTextDidChange), name: UITextFieldTextDidChangeNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TextDidEndEditing), name: UITextFieldTextDidEndEditingNotification, object: nil)
        createTopView()
       loginOrRigsterAction()
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
         
    
     }
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
-    }
+//    deinit {
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+//    }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -73,6 +73,13 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
                         self.showMJProgressHUD("密码错误")
                     }else{
                         
+                        //MARK:融云资料
+                        info.name = loginmodel.data.name
+                        info.userId = loginmodel.data.uid.description
+//                        info.portraitUri = loginmodel.data.thumbnailSrc
+                        info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
+                        
+                        
                         let defaults = NSUserDefaults.standardUserDefaults()
                         
                         MJGetToken().requestTokenFromServeris(getToken
@@ -83,6 +90,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
                                 defaults.setObject(self.userModel.pw, forKey: "pw")
                                 defaults.setValue(userInfo.token, forKey: "token")
                                 defaults.synchronize()
+                            
                                 let helper = MJLoginOpreationHelper()
                                 if helper.IMConnectStatus == .ConnectionStatus_Connected{
                                     return
@@ -91,6 +99,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
                                         MJrcuserInfo.userId = userId as String
                                         helper.getConnectionStatus()
                                         
+                                        RCIM.sharedRCIM().userInfoDataSource = self
                                         }, errorBlock: { (isLogin, errorValue) in
                                             
                                     })
@@ -101,9 +110,9 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
                         
                         
                         self.dismissViewControllerAnimated(true, completion: { 
-                            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
-                            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
-                            NSNotificationCenter.defaultCenter().removeObserver(self)
+//                            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
+//                            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+//                            NSNotificationCenter.defaultCenter().removeObserver(self)
                         })
    
                     }
@@ -129,8 +138,8 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
                         
                     print("返回错误信息",error)
                         self.dismissViewControllerAnimated(true, completion: { 
-                            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
-                            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+//                            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
+//                            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
                         })
                 })
             }
@@ -138,6 +147,9 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
         }
     }
     func createTopView()  {
+        
+         let color = UIColor.whiteColor()
+        
         //背景图
         
         topView.frame = CGRectMake(0,0,ScreenWidth,ScreenHeight/2.5)
@@ -212,9 +224,13 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
         acountTextField.leftView = leftV1
         acountTextField.delegate = self
         acountTextField.tag = 10
+        acountTextField.attributedPlaceholder = NSAttributedString(string: "手机号码",
+                                                                   attributes:
+                                                                   [NSForegroundColorAttributeName:color])
+        acountTextField.addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
         
-        acountPlace = placerholderLabel(frame: CGRectMake(50, 0, 100, 40), string: "手机号码")
-        acountTextField .addSubview(acountPlace)
+//        acountPlace = placerholderLabel(frame: CGRectMake(50, 0, 100, 40), string: "手机号码")
+//        acountTextField .addSubview(acountPlace)
         //密码输入框
         let pwTextfeild = MJLoginTextField()
         pwTextfeild.borderFillColor = UIColor.whiteColor()
@@ -231,8 +247,10 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
         pwTextfeild.leftView = leftV2
         pwTextfeild.tag = 20
         pwTextfeild.delegate = self
-        pwPlace = placerholderLabel(frame: CGRectMake(50, 0, 100, 40), string: "密码")
-        pwTextfeild .addSubview(pwPlace)
+        pwTextfeild.addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
+//        pwPlace = placerholderLabel(frame: CGRectMake(50, 0, 100, 40), string: "密码")
+        pwTextfeild.attributedPlaceholder = NSAttributedString(string: "密码", attributes: [NSForegroundColorAttributeName:color])
+//        pwTextfeild .addSubview(pwPlace)
         //登录
         let loginActBtn = UIButton(type: .Custom)
         
@@ -281,8 +299,10 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
         phoneNumber.leftView = leftV3
         phoneNumber.tag = 30
         phoneNumber.delegate = self
-        newAcountPlace = placerholderLabel(frame: CGRectMake(50, 0, 100, 40), string: "手机号码")
-        phoneNumber .addSubview(newAcountPlace)
+        phoneNumber.addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
+//        newAcountPlace = placerholderLabel(frame: CGRectMake(50, 0, 100, 40), string: "手机号码")
+        phoneNumber.attributedPlaceholder = NSAttributedString(string: "手机号码", attributes: [NSForegroundColorAttributeName:color])
+//        phoneNumber .addSubview(newAcountPlace)
         //验证码
         let maskCode = MJLoginTextField()
         maskCode.borderFillColor = UIColor.whiteColor()
@@ -297,14 +317,16 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
         maskCode.leftViewMode = .Always
         maskCode.leftView = leftV4
         maskCode.tag = 40
-        maskCodePlace = placerholderLabel(frame: CGRectZero, string: "手机验证码")
-        maskCode .addSubview(maskCodePlace)
-        maskCodePlace.snp_makeConstraints { (make) in
-            make.left.right.equalTo(0)
-            make.top.bottom.equalTo(0)
-        }
-        maskCodePlace.adjustsFontSizeToFitWidth = true
-        maskCodePlace.textAlignment = .Center
+//        maskCodePlace = placerholderLabel(frame: CGRectZero, string: "手机验证码")
+//        maskCode .addSubview(maskCodePlace)
+        maskCode.attributedPlaceholder = NSAttributedString(string: "手机验证码", attributes: [NSForegroundColorAttributeName:color])
+        maskCode.addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
+//        maskCodePlace.snp_makeConstraints { (make) in
+//            make.left.right.equalTo(0)
+//            make.top.bottom.equalTo(0)
+//        }
+//        maskCodePlace.adjustsFontSizeToFitWidth = true
+//        maskCodePlace.textAlignment = .Center
         maskCode.delegate = self
         //发送验证码
         let sendMaskCode = UIButton(type: .Custom)
@@ -338,9 +360,12 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
         setPw.leftViewMode = .Always
         setPw.leftView = leftV5
         setPw.tag = 50
-        settingPwPlace = placerholderLabel(frame: CGRectMake(50, 0, 100, 40), string: "设置密码")
+//        settingPwPlace = placerholderLabel(frame: CGRectMake(50, 0, 100, 40), string: "设置密码")
+        setPw.addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
+       
+        setPw.attributedPlaceholder = NSAttributedString(string: "设置密码", attributes: [NSForegroundColorAttributeName:color])
         setPw.secureTextEntry = true
-        setPw .addSubview(settingPwPlace)
+//        setPw .addSubview(settingPwPlace)
         setPw.delegate = self
         //注册
         let registerBtn = UIButton(type: .Custom)
@@ -455,7 +480,68 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
         }
         
     }
-    
+    func textFieldDidChange(textfield:UITextField)  {
+        switch textfield.tag {
+        case 10:
+            if NSString(string: textfield.text!).length != 11 {
+                return
+            }else if NSString(string: textfield.text!).length == 11{
+                //判断电话是否存在
+                if validateUtils.validatePhoneNumber(textfield.text) != true {
+                    print("电话号码错误")
+                }else{
+                    //MARK:登录时判断电话是否已经注册
+                    let phoneModel = MJRequestModel()
+                    phoneModel.v = NSObject.getEncodeString("20160901")
+                    phoneModel.phone = textfield.text!
+                    userModel.phone = textfield.text!
+                    let dic = ["v":phoneModel.v,"phone":phoneModel.phone]
+                    MJNetWorkHelper().judgePhoneNumberIsRegister(isreg, phoneModel: dic, success: { (responseDic, success) in
+                        print("返回结果",responseDic)
+                        }, fail: { (error) in
+                            print("返回错误信息",error)
+                    })
+                }
+                
+            }
+            break
+         case 20:
+            userModel.pw = textfield.text!
+            break
+            case 30:
+                if NSString(string: textfield.text!).length != 11 {
+                    return
+                }else if NSString(string: textfield.text!).length == 11{
+                    //判断电话是否存在
+                    if validateUtils.validatePhoneNumber(textfield.text) != true {
+                        print("电话号码错误")
+                    }else{
+                        //MARK:注册时判断电话是否已经注册
+                        let phoneModel = MJRequestModel()
+                        
+                        phoneModel.phone = textfield.text!
+                        registerModel.phone = textfield.text!
+                        phoneModel.v = NSObject.getEncodeString("20160901")
+                        let dic = ["v":phoneModel.v,"phone":phoneModel.phone]
+                        MJNetWorkHelper().judgePhoneNumberIsRegister(isreg, phoneModel: dic, success: { (responseDic, success) in
+                            print("返回结果",responseDic)
+                            }, fail: { (error) in
+                                print("返回错误信息",error)
+                        })
+                    }
+                    
+                }
+            break
+            case 40:
+                break
+            
+            case 50:
+                 registerModel.pw = textfield.text!
+            break
+        default:
+            break
+        }
+    }
     //MARK:用户登录操作
     func loginAction()  {
         
@@ -488,6 +574,18 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate {
             self.loginOrRigsterAction()
         }
     }
+    
+    func getUserInfoWithUserId(userId: String!, completion: ((RCUserInfo!) -> Void)!) {
+        //MARK:融云资料
+//        info.name = loginmodel.data.name
+//        info.userId = loginmodel.data.uid.description
+        //                        info.portraitUri = loginmodel.data.thumbnailSrc
+        let jjj = RCUserInfo()
+        jjj.name = "成功了嚒"
+        jjj.portraitUri = "http://e.hiphotos.baidu.com/baike/w%3D268%3Bg%3D0/sign=22f7c4c0dbb44aed594eb9e28b27e03c/95eef01f3a292df544116b9fbd315c6035a8736e.jpg"
+        return completion(jjj)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

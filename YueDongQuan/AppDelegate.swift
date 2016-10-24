@@ -12,7 +12,10 @@ import IQKeyboardManagerSwift
 let AMAPAPIKEY = "cc7ada21dae93efe53c70dc7d6a46598"
 let RONGCLOUDAPPKEY = "ik1qhw0911hep"
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate ,UIAlertViewDelegate{
+class AppDelegate: UIResponder,
+UIApplicationDelegate,
+UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
+{
 
     var window: UIWindow?
     
@@ -24,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,UIAlertViewDelegate{
         AMapServices.sharedServices().apiKey = AMAPAPIKEY
         //融云
         RCIM.sharedRCIM().initWithAppKey(RONGCLOUDAPPKEY)
+
         //初始化融云即登录
 //        MJLoginOpreationHelper()
 
@@ -48,7 +52,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,UIAlertViewDelegate{
                        "describe":describe]
             MJNetWorkHelper().loginWithUserInfo(login, userModel: dic, success: { (responseDic, success) in
                 let loginmodel = DataSource().getUserInfo(responseDic)
-                    
+                //MARK:融云资料
+                info.name = loginmodel.data.name
+                info.userId = loginmodel.data.uid.description
+                //                        info.portraitUri = loginmodel.data.thumbnailSrc
+                info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
                     MJGetToken().requestTokenFromServeris(getToken
                         , success: { (responseDic, success) in
                             let model = TokenModel(fromDictionary: responseDic)
@@ -61,7 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,UIAlertViewDelegate{
                                 helper.connectToIM({ (isLogin, userId) in
                                     MJrcuserInfo.userId = userId as String
                                     helper.getConnectionStatus()
-                                    
+                                    RCIM.sharedRCIM().userInfoDataSource = self
+                                    RCIM.sharedRCIM().groupInfoDataSource = self
                                     }, errorBlock: { (isLogin, errorValue) in
                                         
                                 })
@@ -164,6 +173,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,UIAlertViewDelegate{
             HUDView .removeFromSuperview()
         }
         
+    }
+    func getUserInfoWithUserId(userId: String!, completion: ((RCUserInfo!) -> Void)!) {
+        let jjj = RCUserInfo()
+        jjj.name = "美女帅哥你们好"
+        jjj.portraitUri = "http://pic7.nipic.com/20100609/5136651_124423001651_2.jpg"
+        return completion(jjj)
+    }
+    func getGroupInfoWithGroupId(groupId: String!, completion: ((RCGroup!) -> Void)!) {
+        let hhh = RCGroup()
+        hhh.groupName = "江南体育馆"
+        hhh.portraitUri = "http://pic7.nipic.com/20100609/5136651_124423001651_2.jpg"
+        return completion(hhh)
     }
 
 }
