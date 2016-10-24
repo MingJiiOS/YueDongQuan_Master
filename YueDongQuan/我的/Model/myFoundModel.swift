@@ -8,7 +8,7 @@ import Foundation
 class myFoundModel : NSObject, NSCoding{
 
 	var code : String!
-	var data : [myFoundData]!
+	var data : myFoundData!
 	var flag : String!
 
 
@@ -17,12 +17,8 @@ class myFoundModel : NSObject, NSCoding{
 	 */
 	init(fromDictionary dictionary: NSDictionary){
 		code = dictionary["code"] as? String
-		data = [myFoundData]()
-		if let dataArray = dictionary["data"] as? [NSDictionary]{
-			for dic in dataArray{
-				let value = myFoundData(fromDictionary: dic)
-				data.append(value)
-			}
+		if let dataData = dictionary["data"] as? NSDictionary{
+			data = myFoundData(fromDictionary: dataData)
 		}
 		flag = dictionary["flag"] as? String
 	}
@@ -32,16 +28,12 @@ class myFoundModel : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
 		if code != nil{
 			dictionary["code"] = code
 		}
 		if data != nil{
-			var dictionaryElements = [NSDictionary]()
-			for dataElement in data {
-				dictionaryElements.append(dataElement.toDictionary())
-			}
-			dictionary["data"] = dictionaryElements
+			dictionary["data"] = data.toDictionary()
 		}
 		if flag != nil{
 			dictionary["flag"] = flag
@@ -56,7 +48,7 @@ class myFoundModel : NSObject, NSCoding{
     @objc required init(coder aDecoder: NSCoder)
 	{
          code = aDecoder.decodeObjectForKey("code") as? String
-         data = aDecoder.decodeObjectForKey("data") as? [myFoundData]
+         data = aDecoder.decodeObjectForKey("data") as? myFoundData
          flag = aDecoder.decodeObjectForKey("flag") as? String
 
 	}

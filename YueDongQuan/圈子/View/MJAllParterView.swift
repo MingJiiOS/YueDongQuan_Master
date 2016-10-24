@@ -10,10 +10,14 @@ import UIKit
 let AllParterCellIdentifier = "cellIdentifier"
 class MJAllParterView: UIView,UITableViewDelegate,UITableViewDataSource {
     var clickRowClourse : ((index:NSInteger) -> Void)?
-//    var expandBlock:((isExpand:Bool) -> Void)?
-    override init(frame: CGRect) {
+     let tableView = UITableView(frame: CGRectZero, style: .Plain)
+    var circleId : String?
+    var uId : String?
+    var memberModel : circleMemberModel?
+    init(frame: CGRect,circleid:String,uid:String) {
         super.init(frame: frame)
-        let tableView = UITableView(frame: CGRectZero, style: .Plain)
+       circleId = circleid
+        uId = uid
         self .addSubview(tableView)
         tableView.snp_makeConstraints { (make) in
             make.left.right.equalTo(0)
@@ -28,17 +32,20 @@ class MJAllParterView: UIView,UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-       
-          let   cell = MJHeadImageCell(style: .Default, reuseIdentifier: "cell")
-        
-        cell.headImage?.bgImage.image = UIImage(named: "img_message_2x")
-        cell.headImage?.subImage.backgroundColor = UIColor.brownColor()
-        cell.nameLabel.text = "贝克汉姆"
-        
+         let   cell = MJHeadImageCell(style: .Default, reuseIdentifier: "cell")
+        if self.memberModel != nil {
+            cell.headImage?.bgImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+            cell.headImage?.subImage.backgroundColor = UIColor.brownColor()
+            cell.nameLabel.text = self.memberModel?.data[indexPath.row].name
+        }
+
      return cell
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if self.memberModel != nil {
+            return (self.memberModel?.data.count)!
+        }
+        return 0
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView .deselectRowAtIndexPath(indexPath, animated: true)
@@ -46,6 +53,28 @@ class MJAllParterView: UIView,UITableViewDelegate,UITableViewDataSource {
         if let block = self.clickRowClourse{
             block(index: indexPath.row)
         }
+        
+    }
+}
+extension MJAllParterView{
+    func loadAllParterData()  {
+        let v = NSObject.getEncodeString("20160901")
+        let circleid = self.circleId
+        let dict = ["v":v,"circleId":circleid]
+        MJNetWorkHelper().circlemember(circlemember, circlememberModel: dict, success: { (responseDic, success) in
+            let model = DataSource().getcirclememberData(responseDic)
+            self.memberModel = model
+            self.tableView.reloadData()
+        }) { (error) in
+            
+        }
+        
+        
+        
+        
+        
+        
+        
         
     }
 }

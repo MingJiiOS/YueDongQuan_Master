@@ -1,19 +1,16 @@
 //
-//	myInfoModel.swift
-//
-//	Create by 方果 黄 on 22/10/2016
-//	Copyright © 2016. All rights reserved.
+//	AllNoticeModel.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class myInfoModel : NSObject, NSCoding{
+class AllNoticeModel : NSObject, NSCoding{
 
 	var code : String!
-	var data : myInfoData!
+	var data : AllNoticeData!
 	var flag : String!
-
+    var isExpand  = false
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
@@ -21,7 +18,7 @@ class myInfoModel : NSObject, NSCoding{
 	init(fromDictionary dictionary: NSDictionary){
 		code = dictionary["code"] as? String
 		if let dataData = dictionary["data"] as? NSDictionary{
-			data = myInfoData(fromDictionary: dataData)
+			data = AllNoticeData(fromDictionary: dataData)
 		}
 		flag = dictionary["flag"] as? String
 	}
@@ -51,7 +48,7 @@ class myInfoModel : NSObject, NSCoding{
     @objc required init(coder aDecoder: NSCoder)
 	{
          code = aDecoder.decodeObjectForKey("code") as? String
-         data = aDecoder.decodeObjectForKey("data") as? myInfoData
+         data = aDecoder.decodeObjectForKey("data") as? AllNoticeData
          flag = aDecoder.decodeObjectForKey("flag") as? String
 
 	}

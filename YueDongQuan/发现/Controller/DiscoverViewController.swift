@@ -478,8 +478,10 @@ extension DiscoverViewController {
 //                print(self.testModel?.data.array[0].thumbnailSrc)
 //                print(self.testModel?.data.array[0].time)
 
-
-                self.datasource = (self.testModel?.data.array)!
+                if self.testModel != nil{
+                    self.datasource = (self.testModel?.data.array)!
+                }
+                
                 for item in self.tableViews {
                     item.reloadData()
                 }

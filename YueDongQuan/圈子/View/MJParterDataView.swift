@@ -9,10 +9,15 @@
 import UIKit
 
 class MJParterDataView: UIView,UITableViewDelegate,UITableViewDataSource {
-  var tableView = UITableView(frame: CGRectZero, style: .Grouped)
     
-    override init(frame: CGRect) {
+  var tableView = UITableView(frame: CGRectZero, style: .Grouped)
+    var memberinfoModel : memberInfoModel?
+    var circleid : String?
+    var uId : String?
+     init(frame: CGRect,circleID:String,uid:String) {
         super.init(frame: frame)
+        circleid = circleID
+        uId = uid
         self .addSubview(tableView)
         tableView.snp_makeConstraints { (make) in
             make.top.bottom.equalTo(0)
@@ -31,23 +36,25 @@ class MJParterDataView: UIView,UITableViewDelegate,UITableViewDataSource {
         switch indexPath.section {
         case 0:
               let   cell = SettingCell(style: .Default, reuseIdentifier: "cell")
-              cell.headImage.backgroundColor = UIColor.grayColor()
-              cell.bigV.backgroundColor = kBlueColor
-              cell.userName.text = "姚明"
-              cell.userSex.text = "男"
-              cell.userAge.text = "34"
-              cell.accessoryType = .DisclosureIndicator
+              if self.memberinfoModel != nil {
+                cell.config(self.memberinfoModel!)
+              }
             return cell
         case 1:
             let cell = UITableViewCell(style: .Value1, reuseIdentifier: "cell")
-            cell.textLabel?.text = "入圈时间"
-            cell.detailTextLabel?.text = "2016-10-12"
-            cell.detailTextLabel?.textColor = UIColor.grayColor()
+            if self.memberinfoModel != nil {
+               let time = TimeStampToDate().TimestampToDate(self.memberinfoModel!.data.time)
+                cell.textLabel?.text = "入圈时间"
+                cell.detailTextLabel?.text = time
+                cell.detailTextLabel?.textColor = UIColor.grayColor()
+                
+            }
             return cell
         case 2:
             let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
             cell.textLabel?.text = "加入黑名单"
             let swich = UISwitch()
+            swich .addTarget(self, action: #selector(ValueChanged), forControlEvents: UIControlEvents.ValueChanged)
             cell.accessoryView = swich
             return cell
         case 3:
@@ -73,5 +80,34 @@ class MJParterDataView: UIView,UITableViewDelegate,UITableViewDataSource {
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView .deselectRowAtIndexPath(indexPath, animated: true)
+    }
+}
+extension MJParterDataView {
+    func loadParterData(circleid:String,parterUid:String)  {
+        let dict = ["v":v,"circleId":circleid,"uid":parterUid]
+        MJNetWorkHelper().memberinfo(memberinfo, memberinfoModel: dict, success: { (responseDic, success) in
+            let model = DataSource().getmemberinfoData(responseDic)
+            self.memberinfoModel = model
+            self.tableView.reloadData()
+            }) { (error) in
+                
+        }
+    }
+    
+    func ValueChanged(swich:UISwitch)  {
+        if swich.on != true {
+            let dict = ["v":v,
+                        "uid":userInfo.uid.description,
+                        "circleId":self.circleid,
+                        "blacklistId":self.uId]
+            MJNetWorkHelper().joinblacklist(joinblacklist, joinblacklistModel:
+                dict, success: { (responseDic, success) in
+                    
+                }, fail: { (error) in
+                    
+            })
+        }else{
+            swich.enabled = false
+        }
     }
 }

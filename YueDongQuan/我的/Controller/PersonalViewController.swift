@@ -85,7 +85,7 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
         MainBgTableView = UITableView(frame: CGRectMake(0, 0, ScreenWidth, ScreenHeight), style: .Grouped)
         MainBgTableView.delegate = self
         MainBgTableView.dataSource = self
-        
+        MainBgTableView.contentInset = UIEdgeInsetsMake(0, 0, 110, 0)
         self.view .addSubview(MainBgTableView)
 
     }
@@ -156,17 +156,20 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
             return 1;
             
         }else{
-            if self.myfoundmodel?.code != "200" {
-                return 0
-            }else if self.myfoundmodel?.code == "405"{
-                self.showMJProgressHUD("暂时没有说说(づ￣3￣)づ╭❤～")
-                return 0
-            }else{
-                 return (self.myfoundmodel?.data.count)!
+            if self.myfoundmodel != nil {
+                if self.myfoundmodel?.code != "200" {
+                    return 0
+                }else if self.myfoundmodel?.code == "405"{
+                    self.showMJProgressHUD("暂时没有说说(づ￣3￣)づ╭❤～")
+                    return 0
+                }else{
+                    return (self.myfoundmodel?.data.array.count)!
+                }
             }
+            
            
         }
-        
+        return 0
     }
     
     
@@ -174,9 +177,6 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
     //1.3 返回行高
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
-        
-        
-        
         if(indexPath.section == 0){
             
             return 1;
@@ -199,15 +199,25 @@ return 55
      func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
         if (section == 0) {
-        let bgView = HeaderView()
+            if self.myinfoModel != nil {
+                let bgView = HeaderView()
+                bgView.guanZhuLabel.text = self.myinfoModel?.data.bsum.description
+                bgView.changDiLabel.text = self.myinfoModel?.data.msum.description
+                bgView.huoZanLabel.text = self.myinfoModel?.data.asum.description
+                bgView.quanZiLabel.text = self.myinfoModel?.data.psum.description
+                bgView.headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+                return bgView
+            }
+        
+            
             //MARK:下载头像
 //            bgView.headImage.sd_setImageWithURL((NSURL(string: (self.myinfoModel?.data.originalSrc)!)), placeholderImage: UIImage(named: ""), options: .AllowInvalidSSLCertificates)
-        return bgView
+          
 
         }else{
             return view
         }
-        
+        return view
     }
     
     //1.4每组的头部高度
@@ -253,7 +263,7 @@ return 55
                 cell = MyDongdouTableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: identifier);
             }
             
-            cell!.imageView?.image = UIImage(named: "ic_shezhi")
+            cell!.imageView?.image = UIImage(named: "ic_doudong")
             
             cell!.textLabel?.text = "我的动豆"
             cell!.textLabel?.textColor = UIColor(red: 244 / 255,
@@ -266,11 +276,14 @@ return 55
             return cell!
         }
         else if(indexPath.section == 2){
-            if self.myfoundmodel?.code == "405" {
-                
-            }else{
-               cell?.textLabel?.text = self.myfoundmodel?.data[indexPath.row].content
+            if self.myfoundmodel != nil {
+                if self.myfoundmodel?.code == "405" {
+                    
+                }else{
+                    cell?.textLabel?.text = self.myfoundmodel?.data.array[indexPath.row].content
+                }
             }
+            
            
         }
         

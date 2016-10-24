@@ -1,22 +1,28 @@
 //
-//	myFoundImage.swift
+//	memberInfoData.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class myFoundImage : NSObject, NSCoding{
+class memberInfoData : NSObject, NSCoding{
 
-	var originalSrc : String!
+	var birthday : Int!
+	var name : String!
+	var sex : String!
 	var thumbnailSrc : String!
+	var time : Int!
 
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: NSDictionary){
-		originalSrc = dictionary["originalSrc"] as? String
+		birthday = dictionary["birthday"] as? Int
+		name = dictionary["name"] as? String
+		sex = dictionary["sex"] as? String
 		thumbnailSrc = dictionary["thumbnailSrc"] as? String
+		time = dictionary["time"] as? Int
 	}
 
 	/**
@@ -25,11 +31,20 @@ class myFoundImage : NSObject, NSCoding{
 	func toDictionary() -> NSDictionary
 	{
 		var dictionary = NSMutableDictionary()
-		if originalSrc != nil{
-			dictionary["originalSrc"] = originalSrc
+		if birthday != nil{
+			dictionary["birthday"] = birthday
+		}
+		if name != nil{
+			dictionary["name"] = name
+		}
+		if sex != nil{
+			dictionary["sex"] = sex
 		}
 		if thumbnailSrc != nil{
 			dictionary["thumbnailSrc"] = thumbnailSrc
+		}
+		if time != nil{
+			dictionary["time"] = time
 		}
 		return dictionary
 	}
@@ -40,8 +55,11 @@ class myFoundImage : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         originalSrc = aDecoder.decodeObjectForKey("originalSrc") as? String
+         birthday = aDecoder.decodeObjectForKey("birthday") as? Int
+         name = aDecoder.decodeObjectForKey("name") as? String
+         sex = aDecoder.decodeObjectForKey("sex") as? String
          thumbnailSrc = aDecoder.decodeObjectForKey("thumbnailSrc") as? String
+         time = aDecoder.decodeObjectForKey("time") as? Int
 
 	}
 
@@ -51,11 +69,20 @@ class myFoundImage : NSObject, NSCoding{
     */
     @objc func encodeWithCoder(aCoder: NSCoder)
 	{
-		if originalSrc != nil{
-			aCoder.encodeObject(originalSrc, forKey: "originalSrc")
+		if birthday != nil{
+			aCoder.encodeObject(birthday, forKey: "birthday")
+		}
+		if name != nil{
+			aCoder.encodeObject(name, forKey: "name")
+		}
+		if sex != nil{
+			aCoder.encodeObject(sex, forKey: "sex")
 		}
 		if thumbnailSrc != nil{
 			aCoder.encodeObject(thumbnailSrc, forKey: "thumbnailSrc")
+		}
+		if time != nil{
+			aCoder.encodeObject(time, forKey: "time")
 		}
 
 	}

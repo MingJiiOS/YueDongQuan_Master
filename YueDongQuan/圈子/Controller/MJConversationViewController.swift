@@ -20,12 +20,19 @@ class MJConversationViewController: RCConversationViewController {
     }
     //    var userinfo = UserInfo()
     var circleid : String?
+    //圈子头像
+    var thumbnailSrc : String?
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.clickButtonTagClosure { (ButtonTag) in
             if ButtonTag == 3{
                 let notice = QuanZiSettingViewController()
                 notice.circleId = self.circleid
+                notice.Circletitle = self.title
+                notice.thumbnailSrc = self.thumbnailSrc
                 self.push(notice)
             }
             if ButtonTag == 2{
@@ -35,12 +42,13 @@ class MJConversationViewController: RCConversationViewController {
                 
                 self.push(push)
             }
+            
             //            print("userinfo = ",self.userinfo)
         }
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0 / 255, green: 107 / 255, blue: 186 / 255, alpha: 1)
-        
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜", style: .Plain, target: self, action: #selector(pop))
         self.navigationItem.leftBarButtonItem?.tag = 1
         let searchBtn = UIBarButtonItem(title: "公告", style: .Plain, target: self, action: #selector(clickBtnAction(_:)))
@@ -87,6 +95,15 @@ class MJConversationViewController: RCConversationViewController {
         super.viewDidDisappear(animated)
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
     }
+    override func didTapCellPortrait(userId: String!) {
+        if userId == userInfo.uid.description {
+            let personal = PersonalViewController()
+            self.navigationController?.pushViewController(personal, animated: true)
+            
+        }else{
+            
+        }
+    }
     
-    
+  
 }

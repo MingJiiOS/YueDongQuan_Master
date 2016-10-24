@@ -1,17 +1,14 @@
 //
-//	myInfoModel.swift
-//
-//	Create by 方果 黄 on 22/10/2016
-//	Copyright © 2016. All rights reserved.
+//	circleMemberModel.swift
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
 
 
-class myInfoModel : NSObject, NSCoding{
+class circleMemberModel : NSObject, NSCoding{
 
 	var code : String!
-	var data : myInfoData!
+	var data : [circleMemberData]!
 	var flag : String!
 
 
@@ -20,8 +17,12 @@ class myInfoModel : NSObject, NSCoding{
 	 */
 	init(fromDictionary dictionary: NSDictionary){
 		code = dictionary["code"] as? String
-		if let dataData = dictionary["data"] as? NSDictionary{
-			data = myInfoData(fromDictionary: dataData)
+		data = [circleMemberData]()
+		if let dataArray = dictionary["data"] as? [NSDictionary]{
+			for dic in dataArray{
+				let value = circleMemberData(fromDictionary: dic)
+				data.append(value)
+			}
 		}
 		flag = dictionary["flag"] as? String
 	}
@@ -36,7 +37,11 @@ class myInfoModel : NSObject, NSCoding{
 			dictionary["code"] = code
 		}
 		if data != nil{
-			dictionary["data"] = data.toDictionary()
+			var dictionaryElements = [NSDictionary]()
+			for dataElement in data {
+				dictionaryElements.append(dataElement.toDictionary())
+			}
+			dictionary["data"] = dictionaryElements
 		}
 		if flag != nil{
 			dictionary["flag"] = flag
@@ -51,7 +56,7 @@ class myInfoModel : NSObject, NSCoding{
     @objc required init(coder aDecoder: NSCoder)
 	{
          code = aDecoder.decodeObjectForKey("code") as? String
-         data = aDecoder.decodeObjectForKey("data") as? myInfoData
+         data = aDecoder.decodeObjectForKey("data") as? [circleMemberData]
          flag = aDecoder.decodeObjectForKey("flag") as? String
 
 	}

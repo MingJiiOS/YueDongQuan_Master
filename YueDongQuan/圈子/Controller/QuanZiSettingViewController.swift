@@ -10,12 +10,16 @@ import UIKit
 
 let cellIdentifier = "MJAutoHeightCellIdentifier"
 
-class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITableViewDataSource,MHRadioButtonDelegate {
+class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITableViewDataSource {
     var dataSource = [MJNoticeModel]()
     var tableView = UITableView(frame: CGRectZero, style: .Grouped)
     
     var circleId : String?
     var circleinfoModel : CircleInfoModel?
+    //圈子名字
+    var Circletitle : String?
+    //圈子头像
+    var thumbnailSrc : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +28,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                                                                 style: .Plain,
                                                                 target: self,
                                                                 action: #selector(pop))
-        
+       
         self.creatView()
     }
     override func viewWillAppear(animated: Bool) {
@@ -162,9 +166,10 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
             if indexPath.row == 1 {
                 let cell = UITableViewCell(style: .Value1, reuseIdentifier: cellIdentifier)
                 cell.textLabel?.text  = "圈子二维码"
-                let btn = MHRadioButton(groupId: "firstGroup", atIndex: 0)
-                MHRadioButton.addObserver(self, forFroupId: "firstGroup")
-                cell.accessoryView = btn
+                let imageView = UIImageView()
+                imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+                imageView.image = UIImage(named: "qRcode")
+                cell.accessoryView = imageView
                 cell.accessoryType = .DisclosureIndicator
                 return cell
             }
@@ -196,8 +201,11 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                 make.top.equalTo(10)
             }
             overQuanzi.setTitle("退出圈子", forState: UIControlState.Normal)
-            overQuanzi.backgroundColor = UIColor.redColor()
+            overQuanzi.backgroundColor = UIColor(red: 254/255, green: 21/255, blue: 61/255, alpha: 1)
             overQuanzi.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            overQuanzi .addTarget(self, action: #selector(outCircle), forControlEvents: UIControlEvents.TouchUpInside)
+            overQuanzi.layer.cornerRadius = 5
+            overQuanzi.layer.masksToBounds = true
             return cell
         default:
             break
@@ -220,24 +228,23 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
         if indexPath.section == 2 {
             if indexPath.row == 0{
                 let all = AllNoticeViewController()
+                all.circleid = self.circleId
                 self.push(all)
             }
         }else{
             let subContent = SubContentViewController()
             subContent.indexSection = indexPath.section
             subContent.indexRow = indexPath.row
+            subContent.circleId = self.circleId
+            subContent.circletitle = self.Circletitle
+            subContent.thumbnailSrc = self.thumbnailSrc
             self.push(subContent)
         }
         
         
         
     }
-    //MARK: 单选按钮选择代理
-    func radioButtonSelectedAtIndex(index: UInt, inGroup groupID: String!, button: UIButton!) {
-        let cell = button.superview as! UITableViewCell
-        let path = tableView.indexPathForCell(cell)
-        print("index row%d", path?.row);
-    }
+ 
     
 }
 extension QuanZiSettingViewController {
@@ -255,4 +262,16 @@ extension QuanZiSettingViewController {
             
         }
     }
+    
+    func outCircle()  {
+        let dict = ["v":v,"uid":userInfo.uid.description,"circleId":self.circleId]
+        MJNetWorkHelper().kickingcircle(kickingcircle, kickingcircleModel: dict, success: { (responseDic, success) in
+            if success {
+                self.navigationController?.popToViewController(MyQuanZiViewController(), animated: true)
+            }
+            }) { (error) in
+                
+        }
+    }
+    
 }

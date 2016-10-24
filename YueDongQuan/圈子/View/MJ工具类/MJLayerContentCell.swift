@@ -27,10 +27,9 @@ class MJLayerContentCell: UITableViewCell {
         addBtn.layer.shadowColor = kBlueColor.CGColor
         addBtn.layer.shadowOpacity = 0.8
         addBtn.backgroundColor = UIColor(red: 197/255, green: 196/255, blue: 203/255, alpha: 1)
-        
-//        addBtn.backgroundColor = kBlueColor
-       
+        addBtn.setBackgroundImage(UIImage(named: "addMember"), forState: UIControlState.Normal)
         self.selectionStyle = .None
+        let image = UIImageView()
         for index in 0...4 {
             let circleLayer = CAShapeLayer()
             circleLayer.bounds = CGRect(x: 0, y: 0, width: 44, height: 44)
@@ -40,16 +39,19 @@ class MJLayerContentCell: UITableViewCell {
             circleLayer.masksToBounds = true
             self.contentView.layer .addSublayer(circleLayer)
             let layerShadow = CALayer()
-            layerShadow.bounds = CGRect(x: 0, y: 0, width: 46, height: 46)
+            layerShadow.bounds = CGRect(x: 0, y: 0, width: 44, height: 44)
             layerShadow.position = CGPoint(x: 104+index*64, y: 30)
             layerShadow.cornerRadius = layerShadow.bounds.size.width/2
-            layerShadow.masksToBounds = true
-            layerShadow.shadowColor = UIColor.grayColor().CGColor
+            layerShadow.shadowColor = kBlueColor.CGColor
             layerShadow.shadowOffset = CGSize(width: 2, height: 1)
-            layerShadow.shadowOpacity = 1
-            layerShadow.borderColor = UIColor.yellowColor().CGColor
+            layerShadow.shadowOpacity = 0.6
+            layerShadow.borderColor = UIColor.whiteColor().CGColor
             layerShadow.borderWidth = 2
             self.contentView.layer .addSublayer(layerShadow)
+            
+            
+            image.sd_setImageWithURL(NSURL(string:"http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+            circleLayer.contents = image.image?.CGImage
             
         }
         
