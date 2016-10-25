@@ -76,7 +76,12 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("行数",self.dataSource.count)
         if self.allnoticeModel != nil {
-            return (self.allnoticeModel?.data.array.count)!
+            if self.allnoticeModel?.code == "405" {
+            return 0
+            }else{
+               return (self.allnoticeModel?.data.array.count)!
+            }
+            
         }
     return 0
     }

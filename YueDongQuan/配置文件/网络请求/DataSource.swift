@@ -20,6 +20,10 @@ class DataSource: NSObject {
                 userInfo.uid = temp.data.uid
                 userInfo.name = temp.data.name
                 userInfo.thumbnailSrc = temp.data.thumbnailSrc
+                userInfo.sex = temp.data.sex
+                let age = TimeStampToDate().TimestampToAge(temp.data.birthday)
+                userInfo.age = age
+                
             }else{
                 userInfo.isLogin = false
             }

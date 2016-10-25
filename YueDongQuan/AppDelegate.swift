@@ -114,7 +114,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     }
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         let login = YDQLoginRegisterViewController()
-        self.window?.rootViewController = login
+        self.window?.rootViewController?.presentViewController(login, animated: true, completion: nil)
     }
     func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
         

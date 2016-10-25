@@ -33,7 +33,7 @@ class myInfoData : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if asum != nil{
 			dictionary["asum"] = asum
 		}

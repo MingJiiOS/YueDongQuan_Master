@@ -345,7 +345,6 @@ extension OtherQuanZiViewController {
             
             let pageSize = 5
             let dic = ["v":v,
-                
                 "longitude":self.longitude,
                 "latitude":self.latitude,
                 "pageSize":pageSize]
@@ -365,7 +364,8 @@ extension OtherQuanZiViewController {
                     
                     
                 case .Failure(let error):
-                    self.showMJProgressHUD(error.description)
+                    
+                    self.showMJProgressHUD(error.description, isAnimate: true)
                     print(error)
                 }
                 

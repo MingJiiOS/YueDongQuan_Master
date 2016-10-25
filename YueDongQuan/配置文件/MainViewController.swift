@@ -81,9 +81,9 @@ class MainViewController: UIViewController {
         print("点击了",sender.tag)
         
     }
-    func showMJProgressHUD(message:NSString)  {
+    func showMJProgressHUD(message:NSString,isAnimate:Bool)  {
         
-        let HUDView = UIView(frame:CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight, ScreenWidth*0.7, 40) )
+        let HUDView = UIView(frame:CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight - 134, ScreenWidth*0.7, 40) )
         HUDView.backgroundColor = UIColor.blackColor()
         HUDView.layer.cornerRadius = 5
         HUDView.layer.masksToBounds = true
@@ -101,19 +101,25 @@ class MainViewController: UIViewController {
         
         image.animationImages = ary
         image.startAnimating()
-        UIView.animateWithDuration(1.0, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 20.0, options: UIViewAnimationOptions.AllowAnimatedContent, animations: {
-             HUDView.frame = CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight/2, ScreenWidth*0.7, 40)
-            }, completion: nil)
-        
+       
+        if isAnimate != true {
+            
+        }else{
+            UIView.animateWithDuration(1.0, delay: 0.5, usingSpringWithDamping: 125, initialSpringVelocity: 20.0, options: UIViewAnimationOptions.Autoreverse, animations: {
+                HUDView.frame = CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight - 174, ScreenWidth*0.7, 40)
+                }, completion: nil)
+            
+           
+
+        }
         let subLabel = UILabel(frame: CGRectMake(40, 5, CGRectGetWidth(HUDView.frame)-40, 30))
         subLabel.text = message as String
         subLabel.textColor = kBlueColor
         subLabel.textAlignment = .Left
         subLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
         HUDView .addSubview(subLabel)
-        
         //消失
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(13 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
             HUDView .removeFromSuperview()
         }
         

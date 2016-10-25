@@ -142,8 +142,6 @@
 		BF140EE61DAF6A390029DC25 /* updateNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF140EE51DAF6A390029DC25 /* updateNameModel.swift */; };
 		BF1C0D6C1D8AAB5D009EA504 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C0D6B1D8AAB5D009EA504 /* CoreData.framework */; };
 		BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E16A91DA74518007985F3 /* validateUtils.m */; };
-		BF2F6B561DADEF440050B437 /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F6B541DADEF440050B437 /* LoginData.swift */; };
-		BF2F6B571DADEF440050B437 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F6B551DADEF440050B437 /* LoginModel.swift */; };
 		BF2F6C3F1DAE0D630050B437 /* cool－1（被拖移）.tiff in Resources */ = {isa = PBXBuildFile; fileRef = BF2F6BE51DAE0D630050B437 /* cool－1（被拖移）.tiff */; };
 		BF2F6C401DAE0D640050B437 /* cool－2（被拖移）.tiff in Resources */ = {isa = PBXBuildFile; fileRef = BF2F6BE61DAE0D630050B437 /* cool－2（被拖移）.tiff */; };
 		BF2F6C411DAE0D640050B437 /* cool－3（被拖移）.tiff in Resources */ = {isa = PBXBuildFile; fileRef = BF2F6BE71DAE0D630050B437 /* cool－3（被拖移）.tiff */; };
@@ -325,6 +323,10 @@
 		BFDB2A9A1DA6000600A65DAD /* YDQLoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB2A991DA6000600A65DAD /* YDQLoginRegisterViewController.swift */; };
 		BFDB2A9C1DA600BB00A65DAD /* LoginRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB2A9B1DA600BB00A65DAD /* LoginRegisterView.swift */; };
 		BFDB2A9E1DA621DA00A65DAD /* 篮球@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDB2A9D1DA621DA00A65DAD /* 篮球@2x.png */; };
+		BFFCE0281DBEF0820045087A /* TotalRankVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFCE0271DBEF0820045087A /* TotalRankVC.swift */; };
+		BFFF74D81DBDB1C5005295D4 /* HelpandfeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF74D71DBDB1C5005295D4 /* HelpandfeedbackVC.swift */; };
+		BFFF74DB1DBDB443005295D4 /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF74D91DBDB443005295D4 /* LoginData.swift */; };
+		BFFF74DC1DBDB443005295D4 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF74DA1DBDB443005295D4 /* LoginModel.swift */; };
 		BFFFB2A91D9FEE0100ADDB63 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFB2A81D9FEE0100ADDB63 /* libicucore.tbd */; };
 		BFFFB2AB1D9FEE0F00ADDB63 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFB2AA1D9FEE0F00ADDB63 /* JavaScriptCore.framework */; };
 		CF52B5278514852403EE8DCB /* Pods_YueDongQuan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5289E30330F6E0C2F5AB302F /* Pods_YueDongQuan.framework */; };
@@ -513,8 +515,6 @@
 		BF1C0D6B1D8AAB5D009EA504 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		BF1E16A81DA74518007985F3 /* validateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = validateUtils.h; sourceTree = "<group>"; };
 		BF1E16A91DA74518007985F3 /* validateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = validateUtils.m; sourceTree = "<group>"; };
-		BF2F6B541DADEF440050B437 /* LoginData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
-		BF2F6B551DADEF440050B437 /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		BF2F6BE51DAE0D630050B437 /* cool－1（被拖移）.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "cool－1（被拖移）.tiff"; sourceTree = "<group>"; };
 		BF2F6BE61DAE0D630050B437 /* cool－2（被拖移）.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "cool－2（被拖移）.tiff"; sourceTree = "<group>"; };
 		BF2F6BE71DAE0D630050B437 /* cool－3（被拖移）.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "cool－3（被拖移）.tiff"; sourceTree = "<group>"; };
@@ -714,6 +714,10 @@
 		BFDB2A991DA6000600A65DAD /* YDQLoginRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YDQLoginRegisterViewController.swift; path = ../../YDQLoginRegisterViewController.swift; sourceTree = "<group>"; };
 		BFDB2A9B1DA600BB00A65DAD /* LoginRegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRegisterView.swift; sourceTree = "<group>"; };
 		BFDB2A9D1DA621DA00A65DAD /* 篮球@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "篮球@2x.png"; sourceTree = "<group>"; };
+		BFFCE0271DBEF0820045087A /* TotalRankVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankVC.swift; sourceTree = "<group>"; };
+		BFFF74D71DBDB1C5005295D4 /* HelpandfeedbackVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpandfeedbackVC.swift; sourceTree = "<group>"; };
+		BFFF74D91DBDB443005295D4 /* LoginData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
+		BFFF74DA1DBDB443005295D4 /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		BFFFB2A81D9FEE0100ADDB63 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		BFFFB2AA1D9FEE0F00ADDB63 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -1052,6 +1056,8 @@
 				BF071F131D9A0D68000551F7 /* SetNewPasswordViewController.swift */,
 				BF071F141D9A0D68000551F7 /* SubPersonDataViewController.swift */,
 				BF9739D01D9F81ED00E1B3EB /* TempLeftViewController.swift */,
+				BFFF74D71DBDB1C5005295D4 /* HelpandfeedbackVC.swift */,
+				BFFCE0271DBEF0820045087A /* TotalRankVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1059,6 +1065,8 @@
 		BF071F151D9A0D68000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BFFF74D91DBDB443005295D4 /* LoginData.swift */,
+				BFFF74DA1DBDB443005295D4 /* LoginModel.swift */,
 				BF5738811DBB10690023B7DE /* myInfoData.swift */,
 				BF5738821DBB10690023B7DE /* myInfoModel.swift */,
 				BFD36CBA1DB9AEF3005005A3 /* myFoundArray.swift */,
@@ -1071,8 +1079,6 @@
 				BF140EE51DAF6A390029DC25 /* updateNameModel.swift */,
 				BF2F6C9B1DAE25280050B437 /* imData.swift */,
 				BF2F6C9C1DAE25280050B437 /* imModel.swift */,
-				BF2F6B541DADEF440050B437 /* LoginData.swift */,
-				BF2F6B551DADEF440050B437 /* LoginModel.swift */,
 				BFAD632B1D9E4BD0006234E1 /* MJMyInfoModel.swift */,
 				BF2F6C991DAE16510050B437 /* RegistModel.swift */,
 			);
@@ -1790,7 +1796,6 @@
 				BFD36CCF1DBA1922005005A3 /* AllNoticeArray.swift in Sources */,
 				5CC5F9471DAF8A600088A61E /* Extension_String.swift in Sources */,
 				5C27BB071DB761F2005A2F8D /* DACircularProgressView.m in Sources */,
-				BF2F6B561DADEF440050B437 /* LoginData.swift in Sources */,
 				5C2A95761D8D86EC006D1462 /* GlobalUI.m in Sources */,
 				BFCD98D11DAC7B0700AF915C /* DataSource.swift in Sources */,
 				5C27BAF01DB761D9005A2F8D /* MBProgressHUD+PY.m in Sources */,
@@ -1855,9 +1860,11 @@
 				5C90F1371D8FCFA0005E16AF /* UIBarButtonItem+YJItem.m in Sources */,
 				BFC65D5A1D86A1AF004E7E99 /* YXCustomActionSheet.m in Sources */,
 				5C24BB721D9A5C9C00A6D25F /* HKFPostVideoVC.m in Sources */,
+				BFFF74DB1DBDB443005295D4 /* LoginData.swift in Sources */,
 				5C8C3C671D92771600D756FF /* SignPersonCell.swift in Sources */,
 				BF9739CA1D9F6AD800E1B3EB /* MJClearCache.swift in Sources */,
 				BFAF23CA1DB8600800294988 /* uploadImageModel.swift in Sources */,
+				BFFCE0281DBEF0820045087A /* TotalRankVC.swift in Sources */,
 				BF071F411D9A0D68000551F7 /* TotalDongdouCell.swift in Sources */,
 				BF071F0C1D9A0D5F000551F7 /* MJParterDataView.swift in Sources */,
 				BFAF23C21DB85EBC00294988 /* CircleInfoData.swift in Sources */,
@@ -1894,6 +1901,7 @@
 				5C7C3A061DB5CE3F00EA598B /* DiscoveryModel.swift in Sources */,
 				BFC126A21DB48C2B00E11088 /* HistoryDongdouArray.swift in Sources */,
 				5CC5F93F1DAF8A450088A61E /* HKFCell_Cell.swift in Sources */,
+				BFFF74D81DBDB1C5005295D4 /* HelpandfeedbackVC.swift in Sources */,
 				5CFA5A231DB8B24000267399 /* HKFPostVideoSayVC.swift in Sources */,
 				5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */,
 				5CA4EA401D8EC5EE001A8E8D /* FieldCell.swift in Sources */,
@@ -1924,7 +1932,6 @@
 				BF071F3C1D9A0D68000551F7 /* MyDongdouTableViewCell.swift in Sources */,
 				BF7DDC9F1DA0AAC700772366 /* publishNoticeViewController.swift in Sources */,
 				BFAD632C1D9E4BD0006234E1 /* MJMyInfoModel.swift in Sources */,
-				BF2F6B571DADEF440050B437 /* LoginModel.swift in Sources */,
 				BFC65D471D86A0F9004E7E99 /* MainTabBarViewController.swift in Sources */,
 				5CBAA8EF1D99011F000E21E9 /* LxGridViewFlowLayout.m in Sources */,
 				5C90F13E1D8FD1EA005E16AF /* YJTabBar.m in Sources */,
@@ -1975,6 +1982,7 @@
 				BF071F071D9A0D5F000551F7 /* MJBlacklistView.swift in Sources */,
 				BFDB2A461DA3D77500A65DAD /* MJShareSDkHelper.swift in Sources */,
 				BFAD632A1D9E47BC006234E1 /* MJConversationViewController.swift in Sources */,
+				BFFF74DC1DBDB443005295D4 /* LoginModel.swift in Sources */,
 				BF071F0D1D9A0D5F000551F7 /* MJQRCodeView.swift in Sources */,
 				BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */,
 				BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */,
@@ -2033,7 +2041,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2073,7 +2081,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 2.3;

@@ -9,6 +9,10 @@
 import UIKit
 
 class MyDongdouView: UIView {
+    //返回按钮
+    let backbtn = UIButton(type: .Custom)
+    
+    lazy var backBar = UIView()
     //我的身家
     lazy var myBody = UIButton()
     //当前排名
@@ -32,12 +36,51 @@ class MyDongdouView: UIView {
         //将函数指针赋值给myClosure闭包
         clickClosure = closure
     }
+    
+    var lastSelectedTag = 0
+    
+    
      init(frame: CGRect,numberStr:NSString) {
         super.init(frame: frame)
+        
+        self.addSubview(backBar)
+        backBar.snp_makeConstraints { (make) in
+            make.left.right.equalTo(0)
+            make.top.equalTo(0)
+            make.height.equalTo(64)
+        }
+        backBar.backgroundColor = UIColor.clearColor()
+        
+        backBar .addSubview(backbtn)
+        backbtn.snp_makeConstraints { (make) in
+            make.left.equalTo(10)
+            make.top.equalTo(44)
+            make.width.equalTo(100)
+            make.height.equalTo(20)
+        }
+        backbtn.contentHorizontalAlignment = .Left
+        backbtn.custom_acceptEventInterval = 0.5
+        backbtn.setTitle("←|我的动豆", forState: UIControlState.Normal)
+        backbtn.sizeToFit()
+        backbtn .addTarget(self, action: #selector(back), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        let explainBtn = UIButton(type: .Custom)
+        backBar .addSubview(explainBtn)
+        explainBtn.snp_makeConstraints { (make) in
+            make.right.equalTo(-10)
+            make.top.equalTo(44)
+            make.width.equalTo(60)
+            make.height.equalTo(20)
+        }
+        explainBtn.setTitle("说明", forState: UIControlState.Normal)
+        explainBtn.titleLabel?.textColor = UIColor.whiteColor()
+        explainBtn.sizeToFit()
+        explainBtn.custom_acceptEventInterval = 0.5
+        
         //我的身家
         self .addSubview(myBody)
         myBody.snp_makeConstraints { (make) in
-            make.top.equalTo(74)
+            make.top.equalTo(backBar.snp_bottom)
             make.left.equalTo(10)
             make.width.equalTo((-20+ScreenWidth)/5)
             make.height.equalTo(20)
@@ -95,7 +138,8 @@ class MyDongdouView: UIView {
         let range1 = NSRange(location: 0, length: str1.length)
         let number = NSNumber(integer:NSUnderlineStyle.StyleSingle.rawValue)//此处需要转换为NSNumber 不然不对,rawValue转换为integer
         str1.addAttribute(NSUnderlineStyleAttributeName, value: number, range: range1)
-        str1.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: range1)
+        str1.addAttribute(NSForegroundColorAttributeName, value: UIColor.yellowColor(), range: range1)
+//        totalRank.titleLabel?.font = UIFont(name: "Heiti SC", size: 18.0)
         totalRank.setAttributedTitle(str1, forState: UIControlState.Normal)
         totalRank.titleLabel?.adjustsFontSizeToFitWidth = true
         //今日动豆
@@ -108,8 +152,9 @@ class MyDongdouView: UIView {
         }
         todaTongDou.tag = 1
         todaTongDou.setTitle("今日动豆", forState: UIControlState.Normal)
-        todaTongDou.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        todaTongDou.setTitleColor(UIColor.yellowColor(), forState: UIControlState.Selected)
+        todaTongDou.setTitleColor(UIColor.yellowColor(), forState: UIControlState.Normal)
+        todaTongDou.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Selected)
+        
         todaTongDou .addTarget(self, action: #selector(clickBtn(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         todaTongDou.backgroundColor = UIColor.blackColor()
         todaTongDou.alpha = 0.2
@@ -124,12 +169,12 @@ class MyDongdouView: UIView {
         histroyDongdou.tag = 2
         histroyDongdou .addTarget(self, action: #selector(clickBtn(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         histroyDongdou.setTitle("历史动豆", forState: UIControlState.Normal)
-        histroyDongdou.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        histroyDongdou.setTitleColor(UIColor.yellowColor(), forState: UIControlState.Selected)
+        histroyDongdou.setTitleColor(UIColor.yellowColor(), forState: UIControlState.Normal)
+        histroyDongdou.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Selected)
         histroyDongdou.backgroundColor = UIColor.blackColor()
         histroyDongdou.alpha = 0.2
         
-       
+       self.clickBtn(todaTongDou)
         
     }
     
@@ -138,9 +183,42 @@ class MyDongdouView: UIView {
     }
     
     func clickBtn(btnTag:UIButton)  {
+        
+        if lastSelectedTag != 0 && lastSelectedTag != btnTag.tag{
+            
+            let btn = self.viewWithTag(lastSelectedTag) as! UIButton
+            btnTag.backgroundColor = UIColor.blackColor()
+            btnTag.alpha = 0.2
+            btn.selected = false
+        }
+        //    如果两次按钮的tag值不同 （未限制是否是第一次点击）
+        //    如果相同 就代表点击的是同一个按钮  就不改变状态
+        if (btnTag.tag != lastSelectedTag) {
+            btnTag.selected = true;
+            btnTag.backgroundColor = UIColor.blackColor()
+            btnTag.alpha = 0.5
+            lastSelectedTag = btnTag.tag;
+        }
+        
+        
+        
+        
+        //    记录最后一次被选中按钮的tag
+        lastSelectedTag = btnTag.tag;
+        
+        
         if (clickClosure != nil) {
             clickClosure!(index: btnTag.tag)
         }
     }
+    
 
+}
+extension MyDongdouView {
+    func back()  {
+        if (clickClosure != nil) {
+            clickClosure!(index: 100)
+        }
+ 
+    }
 }

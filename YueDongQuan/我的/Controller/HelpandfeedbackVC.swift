@@ -8,7 +8,7 @@
 
 import UIKit
 
-class publishNoticeViewController: MainViewController,UITextViewDelegate{
+class HelpandfeedbackVC: MainViewController,UITextViewDelegate{
     
     lazy var numerLabel = UILabel()
     var  strLength : Int!
@@ -23,7 +23,7 @@ class publishNoticeViewController: MainViewController,UITextViewDelegate{
                                               blue: 0.9529,
                                               alpha: 1.0 )
         let textView = BRPlaceholderTextView(frame: CGRect(x: 0, y: 5, width: ScreenWidth, height: ScreenWidth/3))
-        textView.placeholder = "  有什么要和成员说的 .....\n \n \n \n \n"
+        textView.placeholder = "  请提出您的宝贵意见 .....\n \n \n \n \n"
         textView.font = UIFont.systemFontOfSize(13)
         self.view.addSubview(textView)
         textView.delegate = self
@@ -41,7 +41,7 @@ class publishNoticeViewController: MainViewController,UITextViewDelegate{
         numerLabel.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
         numerLabel.attributedText = NSMutableAttributedString(string: "\(0)/300")
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: .Plain, target: self, action: #selector(publish))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "反馈", style: .Plain, target: self, action: #selector(publish))
         
         
     }
@@ -60,26 +60,25 @@ class publishNoticeViewController: MainViewController,UITextViewDelegate{
     
     
 }
-extension publishNoticeViewController {
+extension HelpandfeedbackVC {
     //MARK:发布公告
     func publish()  {
         
-        if strLength != 0 {
-            let dict:[String:AnyObject] = ["v":v,
-                                           "uid":userInfo.uid,
-                                           "circleId":self.circleId!,
-                                           "content":self.content!]
-            MJNetWorkHelper().publishannouncement(publishannouncement, publishannouncementModel: dict, success: { (responseDic, success) in
-                //如果成功，就返回
-                self.navigationController?.popViewControllerAnimated(true)
-            }) { (error) in
-                
-                self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～", isAnimate: true)
-            }
-        }else{
-           self.navigationItem.rightBarButtonItem?.enabled = false
-        }
-        
+//        if strLength != 0 {
+//            let dict:[String:AnyObject] = ["v":v,
+//                                           "uid":userInfo.uid,
+//                                           "circleId":self.circleId!,
+//                                           "content":self.content!]
+//            MJNetWorkHelper().publishannouncement(publishannouncement, publishannouncementModel: dict, success: { (responseDic, success) in
+//                //如果成功，就返回
+//                self.navigationController?.popViewControllerAnimated(true)
+//            }) { (error) in
+//                self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～")
+//            }
+//        }else{
+//            self.navigationItem.rightBarButtonItem?.enabled = false
+//        }
+//        
         
         
         

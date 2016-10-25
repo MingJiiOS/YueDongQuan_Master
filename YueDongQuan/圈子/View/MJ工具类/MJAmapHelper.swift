@@ -104,7 +104,7 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
                 if let regecode = regecode {
                     
                     //地址信息
-                    let address = regecode.formattedAddress
+                    _ = regecode.formattedAddress
                     
                 }
                 

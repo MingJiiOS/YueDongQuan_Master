@@ -26,16 +26,14 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
         super.loadView()
         self.needRefresh = true;
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
-        self.title = "我的"
+     
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self .creatViewWithSnapKit()
-        self.creatViewWithSnapKit("ic_lanqiu", secondBtnImageString: "ic_search", thirdBtnImageString: "ic_shezhi")
+        self.creatViewWithSnapKit("ic_lanqiu", secondBtnImageString: "ic_search",
+                                               thirdBtnImageString: "ic_shezhi")
         
       
     }
@@ -43,17 +41,27 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         MainBgTableView.reloadData()
+        let titleLabel = UILabel(frame: CGRect(x: 0,
+            y: 0,
+            width: ScreenWidth*0.5,
+            height: 44))
+        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.font = UIFont(name: "Heiti SC", size: 18)
+        titleLabel.center = CGPoint(x: ScreenWidth/2, y: 22)
+        titleLabel.text = userInfo.name
+        titleLabel.textAlignment = .Center
+        titleLabel.sizeToFit()
+        self.navigationItem.titleView = titleLabel
+     
         if userInfo.isLogin != true{
             let login = YDQLoginRegisterViewController()
             login.modalPresentationStyle = .PageSheet
             self.presentViewController(login, animated: true, completion: nil)
         }else{
            downloadData()
-           
-            
+
         }
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+      
         
     }
     
@@ -160,7 +168,8 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
                 if self.myfoundmodel?.code != "200" {
                     return 0
                 }else if self.myfoundmodel?.code == "405"{
-                    self.showMJProgressHUD("暂时没有说说(づ￣3￣)づ╭❤～")
+                    
+                    self.showMJProgressHUD("暂时没有说说(づ￣3￣)づ╭❤～", isAnimate: true)
                     return 0
                 }else{
                     return (self.myfoundmodel?.data.array.count)!
@@ -237,7 +246,8 @@ return 55
     
     //1.5每组的底部高度
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForFooterInSection
+                                           section: Int) -> CGFloat {
         
         return 3;
         
@@ -245,12 +255,15 @@ return 55
     
     //1.6 返回数据源
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath
+                                           indexPath: NSIndexPath)
+                                           -> UITableViewCell {
         
         let identifier="identtifier";
         var cell = tableView.dequeueReusableCellWithIdentifier(identifier)
         if (cell == nil) {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
+            cell = UITableViewCell(style: .Default,
+                                   reuseIdentifier: identifier)
         }
         if(indexPath.section == 0){
             
@@ -260,7 +273,8 @@ return 55
             
             cell=tableView.dequeueReusableCellWithIdentifier(identifier) as? MyDongdouTableViewCell
             if (cell == nil) {
-                cell = MyDongdouTableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: identifier);
+                cell = MyDongdouTableViewCell(style: UITableViewCellStyle.Value1,
+                                              reuseIdentifier: identifier);
             }
             
             cell!.imageView?.image = UIImage(named: "ic_doudong")
@@ -272,7 +286,9 @@ return 55
                                                 alpha: 1)
             cell!.accessoryType = .DisclosureIndicator
             cell!.accessoryType=UITableViewCellAccessoryType.DisclosureIndicator;
-            cell?.number.text = self.myinfoModel?.data.dongdou
+            if self.myinfoModel != nil {
+                cell?.number.text = self.myinfoModel?.data.dongdou
+            }
             return cell!
         }
         else if(indexPath.section == 2){

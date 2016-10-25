@@ -115,6 +115,7 @@ print(indexSection,indexRow)
             }
         }
         
+    
         
     }
 }
@@ -123,12 +124,26 @@ extension SubContentViewController {
         let v = NSObject.getEncodeString("20160901")
         let circleid = self.circleId
         let dict = ["v":v,"circleId":circleid]
-        MJNetWorkHelper().circlemember(circlemember, circlememberModel: dict, success: { (responseDic, success) in
+        MJNetWorkHelper().circlemember(circlemember,
+                                       circlememberModel: dict,
+                                       success: { (responseDic, success) in
             let model = DataSource().getcirclememberData(responseDic)
             self.memberModel = model
             self.tableView.reloadData()
         }) { (error) in
             
+        }
+    }
+    func loadBlacklistData()  {
+        let v = NSObject.getEncodeString("20160901")
+        let circleid = self.circleId
+        let dict = ["v":v,"circleId":circleid]
+        MJNetWorkHelper().blacklist(blacklist,
+                                    blacklistModel: dict,
+                                    success: { (responseDic, success) in
+                                        
+            }) { (error) in
+                
         }
     }
 }
