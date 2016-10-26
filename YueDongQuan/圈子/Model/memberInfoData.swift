@@ -30,7 +30,7 @@ class memberInfoData : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if birthday != nil{
 			dictionary["birthday"] = birthday
 		}

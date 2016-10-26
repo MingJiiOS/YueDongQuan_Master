@@ -510,7 +510,7 @@ extension DiscoverViewController {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                let str = json.object
+                _ = json.object
                 
 
 
@@ -530,7 +530,7 @@ extension DiscoverViewController {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                let str = json.object
+                _ = json.object
                 
 
 

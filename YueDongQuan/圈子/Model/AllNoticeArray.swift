@@ -32,7 +32,7 @@ class AllNoticeArray : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if circleId != nil{
 			dictionary["circleId"] = circleId
 		}

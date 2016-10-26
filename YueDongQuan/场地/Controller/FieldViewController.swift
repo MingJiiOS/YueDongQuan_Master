@@ -276,7 +276,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
 extension FieldViewController : FieldCellDelegate {
     func clickConfirmFieldBtn(indexPath: NSIndexPath) {
         NSLog("点击了预定")
-        let tel = (self.fieldModel?.data.array[indexPath.section].id)!
+        _ = (self.fieldModel?.data.array[indexPath.section].id)!
         let telNumber = "18798812521"
         
         let alertView = YoYoAlertView(title: "我要订场", message: telNumber, cancelButtonTitle: "取消", sureButtonTitle: "确定")

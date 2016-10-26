@@ -289,24 +289,68 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         }
         
     }
+    
+    
+}
+extension NewQuanZiViewController{
+
     //MARK:创建圈子操作
     func createNewCircle()  {
+        
         let uid = userInfo.uid
         let logoId = self.uploadimgaemodel?.data.id
         let Pw = circlePw
-        let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
-                                       "name":circleName,
-                                       "uid":uid,
-                                       "logoId":logoId!,
-                                       "pw":Pw,
-                                       "longitude":self.longdu!,
-                                       "latitude":self.ladu!]
-        
-        MJNetWorkHelper().createcircle(createcircle, createcircleModel: dict, success: { (responseDic, success) in
+        if self.uploadimgaemodel?.data.id == nil{
             
-        }) { (error) in
+            self.showMJProgressHUD("圈子logo不能为空！！", isAnimate: true)
+            if circleName != nil {
+                if NSString(string:circleName).length == 0 {
+                    
+                     self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: true)
+                    if circlePw != nil {
+                        if NSString(string:circlePw).length == 0 {
+                            
+                             self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: true)
+                        }else if  NSString(string:circlePw).length < 6 {
+                            
+                             self.showMJProgressHUD("密码不能少于6位！！", isAnimate: true)
+                        }else if NSString(string:circlePw).length > 16 {
+                            
+                             self.showMJProgressHUD("密码不能大于16位！！", isAnimate: true)
+                        }else{
+                            let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
+                                                           "name":circleName,
+                                                           "uid":uid,
+                                                           "logoId":logoId!,
+                                                           "pw":Pw,
+                                                           "longitude":self.longdu!,
+                                                           "latitude":self.ladu!]
+                            
+                            MJNetWorkHelper().createcircle(createcircle,
+                                                           createcircleModel: dict,
+                                                           success: { (responseDic, success) in
+                                if success {
+                                    self.navigationController?.popViewControllerAnimated(true)
+                                }
+                            }) { (error) in
+                                
+                                 self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: true)
+                            }
+                        }
+                    }else{
+                       
+                         self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: true)
+                    }
+                   
+                }
+            }else{
+                
+                 self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: true)
+            }
             
         }
+
     }
-    
+        
+        
 }

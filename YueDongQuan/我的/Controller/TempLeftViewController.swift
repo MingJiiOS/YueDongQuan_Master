@@ -27,7 +27,8 @@ class TempLeftViewController: MainViewController {
 //            }) { (error) in
 //                
 //        }
-        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧")
+        
+        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧", isAnimate: true)
     }
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true

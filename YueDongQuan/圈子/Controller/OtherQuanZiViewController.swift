@@ -94,19 +94,19 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         //MARK:自定义经纬度
         annotations = NSMutableArray()
         let   coordinates = [[29.287746,106.012341],
-                             [29.1342223,106.42112],
-                             [28.243223,106.927462],
-                             [29.4392749,106.3274685],
-                             [29.486173,106.846512]]
+                             [29.2842223,106.01112],
+                             [29.283223,106.017462],
+                             [29.2892749,106.0274685],
+                             [29.286173,106.026512]]
         for i in 0 ..< coordinates.count {
             if i % 2 == 0 {
                 let gren = MJGreenAnnotation()
-                let coordate = CLLocationCoordinate2D(latitude: 29.583859 + Double(i), longitude: 106.489968 + Double(i))
+                let coordate = CLLocationCoordinate2D(latitude: 29.583859 + Double(i) / 100000, longitude: 106.489968 + Double(i) / 100000)
                 gren.coordinate = coordate
                 annotations .addObject(gren)
             }else{
                 let red = MJRedAnnotation()
-                let coordate = CLLocationCoordinate2D(latitude: 29.287746 - Double(i), longitude: 106.012341 - Double(i))
+                let coordate = CLLocationCoordinate2D(latitude: 29.287746 - Double(i) / 100000, longitude: 106.012341 - Double(i) / 100000)
                 red.coordinate = coordate
                 annotations .addObject(red)
             }
@@ -237,6 +237,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     func addAnnotationsToMapView(annotation: MAAnnotation) {
         mapView .addAnnotations(annotations as [AnyObject])
         mapView.addAnnotation(annotation)
+        mapView.showAnnotations(annotations as [AnyObject], animated: true)
         mapView.selectAnnotation(annotation, animated: true)
         mapView.setZoomLevel(15.1, animated: false)
         mapView.setCenterCoordinate(annotation.coordinate, animated: true)
@@ -258,8 +259,6 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         return cell
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-
         if self.circlesModel != nil {
                 return self.circlesModel.data.array.count
         }
@@ -345,7 +344,6 @@ extension OtherQuanZiViewController {
             
             let pageSize = 5
             let dic = ["v":v,
-                
                 "longitude":self.longitude,
                 "latitude":self.latitude,
                 "pageSize":pageSize]
@@ -365,7 +363,8 @@ extension OtherQuanZiViewController {
                     
                     
                 case .Failure(let error):
-                    self.showMJProgressHUD(error.description)
+                    
+                    self.showMJProgressHUD(error.description, isAnimate: true)
                     print(error)
                 }
                 

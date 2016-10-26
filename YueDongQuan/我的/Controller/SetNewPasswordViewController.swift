@@ -108,11 +108,13 @@ class SetNewPasswordViewController: MainViewController {
                     
                     
                 }else{
-                    self.showMJProgressHUD("两次输入的秘密不一致哦,(づ￣3￣)づ╭❤～")
+                    
+                    self.showMJProgressHUD("两次输入的秘密不一致哦,(づ￣3￣)づ╭❤～", isAnimate: true)
                 }
             }else{
                 //请设置新密码
-                self.showMJProgressHUD("请设置新密码,(づ￣3￣)づ╭❤～")
+                
+                self.showMJProgressHUD("请设置新密码,(づ￣3￣)づ╭❤～", isAnimate: true)
             }
         }
 
@@ -128,7 +130,8 @@ class SetNewPasswordViewController: MainViewController {
             if success != false{
                 let model = DataSource().getnewpwData(responseDic)
                 if model.code != "200"{
-                    self.showMJProgressHUD("修改失败,出现未知错误")
+                    self.showMJProgressHUD("修改失败,出现未知错误", isAnimate: true)
+                    
                      sleep(UInt32(1.5))
                     self.navigationController?.popViewControllerAnimated(true)
                 }else{
@@ -136,7 +139,8 @@ class SetNewPasswordViewController: MainViewController {
                 }
             }
             }) { (error) in
-              self.showMJProgressHUD("网络出现错误！")
+              
+                self.showMJProgressHUD("网络出现错误！", isAnimate: true)
         }
        
     }

@@ -19,6 +19,11 @@
 //黄方果导入的
 #import "MHRadioButton.h"
 #import "validateUtils.h"
+#import "WJPopoverViewController.h"
+#import "SGScanningQRCodeVC.h"
+#import "SGGenerateQRCodeVC.h"
+#import "ScanSuccessJumpVC.h"
+#import "SGAlertView.h"
 //
 #import "HKFPostImageVC.h"
 #import "CustomTextField.h"
@@ -50,7 +55,7 @@
 #import <AMapLocationKit/AMapLocationKit.h>
 //加密文件
 #import "NSObject+EncodingString.h"
-
+#import "NSData+AES256.h"
 //#import <ShareSDK/ShareSDK.h>
 ////#import <ShareSDKUI/ShareSDK+SSUI.h>
 //#import <ShareSDKConnector/ShareSDKConnector.h>

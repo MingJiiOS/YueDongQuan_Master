@@ -26,11 +26,12 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadData()
+         loadData()
         self.creatTableView()
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+       
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
         
     }
@@ -220,6 +221,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
             chatVC.conversationType = .ConversationType_GROUP
             chatVC.circleid = joinClrcleIDAry[indexPath.row] as? String
             chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
+            chatVC.permissions = indexPath.section + 1
             self.push(chatVC)
         }
         

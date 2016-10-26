@@ -31,6 +31,7 @@ struct UserInfo {
     var sex = ""
     var isLogin = false
     var token = ""
+    var age = ""
 }
 var userInfo = UserInfo()
 		

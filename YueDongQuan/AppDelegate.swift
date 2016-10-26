@@ -40,7 +40,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
        
         //ShareSDK
 //        MJShareSDkHelper(isOpen: true)
-        var defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.valueForKey("token") != nil {
             let v = NSObject.getEncodeString("20160901")
             let phone = defaults.valueForKey("phone")
@@ -114,7 +114,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     }
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         let login = YDQLoginRegisterViewController()
-        self.window?.rootViewController = login
+        self.window?.rootViewController?.presentViewController(login, animated: true, completion: nil)
     }
     func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
         

@@ -73,8 +73,8 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
             biVcell!.headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
             biVcell!.bigV.backgroundColor = kBlueColor
             biVcell!.userName.text = userInfo.name
-            biVcell!.userSex.text = "男"
-            biVcell!.userAge.text = "34"
+            biVcell!.userSex.text = userInfo.sex
+            biVcell!.userAge.text = userInfo.age
             biVcell!.accessoryType = .DisclosureIndicator
             return biVcell!
             
@@ -179,6 +179,11 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
         if indexPath.section == 4 {
             if indexPath.row == 2 {
             }
+            if indexPath.row == 0 {
+                let feedback = HelpandfeedbackVC()
+                self.push(feedback)
+                
+            }
         }
         if indexPath.section == 3 {
           let cached =  MJClearCache()
@@ -216,16 +221,19 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
             
             let model = DataSource().getoldpwData(responseDic)
             if model.code != "200"{
-                self.showMJProgressHUD("原密码错误哦！( ⊙ o ⊙ )！")
+                
+                self.showMJProgressHUD("原密码错误哦！( ⊙ o ⊙ )！", isAnimate: true)
             }else{
                 let newpass = SetNewPasswordViewController()
                 self.navigationController?.pushViewController(newpass, animated: true)
             }
         }) { (error) in
-            self.showMJProgressHUD("网络出现有点坑呀")
+            
+            self.showMJProgressHUD("网络出现有点坑呀", isAnimate: true)
         }
        }else if oldPwModel.pw == ""{
-        self.showMJProgressHUD("您还没有输入原密码呢,😊")
+        
+        self.showMJProgressHUD("您还没有输入原密码呢,😊", isAnimate: true)
         }
         
         
