@@ -50,10 +50,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
-
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0 green:107/255 blue:186/255 alpha:1];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.title = @"扫一扫";
-    
     // 创建扫描边框
     self.scanningView = [[SGScanningQRCodeView alloc] initWithFrame:self.view.frame outsideViewLayer:self.view.layer];
     [self.view addSubview:self.scanningView];
@@ -110,12 +109,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    self.navigationController.tabBarController.hidesBottomBarWhenPushed = YES;
     // 二维码扫描
     [self setupScanningQRCode];
 
 }
-
+- (void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.tabBarController.hidesBottomBarWhenPushed = NO;
+}
 #pragma mark - - - 二维码扫描
 - (void)setupScanningQRCode {
     // 1、获取摄像设备

@@ -18,6 +18,8 @@ class HeaderView: UIView {
     let changDiLabel = UILabel()
      let huoZanLabel = UILabel()
     let quanZiLabel = UILabel()
+     let singleBtn = UIButton(type: .Custom)
+     let renZheng = UIImageView()
    override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(headerBgView)
@@ -49,7 +51,7 @@ class HeaderView: UIView {
         
                 }
                 // 认证
-                let renZheng = UIImageView()
+    
                 headerBgView .addSubview(renZheng)
         
                 renZheng.backgroundColor = UIColor.blackColor()
@@ -65,7 +67,7 @@ class HeaderView: UIView {
                 }
         
                 // 中间单独的
-                let singleBtn = UIButton(type: .Custom)
+    
                 headerBgView .addSubview(singleBtn)
                 //        singleBtn.backgroundColor = UIColor.blackColor()
                 singleBtn.snp_makeConstraints { (make) in
@@ -77,7 +79,7 @@ class HeaderView: UIView {
                     make.centerY.equalTo(headerBgView.snp_centerY).offset(ScreenWidth/12)
         
                 }
-                singleBtn .setTitle("34", forState: UIControlState.Normal)
+                 singleBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0)
                 //关注
                 let guanZhu = likeButton(type: .Custom)
                 guanZhu.tag = 10
@@ -204,12 +206,23 @@ class HeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    func configContent(model:myInfoModel,isBigV:Bool)  {
+        guanZhuLabel.text = model.data.bsum.description
+        changDiLabel.text = model.data.msum.description
+        huoZanLabel.text = model.data.asum.description
+        quanZiLabel.text = model.data.psum.description
+        singleBtn.setTitle(userInfo.age, forState: UIControlState.Normal)
+        headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+        if isBigV != true {
+            renZheng.hidden = true
+        }else{
+            renZheng.image = UIImage(named: "v")
+        }
+        if userInfo.sex == "女" {
+            singleBtn.setImage(UIImage(named: "ic_nv_ffffff"), forState: UIControlState.Normal)
+        }else{
+             singleBtn.setImage(UIImage(named: "ic_nan_ffffff"), forState: UIControlState.Normal)
+        }
     }
-    */
 
 }
