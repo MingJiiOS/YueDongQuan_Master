@@ -54,7 +54,7 @@ class MyDongdouView: UIView {
         backBar .addSubview(backbtn)
         backbtn.snp_makeConstraints { (make) in
             make.left.equalTo(10)
-            make.top.equalTo(44)
+            make.top.equalTo(34)
             make.width.equalTo(100)
             make.height.equalTo(20)
         }
@@ -68,7 +68,7 @@ class MyDongdouView: UIView {
         backBar .addSubview(explainBtn)
         explainBtn.snp_makeConstraints { (make) in
             make.right.equalTo(-10)
-            make.top.equalTo(44)
+            make.top.equalTo(34)
             make.width.equalTo(60)
             make.height.equalTo(20)
         }
@@ -80,7 +80,7 @@ class MyDongdouView: UIView {
         //我的身家
         self .addSubview(myBody)
         myBody.snp_makeConstraints { (make) in
-            make.top.equalTo(backBar.snp_bottom)
+            make.top.equalTo(backBar.snp_bottom).offset(10)
             make.left.equalTo(10)
             make.width.equalTo((-20+ScreenWidth)/5)
             make.height.equalTo(20)
@@ -100,7 +100,7 @@ class MyDongdouView: UIView {
         
         curetRank.text = "当前排名 380 ↑"
         curetRank.textAlignment = .Right
-        
+        curetRank.textColor = UIColor.yellowColor()
         //动豆总数
         self .addSubview(myDongDou)
         myDongDou.snp_makeConstraints { (make) in
@@ -140,8 +140,11 @@ class MyDongdouView: UIView {
         str1.addAttribute(NSUnderlineStyleAttributeName, value: number, range: range1)
         str1.addAttribute(NSForegroundColorAttributeName, value: UIColor.yellowColor(), range: range1)
 //        totalRank.titleLabel?.font = UIFont(name: "Heiti SC", size: 18.0)
+        totalRank.tag = 23
         totalRank.setAttributedTitle(str1, forState: UIControlState.Normal)
         totalRank.titleLabel?.adjustsFontSizeToFitWidth = true
+        totalRank .addTarget(self, action: #selector(clickTotalBtn),
+                             forControlEvents: UIControlEvents.TouchUpInside)
         //今日动豆
         self .addSubview(todaTongDou)
         todaTongDou.snp_makeConstraints { (make) in
@@ -186,6 +189,7 @@ class MyDongdouView: UIView {
         
         if lastSelectedTag != 0 && lastSelectedTag != btnTag.tag{
             
+            
             let btn = self.viewWithTag(lastSelectedTag) as! UIButton
             btnTag.backgroundColor = UIColor.blackColor()
             btnTag.alpha = 0.2
@@ -199,9 +203,6 @@ class MyDongdouView: UIView {
             btnTag.alpha = 0.5
             lastSelectedTag = btnTag.tag;
         }
-        
-        
-        
         
         //    记录最后一次被选中按钮的tag
         lastSelectedTag = btnTag.tag;
@@ -221,4 +222,11 @@ extension MyDongdouView {
         }
  
     }
+    
+    func clickTotalBtn()  {
+        if (clickClosure != nil) {
+            clickClosure!(index: 23)
+        }
+    }
+    
 }

@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Alamofire
 import SwiftyJSON
+import SDWebImage
 
 
 class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationManagerDelegate ,UITableViewDelegate,UITableViewDataSource{
@@ -157,7 +158,8 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        SDImageCache.sharedImageCache().cleanDisk()
+        SDImageCache.sharedImageCache().clearMemory()
     }
     
     
@@ -274,7 +276,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
 extension FieldViewController : FieldCellDelegate {
     func clickConfirmFieldBtn(indexPath: NSIndexPath) {
         NSLog("点击了预定")
-        let tel = (self.fieldModel?.data.array[indexPath.section].id)!
+        _ = (self.fieldModel?.data.array[indexPath.section].id)!
         let telNumber = "18798812521"
         
         let alertView = YoYoAlertView(title: "我要订场", message: telNumber, cancelButtonTitle: "取消", sureButtonTitle: "确定")
@@ -344,7 +346,7 @@ extension FieldViewController {
         let para = ["v":v,"uid":1,"latitude":latitude,"longitude":longitude,"pageSize":"10"]
         print(para.description)
         
-        Alamofire.request(.POST, NSURL(string: kURL + "/sites")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: testUrl + "/sites")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)

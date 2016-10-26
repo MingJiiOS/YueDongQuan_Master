@@ -12,11 +12,18 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
   var ref = MJContextRef()
   lazy var mainScrollView = UIScrollView()
   lazy var todayDongdouTableView = UITableView()
-  lazy var histroyDongdouTableView = UITableView() 
+  lazy var histroyDongdouTableView = UITableView()
+    
+    //数据模型
+    var todayModel : TodayDongdouModel?
+    
+    
+    
+    
     var  headBgView = MyDongdouView?()
         override func viewDidLoad() {
         super.viewDidLoad()
-         loadData()
+
         self.creatView()
         
     }
@@ -123,6 +130,10 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
             if index == 100 {
                 self.navigationController?.popViewControllerAnimated(true)
             }
+            if index == 23 {
+                let total = TotalRankVC()
+                self.push(total)
+            }
         }
     }
     
@@ -136,10 +147,9 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
     }
     
     override func viewWillAppear(animated: Bool) {
-        
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(),
-//                                                                    forBarMetrics: .Default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
+        //MARK:下载数据
+        loadTodayData()
+        loadHistroyData()
     self.navigationController?.navigationBar.hidden = true
     }
     override func viewWillDisappear(animated: Bool) {
@@ -155,10 +165,14 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView.tag == 1 {
+//            if self.todayModel != nil {
+//                return (self.todayModel?.data.array.count)!
+//            }
             return 5
         }else{
             return 6
         }
+        return 0
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "dell")
@@ -192,15 +206,26 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
     }
 }
 extension MyDongDouViewController {
-    func loadData()  {
+    func loadTodayData()  {
         let dic = ["v":v,
                    "uid":userInfo.uid,
-                   "timeType":"we"]
+                   "timeType":"now"]
         MJNetWorkHelper().mydongdou(mydongdou, mydongdouModel: dic, success: { (responseDic, success) in
-            
+            self.todayModel = DataSource().gettodaydongdouData(responseDic)
+            self.todayDongdouTableView.reloadData()
             }) { (error) in
                 
         }
         
+    }
+    func loadHistroyData() {
+        let dic = ["v":v,
+                   "uid":userInfo.uid,
+                   "timeType":"histroy"]
+        MJNetWorkHelper().mydongdou(mydongdou, mydongdouModel: dic, success: { (responseDic, success) in
+            
+        }) { (error) in
+            
+        }
     }
 }

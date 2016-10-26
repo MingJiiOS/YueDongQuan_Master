@@ -406,14 +406,15 @@ class DataSource: NSObject {
         }
         return model!
     }
-    //MARK:解析查询我的动豆（今日动豆/历史动豆）数据
-    func getmydongdouData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    //MARK:解析查询我的动豆（今日动豆）数据
+    func gettodaydongdouData(datasource:NSDictionary) -> TodayDongdouModel {
+        let model = TodayDongdouModel(fromDictionary: datasource)
+        return model
+    }
+    //MARK:解析查询我的动豆（历史动豆）数据
+    func gethistroydongdouData(datasource:NSDictionary) -> TodayDongdouModel {
+        let model = TodayDongdouModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析动豆总排行数据
     func getdongdourankingData(datasource:NSDictionary) -> MJResponseModel {

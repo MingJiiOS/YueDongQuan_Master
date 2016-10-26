@@ -15,6 +15,8 @@ import SwiftyJSON
 
 class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate {
 
+    var KVideoUrlPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first?.stringByAppendingString("VideoURL")
+    
     var selectedImages = [UIImage]()
     var imageStr = String()
     var manger = AMapLocationManager()
@@ -205,19 +207,35 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
             
 //             }];
         
+        
         TZImageManager().getVideoOutputPathWithAsset(asset) { (outputPath:String!) in
             NSLog("视频导出到本地完成,沙盒路径为:\(outputPath)")
+            
         }
+        
+        
 
-//        PHCachingImageManager().requestAVAssetForVideo((asset as? PHAsset)!, options: nil) { (asset:AVAsset?, audioMix:AVAudioMix?, info:[NSObject : AnyObject]?) in
-//            dispatch_async(dispatch_get_main_queue(), { 
-//                let asset = asset as? AVURLAsset
+        PHCachingImageManager().requestAVAssetForVideo((asset as? PHAsset)!, options: nil) { (asset:AVAsset?, audioMix:AVAudioMix?, info:[NSObject : AnyObject]?) in
+            dispatch_async(dispatch_get_main_queue(), { 
+                let asset = asset as? AVURLAsset
 //                let data = NSData(contentsOfURL: asset!.URL)
-//                
-//                NSLog("data = \(data?.description)")
-//                self.videoData = data!
-//            })
-//        }
+                JFCompressionVideo.compressedVideoOtherMethodWithURL(asset?.URL, compressionType: AVAssetExportPresetLowQuality, compressionResultPath: { (resultPath:String!, memorySize:Float) in
+                    NSLog("memorySize = \(memorySize),resultPath=\(resultPath)")
+                    let data = NSData(contentsOfFile: resultPath)
+                    
+                    self.videoData = data!
+                    let fileSize = (data?.length)!/(1024*1024)
+                    
+                    if fileSize >= 1024 {
+                        
+                    }
+                })
+                
+                
+                
+                
+            })
+        }
         
         
     }
@@ -242,7 +260,7 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
         let para = ["v":v,"uid":userInfo.uid.description,"content":content,"latitude":latitude,"longitude":longitude,"videoId":videoId,"address":address]
         print(para.description)
         
-        Alamofire.request(.POST, NSURL(string: kURL + "/videofound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: testUrl + "/videofound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
@@ -263,15 +281,15 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
     
     internal func requestUpfile(video:NSData){
         
-        
-        Alamofire.upload(.POST, NSURL(string: kURL + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
+        let vCode = NSObject.getEncodeString("20160901")
+        Alamofire.upload(.POST, NSURL(string: testUrl + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
             
             
             
-            let imageName = String(NSDate().timeIntervalSince1970*100000) + ".png"
-            multipartFormData.appendBodyPart(data: self.videoData, name: "file",fileName: imageName,mimeType: "video/mp4")
+            let imageName = String(NSDate().timeIntervalSince1970*100000) + ".mp4"
+            multipartFormData.appendBodyPart(data: video, name: "file",fileName: imageName,mimeType: "video/mp4")
             
-            let para = ["v":v,"uid":userInfo.uid.description,"file":""]
+            let para = ["v":vCode,"uid":userInfo.uid.description,"file":""]
             for (key,value) in para {
                 multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key )
             }
@@ -289,7 +307,9 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
                     self.imageModel = FieldImageModel.init(fromDictionary: str as! NSDictionary )
                     
                     if (self.imageModel?.code == "200" && self.imageModel?.flag == "1"){
+                        
                         self.tempImageStr.append((self.imageModel?.data.id.description)!)
+                        
                         NSLog("最后一张上传完成")
                         /*if ((self.tempImageStr.count) == self.selectedImages.count) {
                             

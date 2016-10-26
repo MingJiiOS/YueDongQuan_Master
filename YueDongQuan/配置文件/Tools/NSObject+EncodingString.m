@@ -55,5 +55,19 @@
 }
 
 
+-(NSAttributedString *)replaceString:(NSString *)str {
+    NSString *ysStr =[str stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
+    NSLog(@"ysSrt = %@",ysStr);
+    NSData *data = [ysStr dataUsingEncoding:NSUnicodeStringEncoding];
+    NSDictionary *options = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
+    NSAttributedString *html = [[NSAttributedString alloc] initWithData:data
+                                                                options:options
+                                                     documentAttributes:nil
+                                                                  error:nil];
+    return html;
+}
+
+
+
 
 @end

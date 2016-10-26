@@ -17,8 +17,17 @@ class ParterDataViewController: MainViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        parterView = MJParterDataView(frame: self.view.frame,circleID: self.circleid!,uid:self.uid!)
+        parterView = MJParterDataView(frame: self.view.frame,
+                                      circleID: self.circleid!,
+                                      uid:self.uid!)
         self.view.addSubview(parterView!)
+        parterView?.sendSuccessOrFailValueBack({ (isSuccess, descriptionError) in
+            if isSuccess != true{
+                self.showMJProgressHUD(descriptionError, isAnimate: false)
+            }else{
+                return
+            }
+        })
         
     }
     override func viewWillAppear(animated: Bool) {

@@ -40,7 +40,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
        
         //ShareSDK
 //        MJShareSDkHelper(isOpen: true)
-        var defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.valueForKey("token") != nil {
             let v = NSObject.getEncodeString("20160901")
             let phone = defaults.valueForKey("phone")

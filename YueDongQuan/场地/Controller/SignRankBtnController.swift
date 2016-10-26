@@ -226,7 +226,7 @@ extension SignRankBtnController {
         let para = ["v":v,"uid":1,"siteId":siteId]
         print(para.description)
         
-        Alamofire.request(.POST, NSURL(string: kURL + "/sitesign")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: testUrl + "/sitesign")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
@@ -255,7 +255,7 @@ extension SignRankBtnController {
         let para = ["v":v,"uid":1,"signId":siteId]
         print(para.description)
         
-        Alamofire.request(.POST, NSURL(string: kURL + "/exitsite")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: testUrl + "/exitsite")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)

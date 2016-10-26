@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Alamofire
 import SwiftyJSON
+import SDWebImage
 
 class EditorFieldViewController: UIViewController{
     
@@ -386,7 +387,8 @@ class EditorFieldViewController: UIViewController{
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        SDImageCache.sharedImageCache().cleanDisk()
+        SDImageCache.sharedImageCache().clearMemory()
     }
     
     
@@ -430,7 +432,7 @@ extension EditorFieldViewController : UIImagePickerControllerDelegate,UINavigati
         
         
         
-        Alamofire.upload(.POST, NSURL(string: kURL + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
+        Alamofire.upload(.POST, NSURL(string: testUrl + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
             
             let data = UIImageJPEGRepresentation(self.imageUrl!, 0.5)
             let imageName = String(NSDate().timeIntervalSince1970*100000) + ".png"
@@ -475,7 +477,7 @@ extension EditorFieldViewController : UIImagePickerControllerDelegate,UINavigati
         let para = ["v":v,"uid":1,"siteId":siteId,"imageId":imageId,"phone":phone,"cost":cost,"name":name]
         print(para.description)
         
-        Alamofire.request(.POST, NSURL(string: kURL + "/updatesiteinfo")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: testUrl + "/updatesiteinfo")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)

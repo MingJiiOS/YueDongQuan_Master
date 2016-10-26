@@ -26,7 +26,7 @@ let v = NSObject.getEncodeString("20160901")
 
 struct UserInfo {
     var name = ""
-    var uid = 0
+    var uid = Int()
     var thumbnailSrc = ""
     var sex = ""
     var isLogin = false

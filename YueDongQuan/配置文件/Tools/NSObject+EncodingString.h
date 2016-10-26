@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface NSObject (EncodingString)
 
 
 -(NSString *)getEncodeString:(NSString *)str;
 
-
+-(NSAttributedString *)replaceString:(NSString *)str;
 @end

@@ -28,6 +28,12 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
         coordateBlock = block
     }
     
+    var addressBlock : ((address:String) ->Void)?
+    
+    func getAddressBlockValue(block:((address:String) -> Void)?) {
+        addressBlock = block
+    }
+    
     override init() {
         super.init()
         configLocationManager()
@@ -104,11 +110,47 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
                 if let regecode = regecode {
                     
                     //地址信息
-                    _ = regecode.formattedAddress
+              _ = regecode.formattedAddress
+
+                    let address = regecode.formattedAddress
+                    NSLog("address = \(address)")
+
                     
                 }
                 
             }
         }
     }
+    
+    
+    func getGeocodeAction(){
+        
+        //        locationManager.requestLocationWithReGeocode(true, completionBlock: completionBlock)
+        var address = ""
+        locationManager.requestLocationWithReGeocode(true) { (location:CLLocation!, regecode:AMapLocationReGeocode!, error:NSError!) in
+            if let error = error {
+                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
+                
+                if error.code == AMapLocationErrorCode.LocateFailed.rawValue {
+                    return;
+                }
+            }
+            
+            if location != nil {
+                
+                if let regecode = regecode {
+                    
+                    //地址信息
+                    address = regecode.formattedAddress
+                    NSLog("address = \(address)")
+                    self.addressBlock!(address:address)
+                    
+                }
+                
+            }
+        }
+        
+    }
+    
+    
 }

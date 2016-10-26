@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import HYBMasonryAutoCellHeight
 import Alamofire
+import SDWebImage
 
 
 
@@ -40,7 +41,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     private var userLongitude : Double = 0
     
     override func viewWillAppear(animated: Bool) {
-        requestData()
+        
     }
     
     
@@ -50,7 +51,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         //        manger.allowsBackgroundLocationUpdates = true
         manger.delegate = self
         manger.startUpdatingLocation()
-        
+        requestData()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear), name: UIKeyboardWillShowNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear), name:UIKeyboardWillHideNotification, object: nil)
@@ -85,7 +86,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         segementControl.selectedSegmentIndex = 0
         segementControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.blueColor()]
         segementControl.indexChangeBlock = { (index) in
-            NSLog("index == \(index)")
+            
             
             
         }
@@ -118,7 +119,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         //        }
         //        let startY = segementControl.frame.maxY + 2
         //        let endY = self.scrollContentView.frame.maxY
-        NSLog("frame = \(scrollContentView.frame)")
+        
         
         scrollContentView.contentSize = CGSize(width: ScreenWidth*CGFloat(titleArray.count), height: scrollContentView.frame.height )
         scrollContentView.delegate = self
@@ -139,7 +140,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     
     func segmentedControlChangedValue(segemnet : HMSegmentedControl) {
-        NSLog("segement = \(segemnet.selectedSegmentIndex)")
+        
         let offSet = ScreenWidth*CGFloat(segemnet.selectedSegmentIndex)
         scrollContentView.contentOffset = CGPoint(x: offSet, y: 0)
         
@@ -149,7 +150,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        SDImageCache.sharedImageCache().cleanDisk()
+        SDImageCache.sharedImageCache().clearMemory()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -161,7 +163,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     
     deinit {
-        print("deinit")
+        
     }
     
     
@@ -174,14 +176,14 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
 
 extension DiscoverViewController : UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        NSLog("scrollView == \(scrollView.frame)---\(scrollView.contentOffset)")
+        
     }
     
     func amapLocationManager(manager: AMapLocationManager!, didFailWithError error: NSError!) {
         print(error)
     }
     func amapLocationManager(manager: AMapLocationManager!, didUpdateLocation location: CLLocation!) {
-//        print(location.coordinate.longitude)
+
         
         self.userLatitude = location.coordinate.latitude
         self.userLongitude = location.coordinate.longitude
@@ -207,21 +209,22 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         let cell : HKFTableViewCell = tableView.dequeueReusableCellWithIdentifier("HKFTableViewCell", forIndexPath: indexPath) as! HKFTableViewCell
         cell.delegate = self
         cell.headTypeView?.hidden = true
-        cell.displayView.tapedImageV = {[unowned self] index in
-            NSLog("index = \(index)")
+        
+        let model = self.testModel?.data.array[indexPath.row]
+        
+        var imageArr = [String]()
+        for item in (model?.images)! {
+            imageArr.append(item.thumbnailSrc)
+        }
+        
+        if model?.typeId == 11 {
+            cell.imageArry = imageArr
         }
         
         
-        
-        
-        let model = self.testModel?.data.array[indexPath.row]
-        //        cell.imageArry = model.
-        
-        //        print(model.imgArray.count)
-        
         cell.configCellWithModelAndIndexPath(model!, indexPath: indexPath)
         let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model?.latitude)! , longitude2: (model?.longitude)!)
-        NSLog("distance=\(distance)")
+        
         cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
         return cell
         
@@ -231,16 +234,22 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         let model = self.testModel?.data.array[indexPath.row]
+//        let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+//            let cell = sourceCell as! HKFTableViewCell
+//            cell.configCellWithModelAndIndexPath(model!, indexPath: indexPath)
+//        }){ () -> [NSObject : AnyObject]! in
+//                    let cache = [kHYBCacheStateKey : model?.id.description,kHYBCacheStateKey : "",kHYBRecalculateForStateKey : (model!.shouldUpdateCache)]
+//                    model!.shouldUpdateCache = false
+//                    return cache as [NSObject : AnyObject]
+//                }
         let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
             let cell = sourceCell as! HKFTableViewCell
             cell.configCellWithModelAndIndexPath(model!, indexPath: indexPath)
-        })
-        //        { () -> [NSObject : AnyObject]! in
-        //            let cache = [kHYBCacheStateKey : model?.id,kHYBCacheStateKey : "",kHYBRecalculateForStateKey : (model!.shouldUpdateCache)]
-        //            model!.shouldUpdateCache = false
-        //            return cache as [NSObject : AnyObject]
-        //        }
-        
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheStateKey:"\(model?.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+                model?.shouldUpdateCache = false
+                return cache as [NSObject:AnyObject]
+        }
         
         return h
     }
@@ -368,11 +377,11 @@ extension DiscoverViewController:UITextFieldDelegate {
             self.textField.resignFirstResponder()
         }
         
-//        print(self.textField.text)
+
         
         switch typeStatus! {
         case .pinglun:
-//            print(self.textField.text)
+
             
             let model = DiscoveryCommentModel()
             model.netName = userInfo.name
@@ -387,7 +396,7 @@ extension DiscoverViewController:UITextFieldDelegate {
             self.datasource[(index?.row)!].comment.append(model)
             
             for item in self.tableViews {
-                item.reloadData()
+                item.reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
             }
             
             requestCommentSay("", content: self.textField.text!, foundId: self.sayId!)
@@ -406,7 +415,7 @@ extension DiscoverViewController:UITextFieldDelegate {
             self.datasource[(index?.row)!].comment.append(model)
             
             for item in self.tableViews {
-                item.reloadData()
+                item.reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
             }
             
             requestCommentSay((self.commentModel?.commentId.description)!, content: self.textField.text!, foundId: self.sayId!)
@@ -462,12 +471,13 @@ extension DiscoverViewController {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                NSLog("Say-json = \(json)")
+//                NSLog("Say-json = \(json)")
                 
                 let str = json.object
                 
                 self.testModel = DiscoveryModel(fromDictionary: str as! NSDictionary)
                 
+
 
 //                print(self.testModel?.code)
 //                print(self.testModel?.data.array[0].address)
@@ -496,26 +506,14 @@ extension DiscoverViewController {
         let v = NSObject.getEncodeString("20160901")
         
         let para = ["v":v,"uid":userInfo.uid.description,"commentId":commentId,"content":content,"foundId":foundId]
-        
-        
-
-//        print(para.description)
-
-
-        
-        Alamofire.request(.POST, NSURL(string: kURL + "/commentfound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: testUrl + "/commentfound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                let str = json.object
+                _ = json.object
                 
 
-//                print(str)
 
-
-                for item in self.tableViews {
-                    item.reloadData()
-                }
             case .Failure(let error):
                 print(error)
             }
@@ -528,23 +526,14 @@ extension DiscoverViewController {
         
         let para = ["v":v,"uid":userInfo.uid.description,"foundId":foundId]
         
-        
-
-//        print(para.description)
-
-
-        
-        Alamofire.request(.POST, NSURL(string: kURL + "/praise")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: testUrl + "/praise")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                let str = json.object
+                _ = json.object
                 
 
-//                print(str)
-//                for item in self.tableViews {
-//                    item.reloadData()
-//                }
+
 
                 
 
