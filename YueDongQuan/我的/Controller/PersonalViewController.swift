@@ -210,11 +210,7 @@ return 55
         if (section == 0) {
             if self.myinfoModel != nil {
                 let bgView = HeaderView()
-                bgView.guanZhuLabel.text = self.myinfoModel?.data.bsum.description
-                bgView.changDiLabel.text = self.myinfoModel?.data.msum.description
-                bgView.huoZanLabel.text = self.myinfoModel?.data.asum.description
-                bgView.quanZiLabel.text = self.myinfoModel?.data.psum.description
-                bgView.headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+                bgView.configContent(self.myinfoModel!, isBigV: false)
                 return bgView
             }
         
