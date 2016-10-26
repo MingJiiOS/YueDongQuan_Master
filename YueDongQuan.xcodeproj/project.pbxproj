@@ -52,7 +52,12 @@
 		5C343A041D91366F0077BFDD /* SignRankBtnController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C343A031D91366F0077BFDD /* SignRankBtnController.swift */; };
 		5C3B9A011D9D0A0400AF7CFE /* QuanZiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3B9A001D9D0A0400AF7CFE /* QuanZiCell.swift */; };
 		5C3B9A031D9D17A900AF7CFE /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3B9A021D9D17A900AF7CFE /* SearchResultCell.swift */; };
+		5C42CACB1DC0584100669EB5 /* HKFPostField_TwoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C42CACA1DC0584000669EB5 /* HKFPostField_TwoVC.swift */; };
 		5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4396CF1D9E135200F40749 /* SourceAnimation.swift */; };
+		5C5CD06A1DBF0F1500D4C1FA /* UIView+SetRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5CD0651DBF0F1500D4C1FA /* UIView+SetRect.m */; };
+		5C5CD06B1DBF0F1500D4C1FA /* SimplePopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5CD0671DBF0F1500D4C1FA /* SimplePopupView.m */; };
+		5C5CD06C1DBF0F1500D4C1FA /* UIView+SimplePopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5CD0691DBF0F1500D4C1FA /* UIView+SimplePopupView.m */; };
+		5C5CD06E1DBF28AB00D4C1FA /* HKFPostField_OneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5CD06D1DBF28AB00D4C1FA /* HKFPostField_OneVC.swift */; };
 		5C5DB9EF1DBB609700BF89EE /* DiscoveryImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DB9EE1DBB609700BF89EE /* DiscoveryImage.swift */; };
 		5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */; };
 		5C7C3A031DB5CE3F00EA598B /* DiscoveryCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */; };
@@ -76,6 +81,19 @@
 		5C90F13A1D8FCFA0005E16AF /* YJBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C90F1341D8FCFA0005E16AF /* YJBadgeView.m */; };
 		5C90F13B1D8FCFA0005E16AF /* YJTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C90F1361D8FCFA0005E16AF /* YJTabBarButton.m */; };
 		5C90F13E1D8FD1EA005E16AF /* YJTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C90F13D1D8FD1EA005E16AF /* YJTabBar.m */; };
+		5C913F911DBDEB0E00E567FB /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F851DBDEB0E00E567FB /* Weather.swift */; };
+		5C913F921DBDEB0E00E567FB /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F861DBDEB0E00E567FB /* WeatherData.swift */; };
+		5C913F931DBDEB0E00E567FB /* WeatherF3h.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F871DBDEB0E00E567FB /* WeatherF3h.swift */; };
+		5C913F941DBDEB0E00E567FB /* WeatherInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F881DBDEB0E00E567FB /* WeatherInfo.swift */; };
+		5C913F951DBDEB0E00E567FB /* WeatherLife.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F891DBDEB0E00E567FB /* WeatherLife.swift */; };
+		5C913F961DBDEB0E00E567FB /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F8A1DBDEB0E00E567FB /* WeatherModel.swift */; };
+		5C913F971DBDEB0E00E567FB /* WeatherPm25.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F8B1DBDEB0E00E567FB /* WeatherPm25.swift */; };
+		5C913F981DBDEB0E00E567FB /* WeatherPrecipitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F8C1DBDEB0E00E567FB /* WeatherPrecipitation.swift */; };
+		5C913F991DBDEB0E00E567FB /* WeatherRealtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F8D1DBDEB0E00E567FB /* WeatherRealtime.swift */; };
+		5C913F9A1DBDEB0E00E567FB /* WeatherResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F8E1DBDEB0E00E567FB /* WeatherResult.swift */; };
+		5C913F9B1DBDEB0E00E567FB /* WeatherTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F8F1DBDEB0E00E567FB /* WeatherTemperature.swift */; };
+		5C913F9C1DBDEB0E00E567FB /* WeatherWind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C913F901DBDEB0E00E567FB /* WeatherWind.swift */; };
+		5C913F9E1DBDF81600E567FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C913F9D1DBDF81600E567FB /* Assets.xcassets */; };
 		5CA4EA391D8E7453001A8E8D /* UITableView+HYBCacheHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CA4EA361D8E7453001A8E8D /* UITableView+HYBCacheHeight.m */; };
 		5CA4EA3A1D8E7453001A8E8D /* UITableViewCell+HYBMasonryAutoCellHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CA4EA381D8E7453001A8E8D /* UITableViewCell+HYBMasonryAutoCellHeight.m */; };
 		5CA4EA3C1D8E96B5001A8E8D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CA4EA3B1D8E96B5001A8E8D /* MapKit.framework */; };
@@ -140,7 +158,6 @@
 		BF071F411D9A0D68000551F7 /* TotalDongdouCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071F2B1D9A0D68000551F7 /* TotalDongdouCell.swift */; };
 		BF071F431D9A10DA000551F7 /* QuanZiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071F421D9A10DA000551F7 /* QuanZiViewController.swift */; };
 		BF071F451D9A110B000551F7 /* PersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071F441D9A110B000551F7 /* PersonalViewController.swift */; };
-		BF071F471D9A1705000551F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF071F461D9A1705000551F7 /* Assets.xcassets */; };
 		BF140EE61DAF6A390029DC25 /* updateNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF140EE51DAF6A390029DC25 /* updateNameModel.swift */; };
 		BF1C0D6C1D8AAB5D009EA504 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C0D6B1D8AAB5D009EA504 /* CoreData.framework */; };
 		BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E16A91DA74518007985F3 /* validateUtils.m */; };
@@ -408,7 +425,15 @@
 		5C343A031D91366F0077BFDD /* SignRankBtnController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignRankBtnController.swift; sourceTree = "<group>"; };
 		5C3B9A001D9D0A0400AF7CFE /* QuanZiCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuanZiCell.swift; path = "YueDongQuan/搜索/View/QuanZiCell.swift"; sourceTree = SOURCE_ROOT; };
 		5C3B9A021D9D17A900AF7CFE /* SearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
+		5C42CACA1DC0584000669EB5 /* HKFPostField_TwoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostField_TwoVC.swift; sourceTree = "<group>"; };
 		5C4396CF1D9E135200F40749 /* SourceAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceAnimation.swift; sourceTree = "<group>"; };
+		5C5CD0641DBF0F1500D4C1FA /* UIView+SetRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SetRect.h"; sourceTree = "<group>"; };
+		5C5CD0651DBF0F1500D4C1FA /* UIView+SetRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SetRect.m"; sourceTree = "<group>"; };
+		5C5CD0661DBF0F1500D4C1FA /* SimplePopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePopupView.h; sourceTree = "<group>"; };
+		5C5CD0671DBF0F1500D4C1FA /* SimplePopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePopupView.m; sourceTree = "<group>"; };
+		5C5CD0681DBF0F1500D4C1FA /* UIView+SimplePopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SimplePopupView.h"; sourceTree = "<group>"; };
+		5C5CD0691DBF0F1500D4C1FA /* UIView+SimplePopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SimplePopupView.m"; sourceTree = "<group>"; };
+		5C5CD06D1DBF28AB00D4C1FA /* HKFPostField_OneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostField_OneVC.swift; sourceTree = "<group>"; };
 		5C5DB9EE1DBB609700BF89EE /* DiscoveryImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryImage.swift; sourceTree = "<group>"; };
 		5C68263E1DAC91250032B66E /* NSObject+EncodingString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+EncodingString.h"; sourceTree = "<group>"; };
 		5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+EncodingString.m"; sourceTree = "<group>"; };
@@ -440,6 +465,19 @@
 		5C90F1361D8FCFA0005E16AF /* YJTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJTabBarButton.m; sourceTree = "<group>"; };
 		5C90F13C1D8FD1EA005E16AF /* YJTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJTabBar.h; sourceTree = "<group>"; };
 		5C90F13D1D8FD1EA005E16AF /* YJTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJTabBar.m; sourceTree = "<group>"; };
+		5C913F851DBDEB0E00E567FB /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		5C913F861DBDEB0E00E567FB /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		5C913F871DBDEB0E00E567FB /* WeatherF3h.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherF3h.swift; sourceTree = "<group>"; };
+		5C913F881DBDEB0E00E567FB /* WeatherInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInfo.swift; sourceTree = "<group>"; };
+		5C913F891DBDEB0E00E567FB /* WeatherLife.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherLife.swift; sourceTree = "<group>"; };
+		5C913F8A1DBDEB0E00E567FB /* WeatherModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		5C913F8B1DBDEB0E00E567FB /* WeatherPm25.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherPm25.swift; sourceTree = "<group>"; };
+		5C913F8C1DBDEB0E00E567FB /* WeatherPrecipitation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherPrecipitation.swift; sourceTree = "<group>"; };
+		5C913F8D1DBDEB0E00E567FB /* WeatherRealtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherRealtime.swift; sourceTree = "<group>"; };
+		5C913F8E1DBDEB0E00E567FB /* WeatherResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherResult.swift; sourceTree = "<group>"; };
+		5C913F8F1DBDEB0E00E567FB /* WeatherTemperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTemperature.swift; sourceTree = "<group>"; };
+		5C913F901DBDEB0E00E567FB /* WeatherWind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherWind.swift; sourceTree = "<group>"; };
+		5C913F9D1DBDF81600E567FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CA4EA351D8E7453001A8E8D /* UITableView+HYBCacheHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+HYBCacheHeight.h"; sourceTree = "<group>"; };
 		5CA4EA361D8E7453001A8E8D /* UITableView+HYBCacheHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+HYBCacheHeight.m"; sourceTree = "<group>"; };
 		5CA4EA371D8E7453001A8E8D /* UITableViewCell+HYBMasonryAutoCellHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+HYBMasonryAutoCellHeight.h"; sourceTree = "<group>"; };
@@ -512,7 +550,6 @@
 		BF071F2B1D9A0D68000551F7 /* TotalDongdouCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalDongdouCell.swift; sourceTree = "<group>"; };
 		BF071F421D9A10DA000551F7 /* QuanZiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuanZiViewController.swift; sourceTree = "<group>"; };
 		BF071F441D9A110B000551F7 /* PersonalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalViewController.swift; sourceTree = "<group>"; };
-		BF071F461D9A1705000551F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF140EE51DAF6A390029DC25 /* updateNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = updateNameModel.swift; sourceTree = "<group>"; };
 		BF1C0CB21D8A4CD5009EA504 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		BF1C0D6B1D8AAB5D009EA504 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -1299,7 +1336,7 @@
 				BFC65D3E1D86A05D004E7E99 /* 我的 */,
 				BFC65D1C1D869FD1004E7E99 /* AppDelegate.swift */,
 				BFDB2A451DA3D77500A65DAD /* MJShareSDkHelper.swift */,
-				BF071F461D9A1705000551F7 /* Assets.xcassets */,
+				5C913F9D1DBDF81600E567FB /* Assets.xcassets */,
 				5C2A955B1D8D1C56006D1462 /* dataTest.geojson */,
 				BFC65D251D869FD1004E7E99 /* LaunchScreen.storyboard */,
 				BFC65D281D869FD1004E7E99 /* Info.plist */,
@@ -1326,6 +1363,8 @@
 				5C072B611D8F9C6C00420F6D /* EditorFieldViewController.swift */,
 				5C3439FD1D90E6EA0077BFDD /* SignRankingCOntroller.swift */,
 				5C343A031D91366F0077BFDD /* SignRankBtnController.swift */,
+				5C5CD06D1DBF28AB00D4C1FA /* HKFPostField_OneVC.swift */,
+				5C42CACA1DC0584000669EB5 /* HKFPostField_TwoVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1338,6 +1377,18 @@
 				5C7C3A0E1DB5CF3400EA598B /* FieldModel.swift */,
 				5C7C3A121DB6069800EA598B /* FieldImageData.swift */,
 				5C7C3A131DB6069800EA598B /* FieldImageModel.swift */,
+				5C913F851DBDEB0E00E567FB /* Weather.swift */,
+				5C913F861DBDEB0E00E567FB /* WeatherData.swift */,
+				5C913F871DBDEB0E00E567FB /* WeatherF3h.swift */,
+				5C913F881DBDEB0E00E567FB /* WeatherInfo.swift */,
+				5C913F891DBDEB0E00E567FB /* WeatherLife.swift */,
+				5C913F8A1DBDEB0E00E567FB /* WeatherModel.swift */,
+				5C913F8B1DBDEB0E00E567FB /* WeatherPm25.swift */,
+				5C913F8C1DBDEB0E00E567FB /* WeatherPrecipitation.swift */,
+				5C913F8D1DBDEB0E00E567FB /* WeatherRealtime.swift */,
+				5C913F8E1DBDEB0E00E567FB /* WeatherResult.swift */,
+				5C913F8F1DBDEB0E00E567FB /* WeatherTemperature.swift */,
+				5C913F901DBDEB0E00E567FB /* WeatherWind.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1452,6 +1503,12 @@
 		BFC65D391D86A05D004E7E99 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5C5CD0641DBF0F1500D4C1FA /* UIView+SetRect.h */,
+				5C5CD0651DBF0F1500D4C1FA /* UIView+SetRect.m */,
+				5C5CD0661DBF0F1500D4C1FA /* SimplePopupView.h */,
+				5C5CD0671DBF0F1500D4C1FA /* SimplePopupView.m */,
+				5C5CD0681DBF0F1500D4C1FA /* UIView+SimplePopupView.h */,
+				5C5CD0691DBF0F1500D4C1FA /* UIView+SimplePopupView.m */,
 				5C7C3A071DB5CECC00EA598B /* UIView+LQXkeyboard.h */,
 				5C7C3A081DB5CECC00EA598B /* UIView+LQXkeyboard.m */,
 				5C7C3A091DB5CECC00EA598B /* YHMessageView.swift */,
@@ -1716,6 +1773,7 @@
 				BF2F6C711DAE0D640050B437 /* cool－51（被拖移）.tiff in Resources */,
 				BF2F6C531DAE0D640050B437 /* cool－21（被拖移）.tiff in Resources */,
 				BF2F6C8F1DAE0D640050B437 /* cool－81（被拖移）.tiff in Resources */,
+				5C913F9E1DBDF81600E567FB /* Assets.xcassets in Resources */,
 				BF2F6C901DAE0D640050B437 /* cool－82（被拖移）.tiff in Resources */,
 				BF2F6C751DAE0D640050B437 /* cool－55（被拖移）.tiff in Resources */,
 				BFDB2A981DA5EA4300A65DAD /* WeiboSDK.bundle in Resources */,
@@ -1730,7 +1788,6 @@
 				BF2F6C721DAE0D640050B437 /* cool－52（被拖移）.tiff in Resources */,
 				BF2F6C561DAE0D640050B437 /* cool－24（被拖移）.tiff in Resources */,
 				BF2F6C761DAE0D640050B437 /* cool－56（被拖移）.tiff in Resources */,
-				BF071F471D9A1705000551F7 /* Assets.xcassets in Resources */,
 				BF2F6C601DAE0D640050B437 /* cool－34（被拖移）.tiff in Resources */,
 				BF2F6C401DAE0D640050B437 /* cool－2（被拖移）.tiff in Resources */,
 				BF2F6C5E1DAE0D640050B437 /* cool－32（被拖移）.tiff in Resources */,
@@ -1816,7 +1873,9 @@
 				BF071EF81D9A0D5F000551F7 /* MyQuanZiViewController.swift in Sources */,
 				5C3439FE1D90E6EA0077BFDD /* SignRankingCOntroller.swift in Sources */,
 				5C27BAF51DB761D9005A2F8D /* PYPhotosViewController.m in Sources */,
+				5C913F9A1DBDEB0E00E567FB /* WeatherResult.swift in Sources */,
 				BF9739CC1D9F714500E1B3EB /* MJGetToken.swift in Sources */,
+				5C913F921DBDEB0E00E567FB /* WeatherData.swift in Sources */,
 				BFD36CCB1DBA0202005005A3 /* TimeStampToDate.swift in Sources */,
 				BF140EE61DAF6A390029DC25 /* updateNameModel.swift in Sources */,
 				BF071F011D9A0D5F000551F7 /* MJModel.swift in Sources */,
@@ -1830,8 +1889,11 @@
 				BFD36CC11DB9AEF3005005A3 /* myFoundModel.swift in Sources */,
 				BFC65D4A1D86A14F004E7E99 /* MiddleViewController.swift in Sources */,
 				5C7C3A0B1DB5CECC00EA598B /* YHMessageView.swift in Sources */,
+				5C913F931DBDEB0E00E567FB /* WeatherF3h.swift in Sources */,
 				BFAF23C31DB85EBC00294988 /* CircleInfoModel.swift in Sources */,
 				5C27BAFB1DB761D9005A2F8D /* PYPhotoCell.m in Sources */,
+				5C913F991DBDEB0E00E567FB /* WeatherRealtime.swift in Sources */,
+				5C5CD06B1DBF0F1500D4C1FA /* SimplePopupView.m in Sources */,
 				BF071EFF1D9A0D5F000551F7 /* SubContentViewController.swift in Sources */,
 				5C27BAFA1DB761D9005A2F8D /* PYPhotoBrowseView.m in Sources */,
 				5CC5F9431DAF8A550088A61E /* HKFTableViewCell.swift in Sources */,
@@ -1847,6 +1909,7 @@
 				5CC5F9421DAF8A550088A61E /* HKFCommentCell.swift in Sources */,
 				BF071F341D9A0D68000551F7 /* ConfirmOldPw.swift in Sources */,
 				5C7C3A151DB6069800EA598B /* FieldImageModel.swift in Sources */,
+				5C913F941DBDEB0E00E567FB /* WeatherInfo.swift in Sources */,
 				BF3CAC461DB22E15008A5C51 /* myCircleArray.swift in Sources */,
 				BFAF23C61DB85F6800294988 /* MJAmapHelper.swift in Sources */,
 				5C90F13B1D8FCFA0005E16AF /* YJTabBarButton.m in Sources */,
@@ -1864,10 +1927,12 @@
 				BFAF23C91DB8600800294988 /* uploadImageData.swift in Sources */,
 				5CC48A041D9CECF8009C4AFE /* SearchController.swift in Sources */,
 				BF071EF91D9A0D5F000551F7 /* NewQuanZiViewController.swift in Sources */,
+				5C913F9B1DBDEB0E00E567FB /* WeatherTemperature.swift in Sources */,
 				BF6FD5241D9BAF0D00F52C48 /* MJAnnotation.swift in Sources */,
 				5C90F1391D8FCFA0005E16AF /* UIView+Frame.m in Sources */,
 				BF2F6C9A1DAE16510050B437 /* RegistModel.swift in Sources */,
 				BFA3273D1D9CF7200003AA4D /* MJGreenAnnotationView.swift in Sources */,
+				5C5CD06C1DBF0F1500D4C1FA /* UIView+SimplePopupView.m in Sources */,
 				5C7C3A051DB5CE3F00EA598B /* DiscoveryData.swift in Sources */,
 				5C90F1371D8FCFA0005E16AF /* UIBarButtonItem+YJItem.m in Sources */,
 				BFC65D5A1D86A1AF004E7E99 /* YXCustomActionSheet.m in Sources */,
@@ -1888,6 +1953,7 @@
 				BF071F2F1D9A0D68000551F7 /* SetNewPasswordViewController.swift in Sources */,
 				5C24BB741D9A5F4400A6D25F /* HKFPostRecruitmentVC.swift in Sources */,
 				5CD981061D96546A007828E2 /* XTimer.m in Sources */,
+				5C913F911DBDEB0E00E567FB /* Weather.swift in Sources */,
 				BFC126A31DB48C2B00E11088 /* HistoryDongdouData.swift in Sources */,
 				5C27BAF21DB761D9005A2F8D /* PYNavigationController.m in Sources */,
 				BFD36CC91DB9F19A005005A3 /* memberInfoModel.swift in Sources */,
@@ -1897,6 +1963,7 @@
 				5C10E1281D9B5B34008AFAAF /* HKFPostActivityVC.swift in Sources */,
 				5C7C3A0F1DB5CF3400EA598B /* FieldArray.swift in Sources */,
 				5CA4EA391D8E7453001A8E8D /* UITableView+HYBCacheHeight.m in Sources */,
+				5C913F981DBDEB0E00E567FB /* WeatherPrecipitation.swift in Sources */,
 				5C2A956F1D8D86C3006D1462 /* DynamicCell.m in Sources */,
 				BF071F3A1D9A0D68000551F7 /* MJDatePikerView.swift in Sources */,
 				BF9739D31D9F89CF00E1B3EB /* InterfaceFile.swift in Sources */,
@@ -1935,9 +2002,11 @@
 				BF071F3D1D9A0D68000551F7 /* MyDongdouView.swift in Sources */,
 				BFA6DDBA1D88EC91009017DE /* PchFile.swift in Sources */,
 				BF071F091D9A0D5F000551F7 /* MJHeadimageWithSubimageView.swift in Sources */,
+				5C913F9C1DBDEB0E00E567FB /* WeatherWind.swift in Sources */,
 				5C3B9A011D9D0A0400AF7CFE /* QuanZiCell.swift in Sources */,
 				5C7C3A041DB5CE3F00EA598B /* DiscoveryArray.swift in Sources */,
 				BFDB2A9C1DA600BB00A65DAD /* LoginRegisterView.swift in Sources */,
+				5C5CD06E1DBF28AB00D4C1FA /* HKFPostField_OneVC.swift in Sources */,
 				BF071F3C1D9A0D68000551F7 /* MyDongdouTableViewCell.swift in Sources */,
 				BF7DDC9F1DA0AAC700772366 /* publishNoticeViewController.swift in Sources */,
 				BFAD632C1D9E4BD0006234E1 /* MJMyInfoModel.swift in Sources */,
@@ -1954,6 +2023,7 @@
 				5C2A95771D8D86EC006D1462 /* NSString+Extension.m in Sources */,
 				5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */,
 				BFC1269E1DB4792F00E11088 /* CirclesModel.swift in Sources */,
+				5C5CD06A1DBF0F1500D4C1FA /* UIView+SetRect.m in Sources */,
 				BF9739CF1D9F71A100E1B3EB /* MJNetWorkHelper.swift in Sources */,
 				BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */,
 				BFD36CC81DB9F19A005005A3 /* memberInfoData.swift in Sources */,
@@ -1963,6 +2033,7 @@
 				BF071F0E1D9A0D5F000551F7 /* QRCodeView.swift in Sources */,
 				BF071F041D9A0D5F000551F7 /* CircleDataView.swift in Sources */,
 				5C24BB6F1D9A4BEB00A6D25F /* CustomTextField.m in Sources */,
+				5C42CACB1DC0584100669EB5 /* HKFPostField_TwoVC.swift in Sources */,
 				5C343A001D90E8AB0077BFDD /* SignRankCell.swift in Sources */,
 				5C343A041D91366F0077BFDD /* SignRankBtnController.swift in Sources */,
 				BFC65D1D1D869FD1004E7E99 /* AppDelegate.swift in Sources */,
@@ -1984,20 +2055,22 @@
 				5C27BAF81DB761D9005A2F8D /* PYProgressView.m in Sources */,
 				BFC1269C1DB4792F00E11088 /* CirclesArray.swift in Sources */,
 				BFAF23CC1DB8A9D700294988 /* MJLayerContentCell.swift in Sources */,
+				5C913F951DBDEB0E00E567FB /* WeatherLife.swift in Sources */,
 				BFC572941DA8EB72002E1995 /* MJProgressHUD.swift in Sources */,
 				46315B001D882C2300B9D846 /* Pubilc.swift in Sources */,
 				BF071EFA1D9A0D5F000551F7 /* OtherQuanZiViewController.swift in Sources */,
 				5C27BB0A1DB761F2005A2F8D /* MBProgressHUD.m in Sources */,
 				BFAD63281D9E3E34006234E1 /* ConversationListViewController.m in Sources */,
 				BF071F071D9A0D5F000551F7 /* MJBlacklistView.swift in Sources */,
+				5C913F961DBDEB0E00E567FB /* WeatherModel.swift in Sources */,
 				BFDB2A461DA3D77500A65DAD /* MJShareSDkHelper.swift in Sources */,
 				BFAD632A1D9E47BC006234E1 /* MJConversationViewController.swift in Sources */,
 				BF071F0D1D9A0D5F000551F7 /* MJQRCodeView.swift in Sources */,
 				BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */,
+				5C913F971DBDEB0E00E567FB /* WeatherPm25.swift in Sources */,
 				BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */,
 				5C1DC7221DB9BC41000F96BD /* JFCompressionVideo.m in Sources */,
 				BF5738841DBB10690023B7DE /* myInfoModel.swift in Sources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2105,6 +2178,7 @@
 			baseConfigurationReference = 08192597EA95AF20F9236B20 /* Pods-YueDongQuan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2191,6 +2265,7 @@
 			baseConfigurationReference = 8F2702782B36855A0793C813 /* Pods-YueDongQuan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

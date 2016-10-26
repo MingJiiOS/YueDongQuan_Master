@@ -157,8 +157,8 @@ class FieldCell: UITableViewCell {
         self.name.text = model.name
         self.distanceLabel.text = String(format: "%0.2fm",model.distance)
         self.priceLabel.text = String(format: "%0.2f元/时",model.cost)
-        self.imgView.sd_setImageWithURL(NSURL(string: model.thumbnailSrc))
-        self.imgView.sd_setImageWithURL(NSURL(string:"http://g.hiphotos.baidu.com/zhidao/pic/item/cb8065380cd7912331f61f30ab345982b2b78064.jpg"))
+        self.imgView.sd_setImageWithURL(NSURL(string: model.thumbnailSrc),placeholderImage: UIImage(named: ""))
+//        self.imgView.sd_setImageWithURL(NSURL(string:model.thumbnailSrc))
     }
     
     

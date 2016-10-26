@@ -20,7 +20,8 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     private var userLatitude : Double = 0
     private var userLongitude : Double = 0
     var address = ""
-    
+    var selectQzLabel : UILabel!
+    private var circleIdTemp = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +55,7 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
         selectImg.backgroundColor = UIColor.redColor()
         selectQZView.addSubview(selectImg)
         
-        let selectQzLabel = UILabel(frame: CGRect(x: CGRectGetMaxX(selectImg.frame) + 2, y: 3, width: 64, height: 24))
+        selectQzLabel = UILabel(frame: CGRect(x: CGRectGetMaxX(selectImg.frame) + 2, y: 3, width: 64, height: 24))
         selectQzLabel.text = "选择圈子"
         selectQzLabel.font = UIFont.systemFontOfSize(12)
         selectQzLabel.textAlignment = .Center
@@ -131,6 +132,11 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     
     func selectQuanZiClick(){
         NSLog("点击了选择圈子")
+        let cicrleVC = MyQuanZiViewController()
+        cicrleVC.getCicleIDClosure = getMyCicleIdAndNameClosure
+        cicrleVC.pushFlag = true
+        self.navigationController?.pushViewController(cicrleVC, animated: true)
+        
     }
     
     func showLocationClick(){
@@ -139,8 +145,21 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
         
     }
     
+    func getMyCicleIdAndNameClosure(cicleId: String,cicleName:String) ->Void {
+        NSLog("cicleName = \(cicleName),cicleId = \(cicleId)")
+        self.circleIdTemp = cicleId
+        selectQzLabel.text = cicleName
+    }
+    
     func send(){
-        requestToPostZhaoMuSay(self.sayString, latitude: self.userLatitude, longitude: self.userLongitude, circleId: "", address: self.address)
+        
+        if self.circleIdTemp == "" {
+            let alert = UIAlertView(title: "提示", message: "没有选择圈子不能发布招募信息", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            
+        }else{
+            requestToPostZhaoMuSay(self.sayString, latitude: self.userLatitude, longitude: self.userLongitude, circleId: self.circleIdTemp, address: self.address)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -193,11 +212,11 @@ extension HKFPostRecruitmentVC {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                
+                print(json)
                 let str = (json.object) as! NSDictionary
                 
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
-//                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 }
                 
                 

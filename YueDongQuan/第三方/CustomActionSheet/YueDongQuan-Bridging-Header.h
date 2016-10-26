@@ -42,12 +42,15 @@
 #import "PYPhotoBrowser.h"
 #import "PYPhotosPreviewController.h"
 #import "JFCompressionVideo.h"
-
+#import "UIView+SimplePopupView.h"
+#import "UIView+SetRect.h"
+#import "SimplePopupView.h"
 
 //高德地图
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <MAMapKit/MAMapKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
+#import <AMapSearchKit/AMapSearchKit.h>
 //加密文件
 #import "NSObject+EncodingString.h"
 

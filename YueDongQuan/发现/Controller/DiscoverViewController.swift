@@ -206,7 +206,11 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : HKFTableViewCell = tableView.dequeueReusableCellWithIdentifier("HKFTableViewCell", forIndexPath: indexPath) as! HKFTableViewCell
+//        let cell : HKFTableViewCell = tableView.dequeueReusableCellWithIdentifier("HKFTableViewCell", forIndexPath: indexPath) as! HKFTableViewCell
+        
+        var cell = HKFTableViewCell()
+        cell = tableView.dequeueReusableCellWithIdentifier("HKFTableViewCell") as! HKFTableViewCell
+        
         cell.delegate = self
         cell.headTypeView?.hidden = true
         
@@ -373,6 +377,12 @@ extension DiscoverViewController:UITextFieldDelegate {
     }
     
     func sendMsg(){
+        
+        
+        UIView.animateWithDuration(0.2) {
+            self.critiqueView.frame = CGRect(x: 0, y: ScreenHeight - 89, width: ScreenWidth, height: 40)
+        }
+        
         if self.textField.isFirstResponder() {
             self.textField.resignFirstResponder()
         }
@@ -465,13 +475,13 @@ extension DiscoverViewController {
 
 extension DiscoverViewController {
     func requestData(){
-        let para = ["v":"-130%-7200%-7180%-7190%-7240%-7180%-7270%-7180%-7190%87100%","Uid":userInfo.uid.description,"typeId":"","pageNo":1,"pageSize":10]
+        let para = ["v":"-130%-7200%-7180%-7190%-7240%-7180%-7270%-7180%-7190%87100%","Uid":userInfo.uid.description,"typeId":"","pageNo":1,"pageSize":50]
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-//                NSLog("Say-json = \(json)")
+                NSLog("Say-json = \(json)")
                 
                 let str = json.object
                 

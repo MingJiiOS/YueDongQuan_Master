@@ -8,9 +8,14 @@
 
 import UIKit
 
+typealias GetMyCicleIDAndCicleNameClosure = (cicleID:String,cicleName:String) -> Void
+
 class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableViewDataSource {
     
+    var getCicleIDClosure : GetMyCicleIDAndCicleNameClosure?
+    
     var tableView = UITableView()
+    var pushFlag = false
     
     var myclrclemodel : myCircleModel?
     
@@ -204,23 +209,42 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
         let chatVC = MJConversationViewController()
         if indexPath.section == 0 {
             
-           
-            chatVC.targetId = ownClrcleIDAry[indexPath.row] as! String
-
-            chatVC.userName = userInfo.name
-            chatVC.title = ownNameAry[indexPath.row] as? String
-            chatVC.conversationType = .ConversationType_GROUP
-            chatVC.circleid = ownClrcleIDAry[indexPath.row] as? String
-            chatVC.thumbnailSrc = thumbnailSrcAry[indexPath.row] as? String
-            self.push(chatVC)
+            if (self.pushFlag) {
+                let circleId = ownClrcleIDAry[indexPath.row] as! String
+                let cicleName = ownNameAry[indexPath.row] as? String
+                
+                if getCicleIDClosure != nil {
+                    getCicleIDClosure!(cicleID: circleId,cicleName: cicleName!)
+                }
+                
+                
+                self.navigationController?.popViewControllerAnimated(true)
+            }else{
+                chatVC.targetId = ownClrcleIDAry[indexPath.row] as! String
+                
+                chatVC.userName = userInfo.name
+                chatVC.title = ownNameAry[indexPath.row] as? String
+                chatVC.conversationType = .ConversationType_GROUP
+                chatVC.circleid = ownClrcleIDAry[indexPath.row] as? String
+                chatVC.thumbnailSrc = thumbnailSrcAry[indexPath.row] as? String
+                self.push(chatVC)
+            }
+            
+            
         }else{
-            chatVC.targetId = joinClrcleIDAry[indexPath.row] as! String
-            chatVC.userName = userInfo.name
-            chatVC.title = joinNameAry[indexPath.row] as? String
-            chatVC.conversationType = .ConversationType_GROUP
-            chatVC.circleid = joinClrcleIDAry[indexPath.row] as? String
-            chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
-            self.push(chatVC)
+            
+            if (self.pushFlag){
+                
+            }else{
+            
+                chatVC.targetId = joinClrcleIDAry[indexPath.row] as! String
+                chatVC.userName = userInfo.name
+                chatVC.title = joinNameAry[indexPath.row] as? String
+                chatVC.conversationType = .ConversationType_GROUP
+                chatVC.circleid = joinClrcleIDAry[indexPath.row] as? String
+                chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
+                self.push(chatVC)
+            }
         }
         
     }

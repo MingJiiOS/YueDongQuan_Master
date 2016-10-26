@@ -35,46 +35,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YueDongQuan/&#x53d1;&#x5e03;/Controller/HKFPostRecruitmentVC.swift"
-            timestampString = "498738055.763324"
+            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/DiscoverViewController.swift"
+            timestampString = "498824440.29266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "requestToPostZhaoMuSay(_:latitude:longitude:circleId:address:)"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "didReceiveMemoryWarning()"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YueDongQuan.HKFPostRecruitmentVC.requestToPostZhaoMuSay (Swift.String, latitude : Swift.Double, longitude : Swift.Double, circleId : Swift.String, address : Swift.String) -&gt; ()"
-                  moduleName = "YueDongQuan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/YueDongQuan_Master/YueDongQuan/%E5%8F%91%E5%B8%83/Controller/HKFPostRecruitmentVC.swift"
-                  timestampString = "498824520.076426"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "192"
-                  endingLineNumber = "192"
-                  offsetFromSymbolStart = "1512">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YueDongQuan.HKFPostRecruitmentVC.(requestToPostZhaoMuSay (Swift.String, latitude : Swift.Double, longitude : Swift.Double, circleId : Swift.String, address : Swift.String) -&gt; ()).(closure #1)"
-                  moduleName = "YueDongQuan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/YueDongQuan_Master/YueDongQuan/%E5%8F%91%E5%B8%83/Controller/HKFPostRecruitmentVC.swift"
-                  timestampString = "498824520.076714"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "193"
-                  endingLineNumber = "193"
-                  offsetFromSymbolStart = "164">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -83,13 +51,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/DiscoverViewController.swift"
-            timestampString = "498824440.29266"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/HKFPostField_TwoVC.swift"
+            timestampString = "499152192.681657"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
-            landmarkName = "didReceiveMemoryWarning()"
+            startingLineNumber = "494"
+            endingLineNumber = "494"
+            landmarkName = "requestToEditorFieldInfo(_:latitude:logoId:phone:cost:name:address:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
