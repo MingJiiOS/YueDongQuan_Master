@@ -249,20 +249,23 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
 }
 extension QuanZiSettingViewController {
     func loadData()  {
-        
-        let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
-                                       "uid":userInfo.uid,
-                                       "circleId":self.circleId!]
-        MJNetWorkHelper().circleinfo(circleinfo, circleinfoModel: dict, success: { (responseDic, success) in
-            let model = DataSource().getcircleinfoData(responseDic)
-            self.circleinfoModel = model
-            self.tableView.reloadData()
-            
-        }) { (error) in
-            
+        if self.circleId != nil {
+            let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
+                                           "uid":userInfo.uid,
+                                           "circleId":self.circleId!]
+            MJNetWorkHelper().circleinfo(circleinfo, circleinfoModel: dict, success: { (responseDic, success) in
+                let model = DataSource().getcircleinfoData(responseDic)
+                self.circleinfoModel = model
+                self.tableView.reloadData()
+                
+            }) { (error) in
+                
+            }
         }
+        
+        
     }
-    
+    //离开圈子
     func outCircle()  {
         let dict = ["v":v,"uid":userInfo.uid.description,"circleId":self.circleId]
         MJNetWorkHelper().kickingcircle(kickingcircle, kickingcircleModel: dict, success: { (responseDic, success) in

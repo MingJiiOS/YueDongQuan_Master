@@ -23,6 +23,7 @@ class MJConversationViewController: RCConversationViewController {
     //圈子头像
     var thumbnailSrc : String?
     
+    var permissions : NSInteger?
     
     
     override func viewDidLoad() {
@@ -59,6 +60,10 @@ class MJConversationViewController: RCConversationViewController {
         settingBtn.tag = 3
         
         self.navigationItem.rightBarButtonItems = [settingBtn,searchBtn]
+        
+        if self.permissions == 2 {
+             searchBtn.enabled = false
+        }
         
         MJLoginOpreationHelper().getUserInfoWithUserId(MJrcuserInfo.userId) { (userinfo) in
             

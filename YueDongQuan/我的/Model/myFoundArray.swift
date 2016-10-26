@@ -48,7 +48,7 @@ class myFoundArray : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if aname != nil{
 			dictionary["aname"] = aname
 		}

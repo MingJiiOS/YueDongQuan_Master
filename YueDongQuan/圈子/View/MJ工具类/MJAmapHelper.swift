@@ -110,8 +110,11 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
                 if let regecode = regecode {
                     
                     //地址信息
+              _ = regecode.formattedAddress
+
                     let address = regecode.formattedAddress
                     NSLog("address = \(address)")
+
                     
                 }
                 
@@ -133,7 +136,7 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
                 }
             }
             
-            if let location = location {
+            if location != nil {
                 
                 if let regecode = regecode {
                     

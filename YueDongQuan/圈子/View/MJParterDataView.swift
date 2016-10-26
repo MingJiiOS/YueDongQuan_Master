@@ -14,6 +14,17 @@ class MJParterDataView: UIView,UITableViewDelegate,UITableViewDataSource {
     var memberinfoModel : memberInfoModel?
     var circleid : String?
     var uId : String?
+    
+    typealias sendSuccessOrFailValue = (isSuccess:Bool,descriptionError:String)->Void
+    
+    var valueBlock : sendSuccessOrFailValue?
+    
+    func sendSuccessOrFailValueBack(block:sendSuccessOrFailValue) {
+        valueBlock = block
+    }
+    
+    
+    
      init(frame: CGRect,circleID:String,uid:String) {
         super.init(frame: frame)
         circleid = circleID
@@ -95,19 +106,29 @@ extension MJParterDataView {
     }
     
     func ValueChanged(swich:UISwitch)  {
+        
         if swich.on != true {
+            
+        }else{
+           
             let dict = ["v":v,
                         "uid":userInfo.uid.description,
                         "circleId":self.circleid,
                         "blacklistId":self.uId]
-            MJNetWorkHelper().joinblacklist(joinblacklist, joinblacklistModel:
-                dict, success: { (responseDic, success) in
-                    
+            MJNetWorkHelper().joinblacklist(joinblacklist,
+                                            joinblacklistModel:dict,
+                                            success: { (responseDic, success) in
+                     swich.enabled = false
+                    if self.valueBlock != nil{
+                        self.valueBlock!(isSuccess:true,
+                            descriptionError: "成功")
+                    }
                 }, fail: { (error) in
-                    
+                    if self.valueBlock != nil{
+                        self.valueBlock!(isSuccess:false,
+                            descriptionError:error.description)
+                    }
             })
-        }else{
-            swich.enabled = false
         }
     }
 }

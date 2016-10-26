@@ -70,6 +70,9 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
             if indexPath.row == 1 {
                 cell?.detailTextLabel?.text = userInfo.sex
             }
+            if indexPath.row == 2 {
+                cell?.detailTextLabel?.text = userInfo.age
+            }
             cell?.accessoryType = .DisclosureIndicator
             return cell!
         default:

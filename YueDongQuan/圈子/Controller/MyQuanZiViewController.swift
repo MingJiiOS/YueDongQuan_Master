@@ -31,11 +31,12 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadData()
+         loadData()
         self.creatTableView()
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+       
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
         
     }
@@ -232,6 +233,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
             
             
         }else{
+
             
             if (self.pushFlag){
                 
@@ -245,6 +247,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                 chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
                 self.push(chatVC)
             }
+
         }
         
     }
