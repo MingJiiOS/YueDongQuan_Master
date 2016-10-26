@@ -11,6 +11,7 @@ class DiscoveryArray{
 
 	var address : String!
 	var aname : String!
+    var rname : String!
 	var comment : [DiscoveryCommentModel]!
 	var content : String!
 	var id : Int!
@@ -21,6 +22,9 @@ class DiscoveryArray{
     var thumbnailSrc : String!
     var shouldUpdateCache = Bool()
     var images : [DiscoveryImage]!
+    var csum : Int!
+    var num : Int!
+    var name : String!
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
@@ -28,7 +32,11 @@ class DiscoveryArray{
         thumbnailSrc = dictionary["thumbnailSrc"] as? String
 		address = dictionary["address"] as? String
 		aname = dictionary["aname"] as? String
-//		comment = dictionary["comment"] as? [AnyObject]
+        rname = dictionary["rname"] as? String
+        if let numTemp = dictionary["num"] as? Int {
+            num = numTemp
+        }
+        name = dictionary["name"] as? String
         comment = [DiscoveryCommentModel]()
         if let arrayArray = dictionary["comment"] as? [NSDictionary]{
             for dic in arrayArray{
@@ -63,6 +71,7 @@ class DiscoveryArray{
 		longitude = dictionary["longitude"] as? Double
 		time = dictionary["time"] as? Int
 		typeId = dictionary["typeId"] as? Int
+        csum = dictionary["csum"] as? Int
 	}
 
 }

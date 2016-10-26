@@ -140,6 +140,7 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
                 
                 if let regecode = regecode {
                     
+                    NSLog("regecode = \(regecode.province)")
                     //地址信息
                     address = regecode.formattedAddress
                     NSLog("address = \(address)")

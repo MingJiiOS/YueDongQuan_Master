@@ -59,7 +59,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     func tabBarDidClickPlusButton(tabBar: YJTabBar!) {
         NSLog("zhongjiananiu")
         let customSheet = YXCustomActionSheet()
-        let contentArray = [["name": "图片", "icon": "sns_icon_3"], ["name": "视频", "icon": "sns_icon_5"], ["name": "招募", "icon": "sns_icon_4"], ["name": "约战", "icon": "sns_icon_7"], ["name": "求加入", "icon": "sns_icon_8"], ["name": "活动", "icon": "sns_icon_3"]]
+        let contentArray = [["name": "图片", "icon": "ic_picture"], ["name": "视频", "icon": "ic_shiping"], ["name": "招募", "icon": "ic_zhaomu"], ["name": "约战", "icon": "ic_yuezhan"], ["name": "求加入", "icon": "ic_qiujiaru"], ["name": "活动", "icon": "ic_huodong"]]
         customSheet.backgroundColor = UIColor.whiteColor()
         customSheet.delegate = self
         customSheet.showInView(UIApplication.sharedApplication().keyWindow, contentArray: contentArray)

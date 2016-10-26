@@ -54,7 +54,7 @@ class HKFPostMatchVC: UIViewController,AMapLocationManagerDelegate,UITextViewDel
         selectQzLabel.textAlignment = .Center
         selectQzLabel.textColor = UIColor.blackColor()
         selectQZView.addSubview(selectQzLabel)
-        
+        selectQzLabel.textAlignment = .Left
         let selectQZTap = UITapGestureRecognizer(target: self, action: #selector(selectQuanZiClick))
         selectQZView.addGestureRecognizer(selectQZTap)
         
@@ -65,7 +65,7 @@ class HKFPostMatchVC: UIViewController,AMapLocationManagerDelegate,UITextViewDel
         
     }
     func selectQuanZiClick(){
-        NSLog("点击了选择圈子")
+        NSLog("点击了显示位置")
         addressManager.getGeocodeAction()
     }
     

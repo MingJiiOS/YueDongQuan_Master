@@ -13,18 +13,22 @@ import SwiftyJSON
 import SDWebImage
 
 
+
 class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationManagerDelegate ,UITableViewDelegate,UITableViewDataSource{
     
     var scroViewContent : UIScrollView!
     var fieldTable = UITableView()
     var weatherView = UIView()
+    var weatherLabel = UILabel()
+    
     
     var _mapView: MAMapView?
     
     var zoomCount : Double = 12
     var manger = AMapLocationManager()
-    var fieldModel : FieldModel?
     
+    var fieldModel : FieldModel?
+    var weatherModel : WeatherModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +91,13 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         weatherView.backgroundColor = UIColor ( red: 0.7802, green: 0.7584, blue: 0.7562, alpha: 0.92 )
         self.view.addSubview(weatherView)
         
+        weatherLabel = UILabel(frame: CGRect(x: 10, y: 3, width: ScreenWidth - 40, height: 24))
+        weatherLabel.font = UIFont.systemFontOfSize(13)
+        weatherLabel.textColor = UIColor.redColor()
+        weatherLabel.textAlignment = .Center
+        self.weatherView.addSubview(weatherLabel)
+        
+        
         let shutBtn = UIButton(frame: CGRect(x: ScreenWidth - 30, y: 5, width: 20, height: 20))
         shutBtn.setImage(UIImage(named: "photo_delete"), forState: UIControlState.Normal)
         shutBtn.addTarget(self, action: #selector(dismissWeatherView), forControlEvents: UIControlEvents.TouchUpInside)
@@ -117,6 +128,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     
     func clickLocationBtn(){
         NSLog("点击了定位")
+        manger.startUpdatingLocation()
     }
     
     
@@ -127,6 +139,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 65, height: 32))
         let searchBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
         searchBtn.setImage(UIImage(named: "ic_search"), forState: UIControlState.Normal)
+        searchBtn.addTarget(self, action: #selector(clickSearchBtn), forControlEvents: UIControlEvents.TouchUpInside)
         rightView.addSubview(searchBtn)
         let addBtn = UIButton(frame: CGRect(x: 33, y: 0, width: 32, height: 32))
         addBtn.setImage(UIImage(named: "ic_search"), forState: UIControlState.Normal)
@@ -143,10 +156,18 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
     }
     
+    func clickSearchBtn(){
+        let newFiledVC  =  HKFPostField_OneVC()
+        let nav = CustomNavigationBar(rootViewController: newFiledVC)
+        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+        
+    }
+    
     
     func clickAddBtn() {
         let searchVC = SearchController()
         self.navigationController?.pushViewController(searchVC, animated: true)
+        
         
     }
     
@@ -174,6 +195,28 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         _mapView?.setCenterCoordinate(CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), animated: true)
         request(location.coordinate.latitude, longitude: location.coordinate.longitude)
         manger.stopUpdatingLocation()
+        
+        manager.requestLocationWithReGeocode(true) { (location:CLLocation!, geoCode:AMapLocationReGeocode!, error:NSError!) in
+            if let error = error {
+                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
+                
+                if error.code == AMapLocationErrorCode.LocateFailed.rawValue {
+                    return;
+                }
+            }
+            
+            if let location = location {
+                if let geocode = geoCode {
+                    
+                    NSLog("regecode = \(geocode.neighborhood)")
+                    //地址信息
+                    let cityName = geocode.province
+                    self.requestWeather(cityName)
+                }
+            }
+            
+            
+        }
     }
     
     
@@ -343,18 +386,22 @@ extension FieldViewController {
     func request(latitude:Double,longitude:Double){
         let v = NSObject.getEncodeString("20160901")
         
-        let para = ["v":v,"uid":1,"latitude":latitude,"longitude":longitude,"pageSize":"10"]
+        let para = ["v":v,"uid":userInfo.uid,"latitude":latitude,"longitude":longitude,"pageSize":"10"]
         print(para.description)
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/sites")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
+                NSLog("fieldJson = \(json)")
                 let str = json.object
                 self.fieldModel = FieldModel.init(fromDictionary: str as! NSDictionary)
                 
                 print(self.fieldModel?.code)
                 print(self.fieldModel?.flag)
+                
+                
+                
                 if ((self.fieldModel?.code)! == "200" && self.fieldModel?.flag == "1" ){
                     self.fieldTable.reloadData()
                 }
@@ -366,6 +413,33 @@ extension FieldViewController {
         
         
     }
+    
+    func requestWeather(cityname:String){
+        
+        let para = ["cityname":cityname,"key":"f79792162ce1e684b8fb9afede3df581","dtype":"json"]
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string:"http://op.juhe.cn/onebox/weather/query")!, parameters: para).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                NSLog("weather = \(json)")
+                let str = json.object
+                self.weatherModel = WeatherModel.init(fromDictionary: str as! NSDictionary )
+                
+                let CityName = self.weatherModel?.result.data.realtime.cityName
+                let weather = (self.weatherModel?.result.data.realtime.weather.info)! + "  " + (self.weatherModel?.result.data.realtime.weather.temperature)!
+                
+                self.weatherLabel.text = CityName! + "  " + weather + "℃"
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    
+    
 }
 
 

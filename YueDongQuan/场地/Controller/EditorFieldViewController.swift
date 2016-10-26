@@ -440,7 +440,7 @@ extension EditorFieldViewController : UIImagePickerControllerDelegate,UINavigati
             
             multipartFormData.appendBodyPart(data: data!, name: "file",fileName: imageName,mimeType: "image/png")
             
-            let para = ["v":v,"uid":"1","file":""]
+            let para = ["v":v,"uid":userInfo.uid.description,"file":""]
             
             
             for (key,value) in para {
@@ -474,7 +474,7 @@ extension EditorFieldViewController : UIImagePickerControllerDelegate,UINavigati
     func requestToEditorFieldInfo(siteId:String,imageId:Int,phone:String,cost:String,name:String){
         let v = NSObject.getEncodeString("20160901")
         
-        let para = ["v":v,"uid":1,"siteId":siteId,"imageId":imageId,"phone":phone,"cost":cost,"name":name]
+        let para = ["v":v,"uid":userInfo.uid,"siteId":siteId,"imageId":imageId,"phone":phone,"cost":cost,"name":name]
         print(para.description)
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/updatesiteinfo")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in

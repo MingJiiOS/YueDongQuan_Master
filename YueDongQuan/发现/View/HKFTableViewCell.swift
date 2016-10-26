@@ -116,7 +116,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.height.equalTo(14)
             make.width.equalTo(screenWidth/6)
         })
-        self.timeStatus?.text = "六分钟前"
+//        self.timeStatus?.text = "六分钟前"
         self.timeStatus?.backgroundColor = UIColor.whiteColor()
         self.timeStatus?.textAlignment = .Left
         //距离
@@ -129,7 +129,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.height.equalTo(14)
             make.width.equalTo(screenWidth/3)
         })
-        self.distanceLabel?.text = "离我1000km"
+//        self.distanceLabel?.text = "离我1000km"
         self.distanceLabel?.backgroundColor = UIColor.whiteColor()
         self.distanceLabel?.textAlignment = .Left
         
@@ -183,7 +183,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.locationLabel.frame = CGRect(x: 16, y: 1, width: screenWidth - 36, height: 12)
         self.locationLabel.backgroundColor = UIColor.redColor()
         self.locationLabel.font = UIFont.systemFontOfSize(10)
-        self.locationLabel.text = "重庆市渝北区大龙上"
+//        self.locationLabel.text = "重庆市渝北区大龙上"
         self.locationView.addSubview(self.locationLabel)
         
         //点赞数，浏览次数，评论数，以及举报按钮
@@ -195,32 +195,35 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.top.equalTo((weakSelf?.locationView.snp_bottom)!).offset(5)
             make.height.equalTo(24)
         }
-        self.operateView.backgroundColor = UIColor.magentaColor()
-        let liulanImg = UIImageView(frame: CGRect(x: 2, y: 2, width: 20, height: 20))
-        liulanImg.backgroundColor = UIColor.grayColor()
+        self.operateView.backgroundColor = UIColor.whiteColor()
+        let liulanImg = UIImageView(frame: CGRect(x: 2, y: 6, width: 20, height: 12))
+        liulanImg.image = UIImage(named: "ic_liulan")
         self.operateView.addSubview(liulanImg)
         self.liulanCount.frame = CGRect(x: 23, y: 0, width: screenWidth/6, height: 24)
-        self.liulanCount.text = "10000"
+        self.liulanCount.text = "0"
         self.liulanCount.font = UIFont.boldSystemFontOfSize(10)
+        self.liulanCount.textColor = UIColor(red: 166/255, green: 166/255, blue: 166/255, alpha: 1.0)
         self.operateView.addSubview(self.liulanCount)
         
         self.dianzanBtn.frame = CGRect(x: screenWidth/5, y: 0, width: screenWidth/6, height: 24)
-        self.dianzanBtn.backgroundColor = UIColor.blueColor()
-        self.dianzanBtn.setTitle("100", forState: UIControlState.Normal)
+//        self.dianzanBtn.setImage(UIImage(named: "ic_zan_a6a6a6"), forState: UIControlState.Normal)
+        self.dianzanBtn.setTitle("0", forState: UIControlState.Normal)
         self.dianzanBtn.titleLabel?.font = UIFont.systemFontOfSize(10)
-        self.dianzanBtn.setImage(UIImage(named: ""), forState: UIControlState.Normal)
-        self.dianzanBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -screenWidth/12)
-        self.dianzanBtn.titleEdgeInsets = UIEdgeInsetsMake(0, screenWidth/12, 0, 0)
+        self.dianzanBtn.setImage(UIImage(named: "ic_zan_a6a6a6"), forState: UIControlState.Normal)
+        self.dianzanBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0,  screenWidth/10)
+        self.dianzanBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -screenWidth/30, 0, 0)
+        self.dianzanBtn.setTitleColor(UIColor(red: 166/255, green: 166/255, blue: 166/255, alpha: 1.0), forState: UIControlState.Normal)
         self.operateView.addSubview(self.dianzanBtn)
-        self.dianzanBtn.addTarget(self, action: #selector(clickDianZanBtn), forControlEvents: UIControlEvents.TouchUpInside)
+        self.dianzanBtn.addTarget(self, action: #selector(clickDianZanBtn(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.pinglunBtn.frame = CGRect(x: screenWidth/5*2, y: 0, width: screenWidth/6, height: 24)
-        self.pinglunBtn.backgroundColor = UIColor.blueColor()
-        self.pinglunBtn.setTitle("100", forState: UIControlState.Normal)
+//        self.pinglunBtn.setImage(UIImage(named: "ic_pinglun"), forState: UIControlState.Normal)
+        self.pinglunBtn.setTitle("0", forState: UIControlState.Normal)
         self.pinglunBtn.titleLabel?.font = UIFont.systemFontOfSize(10)
-        self.pinglunBtn.setImage(UIImage(named: ""), forState: UIControlState.Normal)
-        self.pinglunBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -screenWidth/12)
-        self.pinglunBtn.titleEdgeInsets = UIEdgeInsetsMake(0, screenWidth/12, 0, 0)
+        self.pinglunBtn.setImage(UIImage(named: "ic_pinglun"), forState: UIControlState.Normal)
+        self.pinglunBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, screenWidth/10)
+        self.pinglunBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -screenWidth/30, 0, 0)
+        self.pinglunBtn.setTitleColor(UIColor(red: 166/255, green: 166/255, blue: 166/255, alpha: 1.0), forState: UIControlState.Normal)
         self.pinglunBtn.addTarget(self, action: #selector(clickPingLun), forControlEvents: UIControlEvents.TouchUpInside)
         self.operateView.addSubview(self.pinglunBtn)
         
@@ -231,8 +234,9 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.width.equalTo(screenWidth/12)
         }
         
-        self.jubaoBtn.setImage(UIImage(named: ""), forState: UIControlState.Normal)
-        self.jubaoBtn.backgroundColor = UIColor.blackColor()
+        self.jubaoBtn.setImage(UIImage(named: "jubao"), forState: UIControlState.Normal)
+        self.jubaoBtn.backgroundColor = UIColor.whiteColor()
+        self.jubaoBtn.addTarget(self, action: #selector(clickJuBao), forControlEvents: UIControlEvents.TouchUpInside)
         
         
         
@@ -265,7 +269,52 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     func configCellWithModelAndIndexPath(model : DiscoveryArray,indexPath : NSIndexPath){
         
         self.indexPath = indexPath
-        self.titleLabel?.text =  model.aname
+        
+        
+        if model.csum != nil{
+            self.pinglunBtn.setTitle("\(model.csum)", forState: UIControlState.Normal)
+            self.liulanCount.text = "\(model.csum)"
+        }else{
+            self.pinglunBtn.setTitle("0", forState: UIControlState.Normal)
+            self.liulanCount.text = "0"
+        }
+//        if model.num != nil {
+//            self.liulanCount.text = "\(model.num + model.csum)"
+//        }else{
+//            
+//        }
+        
+        
+        switch model.typeId {
+        case 11:
+            print("图片")
+            self.titleLabel?.text =  model.name
+            self.typeStatusView?.image = UIImage(named: "explain_pic")
+        case 12:
+            print("视频")
+            self.titleLabel?.text =  model.name
+            self.typeStatusView?.image = UIImage(named: "explain_vedio")
+        case 13:
+            print("活动")
+            self.titleLabel?.text = model.aname
+            self.typeStatusView?.image = UIImage(named: "explain_recruit")
+        case 14:
+            print("约战")
+            self.titleLabel?.text =  model.name
+            self.typeStatusView?.image = UIImage(named: "explain_pic")
+        case 15:
+            print("求加入")
+            self.titleLabel?.text =  model.name
+            self.typeStatusView?.image = UIImage(named: "explain_enlist")
+        case 16:
+            print("招募")
+            self.titleLabel?.text =  model.rname
+            
+            self.typeStatusView?.image = UIImage(named: "explain_JOIN")
+        default:
+            break
+        }
+        
         if model.address == ""{
             self.locationView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(0)
@@ -290,7 +339,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         self.descLabel?.attributedText = html
         self.locationLabel.text = model.address
-        self.headImageView?.sd_setImageWithURL(NSURL(string: "http://scs.ganjistatic1.com/gjfs01/M00/89/F4/CgEHklWmXzvov6K-AABrKnXXM9U624_600-0_6-0.jpg"))
+        self.headImageView?.sd_setImageWithURL(NSURL(string: model.thumbnailSrc))
         self.testModel = model
         
         self.timeStatus?.text = getTimeString(model.time)
@@ -301,10 +350,12 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.displayView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(h1)
             })
+            self.displayView.hidden = false
         }else{
             self.displayView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(0)
             })
+            self.displayView.hidden = true
         }
         
         var thumbnailImageUrls = [String]()
@@ -405,8 +456,23 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.delegate?.createPingLunView(self.indexPath!,sayId: id!, type: PingLunType.pinglun)
     }
     
-    func clickDianZanBtn(){
+    func clickDianZanBtn(sender:UIButton){
+        
+//        if sender.selected {
+//            self.delegate?.clickDianZanBtnAtIndexPath(self.indexPath!)
+//            self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
+//        }
         self.delegate?.clickDianZanBtnAtIndexPath(self.indexPath!)
+        self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
+    }
+    
+    func clickJuBao() {
+        print("点击了举报")
+        let titleArr = ["举报"]
+        let popView = SimplePopupView(frame: CGRect(x: 30, y: 50, width: 60, height: 30), andDirection: PopViewDirectionTop, andTitles: titleArr, andImages: nil, trianglePecent: 0.5)
+        
+        self.jubaoBtn.showPopView(popView, atPoint: CGPoint(x: 0.3, y: 1))
+        popView.show()
     }
     
     

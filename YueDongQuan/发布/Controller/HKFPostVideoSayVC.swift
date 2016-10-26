@@ -16,7 +16,7 @@ import SwiftyJSON
 class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate {
 
     var KVideoUrlPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first?.stringByAppendingString("VideoURL")
-    
+    var helper = MJAmapHelper()
     var selectedImages = [UIImage]()
     var imageStr = String()
     var manger = AMapLocationManager()
@@ -34,7 +34,7 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
     private var userLatitude : Double = 0
     private var userLongitude : Double = 0
     
-    var showLocationBtn : UIButton!
+    private var address = String()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.edgesForExtendedLayout = .None
@@ -62,18 +62,40 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
         publishPhotosView.delegate = self
         self.view.addSubview(publishPhotosView)
         
-        self.showLocationBtn = UIButton()
-        self.showLocationBtn.frame = CGRectMake(0, publishPhotosView.tz_bottom + 20, ScreenWidth, 30)
-        showLocationBtn.setTitle("显示位置", forState: .Normal)
-        self.showLocationBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 200)
-        showLocationBtn.setTitleColor(UIColor(red: 0.1843, green: 0.1882, blue: 0.1922, alpha: 1.0), forState: .Normal)
-        self.showLocationBtn.titleLabel!.font = UIFont.systemFontOfSize(14)
-        self.showLocationBtn.backgroundColor = UIColor(red: 0.9451, green: 0.949, blue: 0.9569, alpha: 1.0)
-        self.view.addSubview(showLocationBtn)
+        //第二view
+        let showLocationView = UIView(frame: CGRect(x: 0, y: CGRectGetMaxY(publishPhotosView.frame) + 10, width: ScreenWidth, height: 30))
+        showLocationView.backgroundColor = UIColor.whiteColor()
+        self.view.addSubview(showLocationView)
         
+        let locationImg = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
+        locationImg.backgroundColor = UIColor.redColor()
+        showLocationView.addSubview(locationImg)
+        
+        let showLocationLabel = UILabel(frame: CGRect(x: CGRectGetMaxX(locationImg.frame) + 3, y: 3, width: ScreenWidth - 40, height: 24))
+        
+        showLocationLabel.text = "显示位置"
+        showLocationLabel.font = UIFont.systemFontOfSize(12)
+        showLocationLabel.textAlignment = .Left
+        showLocationLabel.textColor = UIColor.blackColor()
+        
+        showLocationView.addSubview(showLocationLabel)
+        
+        let showLocationTap = UITapGestureRecognizer(target: self, action: #selector(showLocationClick))
+        showLocationView.addGestureRecognizer(showLocationTap)
+        
+        helper.getAddressBlockValue { (address) in
+            NSLog("招募address = \(address)")
+            showLocationLabel.text = address
+            self.address = address
+        }
         
         
     }
+    
+    func showLocationClick(){
+        helper.getGeocodeAction()
+    }
+    
     
     func setNav(){
         self.view.backgroundColor = UIColor.whiteColor()
@@ -114,8 +136,12 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
 //            
 //        }
         
+        if self.videoData.length != 0 {
+            requestUpfile(self.videoData)
+        }else{
+            
+        }
         
-        requestUpfile(self.videoData)
         
     }
     
@@ -198,7 +224,7 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
     func imagePickerController(picker: TZImagePickerController!, didFinishPickingVideo coverImage: UIImage!, sourceAssets asset: AnyObject!) {
         self.selectedImages = [coverImage]
         self.publishPhotosView.reloadDataWithImages(NSMutableArray(array: [coverImage]))
-        self.showLocationBtn.frame = CGRectMake(0, publishPhotosView.tz_bottom + 20, ScreenWidth, 30)
+//        self.showLocationBtn.frame = CGRectMake(0, publishPhotosView.tz_bottom + 20, ScreenWidth, 30)
         
 //        [[TZImageManager manager] getVideoOutputPathWithAsset:asset completion:^(NSString *outputPath) {
             // NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);

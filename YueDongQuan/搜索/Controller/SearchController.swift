@@ -27,6 +27,12 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
         
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        self.tabBarController?.hidesBottomBarWhenPushed = false
+    }
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.hidesBottomBarWhenPushed = true
+    }
     
     func setUI() {
         searchBgView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 40))
