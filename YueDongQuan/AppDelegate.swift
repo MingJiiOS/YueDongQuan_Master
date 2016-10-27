@@ -78,26 +78,14 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
                         }, fail: { (error) in
                             
                     })
-                    
-                    
-                   
-                    
-                
                 }, fail: { (error) in
-                    
                     print("返回错误信息",error)
-                    
             })
         }
-
-        
         //测试提交
-        
         self.window?.rootViewController = HKFTableBarController()
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
-        
-                
         return true
     }
     func statusNumber(fication:NSNotification)  {
@@ -116,10 +104,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         let login = YDQLoginRegisterViewController()
         self.window?.rootViewController?.presentViewController(login, animated: true, completion: nil)
     }
-    func alertView(alertView: UIAlertView, willDismissWithButtonIndex buttonIndex: Int) {
-        
-        
-    }
+
     func applicationWillResignActive(application: UIApplication) {
  
     }

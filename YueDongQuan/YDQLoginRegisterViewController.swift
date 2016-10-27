@@ -8,19 +8,19 @@
 
 import UIKit
 
-class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource {
+class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RCAnimatedImagesViewDelegate{
     
     var registModel : RegistModel!
     
     //点击登录和注册时使用闭包传参数值
-    typealias LoginOrRigsterClosure = (pramiters:NSDictionary,type:NSInteger) -> Void //声明闭包，点击按钮传值
+    typealias LoginOrRigsterClosure = (pramiters:NSDictionary, type:NSInteger) -> Void //声明闭包，点击按钮传值
     //把申明的闭包设置成属性
     var loginOrrigsterClosure: LoginOrRigsterClosure?
     
     var ref = MJLineRef()
     let margin = (ScreenWidth-ScreenWidth/3.5*2)/4
     let loginRegistMargin = (ScreenWidth-ScreenWidth/3.5*2)/3
-    let topView = UIImageView()
+    let topView = RCAnimatedImagesView()
     let loginBtn = UIButton(type: .Custom)
     var bgScrollView = UIScrollView(frame: CGRectZero)
     //手机号码占位符
@@ -45,6 +45,9 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
     
     var _CountDownTimer : NSTimer?
     
+    var rotationLayer = CAShapeLayer()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,11 +56,13 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-   
+        topView.stopAnimating()
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        topView.startAnimating()
+        self.animate(rotationLayer)
     }
     //MARK:登录和注册操作
     func loginOrRigsterAction()  {
@@ -150,49 +155,72 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         //背景图
         
         topView.frame = CGRectMake(0,0,ScreenWidth,ScreenHeight/2.5)
-        topView.image = UIImage(named: "篮球@2x")
+        topView.delegate = self
         topView.userInteractionEnabled = true
         self.view.addSubview(topView)
         
         //头像
         let headImage = UIImageView()
+        headImage.frame = CGRect(x: 0,
+                                 y: 0,
+                                 width: ScreenWidth/3.5,
+                                 height: ScreenWidth/3.5)
+        headImage.center = CGPoint(x: topView.centerX,
+                                   y: topView.centerY)
         topView .addSubview(headImage)
-        headImage.snp_makeConstraints { (make) in
-            make.width.height.equalTo(ScreenWidth/3.5)
-            make.centerX.equalTo(topView.snp_centerX)
-            make.centerY.equalTo(topView.snp_centerY)
-        }
+        
         headImage.layer.cornerRadius = ScreenWidth/3.5/2
         headImage.layer.masksToBounds = true
         headImage.layer.borderWidth = 1
         headImage.backgroundColor = kBlueColor
         headImage.layer.borderColor = UIColor.whiteColor().CGColor
+        headImage.sd_setImageWithURL(NSURL(string: "http://img.hb.aicdn.com/bcbc67dcae4b539f7c9afb30db12dcd0efebe5f0ca55-OT8oGG_fw658"), placeholderImage: nil)
+        rotationLayer.bounds = CGRect(x: 0,
+                                      y: 0,
+                                      width: (ScreenWidth/3.5),
+                                      height: (ScreenWidth/3.5))
+        rotationLayer.backgroundColor = UIColor.clearColor().CGColor
+        rotationLayer.position = CGPoint(x: topView.centerX,
+                                         y: topView.centerY)
+        let image = UIImageView()
+        image.image = UIImage(named: "loginCircle")
+        rotationLayer.contents = image.image?.CGImage
+
+        self.view.layer .addSublayer(rotationLayer)
         
-        
-        loginBtn.frame = CGRectMake(loginRegistMargin, topView.frame.height-35, ScreenWidth/3.5, 30)
+        loginBtn.frame = CGRectMake(loginRegistMargin,
+                                    topView.frame.height-35,
+                                    ScreenWidth/3.5,
+                                    30)
         loginBtn.tag = 10
-        loginBtn .addTarget(self, action: #selector(btnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        loginBtn .addTarget(self, action: #selector(btnClick(_:)),
+                            forControlEvents: UIControlEvents.TouchUpInside)
         topView .addSubview(loginBtn)
         
         loginBtn.setTitle("登录", forState: UIControlState.Normal)
 
         loginBtn.contentVerticalAlignment = .Top
         let registBtn = UIButton(type: .Custom)
-        registBtn.frame = CGRectMake(loginBtn.frame.width+loginRegistMargin*2, topView.frame.height-35, ScreenWidth/3.5, 30)
-        registBtn.addTarget(self, action: #selector(btnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        registBtn.frame = CGRectMake(loginBtn.frame.width+loginRegistMargin*2,
+                                     topView.frame.height-35,
+                                     ScreenWidth/3.5,
+                                     30)
+        registBtn.addTarget(self, action: #selector(btnClick(_:)),
+                            forControlEvents: UIControlEvents.TouchUpInside)
         registBtn.tag = 20
         topView .addSubview(registBtn)
         
         registBtn.setTitle("注册", forState: UIControlState.Normal)
         registBtn.contentVerticalAlignment = .Top
         
-        ref.frame = CGRectMake(loginRegistMargin, topView.frame.height-2, ScreenWidth/3.5, 2)
+        ref.frame = CGRectMake(loginRegistMargin,
+                               topView.frame.height-2,
+                               ScreenWidth/3.5,
+                               2)
         topView .addSubview(ref)
         ref.backgroundColor = UIColor.whiteColor()
         
         //下面登录注册
-        
-        
         self.view.addSubview(bgScrollView)
         bgScrollView.snp_makeConstraints { (make) in
             make.left.equalTo(0)
@@ -201,7 +229,10 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
             make.bottom.equalTo(0)
         }
         bgScrollView.contentSize = CGSizeMake(ScreenWidth*2, ScreenHeight-topView.height)
-        bgScrollView.backgroundColor = UIColor(red: 38 / 255, green: 43/255, blue: 44/255, alpha: 1)
+        bgScrollView.backgroundColor = UIColor(red: 38 / 255,
+                                               green: 43/255,
+                                               blue: 44/255,
+                                               alpha: 1)
         bgScrollView.scrollEnabled = false
         
         //帐号输入框
@@ -223,7 +254,8 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         acountTextField.attributedPlaceholder = NSAttributedString(string: "手机号码",
                                                                    attributes:
                                                                    [NSForegroundColorAttributeName:color])
-        acountTextField.addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
+        acountTextField.addTarget(self, action: #selector(textFieldDidChange),
+                                        forControlEvents: .EditingChanged)
         
 
 
@@ -243,9 +275,11 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         pwTextfeild.leftView = leftV2
         pwTextfeild.tag = 20
         pwTextfeild.delegate = self
-        pwTextfeild.addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
+        pwTextfeild.addTarget(self, action: #selector(textFieldDidChange),
+                                    forControlEvents: .EditingChanged)
 
-        pwTextfeild.attributedPlaceholder = NSAttributedString(string: "密码", attributes: [NSForegroundColorAttributeName:color])
+        pwTextfeild.attributedPlaceholder = NSAttributedString(string: "密码",
+                                                               attributes: [NSForegroundColorAttributeName:color])
 
         //登录
         let loginActBtn = UIButton(type: .Custom)
@@ -261,8 +295,10 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         loginActBtn.layer.masksToBounds = true
         loginActBtn.backgroundColor = kBlueColor
         loginActBtn.setTitle("登录", forState: UIControlState.Normal)
-        loginActBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        loginActBtn .addTarget(self, action: #selector(loginAction), forControlEvents: UIControlEvents.TouchUpInside)
+        loginActBtn.setTitleColor(UIColor.whiteColor(),
+                                 forState: UIControlState.Normal)
+        loginActBtn .addTarget(self, action: #selector(loginAction),
+                                     forControlEvents: UIControlEvents.TouchUpInside)
         
         //忘记密码
         let forgetPw = UIButton(type: .Custom)
@@ -390,6 +426,16 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         registerBtn.setTitleColor(UIColor.grayColor(), forState: UIControlState.Selected)
         registerBtn.addTarget(self, action: #selector(registerAction), forControlEvents: UIControlEvents.TouchUpInside)
     }
+    func animate(layer:CAShapeLayer)  {
+        let animate = CABasicAnimation(keyPath: "transform.rotation.z")
+//        animate.fromValue = NSNumber(double: M_PI_2)
+        animate.toValue = NSNumber(double: M_PI_2*4)
+        animate.duration = 5
+//        animate.autoreverses = tru/e
+        animate.repeatCount = HUGE
+        layer .addAnimation(animate, forKey: "rotation")
+    }
+    
     
     //按钮点击
     func btnClick(button:UIButton)  {
@@ -519,7 +565,12 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         // Dispose of any resources that can be recreated.
     }
 
-
+    func animatedImagesNumberOfImages(animatedImagesView: RCAnimatedImagesView!) -> UInt {
+        return 2
+    }
+    func animatedImagesView(animatedImagesView: RCAnimatedImagesView!, imageAtIndex index: UInt) -> UIImage! {
+        return UIImage(named: "loginBg(MJ)")
+    }
 
 }
 extension YDQLoginRegisterViewController {

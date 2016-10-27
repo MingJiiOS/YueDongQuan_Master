@@ -138,7 +138,8 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 24.0 / 255, green: 90.0 / 255, blue: 172.0 / 255, alpha: 1.0)
         let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 65, height: 32))
         let searchBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
-        searchBtn.setImage(UIImage(named: "ic_search"), forState: UIControlState.Normal)
+       
+        searchBtn.setImage(UIImage(named: "ic_add"), forState: UIControlState.Normal)
         searchBtn.addTarget(self, action: #selector(clickSearchBtn), forControlEvents: UIControlEvents.TouchUpInside)
         rightView.addSubview(searchBtn)
         let addBtn = UIButton(frame: CGRect(x: 33, y: 0, width: 32, height: 32))

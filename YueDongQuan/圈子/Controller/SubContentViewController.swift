@@ -84,7 +84,7 @@ print(indexSection,indexRow)
             
             }
             if Row == 1 {
-                let qrcodeStr = NSData.AES256EncryptWithPlainText(self.circletitle)
+                let qrcodeStr = NSData.AES256EncryptWithPlainText(self.circleId! + self.circletitle!)
                 
                 let qrCode = QRCodeView(frame: self.view.frame,QRstring:qrcodeStr)
                 qrCode.quanZiName.text = self.circletitle

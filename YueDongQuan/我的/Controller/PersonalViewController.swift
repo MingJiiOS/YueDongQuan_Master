@@ -31,6 +31,7 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
      
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
         self .creatViewWithSnapKit()
         self.creatViewWithSnapKit("ic_lanqiu", secondBtnImageString: "ic_search",
                                                thirdBtnImageString: "ic_shezhi")
@@ -40,6 +41,7 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.hidden = false
         MainBgTableView.reloadData()
         let titleLabel = UILabel(frame: CGRect(x: 0,
             y: 0,
@@ -81,21 +83,19 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
                
             }
             if ButtonTag == 2{
-                let login = YDQLoginRegisterViewController()
-                login.modalPresentationStyle = .PageSheet
-                self.presentViewController(login, animated: true, completion: nil)
-                
-                
             }
         }
         // 头部视图
+        MainBgTableView = UITableView(frame: CGRectZero, style: .Grouped)
+        self.view .addSubview(MainBgTableView)
+        MainBgTableView.snp_makeConstraints { (make) in
+            make.left.right.top.bottom.equalTo(0)
+        }
         
-        MainBgTableView = UITableView(frame: CGRectMake(0, 0, ScreenWidth, ScreenHeight), style: .Grouped)
         MainBgTableView.delegate = self
         MainBgTableView.dataSource = self
-        MainBgTableView.contentInset = UIEdgeInsetsMake(0, 0, 110, 0)
-        self.view .addSubview(MainBgTableView)
-
+        MainBgTableView.custom_CellAcceptEventInterval = 2
+        MainBgTableView.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
     }
     
    
@@ -125,7 +125,7 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
                                                     
                       let model =  DataSource().getmyinfoData(responseDic)
                         self.myinfoModel = model
-                                                    self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.myinfoModel, waitUntilDone: true)
+                        self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.myinfoModel, waitUntilDone: true)
                         }, fail: { (error) in
                             
                     })
@@ -280,6 +280,7 @@ return 55
                                                 green: 158 / 255,
                                                 blue: 23 / 255,
                                                 alpha: 1)
+            cell?.textLabel?.font = UIFont(name: "Times New Roman", size: 18.0)
             cell!.accessoryType = .DisclosureIndicator
             cell!.accessoryType=UITableViewCellAccessoryType.DisclosureIndicator;
             if self.myinfoModel != nil {

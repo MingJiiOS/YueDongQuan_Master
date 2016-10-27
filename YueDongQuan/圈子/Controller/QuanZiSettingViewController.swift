@@ -59,6 +59,8 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
         }
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.contentSize = CGSize(width: ScreenWidth, height: ScreenHeight-44-64)
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0)
         tableView.tableHeaderView?.removeFromSuperview()
         
     }
@@ -231,6 +233,15 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                 all.circleid = self.circleId
                 self.push(all)
             }
+        }else if indexPath.section == 4{
+            RCIMClient.sharedRCIMClient().deleteMessages(.ConversationType_GROUP,
+                                                         targetId: self.circleId,
+                                                         success: {
+                                                            self.showResult("清除消息记录成功")
+                }, error: { (errorCode:RCErrorCode) in
+               let errorStr = self.getErrorStringWithClearIM(errorCode.rawValue)
+                    self.showResult(errorStr)
+            })
         }else{
             let subContent = SubContentViewController()
             subContent.indexSection = indexPath.section
@@ -245,8 +256,9 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
         
     }
  
-    
+
 }
+
 extension QuanZiSettingViewController {
     func loadData()  {
         if self.circleId != nil {
@@ -275,6 +287,39 @@ extension QuanZiSettingViewController {
             }) { (error) in
                 
         }
+    }
+    func getErrorStringWithClearIM(errorCode:Int)->String{
+        switch errorCode {
+        case -1:
+            return "未知错误"
+        case 405:
+            return "您已被对方加入黑名单"
+        case 5004:
+            return "超时！"
+        case 20604:
+            return "发送消息频率过高，1秒钟最多只允许发送5条消息"
+        case 21406:
+            return "不在该讨论组中"
+        case 22406:
+            return "不在该群组中"
+        case 22408:
+            return "您在群中已被禁言"
+        case 23406:
+            return "您不在该聊天室中"
+        case 30001:
+            return "当前连接不可用"
+        case 30003:
+            return "消息响应超时"
+        case 33007:
+            return "历史消息云存储业务未开通"
+        default:
+            break
+        }
+       return ""
+    }
+    func showResult(resultString:String){
+        let alert = UIAlertView(title: nil, message: resultString, delegate: nil, cancelButtonTitle: "确定")
+        alert.show()
     }
     
 }

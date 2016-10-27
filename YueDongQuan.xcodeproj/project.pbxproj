@@ -303,6 +303,8 @@
 		BFAF23C91DB8600800294988 /* uploadImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C71DB8600800294988 /* uploadImageData.swift */; };
 		BFAF23CA1DB8600800294988 /* uploadImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C81DB8600800294988 /* uploadImageModel.swift */; };
 		BFAF23CC1DB8A9D700294988 /* MJLayerContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */; };
+		BFBABCBC1DC1DEA1009F068E /* RCAnimatedImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBABCBB1DC1DEA1009F068E /* RCAnimatedImagesView.m */; };
+		BFBABCC51DC1F9F0009F068E /* UITableView+ClickTime.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBABCC41DC1F9F0009F068E /* UITableView+ClickTime.m */; };
 		BFC1269C1DB4792F00E11088 /* CirclesArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC126991DB4792F00E11088 /* CirclesArray.swift */; };
 		BFC1269D1DB4792F00E11088 /* CirclesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1269A1DB4792F00E11088 /* CirclesData.swift */; };
 		BFC1269E1DB4792F00E11088 /* CirclesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1269B1DB4792F00E11088 /* CirclesModel.swift */; };
@@ -716,6 +718,10 @@
 		BFAF23C71DB8600800294988 /* uploadImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uploadImageData.swift; sourceTree = "<group>"; };
 		BFAF23C81DB8600800294988 /* uploadImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uploadImageModel.swift; sourceTree = "<group>"; };
 		BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJLayerContentCell.swift; sourceTree = "<group>"; };
+		BFBABCBA1DC1DEA1009F068E /* RCAnimatedImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCAnimatedImagesView.h; sourceTree = "<group>"; };
+		BFBABCBB1DC1DEA1009F068E /* RCAnimatedImagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCAnimatedImagesView.m; sourceTree = "<group>"; };
+		BFBABCC31DC1F9F0009F068E /* UITableView+ClickTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+ClickTime.h"; path = "../../../我的/Model/UITableView+ClickTime.h"; sourceTree = "<group>"; };
+		BFBABCC41DC1F9F0009F068E /* UITableView+ClickTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+ClickTime.m"; path = "../../../我的/Model/UITableView+ClickTime.m"; sourceTree = "<group>"; };
 		BFC126991DB4792F00E11088 /* CirclesArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesArray.swift; sourceTree = "<group>"; };
 		BFC1269A1DB4792F00E11088 /* CirclesData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesData.swift; sourceTree = "<group>"; };
 		BFC1269B1DB4792F00E11088 /* CirclesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesModel.swift; sourceTree = "<group>"; };
@@ -1336,6 +1342,8 @@
 		BFAF23C41DB85F5000294988 /* MJ工具类 */ = {
 			isa = PBXGroup;
 			children = (
+				BFBABCC31DC1F9F0009F068E /* UITableView+ClickTime.h */,
+				BFBABCC41DC1F9F0009F068E /* UITableView+ClickTime.m */,
 				BFD41FC81DC05F67005A22E6 /* SGQRCode */,
 				BFD41FBF1DC04849005A22E6 /* WJPopoverViewController.h */,
 				BFD41FC01DC04849005A22E6 /* WJPopoverViewController.m */,
@@ -1349,6 +1357,15 @@
 				BFD41FC61DC05061005A22E6 /* topRightTable.swift */,
 			);
 			path = "MJ工具类";
+			sourceTree = "<group>";
+		};
+		BFBABCB91DC1DE98009F068E /* RCAnimatedImagesView */ = {
+			isa = PBXGroup;
+			children = (
+				BFBABCBA1DC1DEA1009F068E /* RCAnimatedImagesView.h */,
+				BFBABCBB1DC1DEA1009F068E /* RCAnimatedImagesView.m */,
+			);
+			path = RCAnimatedImagesView;
 			sourceTree = "<group>";
 		};
 		BFC5728F1DA8EB04002E1995 /* 等待视图 */ = {
@@ -1602,6 +1619,7 @@
 		BFC65D421D86A0C6004E7E99 /* 第三方 */ = {
 			isa = PBXGroup;
 			children = (
+				BFBABCB91DC1DE98009F068E /* RCAnimatedImagesView */,
 				5C27BAFE1DB761F2005A2F8D /* DACircularProgress */,
 				5C27BB031DB761F2005A2F8D /* MBProgressHUD */,
 				5C27BACE1DB761D9005A2F8D /* PYPhotoBrowser */,
@@ -2007,6 +2025,7 @@
 				BFC65D4A1D86A14F004E7E99 /* MiddleViewController.swift in Sources */,
 				5C7C3A0B1DB5CECC00EA598B /* YHMessageView.swift in Sources */,
 				5C913F931DBDEB0E00E567FB /* WeatherF3h.swift in Sources */,
+				BFBABCC51DC1F9F0009F068E /* UITableView+ClickTime.m in Sources */,
 				BFAF23C31DB85EBC00294988 /* CircleInfoModel.swift in Sources */,
 				5C27BAFB1DB761D9005A2F8D /* PYPhotoCell.m in Sources */,
 				5C913F991DBDEB0E00E567FB /* WeatherRealtime.swift in Sources */,
@@ -2168,6 +2187,7 @@
 				BFC126A61DB4A42200E11088 /* MJKeyChainHelper.swift in Sources */,
 				5C27BAFC1DB761D9005A2F8D /* PYPhotosView.m in Sources */,
 				BFA6DDC71D895C11009017DE /* UIControl+Custom.m in Sources */,
+				BFBABCBC1DC1DEA1009F068E /* RCAnimatedImagesView.m in Sources */,
 				5C8C3C651D9276F500D756FF /* SignSportsCell.swift in Sources */,
 				BFC126AF1DB4ADCA00E11088 /* TokenModel.swift in Sources */,
 				5CA4EA3E1D8EC59A001A8E8D /* FieldViewController.swift in Sources */,
