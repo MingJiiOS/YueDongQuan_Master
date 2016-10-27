@@ -33,10 +33,24 @@ class MJLoginTextField: UITextField {
         self.tintColor = UIColor.whiteColor()
         self.textColor = UIColor.whiteColor()
         let context = UIGraphicsGetCurrentContext()
+        //两边向上小角的高度
+        let cornerLength:CGFloat = 5
+        let lineWidth:CGFloat = 2
+        
         CGContextSetFillColorWithColor(context!, borderFillColor.CGColor)
-        CGContextFillRect(context!, CGRectMake(0, CGRectGetHeight(self.frame)-2, CGRectGetWidth(self.frame), 2))
-        CGContextFillRect(context!, CGRectMake(0, CGRectGetHeight(self.frame)-10, 2, 10))
-        CGContextFillRect(context!, CGRectMake(self.frame.width-2, CGRectGetHeight(self.frame)-10, 2, 10))
+        CGContextFillRect(context!, CGRectMake(0,
+                                              CGRectGetHeight(self.frame)-lineWidth,
+                                              CGRectGetWidth(self.frame),
+                                            lineWidth))
+        CGContextFillRect(context!, CGRectMake(0,
+                                              CGRectGetHeight(self.frame)-cornerLength,
+                                              lineWidth,
+                                              cornerLength))
+        
+        CGContextFillRect(context!, CGRect(x: self.frame.width-lineWidth,
+                                           y: CGRectGetHeight(self.frame)-cornerLength,
+                                           width: lineWidth,
+                                           height: cornerLength))
    
     }
 }

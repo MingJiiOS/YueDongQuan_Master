@@ -62,7 +62,10 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     //MARK:新建圈子
     func creatNewQuanZi()  {
         let new = NewQuanZiViewController()
-        self.push(new)
+        let nav = CustomNavigationBar(rootViewController: new)
+        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+        
+        
     }
     //MARK:表格数据源代理
     @objc func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
