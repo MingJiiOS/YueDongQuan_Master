@@ -10,6 +10,7 @@ import UIKit
 import Masonry
 import SnapKit
 import HYBMasonryAutoCellHeight
+import AVKit
 
 
 
@@ -18,6 +19,8 @@ protocol HKFTableViewCellDelegate {
     func createPingLunView(indexPath:NSIndexPath,sayId:Int,type:PingLunType)
     func selectCellPinglun(indexPath:NSIndexPath,commentIndexPath:NSIndexPath,sayId: Int,model:DiscoveryCommentModel,type:PingLunType)
     func clickDianZanBtnAtIndexPath(indexPath:NSIndexPath)
+    func clickJuBaoBtnAtIndexPath(foundId:Int,typeId:Int)
+    func clickVideoViewAtIndexPath(videoId:String)
 }
 
 
@@ -39,6 +42,10 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     var distanceLabel : UILabel?//距离
     var typeStatusView : UIImageView?//类型
     var displayView = PYPhotosView()//照片或者视频显示
+    
+    var videoImage = UIImageView()//视频展示
+    
+    
     var tableView : UITableView?//评论cell
     var locationView = UIView()//有定位时显示定位，没有时隐藏
     var locationLabel = UILabel()//显示定位信息
@@ -75,6 +82,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.headImageView?.backgroundColor = UIColor.whiteColor()
         self.headImageView?.layer.masksToBounds = true
         self.headImageView?.layer.cornerRadius = 20
+        
         
         weak var weakSelf = self
         
@@ -167,21 +175,32 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.top.equalTo((weakSelf?.descLabel?.snp_bottom)!).offset(5)
         })
         
+        self.contentView.addSubview(self.videoImage)
+        self.videoImage.snp_makeConstraints(closure: { (make) in
+            make.left.equalTo(10)
+            make.width.equalTo((ScreenWidth - 30)/3)
+            make.top.equalTo((weakSelf?.displayView.snp_bottom)!).offset(2)
+        })
+        
+        self.videoImage.backgroundColor = UIColor.brownColor()
+        self.videoImage.userInteractionEnabled = true
+        let tapVideoView = UITapGestureRecognizer(target: self, action: #selector(clickVideoImageToPlayer))
+        self.videoImage.addGestureRecognizer(tapVideoView)
+        
         //定位信息
         self.contentView.addSubview(self.locationView)
         self.locationView.snp_makeConstraints { (make) in
             make.left.equalTo(10)
             make.right.equalTo(-10)
-            make.top.equalTo((weakSelf?.displayView.snp_bottom)!).offset(5)
+            make.top.equalTo((weakSelf?.videoImage.snp_bottom)!).offset(5)
             make.height.equalTo(14)
         }
-        self.locationView.backgroundColor = UIColor.orangeColor()
+        self.locationView.backgroundColor = UIColor.whiteColor()
         let locationImg = UIImageView(frame: CGRect(x: 1, y: 1, width: 12, height: 12))
-        locationImg.backgroundColor = UIColor.blackColor()
+        locationImg.image = UIImage(named: "location")
         self.locationView.addSubview(locationImg)
         
         self.locationLabel.frame = CGRect(x: 16, y: 1, width: screenWidth - 36, height: 12)
-        self.locationLabel.backgroundColor = UIColor.redColor()
         self.locationLabel.font = UIFont.systemFontOfSize(10)
 //        self.locationLabel.text = "重庆市渝北区大龙上"
         self.locationView.addSubview(self.locationLabel)
@@ -358,6 +377,21 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.displayView.hidden = true
         }
         
+        NSLog("videoURL = \(model.compressUrl)")
+        if model.compressUrl != "" {
+            self.videoImage.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo((ScreenWidth - 30)/3)
+            })
+            self.videoImage.hidden = false
+        }else{
+            self.videoImage.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(0)
+            })
+            self.videoImage.hidden = true
+        }
+        
+        
+        
         var thumbnailImageUrls = [String]()
         var originalImageUrls = [String]()
         if model.images.count != 0 {
@@ -368,9 +402,6 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             displayView.thumbnailUrls = thumbnailImageUrls
             displayView.originalUrls = originalImageUrls
         }
-        
-        
-        
         
         
         
@@ -469,12 +500,32 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     func clickJuBao() {
         print("点击了举报")
         let titleArr = ["举报"]
-        let popView = SimplePopupView(frame: CGRect(x: 30, y: 50, width: 60, height: 30), andDirection: PopViewDirectionTop, andTitles: titleArr, andImages: nil, trianglePecent: 0.5)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(myJubao))
+        
+        let popView = SimplePopupView(frame: CGRect(x: 30, y: 50, width: 60, height: 30), andDirection: PopViewDirectionTop, andTitles: titleArr, andImages: nil, trianglePecent: 0.5)
+        popView.popTintColor  = UIColor.whiteColor()
+        popView.popColor = UIColor.blackColor()
+        popView.addGestureRecognizer(tap)
         self.jubaoBtn.showPopView(popView, atPoint: CGPoint(x: 0.3, y: 1))
         popView.show()
     }
     
+    func myJubao(){
+        print("我要举报\(self.indexPath)行")
+        let foundId = self.testModel?.id
+        let typeId = self.testModel?.typeId
+        self.delegate?.clickJuBaoBtnAtIndexPath(foundId!, typeId: typeId!)
+        
+    }
+    
+    
+    
+    //点击视频
+    func clickVideoImageToPlayer(){
+        let videoid = self.testModel?.compressUrl
+        self.delegate?.clickVideoViewAtIndexPath(videoid!)
+    }
     
     
     
@@ -571,6 +622,8 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     }
     
     
+    
+
     
     
 }

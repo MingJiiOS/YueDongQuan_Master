@@ -50,6 +50,7 @@
 #import "UIView+SimplePopupView.h"
 #import "UIView+SetRect.h"
 #import "SimplePopupView.h"
+#import "SHBAVController.h"
 
 //高德地图
 #import <AMapFoundationKit/AMapFoundationKit.h>

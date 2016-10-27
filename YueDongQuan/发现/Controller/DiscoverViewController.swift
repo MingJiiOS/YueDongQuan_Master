@@ -11,7 +11,8 @@ import SwiftyJSON
 import HYBMasonryAutoCellHeight
 import Alamofire
 import SDWebImage
-
+import AVKit
+import MJRefresh
 
 
 
@@ -108,7 +109,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         scrollContentView.showsHorizontalScrollIndicator = true
         scrollContentView.showsVerticalScrollIndicator = false
         scrollContentView.pagingEnabled = true
-        scrollContentView.scrollEnabled = false
+        scrollContentView.scrollEnabled = true
         scrollContentView.frame = CGRectMake(0, 104, ScreenWidth, ScreenHeight - 104 - 49)
         //        scrollContentView.snp_makeConstraints { (make) in
         //            make.left.equalTo(0)
@@ -131,10 +132,23 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
             testTable.delegate = self
             testTable.dataSource = self
             testTable.registerClass(HKFTableViewCell.self, forCellReuseIdentifier: "HKFTableViewCell")
+            testTable.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(pullDownLoadNewData))
+            testTable.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(pullUpLoadMoreData))
+//            testTable.mj_header.beginRefreshing()
             testTable.tag = i + 1
             scrollContentView.addSubview(testTable)
             tableViews.append(testTable)
         }
+        
+    }
+    
+    func pullDownLoadNewData(){
+        datasource = []
+        requestData()
+    }
+    
+    
+    func pullUpLoadMoreData(){
         
     }
     
@@ -178,6 +192,7 @@ extension DiscoverViewController : UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
     }
+    
     
     func amapLocationManager(manager: AMapLocationManager!, didFailWithError error: NSError!) {
         print(error)
@@ -288,6 +303,20 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     func clickDianZanBtnAtIndexPath(indexPath: NSIndexPath) {
         let foundId = self.testModel?.data.array[indexPath.row].id
         requestDianZan(foundId!)
+        
+    }
+    
+    func clickJuBaoBtnAtIndexPath(foundId: Int, typeId: Int) {
+        requestJuBaoSay(foundId, typeId: typeId)
+    }
+    
+    func clickVideoViewAtIndexPath(videoId: String) {
+        
+        
+        let videoId = "http://static.tripbe.com/videofiles/20121214/9533522808.f4v.mp4"
+        let vc = SHBAVController(url: NSURL(string: videoId)!)
+        self.presentViewController(vc, animated: true, completion: nil)
+        
     }
     
     
@@ -504,6 +533,7 @@ extension DiscoverViewController {
                 
                 for item in self.tableViews {
                     item.reloadData()
+                    item.mj_header.endRefreshing()
                 }
             case .Failure(let error):
                 print(error)
@@ -553,6 +583,27 @@ extension DiscoverViewController {
             }
         }
     }
+    
+    
+    func requestJuBaoSay(foundId:Int,typeId:Int){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":userInfo.uid.description,"foundId":foundId,"typeId":typeId]
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/report")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                _ = json.object
+                
+               NSLog("举报=\(json)")
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    
     
     
 }

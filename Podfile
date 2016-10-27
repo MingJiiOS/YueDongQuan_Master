@@ -29,7 +29,7 @@ target 'YueDongQuan' do
     pod 'RongCloudIMKit', '~> 2.7.2'
     pod 'AMapSearch', '~> 4.2.0'
     #pod 'PYPhotoBrowser', '~> 1.0.1'
-
+	pod 'MJRefresh', '~> 3.1.0'
   # Pods for YueDongQuan
 
 
