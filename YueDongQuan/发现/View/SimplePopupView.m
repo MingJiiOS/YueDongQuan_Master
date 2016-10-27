@@ -185,7 +185,8 @@ static NSString *reuseCell = @"popViewCell";
         cell.textLabel.textColor = self.popTintColor;
     }
     cell.textLabel.font = [UIFont systemFontOfSize:14];
-//    cell.backgroundColor = [UIColor cyanColor];
+//    cell.textLabel.backgroundColor = [UIColor blackColor];
+    cell.backgroundColor = [UIColor blackColor];
 //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = _titles[indexPath.row];
     return cell;

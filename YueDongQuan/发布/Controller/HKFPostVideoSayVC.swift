@@ -294,6 +294,7 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
                 let str = (json.object) as! NSDictionary
                 
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
+                    NSLog("发布完成完成")
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
                 
@@ -335,6 +336,11 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
                     if (self.imageModel?.code == "200" && self.imageModel?.flag == "1"){
                         
                         self.tempImageStr.append((self.imageModel?.data.id.description)!)
+                        
+                        let videoId = self.imageModel?.data.id
+                        
+                        self.requestToPostImagesSay(self.contentText, latitude: self.userLatitude, longitude: self.userLongitude, videoId: (videoId?.description)!, address: self.address)
+                        
                         
                         NSLog("最后一张上传完成")
                         /*if ((self.tempImageStr.count) == self.selectedImages.count) {

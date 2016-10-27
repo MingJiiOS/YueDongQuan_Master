@@ -109,6 +109,7 @@
 		5CC5F9431DAF8A550088A61E /* HKFTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC5F9411DAF8A550088A61E /* HKFTableViewCell.swift */; };
 		5CC5F9461DAF8A600088A61E /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC5F9441DAF8A600088A61E /* DisplayView.swift */; };
 		5CC5F9471DAF8A600088A61E /* Extension_String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC5F9451DAF8A600088A61E /* Extension_String.swift */; };
+		5CC7C73F1DC1F20700FE3F32 /* SHBAVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CC7C73E1DC1F20700FE3F32 /* SHBAVController.m */; };
 		5CD980EA1D9615FF007828E2 /* CircleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD980E91D9615FF007828E2 /* CircleAnimation.swift */; };
 		5CD981061D96546A007828E2 /* XTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD981051D96546A007828E2 /* XTimer.m */; };
 		5CE4A7E91D8AC1ED00F25CF6 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4A7E81D8AC1ED00F25CF6 /* HMSegmentedControl.m */; };
@@ -516,6 +517,8 @@
 		5CC5F9411DAF8A550088A61E /* HKFTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFTableViewCell.swift; sourceTree = "<group>"; };
 		5CC5F9441DAF8A600088A61E /* DisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		5CC5F9451DAF8A600088A61E /* Extension_String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension_String.swift; sourceTree = "<group>"; };
+		5CC7C73D1DC1F20700FE3F32 /* SHBAVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHBAVController.h; sourceTree = "<group>"; };
+		5CC7C73E1DC1F20700FE3F32 /* SHBAVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHBAVController.m; sourceTree = "<group>"; };
 		5CD980E91D9615FF007828E2 /* CircleAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleAnimation.swift; sourceTree = "<group>"; };
 		5CD981041D96546A007828E2 /* XTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTimer.h; sourceTree = "<group>"; };
 		5CD981051D96546A007828E2 /* XTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTimer.m; sourceTree = "<group>"; };
@@ -1552,6 +1555,8 @@
 			isa = PBXGroup;
 			children = (
 				BFC65D4D1D86A160004E7E99 /* DiscoverViewController.swift */,
+				5CC7C73D1DC1F20700FE3F32 /* SHBAVController.h */,
+				5CC7C73E1DC1F20700FE3F32 /* SHBAVController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2164,6 +2169,7 @@
 				BF071F401D9A0D68000551F7 /* SubPersonCell.swift in Sources */,
 				BF071F301D9A0D68000551F7 /* SubPersonDataViewController.swift in Sources */,
 				5C27BB0C1DB7638D005A2F8D /* HKFPostPictureSayVC.swift in Sources */,
+				5CC7C73F1DC1F20700FE3F32 /* SHBAVController.m in Sources */,
 				5C7C3A101DB5CF3400EA598B /* FieldData.swift in Sources */,
 				5C2A95771D8D86EC006D1462 /* NSString+Extension.m in Sources */,
 				5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */,

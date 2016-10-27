@@ -25,6 +25,7 @@ class DiscoveryArray{
     var csum : Int!
     var num : Int!
     var name : String!
+    var compressUrl : String!
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
@@ -72,6 +73,13 @@ class DiscoveryArray{
 		time = dictionary["time"] as? Int
 		typeId = dictionary["typeId"] as? Int
         csum = dictionary["csum"] as? Int
+        
+        if let compressUrls = dictionary["compressUrl"] as? String {
+            compressUrl = compressUrls
+        }else{
+            compressUrl = ""
+        }
+        
 	}
 
 }

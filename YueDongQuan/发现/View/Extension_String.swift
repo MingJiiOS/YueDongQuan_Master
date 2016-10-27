@@ -41,3 +41,9 @@ func cellHeightByData(data:String)->CGFloat{
     return  height
     
 }
+
+
+
+
+
+
