@@ -157,7 +157,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
 //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(),
 //                                                                    forBarMetrics: .Default)
 //        self.navigationController?.navigationBar.shadowImage = nil
-    
+//    self.navigationController?.navigationBar.hidden = false
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -38,7 +38,7 @@ class QuanZiViewController: RCConversationListViewController
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0 / 255, green: 107 / 255, blue: 186 / 255, alpha: 1)
-        
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: leftBarButtonImageString as String), style: .Plain, target: self, action: #selector(clickBtnAction))
         self.navigationItem.leftBarButtonItem?.tag = 1
         let bgView = UIView(frame:CGRectMake(0, 0, 98, 44) )
@@ -86,7 +86,7 @@ class QuanZiViewController: RCConversationListViewController
                                                           animation: true)
                 
                 righttable.sendVlaueBack({ (index) in
-                   
+                   popview.dissPopoverViewWithAnimation(true)
                     switch index {
                     case 0:
                         
@@ -101,8 +101,15 @@ class QuanZiViewController: RCConversationListViewController
                         
                         break
                     case 1:
+                        let post = HKFPostField_OneVC()
+                        let nav = CustomNavigationBar(rootViewController: post)
+                        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+                        
                         break
                     case 2:
+                        let newCircle = NewQuanZiViewController()
+                        let nav = CustomNavigationBar(rootViewController: newCircle)
+                        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
                         break
                     default:
                         break

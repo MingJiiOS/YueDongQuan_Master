@@ -40,8 +40,9 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜新建圈子", style: .Plain, target: self, action: #selector(back))
+        self.navigationController?.navigationBar.barTintColor = kBlueColor
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜返回", style: .Plain, target: self, action: #selector(back))
         self.createView()
     }
     func createView()  {
@@ -158,7 +159,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         
     }
     func back(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -200,7 +201,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
             picker.sourceType = .Camera
             self.presentViewController(picker, animated: true, completion: nil)
         }else{
-            let alert = UIAlertView(title: nil, message: "没有相机", delegate: self, cancelButtonTitle: "好的")
+            let alert = SGAlertView(title: "⚠️警告", delegate: nil, contentTitle: "未检测您到摄像头", alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
             alert.show()
         }
     }
@@ -302,21 +303,21 @@ extension NewQuanZiViewController{
         let Pw = circlePw
         if self.uploadimgaemodel?.data.id == nil{
             
-            self.showMJProgressHUD("圈子logo不能为空！！", isAnimate: true)
+            self.showMJProgressHUD("圈子logo不能为空！！", isAnimate: false)
             if circleName != nil {
                 if NSString(string:circleName).length == 0 {
                     
-                     self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: true)
+                     self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: false)
                     if circlePw != nil {
                         if NSString(string:circlePw).length == 0 {
                             
-                             self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: true)
+                             self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: false)
                         }else if  NSString(string:circlePw).length < 6 {
                             
-                             self.showMJProgressHUD("密码不能少于6位！！", isAnimate: true)
+                             self.showMJProgressHUD("密码不能少于6位！！", isAnimate: false)
                         }else if NSString(string:circlePw).length > 16 {
                             
-                             self.showMJProgressHUD("密码不能大于16位！！", isAnimate: true)
+                             self.showMJProgressHUD("密码不能大于16位！！", isAnimate: false)
                         }else{
                             let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
                                                            "name":circleName,
@@ -330,22 +331,22 @@ extension NewQuanZiViewController{
                                                            createcircleModel: dict,
                                                            success: { (responseDic, success) in
                                 if success {
-                                    self.navigationController?.popViewControllerAnimated(true)
+                                    self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
                                 }
                             }) { (error) in
                                 
-                                 self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: true)
+                                 self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: false)
                             }
                         }
                     }else{
                        
-                         self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: true)
+                         self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: false)
                     }
                    
                 }
             }else{
                 
-                 self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: true)
+                 self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: false)
             }
             
         }

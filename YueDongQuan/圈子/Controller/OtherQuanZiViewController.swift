@@ -260,7 +260,12 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.circlesModel != nil {
-                return self.circlesModel.data.array.count
+            if self.circlesModel.code == "405" {
+                return 0
+            }else{
+                 return self.circlesModel.data.array.count
+            }
+            
         }
         return 0
         
@@ -364,7 +369,7 @@ extension OtherQuanZiViewController {
                     
                 case .Failure(let error):
                     
-                    self.showMJProgressHUD(error.description, isAnimate: true)
+                    self.showMJProgressHUD(error.description, isAnimate: false)
                     print(error)
                 }
                 

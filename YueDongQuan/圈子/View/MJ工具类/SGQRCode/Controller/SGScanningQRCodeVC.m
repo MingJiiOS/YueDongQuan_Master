@@ -32,7 +32,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SGScanningQRCodeView.h"
 #import "ScanSuccessJumpVC.h"
-
+#import "NSData+AES256.h"
 @interface SGScanningQRCodeVC ()<AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 /** 会话对象 */
 @property (nonatomic, strong) AVCaptureSession *session;
@@ -191,11 +191,13 @@
         } else { // 扫描结果为条形码
         
             ScanSuccessJumpVC *jumpVC = [[ScanSuccessJumpVC alloc] init];
-            jumpVC.jump_bar_code = obj.stringValue;
+           NSString *resultStr = [NSData AES256DecryptWithCiphertext:obj.stringValue];
+            jumpVC.jump_bar_code = resultStr;
             NSLog(@"stringValue = = %@", obj.stringValue);
             [self.navigationController pushViewController:jumpVC animated:YES];
         }
     }
+    
 }
 
 // 移除定时器

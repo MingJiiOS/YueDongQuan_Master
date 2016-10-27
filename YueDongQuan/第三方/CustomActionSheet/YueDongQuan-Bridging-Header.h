@@ -24,6 +24,8 @@
 #import "SGGenerateQRCodeVC.h"
 #import "ScanSuccessJumpVC.h"
 #import "SGAlertView.h"
+#import "RCAnimatedImagesView.h"
+#import "UITableView+ClickTime.h"
 //
 #import "HKFPostImageVC.h"
 #import "CustomTextField.h"
