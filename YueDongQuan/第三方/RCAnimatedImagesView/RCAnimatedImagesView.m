@@ -13,11 +13,13 @@
 
 #define imageViewsBorderOffset 150
 
+
 @interface RCAnimatedImagesView () {
   BOOL animating;
   NSUInteger totalImages;
   NSUInteger currentlyDisplayingImageViewIndex;
   NSInteger currentlyDisplayingImageIndex;
+    
 }
 
 @property(nonatomic, retain) NSArray *imageViews;
@@ -44,7 +46,9 @@
   return self;
 }
 
+
 - (id)initWithFrame:(CGRect)frame {
+    
   if ((self = [super initWithFrame:frame])) {
     [self _init];
   }
@@ -53,24 +57,25 @@
 }
 
 - (void)_init {
+    
   NSMutableArray *imageViews = [NSMutableArray array];
-
-  for (int i = 0; i < 2; i++) {
-    UIImageView *imageView = [[UIImageView alloc]
-        initWithFrame:CGRectMake(-imageViewsBorderOffset * 3.3,
-                                 -imageViewsBorderOffset,
-                                 self.bounds.size.width +
-                                     (imageViewsBorderOffset * 2),
-                                 self.bounds.size.height +
-                                     (imageViewsBorderOffset * 2))];
-    imageView.autoresizingMask =
-        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    imageView.contentMode = UIViewContentModeScaleAspectFill;
-    imageView.clipsToBounds = NO;
-    [self addSubview:imageView];
-
-    [imageViews addObject:imageView];
-  }
+    
+        for (int i = 0; i < 2; i++) {
+            UIImageView *imageView = [[UIImageView alloc]
+                                      initWithFrame:CGRectMake(-imageViewsBorderOffset * 2,
+                                                               -imageViewsBorderOffset,
+                                                               self.bounds.size.width +
+                                                               (imageViewsBorderOffset * 4),
+                                                               self.bounds.size.height +
+                                                               (imageViewsBorderOffset * 2))];
+            imageView.autoresizingMask =
+            UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.clipsToBounds = NO;
+            [self addSubview:imageView];
+            
+            [imageViews addObject:imageView];
+        }
 
   self.imageViews = [imageViews copy];
 
@@ -118,25 +123,49 @@
                           UIViewAnimationCurveLinear
                animations:^{
                  NSInteger randomTranslationValueX =
-                     imageViewsBorderOffset * 3.5 -
+                     imageViewsBorderOffset * 2 -
                      [[self class]
                          randomIntBetweenNumber:0
                                       andNumber:imageViewsBorderOffset];
                  NSInteger randomTranslationValueY = 0;
-
-                 CGAffineTransform translationTransform =
-                     CGAffineTransformMakeTranslation(randomTranslationValueX,
-                                                      randomTranslationValueY);
-
-                 CGFloat randomScaleTransformValue =
-                     [[self class] randomIntBetweenNumber:115 andNumber:120] /
-                     100;
-
-                 CGAffineTransform scaleTransform = CGAffineTransformMakeScale(
-                     randomScaleTransformValue, randomScaleTransformValue);
-
-                 imageViewToShow.transform = CGAffineTransformConcat(
-                     scaleTransform, translationTransform);
+                       //向右滑动
+                   if (_diectType == right) {
+                       CGAffineTransform translationTransform =
+                       CGAffineTransformMakeTranslation(randomTranslationValueX,
+                                                        randomTranslationValueY);
+                       
+                       CGFloat randomScaleTransformValue =
+                       [[self class] randomIntBetweenNumber:115 andNumber:120] /
+                       100;
+                       
+                       CGAffineTransform scaleTransform = CGAffineTransformMakeScale(
+                                                                                     randomScaleTransformValue, randomScaleTransformValue);
+                       
+                       imageViewToShow.transform = CGAffineTransformConcat(
+                                                                           scaleTransform, translationTransform);
+                   }else{
+                       NSInteger LeftrandomTranslationValueX =
+                       -imageViewsBorderOffset * 2 +
+                       [[self class]
+                        randomIntBetweenNumber:0
+                        andNumber:imageViewsBorderOffset];
+                           //向左滑动
+                       CGAffineTransform translationTransform =
+                       CGAffineTransformMakeTranslation(LeftrandomTranslationValueX,
+                                                        randomTranslationValueY);
+                       
+                       CGFloat randomScaleTransformValue =
+                       [[self class] randomIntBetweenNumber:115 andNumber:120] /
+                       100;
+                       
+                       CGAffineTransform scaleTransform = CGAffineTransformMakeScale(
+                                                                                     randomScaleTransformValue, randomScaleTransformValue);
+                       
+                       imageViewToShow.transform = CGAffineTransformConcat(
+                                                                           scaleTransform, translationTransform);
+  
+                   }
+                 
                }
                completion:NULL];
 

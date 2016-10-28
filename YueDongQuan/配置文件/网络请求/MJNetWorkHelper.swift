@@ -11,6 +11,11 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 class MJNetWorkHelper: NSObject {
+    
+    
+    
+    
+    
     //请求成功返回值
     typealias SuccessBlock = (responseDic:NSDictionary,success:Bool)->Void
     var successBlock : SuccessBlock!
@@ -45,6 +50,9 @@ class MJNetWorkHelper: NSObject {
         }
 
     }
+    
+    
+    
     //MARK:用户登录
     func loginWithUserInfo(interfaceName:NSString,userModel:NSDictionary,
                             success:SuccessBlock,
