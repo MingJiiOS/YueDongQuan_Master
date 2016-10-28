@@ -60,6 +60,12 @@
 		5C5CD06E1DBF28AB00D4C1FA /* HKFPostField_OneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5CD06D1DBF28AB00D4C1FA /* HKFPostField_OneVC.swift */; };
 		5C5DB9EF1DBB609700BF89EE /* DiscoveryImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DB9EE1DBB609700BF89EE /* DiscoveryImage.swift */; };
 		5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */; };
+		5C6CD9951DC2FA0C001F3DA8 /* AVPlayerItem+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6CD98F1DC2FA0C001F3DA8 /* AVPlayerItem+extension.swift */; };
+		5C6CD9961DC2FA0C001F3DA8 /* Double+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6CD9901DC2FA0C001F3DA8 /* Double+extension.swift */; };
+		5C6CD9971DC2FA0C001F3DA8 /* MudPlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6CD9911DC2FA0C001F3DA8 /* MudPlayerControls.swift */; };
+		5C6CD9981DC2FA0C001F3DA8 /* MudPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6CD9921DC2FA0C001F3DA8 /* MudPlayerView.swift */; };
+		5C6CD9991DC2FA0C001F3DA8 /* MudPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6CD9931DC2FA0C001F3DA8 /* MudPlayerViewController.swift */; };
+		5C6CD99A1DC2FA0C001F3DA8 /* PlayerSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C6CD9941DC2FA0C001F3DA8 /* PlayerSource.bundle */; };
 		5C7C3A031DB5CE3F00EA598B /* DiscoveryCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */; };
 		5C7C3A041DB5CE3F00EA598B /* DiscoveryArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A001DB5CE3F00EA598B /* DiscoveryArray.swift */; };
 		5C7C3A051DB5CE3F00EA598B /* DiscoveryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A011DB5CE3F00EA598B /* DiscoveryData.swift */; };
@@ -109,7 +115,6 @@
 		5CC5F9431DAF8A550088A61E /* HKFTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC5F9411DAF8A550088A61E /* HKFTableViewCell.swift */; };
 		5CC5F9461DAF8A600088A61E /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC5F9441DAF8A600088A61E /* DisplayView.swift */; };
 		5CC5F9471DAF8A600088A61E /* Extension_String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC5F9451DAF8A600088A61E /* Extension_String.swift */; };
-		5CC7C73F1DC1F20700FE3F32 /* SHBAVController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CC7C73E1DC1F20700FE3F32 /* SHBAVController.m */; };
 		5CD980EA1D9615FF007828E2 /* CircleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD980E91D9615FF007828E2 /* CircleAnimation.swift */; };
 		5CD981061D96546A007828E2 /* XTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD981051D96546A007828E2 /* XTimer.m */; };
 		5CE4A7E91D8AC1ED00F25CF6 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4A7E81D8AC1ED00F25CF6 /* HMSegmentedControl.m */; };
@@ -458,6 +463,12 @@
 		5C5DB9EE1DBB609700BF89EE /* DiscoveryImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryImage.swift; sourceTree = "<group>"; };
 		5C68263E1DAC91250032B66E /* NSObject+EncodingString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+EncodingString.h"; sourceTree = "<group>"; };
 		5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+EncodingString.m"; sourceTree = "<group>"; };
+		5C6CD98F1DC2FA0C001F3DA8 /* AVPlayerItem+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+extension.swift"; sourceTree = "<group>"; };
+		5C6CD9901DC2FA0C001F3DA8 /* Double+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extension.swift"; sourceTree = "<group>"; };
+		5C6CD9911DC2FA0C001F3DA8 /* MudPlayerControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MudPlayerControls.swift; sourceTree = "<group>"; };
+		5C6CD9921DC2FA0C001F3DA8 /* MudPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MudPlayerView.swift; sourceTree = "<group>"; };
+		5C6CD9931DC2FA0C001F3DA8 /* MudPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MudPlayerViewController.swift; sourceTree = "<group>"; };
+		5C6CD9941DC2FA0C001F3DA8 /* PlayerSource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PlayerSource.bundle; sourceTree = "<group>"; };
 		5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryCommentModel.swift; sourceTree = "<group>"; };
 		5C7C3A001DB5CE3F00EA598B /* DiscoveryArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryArray.swift; sourceTree = "<group>"; };
 		5C7C3A011DB5CE3F00EA598B /* DiscoveryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryData.swift; sourceTree = "<group>"; };
@@ -518,8 +529,6 @@
 		5CC5F9411DAF8A550088A61E /* HKFTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFTableViewCell.swift; sourceTree = "<group>"; };
 		5CC5F9441DAF8A600088A61E /* DisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		5CC5F9451DAF8A600088A61E /* Extension_String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension_String.swift; sourceTree = "<group>"; };
-		5CC7C73D1DC1F20700FE3F32 /* SHBAVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHBAVController.h; sourceTree = "<group>"; };
-		5CC7C73E1DC1F20700FE3F32 /* SHBAVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHBAVController.m; sourceTree = "<group>"; };
 		5CD980E91D9615FF007828E2 /* CircleAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleAnimation.swift; sourceTree = "<group>"; };
 		5CD981041D96546A007828E2 /* XTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTimer.h; sourceTree = "<group>"; };
 		5CD981051D96546A007828E2 /* XTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTimer.m; sourceTree = "<group>"; };
@@ -1022,6 +1031,19 @@
 				5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */,
 			);
 			path = Tools;
+			sourceTree = "<group>";
+		};
+		5C6CD98E1DC2FA0C001F3DA8 /* MudPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				5C6CD98F1DC2FA0C001F3DA8 /* AVPlayerItem+extension.swift */,
+				5C6CD9901DC2FA0C001F3DA8 /* Double+extension.swift */,
+				5C6CD9911DC2FA0C001F3DA8 /* MudPlayerControls.swift */,
+				5C6CD9921DC2FA0C001F3DA8 /* MudPlayerView.swift */,
+				5C6CD9931DC2FA0C001F3DA8 /* MudPlayerViewController.swift */,
+				5C6CD9941DC2FA0C001F3DA8 /* PlayerSource.bundle */,
+			);
+			path = MudPlayer;
 			sourceTree = "<group>";
 		};
 		5CA4EA341D8E7453001A8E8D /* HYBMasonryAutoCellHeight */ = {
@@ -1558,8 +1580,6 @@
 			isa = PBXGroup;
 			children = (
 				BFC65D4D1D86A160004E7E99 /* DiscoverViewController.swift */,
-				5CC7C73D1DC1F20700FE3F32 /* SHBAVController.h */,
-				5CC7C73E1DC1F20700FE3F32 /* SHBAVController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1627,6 +1647,7 @@
 		BFC65D421D86A0C6004E7E99 /* 第三方 */ = {
 			isa = PBXGroup;
 			children = (
+				5C6CD98E1DC2FA0C001F3DA8 /* MudPlayer */,
 				BFBABCB91DC1DE98009F068E /* RCAnimatedImagesView */,
 				5C27BAFE1DB761F2005A2F8D /* DACircularProgress */,
 				5C27BB031DB761F2005A2F8D /* MBProgressHUD */,
@@ -1887,6 +1908,7 @@
 				BF2F6C8C1DAE0D640050B437 /* cool－78（被拖移）.tiff in Resources */,
 				BF2F6C631DAE0D640050B437 /* cool－37（被拖移）.tiff in Resources */,
 				BF2F6C861DAE0D640050B437 /* cool－72（被拖移）.tiff in Resources */,
+				5C6CD99A1DC2FA0C001F3DA8 /* PlayerSource.bundle in Resources */,
 				BF2F6C8D1DAE0D640050B437 /* cool－79（被拖移）.tiff in Resources */,
 				BF2F6C3F1DAE0D630050B437 /* cool－1（被拖移）.tiff in Resources */,
 				BF2F6C5F1DAE0D640050B437 /* cool－33（被拖移）.tiff in Resources */,
@@ -2006,6 +2028,7 @@
 				5CC5F9471DAF8A600088A61E /* Extension_String.swift in Sources */,
 				5C27BB071DB761F2005A2F8D /* DACircularProgressView.m in Sources */,
 				BFD41FE11DC05F67005A22E6 /* SGScanningQRCodeView.m in Sources */,
+				5C6CD9991DC2FA0C001F3DA8 /* MudPlayerViewController.swift in Sources */,
 				5C2A95761D8D86EC006D1462 /* GlobalUI.m in Sources */,
 				BFCD98D11DAC7B0700AF915C /* DataSource.swift in Sources */,
 				5C27BAF01DB761D9005A2F8D /* MBProgressHUD+PY.m in Sources */,
@@ -2138,6 +2161,7 @@
 				5CA4EA401D8EC5EE001A8E8D /* FieldCell.swift in Sources */,
 				BF5738861DBB74930023B7DE /* CircleHeadView.swift in Sources */,
 				5C27BAF41DB761D9005A2F8D /* PYPhotosReaderController.m in Sources */,
+				5C6CD9971DC2FA0C001F3DA8 /* MudPlayerControls.swift in Sources */,
 				BF071F3E1D9A0D68000551F7 /* SendPhoneNumberView.swift in Sources */,
 				BFD36CBF1DB9AEF3005005A3 /* myFoundData.swift in Sources */,
 				5C7C3A031DB5CE3F00EA598B /* DiscoveryCommentModel.swift in Sources */,
@@ -2173,7 +2197,6 @@
 				BF071F401D9A0D68000551F7 /* SubPersonCell.swift in Sources */,
 				BF071F301D9A0D68000551F7 /* SubPersonDataViewController.swift in Sources */,
 				5C27BB0C1DB7638D005A2F8D /* HKFPostPictureSayVC.swift in Sources */,
-				5CC7C73F1DC1F20700FE3F32 /* SHBAVController.m in Sources */,
 				5C7C3A101DB5CF3400EA598B /* FieldData.swift in Sources */,
 				5C2A95771D8D86EC006D1462 /* NSString+Extension.m in Sources */,
 				5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */,
@@ -2188,6 +2211,7 @@
 				BF071F0E1D9A0D5F000551F7 /* QRCodeView.swift in Sources */,
 				BF071F041D9A0D5F000551F7 /* CircleDataView.swift in Sources */,
 				5C24BB6F1D9A4BEB00A6D25F /* CustomTextField.m in Sources */,
+				5C6CD9951DC2FA0C001F3DA8 /* AVPlayerItem+extension.swift in Sources */,
 				5C42CACB1DC0584100669EB5 /* HKFPostField_TwoVC.swift in Sources */,
 				5C343A001D90E8AB0077BFDD /* SignRankCell.swift in Sources */,
 				5C343A041D91366F0077BFDD /* SignRankBtnController.swift in Sources */,
@@ -2209,6 +2233,7 @@
 				5C343A021D91361C0077BFDD /* KYCircularProgress.swift in Sources */,
 				BFD41FBB1DC03D9F005A22E6 /* TodayDongdouModel.swift in Sources */,
 				BFC65D481D86A0F9004E7E99 /* MainViewController.swift in Sources */,
+				5C6CD9961DC2FA0C001F3DA8 /* Double+extension.swift in Sources */,
 				BF071F0B1D9A0D5F000551F7 /* MJOtherQuanZiView.swift in Sources */,
 				5C27BAF81DB761D9005A2F8D /* PYProgressView.m in Sources */,
 				BFC1269C1DB4792F00E11088 /* CirclesArray.swift in Sources */,
@@ -2222,6 +2247,7 @@
 				BF071EFA1D9A0D5F000551F7 /* OtherQuanZiViewController.swift in Sources */,
 				5C27BB0A1DB761F2005A2F8D /* MBProgressHUD.m in Sources */,
 				BFAD63281D9E3E34006234E1 /* ConversationListViewController.m in Sources */,
+				5C6CD9981DC2FA0C001F3DA8 /* MudPlayerView.swift in Sources */,
 				BF071F071D9A0D5F000551F7 /* MJBlacklistView.swift in Sources */,
 				5C913F961DBDEB0E00E567FB /* WeatherModel.swift in Sources */,
 				BFDB2A461DA3D77500A65DAD /* MJShareSDkHelper.swift in Sources */,

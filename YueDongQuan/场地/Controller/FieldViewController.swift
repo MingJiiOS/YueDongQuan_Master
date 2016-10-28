@@ -178,6 +178,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     }
     
     
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         SDImageCache.sharedImageCache().cleanDisk()

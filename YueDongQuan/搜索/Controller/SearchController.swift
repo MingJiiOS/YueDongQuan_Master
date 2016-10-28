@@ -8,14 +8,20 @@
 
 import UIKit
 
+
+enum SearchType {
+    case Circle
+    case Field
+}
+
 class SearchController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate {
     
     
     var searchBgView : UIView!
     var collectionView : UICollectionView!
     var searchTableView : UITableView!
-    
-    
+    var searchType = SearchType.Circle
+    var quanziSelect = UIButton()
     
     private var scrollView = UIScrollView(frame: CGRect(x: 0, y: 45, width: ScreenWidth, height: ScreenHeight - 64 - 45 - 49))
     
@@ -39,10 +45,15 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
         searchBgView.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(searchBgView)
         
-        let quanziSelect = UIButton(frame: CGRect(x: 8, y: 5, width: 60, height: 30))
-        quanziSelect.backgroundColor = UIColor ( red: 0.9176, green: 0.9176, blue: 0.9529, alpha: 1.0 )
+        quanziSelect = UIButton(frame: CGRect(x: 8, y: 5, width: 60, height: 30))
+        quanziSelect.backgroundColor = UIColor ( red: 0.8959, green: 0.899, blue: 0.9392, alpha: 1.0 )
         quanziSelect.setTitle("圈子", forState: UIControlState.Normal)
+        quanziSelect.setTitle("场地", forState: UIControlState.Selected)
+        quanziSelect.setImage(UIImage(named: "single"), forState: UIControlState.Normal)
+        quanziSelect.imageEdgeInsets = UIEdgeInsetsMake(0, 40, 0, 0)
+        quanziSelect.titleEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 0)
         quanziSelect.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        quanziSelect.addTarget(self, action: #selector(clickSelectQuanZiBtn), forControlEvents: UIControlEvents.TouchUpInside)
         searchBgView.addSubview(quanziSelect)
         
         let searchText = UITextField(frame: CGRect(x: CGRectGetMaxX(quanziSelect.frame), y: 5, width: ScreenWidth - 60*2 - 20, height: 30))
@@ -107,6 +118,41 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
         
     }
     
+    
+    func clickSelectQuanZiBtn(sender:UIButton){
+        /*
+        let titleArr = ["举报"]
+        let tap = UITapGestureRecognizer(target: self, action: #selector(myJubao))
+        let popView = SimplePopupView(frame: CGRect(x: 30, y: 50, width: 60, height: 30), andDirection: PopViewDirectionTop, andTitles: titleArr, andImages: nil, trianglePecent: 0.0)
+        popView.popTintColor  = UIColor.whiteColor()
+        popView.popColor = UIColor.blackColor()
+        popView.addGestureRecognizer(tap)
+        sender.showPopView(popView, atPoint: CGPoint(x: 1, y: 1))
+        popView.show()
+        */
+//        sender.selected = !sender.selected
+        
+        
+//        sender.selected = !sender.selected
+        
+        if sender.selected  {
+            sender.selected = !sender.selected
+            
+//            quanziSelect.setTitle("圈子", forState: UIControlState.Normal)
+        }else{
+            sender.selected = !sender.selected
+//            quanziSelect.setTitle("场地", forState: UIControlState.Normal)
+        }
+        
+        
+        
+    }
+    
+    
+    func myJubao(){
+        
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
@@ -116,6 +162,7 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
         let cell : QuanZiCell = collectionView.dequeueReusableCellWithReuseIdentifier("QuanZiCell", forIndexPath: indexPath) as! QuanZiCell
         return cell
     }
@@ -140,6 +187,13 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        switch searchType {
+        case .Circle:
+            break
+        case .Field:
+            break
+        }
         let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath) as! SearchResultCell
         return cell
         
@@ -170,6 +224,10 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
         }
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        return true
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -178,3 +236,14 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
     
 
 }
+extension SearchController {
+    func requestSearchCircle() {
+        
+    }
+    
+    func requestSearchField() {
+        
+    }
+}
+
+
