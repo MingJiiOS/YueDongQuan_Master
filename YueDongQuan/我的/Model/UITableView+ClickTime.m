@@ -26,6 +26,7 @@
     if (didAddMethod) {
         class_replaceMethod(self, customSEL, method_getImplementation(systemMethod), method_getTypeEncoding(systemMethod));
     }else{
+            //交换方法
         method_exchangeImplementations(systemMethod, customMethod);
     }
 }

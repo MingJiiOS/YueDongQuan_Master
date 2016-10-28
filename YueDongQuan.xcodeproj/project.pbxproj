@@ -258,6 +258,7 @@
 		BF3CAC461DB22E15008A5C51 /* myCircleArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC431DB22E15008A5C51 /* myCircleArray.swift */; };
 		BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC441DB22E15008A5C51 /* myCircleData.swift */; };
 		BF3CAC481DB22E15008A5C51 /* myCircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */; };
+		BF44EA431DC319E600AD7B3D /* RegistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF44EA421DC319E600AD7B3D /* RegistVC.swift */; };
 		BF5738831DBB10690023B7DE /* myInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738811DBB10690023B7DE /* myInfoData.swift */; };
 		BF5738841DBB10690023B7DE /* myInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738821DBB10690023B7DE /* myInfoModel.swift */; };
 		BF5738861DBB74930023B7DE /* CircleHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738851DBB74930023B7DE /* CircleHeadView.swift */; };
@@ -674,6 +675,7 @@
 		BF3CAC431DB22E15008A5C51 /* myCircleArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleArray.swift; sourceTree = "<group>"; };
 		BF3CAC441DB22E15008A5C51 /* myCircleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleData.swift; sourceTree = "<group>"; };
 		BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleModel.swift; sourceTree = "<group>"; };
+		BF44EA421DC319E600AD7B3D /* RegistVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistVC.swift; sourceTree = "<group>"; };
 		BF5738811DBB10690023B7DE /* myInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoData.swift; sourceTree = "<group>"; };
 		BF5738821DBB10690023B7DE /* myInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoModel.swift; sourceTree = "<group>"; };
 		BF5738851DBB74930023B7DE /* CircleHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHeadView.swift; sourceTree = "<group>"; };
@@ -1155,9 +1157,10 @@
 				BF071F121D9A0D68000551F7 /* SendPhoneViewController.swift */,
 				BF071F131D9A0D68000551F7 /* SetNewPasswordViewController.swift */,
 				BF071F141D9A0D68000551F7 /* SubPersonDataViewController.swift */,
-				BF9739D01D9F81ED00E1B3EB /* TempLeftViewController.swift */,
 				BFFF74D71DBDB1C5005295D4 /* HelpandfeedbackVC.swift */,
+				BF9739D01D9F81ED00E1B3EB /* TempLeftViewController.swift */,
 				BFFCE0271DBEF0820045087A /* TotalRankVC.swift */,
+				BF44EA421DC319E600AD7B3D /* RegistVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2064,6 +2067,7 @@
 				5C24BB771D9A709100A6D25F /* BRPlaceholderTextView.m in Sources */,
 				BF071F451D9A110B000551F7 /* PersonalViewController.swift in Sources */,
 				5C27BAF11DB761D9005A2F8D /* UIView+PYExtension.m in Sources */,
+				BF44EA431DC319E600AD7B3D /* RegistVC.swift in Sources */,
 				BF071EF61D9A0D5F000551F7 /* AllNoticeViewController.swift in Sources */,
 				5C5DB9EF1DBB609700BF89EE /* DiscoveryImage.swift in Sources */,
 				5C072B601D8F8D2500420F6D /* YoYoAlertView.swift in Sources */,
