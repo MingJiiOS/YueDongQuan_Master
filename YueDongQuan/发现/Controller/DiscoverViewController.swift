@@ -17,7 +17,7 @@ import MJRefresh
 
 
 class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationManagerDelegate{
-    let titleArray = ["最新", "附近", "关注", "招募", "求加入", "图片", "视频", "Eight"]
+    let titleArray = ["最新", "图片", "视频","活动", "约战", "求加入", "招募"]
     var segementControl : HMSegmentedControl!
     //底部容器(用于装tableview)
     private var scrollContentView = UIScrollView()
@@ -41,6 +41,11 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     private var userLatitude : Double = 0
     private var userLongitude : Double = 0
     
+    private var pageNuber : Int = 1
+    
+    private var indexOfType : Int = 0
+    
+    
     override func viewWillAppear(animated: Bool) {
         
     }
@@ -52,7 +57,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         //        manger.allowsBackgroundLocationUpdates = true
         manger.delegate = self
         manger.startUpdatingLocation()
-        requestData()
+        pullDownLoadNewData()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear), name: UIKeyboardWillShowNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear), name:UIKeyboardWillHideNotification, object: nil)
@@ -88,7 +93,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         segementControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.blueColor()]
         segementControl.indexChangeBlock = { (index) in
             
-            
+            self.indexOfType = index
+            self.pullDownLoadNewData()
             
         }
         segementControl.addTarget(self, action: #selector(DiscoverViewController.segmentedControlChangedValue(_:)), forControlEvents: UIControlEvents.ValueChanged)
@@ -144,12 +150,70 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     func pullDownLoadNewData(){
         datasource = []
-        requestData()
+        pageNuber = 1
+        
+        
+        
+        switch self.indexOfType {
+        case 0:
+            print(indexOfType)
+            requestData("", pageNuber: pageNuber)
+        case 1:
+            print(indexOfType)
+            requestData("11", pageNuber: pageNuber)
+        case 2:
+            print(indexOfType)
+            requestData("12", pageNuber: pageNuber)
+        case 3:
+            print(indexOfType)
+            requestData("13", pageNuber: pageNuber)
+        case 4:
+            print(indexOfType)
+            requestData("14", pageNuber: pageNuber)
+        case 5:
+            print(indexOfType)
+            requestData("15", pageNuber: pageNuber)
+        case 6:
+            print(indexOfType)
+            requestData("16", pageNuber: pageNuber)
+        default:
+            break
+        }
+        
+        
+        
+        
     }
     
     
     func pullUpLoadMoreData(){
+        pageNuber += 1
         
+        switch self.indexOfType {
+        case 0:
+            print(indexOfType)
+            requestPullUpData("", pageNuber: pageNuber)
+        case 1:
+            print(indexOfType)
+            requestPullUpData("11", pageNuber: pageNuber)
+        case 2:
+            print(indexOfType)
+            requestPullUpData("12", pageNuber: pageNuber)
+        case 3:
+            print(indexOfType)
+            requestPullUpData("13", pageNuber: pageNuber)
+        case 4:
+            print(indexOfType)
+            requestPullUpData("14", pageNuber: pageNuber)
+        case 5:
+            print(indexOfType)
+            requestPullUpData("15", pageNuber: pageNuber)
+        case 6:
+            print(indexOfType)
+            requestPullUpData("16", pageNuber: pageNuber)
+        default:
+            break
+        }
     }
     
     
@@ -190,7 +254,37 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
 
 extension DiscoverViewController : UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+//        print(scrollView.contentOffset.x)
+//        var picHeight:Int = 0
+//        switch scrollView.contentOffset.x {
+//        case 0..<ScreenWidth:
+//            picHeight = 0
+//            break
+//        case ScreenWidth..<ScreenWidth*2:
+//            picHeight = 1
+//            break
+//        case 2*ScreenWidth..<3*ScreenWidth:
+//            picHeight = 2
+//            break
+//        case 3*ScreenWidth..<4*ScreenWidth:
+//            picHeight = 3
+//            break
+//        case 4*ScreenWidth..<5*ScreenWidth:
+//            picHeight = 4
+//            break
+//        case 5*ScreenWidth..<6*ScreenWidth:
+//            picHeight = 5
+//            break
+//        case 6*ScreenWidth..<7*ScreenWidth:
+//            picHeight = 6
+//            break
+//        default:
+//            picHeight = 0
+//        }
+//        
+//        segementControl.selectedSegmentIndex = picHeight
+//        self.indexOfType = picHeight
+//        self.pullDownLoadNewData()
     }
     
     
@@ -217,11 +311,9 @@ extension DiscoverViewController : UIScrollViewDelegate {
 extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKFTableViewCellDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.datasource.count
-        //        return (self.testModel?.data.array.count)!
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell : HKFTableViewCell = tableView.dequeueReusableCellWithIdentifier("HKFTableViewCell", forIndexPath: indexPath) as! HKFTableViewCell
         
         var cell = HKFTableViewCell()
         cell = tableView.dequeueReusableCellWithIdentifier("HKFTableViewCell") as! HKFTableViewCell
@@ -229,20 +321,20 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         cell.delegate = self
         cell.headTypeView?.hidden = true
         
-        let model = self.testModel?.data.array[indexPath.row]
+        let model = self.datasource[indexPath.row]
         
         var imageArr = [String]()
-        for item in (model?.images)! {
+        for item in (model.images)! {
             imageArr.append(item.thumbnailSrc)
         }
         
-        if model?.typeId == 11 {
+        if model.typeId == 11 {
             cell.imageArry = imageArr
         }
         
         
-        cell.configCellWithModelAndIndexPath(model!, indexPath: indexPath)
-        let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model?.latitude)! , longitude2: (model?.longitude)!)
+        cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+        let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
         
         cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
         return cell
@@ -252,21 +344,13 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        let model = self.testModel?.data.array[indexPath.row]
-//        let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
-//            let cell = sourceCell as! HKFTableViewCell
-//            cell.configCellWithModelAndIndexPath(model!, indexPath: indexPath)
-//        }){ () -> [NSObject : AnyObject]! in
-//                    let cache = [kHYBCacheStateKey : model?.id.description,kHYBCacheStateKey : "",kHYBRecalculateForStateKey : (model!.shouldUpdateCache)]
-//                    model!.shouldUpdateCache = false
-//                    return cache as [NSObject : AnyObject]
-//                }
+        let model = self.datasource[indexPath.row]
         let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
             let cell = sourceCell as! HKFTableViewCell
-            cell.configCellWithModelAndIndexPath(model!, indexPath: indexPath)
+            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
             }) { () -> [NSObject : AnyObject]! in
-                let cache = [kHYBCacheStateKey:"\(model?.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
-                model?.shouldUpdateCache = false
+                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+                model.shouldUpdateCache = false
                 return cache as [NSObject:AnyObject]
         }
         
@@ -301,7 +385,7 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     
     
     func clickDianZanBtnAtIndexPath(indexPath: NSIndexPath) {
-        let foundId = self.testModel?.data.array[indexPath.row].id
+        let foundId = self.datasource[indexPath.row].id
         requestDianZan(foundId!)
         
     }
@@ -313,9 +397,15 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     func clickVideoViewAtIndexPath(videoId: String) {
         
         
-        let videoId = "http://static.tripbe.com/videofiles/20121214/9533522808.f4v.mp4"
-        let vc = SHBAVController(url: NSURL(string: videoId)!)
-        self.presentViewController(vc, animated: true, completion: nil)
+//        let videoIds = videoId//"http://static.tripbe.com/videofiles/20121214/9533522808.f4v.mp4"
+        let player = AVPlayer(URL: NSURL(string: "http://static.tripbe.com/videofiles/20121214/9533522808.f4v.mp4")!)
+        let playerVC = MudPlayerViewContoller()
+        playerVC.player = player
+        player.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
+        self.view.addSubview(playerVC.view)
+        self.presentViewController(playerVC, animated: true, completion: nil)
+        player.play()
+        
         
     }
     
@@ -427,7 +517,7 @@ extension DiscoverViewController:UITextFieldDelegate {
             model.commentId = 0
             model.content = self.textField.text!
             model.foundId = self.sayId
-            model.id = self.commentModel?.id
+            model.id = (self.commentModel?.id)! + 1
             model.reply = ""
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
@@ -446,16 +536,19 @@ extension DiscoverViewController:UITextFieldDelegate {
             model.commentId = self.commentModel?.commentId
             model.content = self.textField.text!
             model.foundId = self.sayId
-            model.id = self.commentModel?.id
+            model.id = (self.commentModel?.id)! + 1
             model.reply = self.commentModel?.netName
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
             
             self.datasource[(index?.row)!].comment.append(model)
             
-            for item in self.tableViews {
-                item.reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
-            }
+            
+            self.tableViews[self.indexOfType].reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
+            
+//            for item in self.tableViews {
+//                item.reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
+//            }
             
             requestCommentSay((self.commentModel?.commentId.description)!, content: self.textField.text!, foundId: self.sayId!)
             
@@ -503,8 +596,9 @@ extension DiscoverViewController {
 }
 
 extension DiscoverViewController {
-    func requestData(){
-        let para = ["v":"-130%-7200%-7180%-7190%-7240%-7180%-7270%-7180%-7190%87100%","Uid":userInfo.uid.description,"typeId":"","pageNo":1,"pageSize":50]
+    func requestData(typeId:String,pageNuber:Int){
+        let vcode = NSObject.getEncodeString("20160901")
+        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNuber,"pageSize":6]
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
@@ -515,26 +609,18 @@ extension DiscoverViewController {
                 let str = json.object
                 
                 self.testModel = DiscoveryModel(fromDictionary: str as! NSDictionary)
-                
-
-
-//                print(self.testModel?.code)
-//                print(self.testModel?.data.array[0].address)
-//                print(self.testModel?.data.array[0].aname)
-//                print(self.testModel?.data.array[0].content)
-//                print(self.testModel?.data.array[0].id)
-//                print(self.testModel?.data.array[0].typeId)
-//                print(self.testModel?.data.array[0].thumbnailSrc)
-//                print(self.testModel?.data.array[0].time)
-
-                if self.testModel != nil{
+                 if self.testModel != nil && self.testModel?.data.array.count != 0{
                     self.datasource = (self.testModel?.data.array)!
+                 }else{
+                    self.tableViews[self.indexOfType].mj_header.endRefreshing()
+                    return
                 }
-                
-                for item in self.tableViews {
-                    item.reloadData()
-                    item.mj_header.endRefreshing()
-                }
+                self.tableViews[self.indexOfType].reloadData()
+                self.tableViews[self.indexOfType].mj_header.endRefreshing()
+//                for item in self.tableViews {
+//                    item.reloadData()
+//                    item.mj_header.endRefreshing()
+//                }
             case .Failure(let error):
                 print(error)
             }
@@ -603,7 +689,38 @@ extension DiscoverViewController {
         }
     }
     
-    
+    func requestPullUpData(typeId:String,pageNuber:Int){
+        let vcode = NSObject.getEncodeString("20160901")
+        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNuber,"pageSize":6]
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                NSLog("Say-json = \(json)")
+                
+                let str = json.object
+                
+                self.testModel = DiscoveryModel(fromDictionary: str as! NSDictionary)
+                if self.testModel != nil && self.testModel?.data.array.count != 0{
+                    self.datasource += (self.testModel?.data.array)!
+                }else{
+                    self.tableViews[self.indexOfType].mj_footer.endRefreshing()
+                    return
+                }
+                
+                self.tableViews[self.indexOfType].reloadData()
+                self.tableViews[self.indexOfType].mj_footer.endRefreshing()
+//                for item in self.tableViews {
+//                    item.reloadData()
+//                    item.mj_footer.endRefreshing()
+//                }
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+
     
     
 }

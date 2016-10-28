@@ -27,7 +27,7 @@ class HKFCommentCell: UITableViewCell {
             //            make.left.right.top.equalTo(0)
         })
         self.hyb_lastViewInCell = self.contentLabel
-        self.hyb_bottomOffsetToCell  = 1
+        self.hyb_bottomOffsetToCell  = 0
         
     }
     

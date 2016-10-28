@@ -270,7 +270,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         self.tableView?.separatorStyle = .None
         self.hyb_lastViewInCell = self.tableView
-        self.hyb_bottomOffsetToCell = 1
+        self.hyb_bottomOffsetToCell = 0
         
         
         
@@ -306,27 +306,27 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         switch model.typeId {
         case 11:
-            print("图片")
+//            print("图片")
             self.titleLabel?.text =  model.name
             self.typeStatusView?.image = UIImage(named: "explain_pic")
         case 12:
-            print("视频")
+//            print("视频")
             self.titleLabel?.text =  model.name
             self.typeStatusView?.image = UIImage(named: "explain_vedio")
         case 13:
-            print("活动")
+//            print("活动")
             self.titleLabel?.text = model.aname
             self.typeStatusView?.image = UIImage(named: "explain_recruit")
         case 14:
-            print("约战")
+//            print("约战")
             self.titleLabel?.text =  model.name
             self.typeStatusView?.image = UIImage(named: "explain_pic")
         case 15:
-            print("求加入")
+//            print("求加入")
             self.titleLabel?.text =  model.name
             self.typeStatusView?.image = UIImage(named: "explain_enlist")
         case 16:
-            print("招募")
+//            print("招募")
             self.titleLabel?.text =  model.rname
             
             self.typeStatusView?.image = UIImage(named: "explain_JOIN")
@@ -377,7 +377,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.displayView.hidden = true
         }
         
-        NSLog("videoURL = \(model.compressUrl)")
+//        NSLog("videoURL = \(model.compressUrl)")
         if model.compressUrl != "" {
             self.videoImage.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo((ScreenWidth - 30)/3)
@@ -440,7 +440,9 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : HKFCommentCell = tableView.dequeueReusableCellWithIdentifier("HKFCommentCell", forIndexPath: indexPath) as! HKFCommentCell
+//        let cell : HKFCommentCell = tableView.dequeueReusableCellWithIdentifier("HKFCommentCell", forIndexPath: indexPath) as! HKFCommentCell
+        var cell = HKFCommentCell()
+        cell = tableView.dequeueReusableCellWithIdentifier("HKFCommentCell") as! HKFCommentCell
         
         let model = self.testModel?.comment[indexPath.row]
         cell.configCellWithModel(model!)
@@ -498,7 +500,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     }
     
     func clickJuBao() {
-        print("点击了举报")
+//        print("点击了举报")
         let titleArr = ["举报"]
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(myJubao))
@@ -512,7 +514,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     }
     
     func myJubao(){
-        print("我要举报\(self.indexPath)行")
+//        print("我要举报\(self.indexPath)行")
         let foundId = self.testModel?.id
         let typeId = self.testModel?.typeId
         self.delegate?.clickJuBaoBtnAtIndexPath(foundId!, typeId: typeId!)
