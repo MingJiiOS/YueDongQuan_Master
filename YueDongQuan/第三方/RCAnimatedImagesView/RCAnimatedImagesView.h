@@ -11,12 +11,19 @@
 #define kJSAnimatedImagesViewDefaultTimePerImage 20.0f
 
 @protocol RCAnimatedImagesViewDelegate;
+//动画执行方向 right：向右 left：向左
+typedef enum {
+    right,
+    left
+}type;
 
 @interface RCAnimatedImagesView : UIView
 
 @property(nonatomic, assign) id<RCAnimatedImagesViewDelegate> delegate;
 
 @property(nonatomic, assign) NSTimeInterval timePerImage;
+
+@property (nonatomic,assign) type diectType;
 
 - (void)startAnimating;
 - (void)stopAnimating;
@@ -30,4 +37,5 @@
     (RCAnimatedImagesView *)animatedImagesView;
 - (UIImage *)animatedImagesView:(RCAnimatedImagesView *)animatedImagesView
                    imageAtIndex:(NSUInteger)index;
+
 @end

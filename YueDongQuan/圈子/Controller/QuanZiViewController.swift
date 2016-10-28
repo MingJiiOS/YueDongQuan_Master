@@ -20,7 +20,8 @@ class QuanZiViewController: RCConversationListViewController
         //将函数指针赋值给myClosure闭包
         clickClosure = closure
     }
-    
+    typealias GetDataCompletion = (data:NSData)->Void
+    var localLastModified = NSString()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,10 @@ class QuanZiViewController: RCConversationListViewController
         self.conversationListTableView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-120)
         self.conversationListTableView.tableFooterView = UIView()
     }
+    override func viewWillAppear(animated: Bool) {
+
+    }
+    
     
     func creatViewWithSnapKit(leftBarButtonImageString:NSString,secondBtnImageString:String,thirdBtnImageString:String)  {
         

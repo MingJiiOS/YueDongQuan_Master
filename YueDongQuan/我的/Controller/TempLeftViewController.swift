@@ -32,6 +32,7 @@ class TempLeftViewController: MainViewController {
     }
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+       
         
     }
     override func viewWillDisappear(animated: Bool) {
@@ -42,7 +43,7 @@ class TempLeftViewController: MainViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+  
 
     /*
     // MARK: - Navigation

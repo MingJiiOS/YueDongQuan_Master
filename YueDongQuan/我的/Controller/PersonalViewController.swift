@@ -57,8 +57,9 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
      
         if userInfo.isLogin != true{
             let login = YDQLoginRegisterViewController()
+            let nav = CustomNavigationBar(rootViewController: login)
             login.modalPresentationStyle = .PageSheet
-            self.presentViewController(login, animated: true, completion: nil)
+            self.presentViewController(nav, animated: true, completion: nil)
         }else{
            downloadData()
 
