@@ -23,6 +23,16 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
         self.view .addSubview(tableView)
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.reloadData()
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -131,10 +141,11 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
                 })
             }
             if indexPath.row == 2 {
+                
                 let datePiker = MJDatePikerView(title: "出生日期", cancelButtonTitle: "取消", sureButtonTitle: "确定")
                 datePiker.show()
-                datePiker.dismissAlertClosure({ (dateString) in
-                    self.changeBirthday(dateString!)
+                datePiker.dismissAlertClosure({ (dateString,date) in
+                    self.changeBirthday(dateString!,date: date)
                 })
             }
          
@@ -241,8 +252,7 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
                 
              let model =  DataSource().getupdatesexData(responseDic)
                 self.updateSexModel = model
-                
-             
+                userInfo.sex = changeSexModel.sex
                 
                 self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.updateSexModel, waitUntilDone: true)
             }
@@ -252,7 +262,7 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
         }
     }
     //MARK:更改出生日期
-    func changeBirthday(dateString:NSString)  {
+    func changeBirthday(dateString:NSString,date:NSDate)  {
         let birthdayModel = MyInfoModel()
         birthdayModel.birthday = dateString as String
         birthdayModel.uid = userInfo.uid
@@ -263,6 +273,7 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
             if success != false{
                  let model = DataSource().getupdatebirthdayData(responseDic)
                 self.updateBirthdayModel = model
+                userInfo.age = TimeStampToDate().getAgeWithDate(date)
                 self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.updateBirthdayModel, waitUntilDone: true)
             }
            

@@ -282,7 +282,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         }
         forgetPw.setTitle("忘记密码？", forState: UIControlState.Normal)
         forgetPw.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        
+        forgetPw.addTarget(self, action: #selector(forgetPassword), forControlEvents: UIControlEvents.TouchUpInside)
         let noAcount = UIButton(type: .Custom)
         _inputBackground!.addSubview(noAcount)
         noAcount.snp_makeConstraints { (make) in
@@ -450,5 +450,65 @@ extension YDQLoginRegisterViewController {
         self.navigationController?.pushViewController(regist, animated: true)
         
     }
+    func forgetPassword()  {
     
+        //获取点击事件
+                let textFeild = ConfirmOldPw(title: "忘记密码", message: "请填写注册时的手机号", cancelButtonTitle: "取消", sureButtonTitle: "确定")
+                textFeild.show()
+                textFeild.clickIndexClosure({ (index,password) in
+                    
+                   
+                    if index == 2{
+                        let send = SendPhoneViewController()
+                        if password.length != 11 {
+                            self.showMJProgressHUD("电话号码有误", isAnimate: false)
+                        }else if password.length == 11{
+                            //判断电话是否存在
+                            if validateUtils.validatePhoneNumber(password as String) != true {
+                                self.showMJProgressHUD("电话号码有误", isAnimate: false)
+                            }else{
+                                send.phoneNumber = password as String
+                                 self.navigationController?.pushViewController(send, animated: true)
+                                return
+                            }
+                            
+                        }
+                       
+                    }
+                })
+
+        
+    }
+    //MARK:验证旧密码 返回值:验证是否符合旧密码
+    func validatePassword(oldPassword:NSString)  {
+        let oldPwModel = MyInfoModel()
+        oldPwModel.pw = oldPassword as String
+        let dic = ["v":NSObject.getEncodeString("20160901"),
+                   "uid":userInfo.uid,
+                   "pw":oldPwModel.pw]
+        
+        if NSString(string:oldPwModel.pw).length != 0 {
+            MJNetWorkHelper().judgeOldPassword(oldpw, judgeOldPasswordModel: dic, success: { (responseDic, success) in
+                
+                let model = DataSource().getoldpwData(responseDic)
+                if model.code != "200"{
+                    
+                    self.showMJProgressHUD("原密码错误哦！( ⊙ o ⊙ )！", isAnimate: true)
+                }else{
+                    let newpass = SetNewPasswordViewController()
+                    self.navigationController?.pushViewController(newpass, animated: true)
+                }
+            }) { (error) in
+                
+                self.showMJProgressHUD("网络出现有点坑呀", isAnimate: true)
+            }
+        }else if oldPwModel.pw == ""{
+            
+            self.showMJProgressHUD("您还没有输入原密码呢,😊", isAnimate: true)
+        }
+        
+        
+        
+    }
+
 }

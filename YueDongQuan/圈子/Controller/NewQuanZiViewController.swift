@@ -21,7 +21,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     //上面的线
     var line = UIView()
     //创建圈子按钮
-    var initNewChangDi = UIButton(type: UIButtonType.Custom)
+    var createNewChangDi = UIButton(type: UIButtonType.Custom)
     //选择场地 是一个透明的按钮
     var clearBtn = UIButton(type: UIButtonType.Custom)
     //圈子名
@@ -134,19 +134,19 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
             make.bottom.equalTo(quanZiNameField.snp_top)
         }
         line.backgroundColor = kBlueColor
-        self.view .addSubview(initNewChangDi)
-        initNewChangDi.snp_makeConstraints { (make) in
+        self.view .addSubview(createNewChangDi)
+        createNewChangDi.snp_makeConstraints { (make) in
             make.left.equalTo(ScreenWidth/8)
             make.right.equalTo(-ScreenWidth/8)
             make.top.equalTo(circlePasswordFeild.snp_bottom).offset(ScreenHeight/8)
             make.height.equalTo(ScreenWidth/8)
         }
-        initNewChangDi.backgroundColor = kBlueColor
-        initNewChangDi.layer.cornerRadius = 5
-        initNewChangDi.layer.masksToBounds = true
-        initNewChangDi.setTitle("创建圈子", forState: UIControlState.Normal)
-        initNewChangDi.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        initNewChangDi .addTarget(self, action: #selector(createNewCircle), forControlEvents: UIControlEvents.TouchUpInside)
+        createNewChangDi.backgroundColor = kBlueColor
+        createNewChangDi.layer.cornerRadius = 5
+        createNewChangDi.layer.masksToBounds = true
+        createNewChangDi.setTitle("创建圈子", forState: UIControlState.Normal)
+        createNewChangDi.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        createNewChangDi .addTarget(self, action: #selector(createNewCircle), forControlEvents: UIControlEvents.TouchUpInside)
         let helper = MJAmapHelper()
         
         helper.coordataBlockValue { (longitude, latitude) in
@@ -212,7 +212,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         let image = dic.objectForKey(UIImagePickerControllerOriginalImage) as! UIImage
         //图片存入相册
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        
         //MARK:更换头像
         Alamofire.upload(.POST, NSURL(string: kURL + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
             
@@ -301,24 +301,22 @@ extension NewQuanZiViewController{
         let uid = userInfo.uid
         let logoId = self.uploadimgaemodel?.data.id
         let Pw = circlePw
-        if self.uploadimgaemodel?.data.id == nil{
-            
-            self.showMJProgressHUD("圈子logo不能为空！！", isAnimate: false)
-            if circleName != nil {
-                if NSString(string:circleName).length == 0 {
-                    
-                     self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: false)
-                    if circlePw != nil {
-                        if NSString(string:circlePw).length == 0 {
-                            
-                             self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: false)
-                        }else if  NSString(string:circlePw).length < 6 {
-                            
-                             self.showMJProgressHUD("密码不能少于6位！！", isAnimate: false)
-                        }else if NSString(string:circlePw).length > 16 {
-                            
-                             self.showMJProgressHUD("密码不能大于16位！！", isAnimate: false)
-                        }else{
+//        if self.uploadimgaemodel?.data.id != nil{
+//            if circleName != nil {
+//                if NSString(string:circleName).length == 0 {
+//                    
+//                    self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: false)
+//                    if circlePw != nil {
+//                        if NSString(string:circlePw).length == 0 {
+//                            
+//                            self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: false)
+//                        }else if  NSString(string:circlePw).length < 6 {
+//                            
+//                            self.showMJProgressHUD("密码不能少于6位！！", isAnimate: false)
+//                        }else if NSString(string:circlePw).length > 16 {
+//                            
+//                            self.showMJProgressHUD("密码不能大于16位！！", isAnimate: false)
+//                        }else{
                             let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
                                                            "name":circleName,
                                                            "uid":uid,
@@ -330,26 +328,29 @@ extension NewQuanZiViewController{
                             MJNetWorkHelper().createcircle(createcircle,
                                                            createcircleModel: dict,
                                                            success: { (responseDic, success) in
-                                if success {
-                                    self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-                                }
+                                                            
+                                                            if success {
+                                                                self.dismissViewControllerAnimated(true, completion: nil)
+                                                            }
                             }) { (error) in
                                 
-                                 self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: false)
+                                self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: false)
                             }
-                        }
-                    }else{
-                       
-                         self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: false)
-                    }
-                   
-                }
-            }else{
-                
-                 self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: false)
-            }
-            
-        }
+//                        }
+//                    }else{
+//                        
+//                        self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: false)
+//                    }
+//                    
+//                }
+//            }else{
+//                
+//                self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: false)
+//            }
+//        }else{
+//           
+//           self.showMJProgressHUD("圈子logo不能为空！！", isAnimate: false)
+//        }
 
     }
         
