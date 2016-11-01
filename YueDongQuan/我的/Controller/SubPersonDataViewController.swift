@@ -16,7 +16,7 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
     var updateBirthdayModel : updateNameModel?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+       self.title = "个人资料"
        self.tableView = UITableView(frame: CGRectMake(0, 0, ScreenWidth, ScreenHeight), style: .Grouped)
         self.tableView.delegate = self
         self.tableView.dataSource = self

@@ -97,6 +97,7 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
         MainBgTableView.dataSource = self
         MainBgTableView.custom_CellAcceptEventInterval = 2
         MainBgTableView.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
+        MainBgTableView.registerClass(HKFTableViewCell.self, forCellReuseIdentifier: "hkfCell")
     }
     
    
@@ -290,13 +291,13 @@ return 55
             return cell!
         }
         else if(indexPath.section == 2){
-            if self.myfoundmodel != nil {
-                if self.myfoundmodel?.code == "405" {
-                    
-                }else{
-                    cell?.textLabel?.text = self.myfoundmodel?.data.array[indexPath.row].content
-                }
-            }
+            
+            
+//            let foundCell = tableView.dequeueReusableCellWithIdentifier("hkfCell") as! HKFTableViewCell
+//            
+//              foundCell.delegate = self
+            
+        
             
            
         }

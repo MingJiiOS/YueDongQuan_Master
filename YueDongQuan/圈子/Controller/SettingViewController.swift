@@ -12,7 +12,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
       var settingTableView = UITableView(frame: CGRectZero, style: .Grouped)
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "设置"
         self.view .addSubview(settingTableView)
         settingTableView.snp_makeConstraints { (make) in
             make.left.right.equalTo(0)

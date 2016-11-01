@@ -16,6 +16,7 @@ class ChangeNameViewController: MainViewController,UITextFieldDelegate {
     var changeNameModel : updateNameModel?
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "更改昵称"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(getUserName), name: UITextFieldTextDidChangeNotification, object: nil)
         
         reNamefeild.frame = CGRectMake(10, 0, ScreenWidth-20, 44)
