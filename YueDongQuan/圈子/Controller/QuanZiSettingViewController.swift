@@ -242,7 +242,12 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                let errorStr = self.getErrorStringWithClearIM(errorCode.rawValue)
                     self.showResult(errorStr)
             })
-        }else{
+        }else if indexPath.section == 3{
+            if indexPath.row == 0 {
+                
+            }
+        }
+        else{
             let subContent = SubContentViewController()
             subContent.indexSection = indexPath.section
             subContent.indexRow = indexPath.row

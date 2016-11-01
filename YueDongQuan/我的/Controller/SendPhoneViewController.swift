@@ -10,10 +10,13 @@ import UIKit
 import SnapKit
 class SendPhoneViewController: MainViewController {
  var SendNumberview = SendPhoneNumberView()
+    var phoneNumber : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
        SendNumberview .frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight)
+        SendNumberview.phoneNumber.text = phoneNumber
         self.view .addSubview(SendNumberview)
         
         

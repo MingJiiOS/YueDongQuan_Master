@@ -84,8 +84,9 @@ print(indexSection,indexRow)
             
             }
             if Row == 1 {
-                let qrcodeStr = NSData.AES256EncryptWithPlainText(self.circleId! + self.circletitle!)
-                
+                let qrcodeStr = NSData.AES256EncryptWithPlainText(
+                    self.circleId! + "/" + self.circletitle!)
+                print("qrcodestr",qrcodeStr)
                 let qrCode = QRCodeView(frame: self.view.frame,QRstring:qrcodeStr)
                 qrCode.quanZiName.text = self.circletitle
                 qrCode.image.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
