@@ -23,6 +23,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
         
     }
     override func viewWillAppear(animated: Bool) {
+        self.settingTableView.reloadData()
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
     override func viewWillDisappear(animated: Bool) {
@@ -229,7 +230,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
             }
         }) { (error) in
             
-            self.showMJProgressHUD("网络出现有点坑呀", isAnimate: true)
+            self.showMJProgressHUD("网络有点坑呀", isAnimate: true)
         }
        }else if oldPwModel.pw == ""{
         

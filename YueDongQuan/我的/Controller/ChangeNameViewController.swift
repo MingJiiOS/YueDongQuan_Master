@@ -64,7 +64,8 @@ class ChangeNameViewController: MainViewController,UITextFieldDelegate {
                     return
                 }else{
                     userInfo.name = self.updatenameModel.name
-                   self.navigationController?.popViewControllerAnimated(true)                }
+                   self.navigationController?.popViewControllerAnimated(true)
+                }
             }) { (error) in
                 
             }

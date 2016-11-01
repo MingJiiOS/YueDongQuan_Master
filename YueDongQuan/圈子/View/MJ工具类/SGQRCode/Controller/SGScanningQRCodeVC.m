@@ -33,6 +33,9 @@
 #import "SGScanningQRCodeView.h"
 #import "ScanSuccessJumpVC.h"
 #import "NSData+AES256.h"
+#import "SGAlertView.h"
+#import "YueDongQuan-Swift.h"
+#import "NSObject+EncodingString.h"
 @interface SGScanningQRCodeVC ()<AVCaptureMetadataOutputObjectsDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 /** 会话对象 */
 @property (nonatomic, strong) AVCaptureSession *session;
@@ -186,6 +189,7 @@
             ScanSuccessJumpVC *jumpVC = [[ScanSuccessJumpVC alloc] init];
             jumpVC.jump_URL = obj.stringValue;
             NSLog(@"stringValue = = %@", obj.stringValue);
+            
             [self.navigationController pushViewController:jumpVC animated:YES];
             
         } else { // 扫描结果为条形码
@@ -193,6 +197,36 @@
             ScanSuccessJumpVC *jumpVC = [[ScanSuccessJumpVC alloc] init];
            NSString *resultStr = [NSData AES256DecryptWithCiphertext:obj.stringValue];
             jumpVC.jump_bar_code = resultStr;
+           
+            BOOL isHave = [jumpVC.jump_bar_code containsString:@"/"];
+            if (isHave) {
+               NSArray * array = [jumpVC.jump_bar_code componentsSeparatedByString:@"/"];
+                ConfirmOldPw *alert = [[ConfirmOldPw alloc]initWithTitle:array.lastObject message:@"输入圈子密码以加入" cancelButtonTitle:@"取消" sureButtonTitle:@"加入"];
+                [alert show];
+                [alert clickIndexClosure:^(NSInteger index, NSString * _Nonnull password) {
+                    if (index == 2) {
+                        NSDictionary *dict = @{@"v": [NSObject getEncodeString:@"20160901"],@"uid":[[NSUserDefaults standardUserDefaults] valueForKey:@"uid"],@"pw":password,@"circleId":array.firstObject,@"name":array.lastObject,@"typeLd":@(2)};
+                        MJNetWorkHelper *helper = [[MJNetWorkHelper alloc]init];
+                        [helper joinmember:@"joinmember" joinmemberModel:dict success:^(NSDictionary * _Nonnull responseDic, BOOL success) {
+                            if (success) {
+                                NSString *code = [responseDic objectForKey:@"code"];
+                                if ([code isEqualToString:@"501"]) {
+                                    SGAlertView *alert = [[SGAlertView alloc]initWithTitle:@"⚠️" delegate:nil contentTitle:@"密码错误" alertViewBottomViewType:SGAlertViewBottomViewTypeOne];
+                                    [alert show];
+                                }else{
+                                    return ;
+                                }
+                            }
+                        } fail:^(NSError * _Nonnull error) {
+                   
+                                SGAlertView *alert = [[SGAlertView alloc]initWithTitle:@"⚠️" delegate:nil contentTitle:@"加入失败/(ㄒoㄒ)/~~" alertViewBottomViewType:SGAlertViewBottomViewTypeOne];
+                                [alert show];
+                            
+                        }];
+                    }
+                }];
+           
+            }
             NSLog(@"stringValue = = %@", obj.stringValue);
             [self.navigationController pushViewController:jumpVC animated:YES];
         }

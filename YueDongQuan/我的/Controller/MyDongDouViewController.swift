@@ -172,7 +172,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
         }else{
             return 6
         }
-        return 0
+        
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "dell")

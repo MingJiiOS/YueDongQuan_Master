@@ -22,6 +22,7 @@ class DataSource: NSObject {
                 userInfo.thumbnailSrc = temp.data.thumbnailSrc
                 userInfo.sex = temp.data.sex
                 let age = TimeStampToDate().TimestampToAge(temp.data.birthday)
+                
                 userInfo.age = age
                 
             }else{

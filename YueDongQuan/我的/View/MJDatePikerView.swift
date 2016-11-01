@@ -11,7 +11,7 @@ import UIKit
 class MJDatePikerView: UIView {
 
     
-    typealias dismissClosure = (dateString:NSString?) -> Void //声明闭包，dismiss时传值
+    typealias dismissClosure = (dateString:NSString?,date:NSDate) -> Void //声明闭包，dismiss时传值
     //把申明的闭包设置成属性
     var dismissBlock: dismissClosure?
     //为闭包设置调用函数
@@ -50,7 +50,7 @@ class MJDatePikerView: UIView {
     func createAlertView() {
         //布局
         self.frame = CGRect(x: 0, y: 0, width: screen_width, height: screen_height)
-        self.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+//        self.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         tap.addTarget(self, action: #selector(MJAlertView.dismiss))
         self.addGestureRecognizer(tap)
         //白底
@@ -105,6 +105,7 @@ class MJDatePikerView: UIView {
             make.bottom.equalTo(whiteView.snp_bottom)
         }
         datePiker.locale = NSLocale(localeIdentifier: "zh_CN")
+        datePiker.datePickerMode = .Date
         datePiker.addTarget(self, action: #selector(MJDatePikerView.dateChanged(_:)),
                              forControlEvents: UIControlEvents.ValueChanged)
     }
@@ -124,7 +125,8 @@ class MJDatePikerView: UIView {
         }) { (finish) -> Void in
             if finish {
                 if self.dismissBlock != nil{
-                    self.dismissBlock!(dateString:self.formatter.stringFromDate(self.datePiker.date))
+                    self.dismissBlock!(dateString:self.formatter.stringFromDate(self.datePiker.date),
+                                       date:self.datePiker.date)
                 }
                 
                 self.removeFromSuperview()
