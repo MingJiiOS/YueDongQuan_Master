@@ -69,6 +69,7 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
         searchBtn.layer.masksToBounds = true
         searchBtn.layer.cornerRadius = 10
         searchBgView.addSubview(searchBtn)
+        searchBtn.addTarget(self, action: #selector(searchBtnClick), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.view.addSubview(scrollView)
         scrollView.scrollEnabled = false
@@ -119,29 +120,24 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     
+    func searchBtnClick(){
+        switch searchType {
+        case .Circle:
+            print("圈子搜索")
+        case .Field:
+            print("场地搜索")
+        }
+    }
+    
+    
     func clickSelectQuanZiBtn(sender:UIButton){
-        /*
-        let titleArr = ["举报"]
-        let tap = UITapGestureRecognizer(target: self, action: #selector(myJubao))
-        let popView = SimplePopupView(frame: CGRect(x: 30, y: 50, width: 60, height: 30), andDirection: PopViewDirectionTop, andTitles: titleArr, andImages: nil, trianglePecent: 0.0)
-        popView.popTintColor  = UIColor.whiteColor()
-        popView.popColor = UIColor.blackColor()
-        popView.addGestureRecognizer(tap)
-        sender.showPopView(popView, atPoint: CGPoint(x: 1, y: 1))
-        popView.show()
-        */
-//        sender.selected = !sender.selected
-        
-        
-//        sender.selected = !sender.selected
         
         if sender.selected  {
             sender.selected = !sender.selected
-            
-//            quanziSelect.setTitle("圈子", forState: UIControlState.Normal)
+            searchType = SearchType.Circle
         }else{
             sender.selected = !sender.selected
-//            quanziSelect.setTitle("场地", forState: UIControlState.Normal)
+            searchType = SearchType.Field
         }
         
         
@@ -149,9 +145,6 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     
-    func myJubao(){
-        
-    }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
@@ -175,7 +168,14 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        
+        switch searchType {
+        case .Circle:
+            return 64
+        case .Field:
+            return 64
+        }
+
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -183,19 +183,30 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 64
+        
+        switch searchType {
+        case .Circle:
+            return 64
+        case .Field:
+            return 64
+        }
+        
+//        return 64
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         switch searchType {
         case .Circle:
-            break
+            let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath) as! SearchResultCell
+            return cell
+
         case .Field:
-            break
+
+            let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath) as! SearchResultCell
+            return cell
         }
-        let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath) as! SearchResultCell
-        return cell
+        
         
     }
     
@@ -225,7 +236,7 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        return true
+        return false
     }
     
 

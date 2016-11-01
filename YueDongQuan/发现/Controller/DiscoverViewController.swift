@@ -21,7 +21,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     var segementControl : HMSegmentedControl!
     //底部容器(用于装tableview)
     private var scrollContentView = UIScrollView()
-    private var tableViews = [UITableView]()
+    var hud = MBProgressHUD()
+    
     var manger = AMapLocationManager()
     var datasource = [DiscoveryArray]()
     var testModel : DiscoveryModel?
@@ -45,10 +46,70 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     private var indexOfType : Int = 0
     
+    private var tableViewForLastest = UITableView(frame: CGRect(x: 0 , y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForImage = UITableView(frame: CGRect(x: ScreenWidth*1, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForVideo = UITableView(frame: CGRect(x: ScreenWidth*2, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForActivity = UITableView(frame: CGRect(x: ScreenWidth*3, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForMatch = UITableView(frame: CGRect(x: ScreenWidth*4, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForJoinTeam = UITableView(frame: CGRect(x: ScreenWidth*5, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForZhaoMu = UITableView(frame: CGRect(x: ScreenWidth*6, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
     
-    override func viewWillAppear(animated: Bool) {
+    private var tableViews = [UITableView]()
+    var currentShowTableViewIndex = 0 {
+        didSet{
+            dropDownRef()
+        }
+    }
+
+    private var http = DiscorveryDataAPI.shareInstance
+    
+    //最新model
+    private var lastestModelData = [DiscoveryArray]()
+    //图片Model
+    private var imageModelData = [DiscoveryArray]()
+    //视频model
+    private var videoModelData = [DiscoveryArray]()
+    //活动model
+    private var activityModelData = [DiscoveryArray]()
+    //约战model
+    private var matchModelData = [DiscoveryArray]()
+    //求加入model
+    private var joinModelData = [DiscoveryArray]()
+    //招募dataModel
+    private var zhaomuModelData = [DiscoveryArray]()
+    
+    
+    private func setTableViewInfo()  {
+        tableViews.append(tableViewForLastest)
+        tableViews.append(tableiewForImage)
+        tableViews.append(tableiewForVideo)
+        tableViews.append(tableiewForActivity)
+        tableViews.append(tableiewForMatch)
+        tableViews.append(tableiewForJoinTeam)
+        tableViews.append(tableiewForZhaoMu)
+        
+        for i in 0..<tableViews.count {
+            
+            scrollContentView.addSubview(tableViews[i])
+            
+            tableViews[i].registerClass(HKFTableViewCell.self, forCellReuseIdentifier: "HKFTableViewCell")
+            tableViews[i].backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+            tableViews[i].separatorStyle = .None
+            
+            tableViews[i].dataSource = self
+            tableViews[i].delegate = self
+            tableViews[i].tag = i
+            
+            //下拉
+            tableViews[i].mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(DiscoverViewController.dropDownRef))
+            //上拉
+            tableViews[i].mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(DiscoverViewController.pullUpRef))
+            
+            
+        }
         
     }
+
     
     
     override func viewDidLoad() {
@@ -57,11 +118,12 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         //        manger.allowsBackgroundLocationUpdates = true
         manger.delegate = self
         manger.startUpdatingLocation()
-        pullDownLoadNewData()
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear), name: UIKeyboardWillShowNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear), name:UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiscoverViewController.say_sayModelChangeProcess(_:)), name: "OrderDataChanged", object: nil)
         
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
@@ -94,14 +156,14 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         segementControl.indexChangeBlock = { (index) in
             
             self.indexOfType = index
-            self.pullDownLoadNewData()
+            
             
         }
         segementControl.addTarget(self, action: #selector(DiscoverViewController.segmentedControlChangedValue(_:)), forControlEvents: UIControlEvents.ValueChanged)
         self.view.addSubview(segementControl)
         
         setScrollContentView()
-        // self.view.addSubview(commentView)
+        setTableViewInfo()
         
     }
     
@@ -117,65 +179,79 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         scrollContentView.pagingEnabled = true
         scrollContentView.scrollEnabled = true
         scrollContentView.frame = CGRectMake(0, 104, ScreenWidth, ScreenHeight - 104 - 49)
-        //        scrollContentView.snp_makeConstraints { (make) in
-        //            make.left.equalTo(0)
-        //            make.right.equalTo(0)
-        //            make.top.equalTo(0).offset(106)
-        //            //make.bottom.equalTo(self.view.snp_bottom).offset(-44)
-        //            make.bottom.equalTo(self.view.snp_bottom).offset(-49)
-        //        }
-        //        let startY = segementControl.frame.maxY + 2
-        //        let endY = self.scrollContentView.frame.maxY
         
         
         scrollContentView.contentSize = CGSize(width: ScreenWidth*CGFloat(titleArray.count), height: scrollContentView.frame.height )
         scrollContentView.delegate = self
-        scrollContentView.backgroundColor = UIColor.redColor()
+        scrollContentView.backgroundColor = UIColor.whiteColor()
         
         
-        for i in 0..<titleArray.count {
-            let testTable = UITableView(frame: CGRect(x: 0 + ScreenWidth*CGFloat(i), y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
-            testTable.delegate = self
-            testTable.dataSource = self
-            testTable.registerClass(HKFTableViewCell.self, forCellReuseIdentifier: "HKFTableViewCell")
-            testTable.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(pullDownLoadNewData))
-            testTable.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(pullUpLoadMoreData))
-//            testTable.mj_header.beginRefreshing()
-            testTable.tag = i + 1
-            scrollContentView.addSubview(testTable)
-            tableViews.append(testTable)
-        }
+        
         
     }
     
-    func pullDownLoadNewData(){
-        datasource = []
-        pageNuber = 1
+    
+    
+    func say_sayModelChangeProcess(notify:NSNotification){
+        let index = notify.object as! Int
+        
+        if index != 100 {
+            tableViews[index].mj_footer.endRefreshing()
+            tableViews[index].mj_header.endRefreshing()
+            
+            switch index {
+            case 0:
+                let lastestDataTemp = http.getLastestDataList()
+                self.lastestModelData = lastestDataTemp
+            case 1:
+                let imageDataTemp = http.getImageDataList()
+                self.imageModelData = imageDataTemp
+            case 2:
+                let videoDataTemp = http.getVideoDataList()
+                self.videoModelData = videoDataTemp
+            case 3:
+                let activityDataTemp = http.getActivityDataList()
+                self.activityModelData = activityDataTemp
+            case 4:
+                let matchDataTemp = http.getMatchDataList()
+                self.matchModelData = matchDataTemp
+            case 5:
+                let joinDataTemp = http.getJoinTeamDataList()
+                self.joinModelData = joinDataTemp
+            case 6:
+                let zhaomuDataTemp = http.getZhaoMuDataList()
+                self.zhaomuModelData = zhaomuDataTemp
+            default:
+                break
+            }
+            tableViews[index].reloadData()
+            
+        }
+    }
+    
+    
+    
+    //下拉请求默认数据
+    func dropDownRef(){
         
         
         
-        switch self.indexOfType {
+        
+        switch currentShowTableViewIndex {
         case 0:
-            print(indexOfType)
-            requestData("", pageNuber: pageNuber)
+            http.requestLastestDataList("", pageNo: 1)
         case 1:
-            print(indexOfType)
-            requestData("11", pageNuber: pageNuber)
+            http.requestImageDataList("11", pageNo: 1)
         case 2:
-            print(indexOfType)
-            requestData("12", pageNuber: pageNuber)
+            http.requestVideoDataList("12", pageNo: 1)
         case 3:
-            print(indexOfType)
-            requestData("13", pageNuber: pageNuber)
+            http.requestActivityDataList("13", pageNo: 1)
         case 4:
-            print(indexOfType)
-            requestData("14", pageNuber: pageNuber)
+            http.requestMatchDataList("14", pageNo: 1)
         case 5:
-            print(indexOfType)
-            requestData("15", pageNuber: pageNuber)
+            http.requestJoinTeamDataList("15", pageNo: 1)
         case 6:
-            print(indexOfType)
-            requestData("16", pageNuber: pageNuber)
+            http.requestJoinTeamDataList("16", pageNo: 1)
         default:
             break
         }
@@ -185,32 +261,25 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         
     }
     
-    
-    func pullUpLoadMoreData(){
-        pageNuber += 1
+    //上拉加载更多
+    func pullUpRef(){
         
-        switch self.indexOfType {
+        
+        switch currentShowTableViewIndex {
         case 0:
-            print(indexOfType)
-            requestPullUpData("", pageNuber: pageNuber)
+            http.requestLastestMoreDataList("")
         case 1:
-            print(indexOfType)
-            requestPullUpData("11", pageNuber: pageNuber)
+            http.requestImageMoreDataList("11")
         case 2:
-            print(indexOfType)
-            requestPullUpData("12", pageNuber: pageNuber)
+            http.requestVideoMoreDataList("12")
         case 3:
-            print(indexOfType)
-            requestPullUpData("13", pageNuber: pageNuber)
+            http.requestActivityMoreDataList("13")
         case 4:
-            print(indexOfType)
-            requestPullUpData("14", pageNuber: pageNuber)
+            http.requestMatchDataMoreList("14")
         case 5:
-            print(indexOfType)
-            requestPullUpData("15", pageNuber: pageNuber)
+            http.requestJoinTeamMoreDataList("15")
         case 6:
-            print(indexOfType)
-            requestPullUpData("16", pageNuber: pageNuber)
+            http.requestZhaoMuMoreDataList("16")
         default:
             break
         }
@@ -218,7 +287,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     
     func segmentedControlChangedValue(segemnet : HMSegmentedControl) {
-        
+        self.currentShowTableViewIndex = segemnet.selectedSegmentIndex
         let offSet = ScreenWidth*CGFloat(segemnet.selectedSegmentIndex)
         scrollContentView.contentOffset = CGPoint(x: offSet, y: 0)
         
@@ -232,6 +301,11 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         SDImageCache.sharedImageCache().clearMemory()
     }
     
+    override func viewWillAppear(animated: Bool) {
+//        hud.
+        dropDownRef()
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
@@ -241,7 +315,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     
     deinit {
-        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     
@@ -254,37 +328,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
 
 extension DiscoverViewController : UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
-//        print(scrollView.contentOffset.x)
-//        var picHeight:Int = 0
-//        switch scrollView.contentOffset.x {
-//        case 0..<ScreenWidth:
-//            picHeight = 0
-//            break
-//        case ScreenWidth..<ScreenWidth*2:
-//            picHeight = 1
-//            break
-//        case 2*ScreenWidth..<3*ScreenWidth:
-//            picHeight = 2
-//            break
-//        case 3*ScreenWidth..<4*ScreenWidth:
-//            picHeight = 3
-//            break
-//        case 4*ScreenWidth..<5*ScreenWidth:
-//            picHeight = 4
-//            break
-//        case 5*ScreenWidth..<6*ScreenWidth:
-//            picHeight = 5
-//            break
-//        case 6*ScreenWidth..<7*ScreenWidth:
-//            picHeight = 6
-//            break
-//        default:
-//            picHeight = 0
-//        }
-//        
-//        segementControl.selectedSegmentIndex = picHeight
-//        self.indexOfType = picHeight
-//        self.pullDownLoadNewData()
+        
     }
     
     
@@ -310,7 +354,24 @@ extension DiscoverViewController : UIScrollViewDelegate {
 
 extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKFTableViewCellDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.datasource.count
+        switch tableView.tag {
+        case 0:
+            return lastestModelData.count
+        case 1:
+            return imageModelData.count
+        case 2:
+            return videoModelData.count
+        case 3:
+            return activityModelData.count
+        case 4:
+            return matchModelData.count
+        case 5:
+            return joinModelData.count
+        case 6:
+            return zhaomuModelData.count
+        default:
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -318,52 +379,173 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         var cell = HKFTableViewCell()
         cell = tableView.dequeueReusableCellWithIdentifier("HKFTableViewCell") as! HKFTableViewCell
         
-        cell.delegate = self
-        cell.headTypeView?.hidden = true
-        
-        let model = self.datasource[indexPath.row]
-        
-        var imageArr = [String]()
-        for item in (model.images)! {
-            imageArr.append(item.thumbnailSrc)
+        switch tableView.tag {
+        case 0:
+            cell.delegate = self
+            cell.headTypeView?.hidden = true
+            let model = self.lastestModelData[indexPath.row]
+            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
+            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
+            return cell
+        case 1:
+            cell.delegate = self
+            cell.headTypeView?.hidden = true
+            let model = self.imageModelData[indexPath.row]
+            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
+            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
+            return cell
+        case 2:
+            cell.delegate = self
+            cell.headTypeView?.hidden = true
+            let model = self.videoModelData[indexPath.row]
+            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
+            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
+            return cell
+        case 3:
+            cell.delegate = self
+            cell.headTypeView?.hidden = true
+            let model = self.activityModelData[indexPath.row]
+            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
+            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
+            return cell
+        case 4:
+            cell.delegate = self
+            cell.headTypeView?.hidden = true
+            let model = self.matchModelData[indexPath.row]
+            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
+            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
+            return cell
+        case 5:
+            cell.delegate = self
+            cell.headTypeView?.hidden = true
+            let model = self.joinModelData[indexPath.row]
+            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
+            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
+            return cell
+        case 6:
+            cell.delegate = self
+            cell.headTypeView?.hidden = true
+            let model = self.zhaomuModelData[indexPath.row]
+            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
+            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
+            return cell
+        default:
+            return cell
         }
-        
-        if model.typeId == 11 {
-            cell.imageArry = imageArr
-        }
-        
-        
-        cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
-        let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
-        
-        cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
-        return cell
         
     }
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        let model = self.datasource[indexPath.row]
-        let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
-            let cell = sourceCell as! HKFTableViewCell
-            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+//        let model = self.datasource[indexPath.row]
+//        let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+//            let cell = sourceCell as! HKFTableViewCell
+//            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+//            }) { () -> [NSObject : AnyObject]! in
+//                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+//                model.shouldUpdateCache = false
+//                return cache as [NSObject:AnyObject]
+//        }
+//        return h
+        
+        switch tableView.tag {
+        case 0:
+            let model = self.lastestModelData[indexPath.row]
+            let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                let cell = sourceCell as! HKFTableViewCell
+                cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
             }) { () -> [NSObject : AnyObject]! in
                 let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
                 model.shouldUpdateCache = false
                 return cache as [NSObject:AnyObject]
+            }
+            return h
+        case 1:
+            let model = self.imageModelData[indexPath.row]
+            let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                let cell = sourceCell as! HKFTableViewCell
+                cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+                model.shouldUpdateCache = false
+                return cache as [NSObject:AnyObject]
+            }
+            return h
+        case 2:
+            let model = self.videoModelData[indexPath.row]
+            let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                let cell = sourceCell as! HKFTableViewCell
+                cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+                model.shouldUpdateCache = false
+                return cache as [NSObject:AnyObject]
+            }
+            return h
+        case 3:
+            let model = self.activityModelData[indexPath.row]
+            let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                let cell = sourceCell as! HKFTableViewCell
+                cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+                model.shouldUpdateCache = false
+                return cache as [NSObject:AnyObject]
+            }
+            return h
+        case 4:
+            let model = self.matchModelData[indexPath.row]
+            let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                let cell = sourceCell as! HKFTableViewCell
+                cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+                model.shouldUpdateCache = false
+                return cache as [NSObject:AnyObject]
+            }
+            return h
+        case 5:
+            let model = self.joinModelData[indexPath.row]
+            let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                let cell = sourceCell as! HKFTableViewCell
+                cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+                model.shouldUpdateCache = false
+                return cache as [NSObject:AnyObject]
+            }
+            return h
+        case 5:
+            let model = self.zhaomuModelData[indexPath.row]
+            let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                let cell = sourceCell as! HKFTableViewCell
+                cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+                model.shouldUpdateCache = false
+                return cache as [NSObject:AnyObject]
+            }
+            return h
+            
+        default:
+            return 0
         }
         
-        return h
+        
     }
     
     
     
     func reloadCellHeightForModelAndAtIndexPath(model: DiscoveryArray, indexPath: NSIndexPath) {
-        for item in self.tableViews {
-            item.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-        }
-        //        self.selectTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableViews[currentShowTableViewIndex].reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         
     }
     
@@ -524,9 +706,8 @@ extension DiscoverViewController:UITextFieldDelegate {
             
             self.datasource[(index?.row)!].comment.append(model)
             
-            for item in self.tableViews {
-                item.reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
-            }
+            
+                self.tableViews[currentShowTableViewIndex].reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
             
             requestCommentSay("", content: self.textField.text!, foundId: self.sayId!)
             
@@ -544,11 +725,7 @@ extension DiscoverViewController:UITextFieldDelegate {
             self.datasource[(index?.row)!].comment.append(model)
             
             
-            self.tableViews[self.indexOfType].reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
-            
-//            for item in self.tableViews {
-//                item.reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
-//            }
+            self.tableViews[currentShowTableViewIndex].reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
             
             requestCommentSay((self.commentModel?.commentId.description)!, content: self.textField.text!, foundId: self.sayId!)
             
@@ -596,36 +773,7 @@ extension DiscoverViewController {
 }
 
 extension DiscoverViewController {
-    func requestData(typeId:String,pageNuber:Int){
-        let vcode = NSObject.getEncodeString("20160901")
-        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNuber,"pageSize":6]
-        
-        Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
-            switch response.result {
-            case .Success:
-                let json = JSON(data: response.data!)
-                NSLog("Say-json = \(json)")
-                
-                let str = json.object
-                
-                self.testModel = DiscoveryModel(fromDictionary: str as! NSDictionary)
-                 if self.testModel != nil && self.testModel?.data.array.count != 0{
-                    self.datasource = (self.testModel?.data.array)!
-                 }else{
-                    self.tableViews[self.indexOfType].mj_header.endRefreshing()
-                    return
-                }
-                self.tableViews[self.indexOfType].reloadData()
-                self.tableViews[self.indexOfType].mj_header.endRefreshing()
-//                for item in self.tableViews {
-//                    item.reloadData()
-//                    item.mj_header.endRefreshing()
-//                }
-            case .Failure(let error):
-                print(error)
-            }
-        }
-    }
+    
     
     //评论说说
     func requestCommentSay(commentId: String,content:String,foundId:Int){
@@ -657,12 +805,6 @@ extension DiscoverViewController {
             case .Success:
                 let json = JSON(data: response.data!)
                 _ = json.object
-                
-
-
-
-                
-
 
             case .Failure(let error):
                 print(error)
@@ -689,37 +831,6 @@ extension DiscoverViewController {
         }
     }
     
-    func requestPullUpData(typeId:String,pageNuber:Int){
-        let vcode = NSObject.getEncodeString("20160901")
-        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNuber,"pageSize":6]
-        
-        Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
-            switch response.result {
-            case .Success:
-                let json = JSON(data: response.data!)
-                NSLog("Say-json = \(json)")
-                
-                let str = json.object
-                
-                self.testModel = DiscoveryModel(fromDictionary: str as! NSDictionary)
-                if self.testModel != nil && self.testModel?.data.array.count != 0{
-                    self.datasource += (self.testModel?.data.array)!
-                }else{
-                    self.tableViews[self.indexOfType].mj_footer.endRefreshing()
-                    return
-                }
-                
-                self.tableViews[self.indexOfType].reloadData()
-                self.tableViews[self.indexOfType].mj_footer.endRefreshing()
-//                for item in self.tableViews {
-//                    item.reloadData()
-//                    item.mj_footer.endRefreshing()
-//                }
-            case .Failure(let error):
-                print(error)
-            }
-        }
-    }
 
     
     

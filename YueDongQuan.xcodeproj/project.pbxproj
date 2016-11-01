@@ -77,6 +77,9 @@
 		5C7C3A111DB5CF3400EA598B /* FieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A0E1DB5CF3400EA598B /* FieldModel.swift */; };
 		5C7C3A141DB6069800EA598B /* FieldImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A121DB6069800EA598B /* FieldImageData.swift */; };
 		5C7C3A151DB6069800EA598B /* FieldImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A131DB6069800EA598B /* FieldImageModel.swift */; };
+		5C8886B51DC750EB001BC7A8 /* DiscorveryDataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8886B41DC750EB001BC7A8 /* DiscorveryDataAPI.swift */; };
+		5C8886B71DC75112001BC7A8 /* DiscorveryHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8886B61DC75112001BC7A8 /* DiscorveryHTTPClient.swift */; };
+		5C8886B91DC7512C001BC7A8 /* DiscoveryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8886B81DC7512C001BC7A8 /* DiscoveryManager.swift */; };
 		5C8C3C651D9276F500D756FF /* SignSportsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8C3C641D9276F500D756FF /* SignSportsCell.swift */; };
 		5C8C3C671D92771600D756FF /* SignPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8C3C661D92771600D756FF /* SignPersonCell.swift */; };
 		5C8C3C691D927FAD00D756FF /* SignCellForHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8C3C681D927FAD00D756FF /* SignCellForHeader.swift */; };
@@ -278,7 +281,6 @@
 		BFA3273D1D9CF7200003AA4D /* MJGreenAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA3273C1D9CF7200003AA4D /* MJGreenAnnotationView.swift */; };
 		BFA6DDBA1D88EC91009017DE /* PchFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6DDB91D88EC91009017DE /* PchFile.swift */; };
 		BFA6DDC71D895C11009017DE /* UIControl+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA6DDC61D895C11009017DE /* UIControl+Custom.m */; };
-		BFAD62F91D9E0FE1006234E1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAD62F81D9E0FE1006234E1 /* AudioToolbox.framework */; };
 		BFAD62FB1D9E0FE8006234E1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAD62FA1D9E0FE8006234E1 /* AVFoundation.framework */; };
 		BFAD62FD1D9E0FF1006234E1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAD62FC1D9E0FF1006234E1 /* CFNetwork.framework */; };
 		BFAD62FF1D9E0FF9006234E1 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAD62FE1D9E0FF9006234E1 /* CoreAudio.framework */; };
@@ -481,6 +483,9 @@
 		5C7C3A0E1DB5CF3400EA598B /* FieldModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldModel.swift; sourceTree = "<group>"; };
 		5C7C3A121DB6069800EA598B /* FieldImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldImageData.swift; sourceTree = "<group>"; };
 		5C7C3A131DB6069800EA598B /* FieldImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldImageModel.swift; sourceTree = "<group>"; };
+		5C8886B41DC750EB001BC7A8 /* DiscorveryDataAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscorveryDataAPI.swift; sourceTree = "<group>"; };
+		5C8886B61DC75112001BC7A8 /* DiscorveryHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscorveryHTTPClient.swift; sourceTree = "<group>"; };
+		5C8886B81DC7512C001BC7A8 /* DiscoveryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryManager.swift; sourceTree = "<group>"; };
 		5C8C3C641D9276F500D756FF /* SignSportsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignSportsCell.swift; sourceTree = "<group>"; };
 		5C8C3C661D92771600D756FF /* SignPersonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignPersonCell.swift; sourceTree = "<group>"; };
 		5C8C3C681D927FAD00D756FF /* SignCellForHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignCellForHeader.swift; sourceTree = "<group>"; };
@@ -700,7 +705,6 @@
 		BFA6DDB91D88EC91009017DE /* PchFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PchFile.swift; sourceTree = "<group>"; };
 		BFA6DDC51D895C11009017DE /* UIControl+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+Custom.h"; sourceTree = "<group>"; };
 		BFA6DDC61D895C11009017DE /* UIControl+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Custom.m"; sourceTree = "<group>"; };
-		BFAD62F81D9E0FE1006234E1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		BFAD62FA1D9E0FE8006234E1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BFAD62FC1D9E0FF1006234E1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		BFAD62FE1D9E0FF9006234E1 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -852,7 +856,6 @@
 				BFAD62FF1D9E0FF9006234E1 /* CoreAudio.framework in Frameworks */,
 				BFAD62FD1D9E0FF1006234E1 /* CFNetwork.framework in Frameworks */,
 				BFAD62FB1D9E0FE8006234E1 /* AVFoundation.framework in Frameworks */,
-				BFAD62F91D9E0FE1006234E1 /* AudioToolbox.framework in Frameworks */,
 				5CBAA8F21D9908B1000E21E9 /* AssetsLibrary.framework in Frameworks */,
 				BF1C0D6C1D8AAB5D009EA504 /* CoreData.framework in Frameworks */,
 				5CA4EA3C1D8E96B5001A8E8D /* MapKit.framework in Frameworks */,
@@ -898,7 +901,6 @@
 				BFAD62FE1D9E0FF9006234E1 /* CoreAudio.framework */,
 				BFAD62FC1D9E0FF1006234E1 /* CFNetwork.framework */,
 				BFAD62FA1D9E0FE8006234E1 /* AVFoundation.framework */,
-				BFAD62F81D9E0FE1006234E1 /* AudioToolbox.framework */,
 				BF3061681D9CAB5100999402 /* AMapSearchKit.framework */,
 				5CBAA8F11D9908B1000E21E9 /* AssetsLibrary.framework */,
 				5CA4EA3B1D8E96B5001A8E8D /* MapKit.framework */,
@@ -1044,6 +1046,30 @@
 				5C6CD9941DC2FA0C001F3DA8 /* PlayerSource.bundle */,
 			);
 			path = MudPlayer;
+			sourceTree = "<group>";
+		};
+		5C8886B11DC750B4001BC7A8 /* DataAPI */ = {
+			isa = PBXGroup;
+			children = (
+				5C8886B41DC750EB001BC7A8 /* DiscorveryDataAPI.swift */,
+			);
+			path = DataAPI;
+			sourceTree = "<group>";
+		};
+		5C8886B21DC750B4001BC7A8 /* HTTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				5C8886B61DC75112001BC7A8 /* DiscorveryHTTPClient.swift */,
+			);
+			path = HTTPClient;
+			sourceTree = "<group>";
+		};
+		5C8886B31DC750B4001BC7A8 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				5C8886B81DC7512C001BC7A8 /* DiscoveryManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		5CA4EA341D8E7453001A8E8D /* HYBMasonryAutoCellHeight */ = {
@@ -1569,6 +1595,9 @@
 				5C2A95731D8D86EC006D1462 /* NSString+Extension.m */,
 				5C2A95741D8D86EC006D1462 /* UIImage+Extension.h */,
 				5C2A95751D8D86EC006D1462 /* UIImage+Extension.m */,
+				5C8886B11DC750B4001BC7A8 /* DataAPI */,
+				5C8886B21DC750B4001BC7A8 /* HTTPClient */,
+				5C8886B31DC750B4001BC7A8 /* Manager */,
 				BFC65D371D86A05D004E7E99 /* Controller */,
 				BFC65D381D86A05D004E7E99 /* Model */,
 				BFC65D391D86A05D004E7E99 /* View */,
@@ -1833,6 +1862,9 @@
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.InterAppAudio = {
+								enabled = 0;
 							};
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -2170,6 +2202,7 @@
 				5CA4EA3A1D8E7453001A8E8D /* UITableViewCell+HYBMasonryAutoCellHeight.m in Sources */,
 				5C2A95781D8D86EC006D1462 /* UIImage+Extension.m in Sources */,
 				BFC1269D1DB4792F00E11088 /* CirclesData.swift in Sources */,
+				5C8886B91DC7512C001BC7A8 /* DiscoveryManager.swift in Sources */,
 				BF071F0A1D9A0D5F000551F7 /* MJNoticeCell.swift in Sources */,
 				BF071F391D9A0D68000551F7 /* MJContextRef.swift in Sources */,
 				5C7C3A0A1DB5CECC00EA598B /* UIView+LQXkeyboard.m in Sources */,
@@ -2206,6 +2239,7 @@
 				BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */,
 				BFD36CC81DB9F19A005005A3 /* memberInfoData.swift in Sources */,
 				5C27BB081DB761F2005A2F8D /* DALabeledCircularProgressView.m in Sources */,
+				5C8886B71DC75112001BC7A8 /* DiscorveryHTTPClient.swift in Sources */,
 				5CD980EA1D9615FF007828E2 /* CircleAnimation.swift in Sources */,
 				5C7C3A141DB6069800EA598B /* FieldImageData.swift in Sources */,
 				BF071F0E1D9A0D5F000551F7 /* QRCodeView.swift in Sources */,
@@ -2228,6 +2262,7 @@
 				BF071F2D1D9A0D68000551F7 /* MyDongDouViewController.swift in Sources */,
 				5C27BAF61DB761D9005A2F8D /* PYPhoto.m in Sources */,
 				BFD41FC11DC04849005A22E6 /* WJPopoverViewController.m in Sources */,
+				5C8886B51DC750EB001BC7A8 /* DiscorveryDataAPI.swift in Sources */,
 				BF071F001D9A0D5F000551F7 /* MJAutoHeightCell.swift in Sources */,
 				BF071F2C1D9A0D68000551F7 /* ChangeNameViewController.swift in Sources */,
 				5C343A021D91361C0077BFDD /* KYCircularProgress.swift in Sources */,
