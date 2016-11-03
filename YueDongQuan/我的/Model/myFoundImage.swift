@@ -1,5 +1,8 @@
 //
 //	myFoundImage.swift
+//
+//	Create by 方果 黄 on 2/11/2016
+//	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
@@ -24,7 +27,7 @@ class myFoundImage : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
 		if originalSrc != nil{
 			dictionary["originalSrc"] = originalSrc
 		}

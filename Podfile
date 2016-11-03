@@ -30,6 +30,7 @@ target 'YueDongQuan' do
     pod 'AMapSearch', '~> 4.2.0'
     #pod 'PYPhotoBrowser', '~> 1.0.1'
 	pod 'MJRefresh', '~> 3.1.0'
+     pod 'YYKit', '~> 1.0.9'
   # Pods for YueDongQuan
 
 
