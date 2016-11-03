@@ -348,16 +348,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         
         
         if model.data.array[indexpath.row].images.count != 0 {
-            var thImageStr = [String]()
-            var oringIMage = [String]()
-            
-            for imageModel in model.data.array[indexpath.row].images {
-                thImageStr.append(imageModel.thumbnailSrc)
-                oringIMage.append(imageModel.originalSrc)
-            }
-            self.displayView.thumbnailUrls = thImageStr
-            self.displayView.originalUrls = oringIMage
-            let h1 = cellHeightByData1(model.data.array[indexpath.row].images.count)
+                       let h1 = cellHeightByData1(model.data.array[indexpath.row].images.count)
             
             self.displayView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(h1)
@@ -370,6 +361,19 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
             })
             self.displayView.hidden = true
         }
+        
+            var thImageStr = [String]()
+            var oringIMage = [String]()
+            
+            for imageModel in model.data.array[indexpath.row].images {
+                thImageStr.append(imageModel.thumbnailSrc)
+                oringIMage.append(imageModel.originalSrc)
+            }
+            self.displayView.thumbnailUrls = thImageStr
+            self.displayView.originalUrls = oringIMage
+
+        
+        
         var tableViewHeight = CGFloat()
         for model in self.commentModel {
             let cellheight = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
