@@ -16,7 +16,7 @@ class FieldArray{
 	var longitude : Float!
 	var name : String!
 	var thumbnailSrc : String!
-
+    var telephone : String!
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values

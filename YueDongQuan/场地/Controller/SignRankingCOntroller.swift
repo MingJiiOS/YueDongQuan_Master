@@ -13,8 +13,14 @@ import SDWebImage
 
 class SignRankingCOntroller: UIViewController {
     
+    var signRankingModel = [SignRankingArray]()
+    var mySignRankingModel = [SignRankingArray]()
     var signTableView : UITableView!
-    var siteId = Int()
+    var siteId = Int(){
+        didSet{
+            requestRankingData(siteId, pageSize: "10")
+        }
+    }
     
 
     override func viewDidLoad() {
@@ -27,20 +33,20 @@ class SignRankingCOntroller: UIViewController {
     
     func setNav(){
         
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-        let imgView = UIImageView(frame:leftView.frame)
-        imgView.image = UIImage(named: "CDEditBack.jpg")
-        imgView.contentMode = .Center
-        leftView.addSubview(imgView)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissVC))
-        
-        leftView.addGestureRecognizer(tap)
+//        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+//        let imgView = UIImageView(frame:leftView.frame)
+//        imgView.image = UIImage(named: "CDEditBack.jpg")
+//        imgView.contentMode = .Center
+//        leftView.addSubview(imgView)
+//        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissVC))
+//        
+//        leftView.addGestureRecognizer(tap)
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftView)
+//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftView)
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 23.0 / 255, green: 89.0 / 255, blue: 172.0 / 255, alpha: 1.0)
-        self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
     
     func setUI(){
@@ -63,7 +69,7 @@ class SignRankingCOntroller: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.hidesBottomBarWhenPushed = true
-        requestRankingData(self.siteId, pageSize: "100")
+        
         
     }
     override func viewWillDisappear(animated: Bool) {
@@ -92,9 +98,9 @@ extension SignRankingCOntroller : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            return mySignRankingModel.count
         }else{
-            return 20
+            return signRankingModel.count
         }
     }
     
@@ -119,9 +125,25 @@ extension SignRankingCOntroller : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : SignRankCell = tableView.dequeueReusableCellWithIdentifier("signrank", forIndexPath: indexPath) as! SignRankCell
-        return cell
+        let cell : SignRankCell = tableView.dequeueReusableCellWithIdentifier("signrank") as! SignRankCell
         
+        switch indexPath.section {
+        case 0:
+            cell.headerImage.sd_setImageWithURL(NSURL(string: self.mySignRankingModel[indexPath.row].originalSrc), placeholderImage: UIImage(named: ""))
+            cell.userName.text = self.mySignRankingModel[indexPath.row].name
+            cell.certificateImage.hidden = true
+            cell.signCount.text = String(format: "%ld次",self.mySignRankingModel[indexPath.row].sum)
+            return cell
+        case 1:
+            cell.headerImage.sd_setImageWithURL(NSURL(string: self.signRankingModel[indexPath.row].originalSrc), placeholderImage: UIImage(named: ""))
+            cell.userName.text = self.signRankingModel[indexPath.row].name
+            cell.certificateImage.hidden = true
+            cell.signCount.text = String(format: "%ld次",self.signRankingModel[indexPath.row].sum)
+            return cell
+        default:
+            break
+        }
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -136,7 +158,7 @@ extension SignRankingCOntroller {
     func requestRankingData(siteId:Int,pageSize:String){
         let v = NSObject.getEncodeString("20160901")
         
-        let para = ["v":v,"uid":1,"siteId":siteId,"pageSize":pageSize]
+        let para = ["v":v,"uid":userInfo.uid,"siteId":siteId,"pageSize":pageSize]
         print(para.description)
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/signranking")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
@@ -144,14 +166,27 @@ extension SignRankingCOntroller {
             case .Success:
                 let json = JSON(data: response.data!)
                 print(json)
-                let str = (json.object) as! NSDictionary
-                print(str["code"])
+                let dict = (json.object) as! NSDictionary
+                print(dict["code"])
                 
-                print(str["flag"])
-                
-//                if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
-//                    self.navigationController?.popViewControllerAnimated(true)
-//                }
+                print(dict["flag"])
+                let model = SignRankingModel.init(fromDictionary: dict)
+                NSLog("model=\(model.data.array.first?.originalSrc)")
+                if model.code == "200" && model.flag == "1" {
+                    self.signRankingModel = model.data.array
+                    
+                    for item in self.signRankingModel {
+                        if item.uid == userInfo.uid {
+                            
+                            self.mySignRankingModel.append(item)
+                            NSLog("mySignRankingModel = \(self.mySignRankingModel.first?.name)")
+                            self.signTableView.reloadData()
+                            break
+                        }
+                    }
+                    
+                    
+                }
                 
                 
             case .Failure(let error):

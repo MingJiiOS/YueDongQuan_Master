@@ -204,7 +204,7 @@ class SignHeaderView: UIView {
     }
     
     func clickZanTingBtn(sender:UIButton) {
-        NSLog("xxxxxxxxxx\(sender.selected)")
+        
         
         if sender.selected == false {
             let tempLabel = SourceAnimation(frame: CGRect(x: 0, y: 0, width: ScreenWidth/2, height: 40))

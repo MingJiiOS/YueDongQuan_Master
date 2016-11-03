@@ -9,8 +9,10 @@
 import UIKit
 
 class SendPhoneNumberView: UIView {
+
    private  let kGAP = 10
    private let kAvatar_Size = 40
+
     lazy var topLabel = UILabel()
     lazy var phoneNumber = UILabel()
     lazy var yanZhengMaLabel = UIButton()

@@ -223,7 +223,7 @@ extension SignRankBtnController {
     func requestFieldSignData(siteId:Int){
         let v = NSObject.getEncodeString("20160901")
         
-        let para = ["v":v,"uid":1,"siteId":siteId]
+        let para = ["v":v,"uid":userInfo.uid,"siteId":siteId]
         print(para.description)
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/sitesign")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
@@ -252,7 +252,7 @@ extension SignRankBtnController {
     func requestExitFieldSignData(siteId:Int){
         let v = NSObject.getEncodeString("20160901")
         
-        let para = ["v":v,"uid":1,"signId":siteId]
+        let para = ["v":v,"uid":userInfo.uid,"signId":siteId]
         print(para.description)
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/exitsite")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in

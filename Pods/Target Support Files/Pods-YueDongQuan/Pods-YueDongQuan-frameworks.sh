@@ -95,6 +95,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
   install_framework "$BUILT_PRODUCTS_DIR/TZImagePickerController/TZImagePickerController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/XHImageViewer/XHImageViewer.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/XLProgressHUD/XLProgressHUD.framework"
   install_framework "$BUILT_PRODUCTS_DIR/YYKit/YYKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -109,5 +110,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
   install_framework "$BUILT_PRODUCTS_DIR/TZImagePickerController/TZImagePickerController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/XHImageViewer/XHImageViewer.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/XLProgressHUD/XLProgressHUD.framework"
   install_framework "$BUILT_PRODUCTS_DIR/YYKit/YYKit.framework"
 fi
