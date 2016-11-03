@@ -12,6 +12,11 @@
 		5C019B401D92708900BAAAC1 /* SignHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C019B3F1D92708900BAAAC1 /* SignHeaderView.swift */; };
 		5C072B601D8F8D2500420F6D /* YoYoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C072B5F1D8F8D2500420F6D /* YoYoAlertView.swift */; };
 		5C072B621D8F9C6C00420F6D /* EditorFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C072B611D8F9C6C00420F6D /* EditorFieldViewController.swift */; };
+		5C07FE461DC885360001850E /* SearchCircleArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C07FE421DC885360001850E /* SearchCircleArray.swift */; };
+		5C07FE471DC885360001850E /* SearchFieldArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C07FE431DC885360001850E /* SearchFieldArray.swift */; };
+		5C07FE481DC885360001850E /* SearchListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C07FE441DC885360001850E /* SearchListData.swift */; };
+		5C07FE491DC885360001850E /* SearchListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C07FE451DC885360001850E /* SearchListModel.swift */; };
+		5C07FE4B1DC88AB40001850E /* SearchFieldData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C07FE4A1DC88AB40001850E /* SearchFieldData.swift */; };
 		5C10E1261D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C10E1251D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift */; };
 		5C10E1281D9B5B34008AFAAF /* HKFPostActivityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C10E1271D9B5B34008AFAAF /* HKFPostActivityVC.swift */; };
 		5C1DC7221DB9BC41000F96BD /* JFCompressionVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1DC7211DB9BC41000F96BD /* JFCompressionVideo.m */; };
@@ -54,6 +59,10 @@
 		5C3B9A031D9D17A900AF7CFE /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3B9A021D9D17A900AF7CFE /* SearchResultCell.swift */; };
 		5C42CACB1DC0584100669EB5 /* HKFPostField_TwoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C42CACA1DC0584000669EB5 /* HKFPostField_TwoVC.swift */; };
 		5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4396CF1D9E135200F40749 /* SourceAnimation.swift */; };
+		5C5C8F1D1DC98C110019633F /* 热动篮球LOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C5C8F1C1DC98C110019633F /* 热动篮球LOGO.png */; };
+		5C5C8F211DC9A2090019633F /* SignRankingArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5C8F1E1DC9A2090019633F /* SignRankingArray.swift */; };
+		5C5C8F221DC9A2090019633F /* SignRankingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5C8F1F1DC9A2090019633F /* SignRankingData.swift */; };
+		5C5C8F231DC9A2090019633F /* SignRankingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5C8F201DC9A2090019633F /* SignRankingModel.swift */; };
 		5C5CD06A1DBF0F1500D4C1FA /* UIView+SetRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5CD0651DBF0F1500D4C1FA /* UIView+SetRect.m */; };
 		5C5CD06B1DBF0F1500D4C1FA /* SimplePopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5CD0671DBF0F1500D4C1FA /* SimplePopupView.m */; };
 		5C5CD06C1DBF0F1500D4C1FA /* UIView+SimplePopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5CD0691DBF0F1500D4C1FA /* UIView+SimplePopupView.m */; };
@@ -385,6 +394,11 @@
 		5C019B3F1D92708900BAAAC1 /* SignHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignHeaderView.swift; sourceTree = "<group>"; };
 		5C072B5F1D8F8D2500420F6D /* YoYoAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoYoAlertView.swift; sourceTree = "<group>"; };
 		5C072B611D8F9C6C00420F6D /* EditorFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorFieldViewController.swift; sourceTree = "<group>"; };
+		5C07FE421DC885360001850E /* SearchCircleArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCircleArray.swift; sourceTree = "<group>"; };
+		5C07FE431DC885360001850E /* SearchFieldArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFieldArray.swift; sourceTree = "<group>"; };
+		5C07FE441DC885360001850E /* SearchListData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchListData.swift; sourceTree = "<group>"; };
+		5C07FE451DC885360001850E /* SearchListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchListModel.swift; sourceTree = "<group>"; };
+		5C07FE4A1DC88AB40001850E /* SearchFieldData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFieldData.swift; sourceTree = "<group>"; };
 		5C10E1251D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostJoinTeamVC.swift; sourceTree = "<group>"; };
 		5C10E1271D9B5B34008AFAAF /* HKFPostActivityVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostActivityVC.swift; sourceTree = "<group>"; };
 		5C1DC7201DB9BC41000F96BD /* JFCompressionVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFCompressionVideo.h; sourceTree = "<group>"; };
@@ -455,6 +469,10 @@
 		5C3B9A021D9D17A900AF7CFE /* SearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		5C42CACA1DC0584000669EB5 /* HKFPostField_TwoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostField_TwoVC.swift; sourceTree = "<group>"; };
 		5C4396CF1D9E135200F40749 /* SourceAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceAnimation.swift; sourceTree = "<group>"; };
+		5C5C8F1C1DC98C110019633F /* 热动篮球LOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "热动篮球LOGO.png"; sourceTree = "<group>"; };
+		5C5C8F1E1DC9A2090019633F /* SignRankingArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignRankingArray.swift; sourceTree = "<group>"; };
+		5C5C8F1F1DC9A2090019633F /* SignRankingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignRankingData.swift; sourceTree = "<group>"; };
+		5C5C8F201DC9A2090019633F /* SignRankingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignRankingModel.swift; sourceTree = "<group>"; };
 		5C5CD0641DBF0F1500D4C1FA /* UIView+SetRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SetRect.h"; sourceTree = "<group>"; };
 		5C5CD0651DBF0F1500D4C1FA /* UIView+SetRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SetRect.m"; sourceTree = "<group>"; };
 		5C5CD0661DBF0F1500D4C1FA /* SimplePopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePopupView.h; sourceTree = "<group>"; };
@@ -1104,6 +1122,11 @@
 		5CC48A011D9CECDC009C4AFE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5C07FE421DC885360001850E /* SearchCircleArray.swift */,
+				5C07FE431DC885360001850E /* SearchFieldArray.swift */,
+				5C07FE441DC885360001850E /* SearchListData.swift */,
+				5C07FE4A1DC88AB40001850E /* SearchFieldData.swift */,
+				5C07FE451DC885360001850E /* SearchListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1463,6 +1486,7 @@
 				BFC65D1C1D869FD1004E7E99 /* AppDelegate.swift */,
 				BFDB2A451DA3D77500A65DAD /* MJShareSDkHelper.swift */,
 				5C913F9D1DBDF81600E567FB /* Assets.xcassets */,
+				5C5C8F1C1DC98C110019633F /* 热动篮球LOGO.png */,
 				5C2A955B1D8D1C56006D1462 /* dataTest.geojson */,
 				BFC65D251D869FD1004E7E99 /* LaunchScreen.storyboard */,
 				BFC65D281D869FD1004E7E99 /* Info.plist */,
@@ -1498,6 +1522,9 @@
 		BFC65D301D86A05D004E7E99 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5C5C8F1E1DC9A2090019633F /* SignRankingArray.swift */,
+				5C5C8F1F1DC9A2090019633F /* SignRankingData.swift */,
+				5C5C8F201DC9A2090019633F /* SignRankingModel.swift */,
 				5C7C3A0C1DB5CF3400EA598B /* FieldArray.swift */,
 				5C7C3A0D1DB5CF3400EA598B /* FieldData.swift */,
 				5C7C3A0E1DB5CF3400EA598B /* FieldModel.swift */,
@@ -1971,6 +1998,7 @@
 				5C913F9E1DBDF81600E567FB /* Assets.xcassets in Resources */,
 				BF2F6C901DAE0D640050B437 /* cool－82（被拖移）.tiff in Resources */,
 				BF2F6C751DAE0D640050B437 /* cool－55（被拖移）.tiff in Resources */,
+				5C5C8F1D1DC98C110019633F /* 热动篮球LOGO.png in Resources */,
 				BFDB2A981DA5EA4300A65DAD /* WeiboSDK.bundle in Resources */,
 				BF2F6C521DAE0D640050B437 /* cool－20（被拖移）.tiff in Resources */,
 				BF2F6C6A1DAE0D640050B437 /* cool－44（被拖移）.tiff in Resources */,
@@ -2066,12 +2094,16 @@
 				5C27BAF01DB761D9005A2F8D /* MBProgressHUD+PY.m in Sources */,
 				5C24BB791D9A7D2800A6D25F /* HKFPostMatchVC.swift in Sources */,
 				BFC65D591D86A1AF004E7E99 /* YXActionSheetButton.m in Sources */,
+				5C07FE461DC885360001850E /* SearchCircleArray.swift in Sources */,
+				5C5C8F231DC9A2090019633F /* SignRankingModel.swift in Sources */,
 				BFD36CC51DB9BB0C005005A3 /* circleMemberModel.swift in Sources */,
 				BF071EF81D9A0D5F000551F7 /* MyQuanZiViewController.swift in Sources */,
 				BFD41FDF1DC05F67005A22E6 /* SGAlertView.m in Sources */,
 				5C3439FE1D90E6EA0077BFDD /* SignRankingCOntroller.swift in Sources */,
+				5C5C8F211DC9A2090019633F /* SignRankingArray.swift in Sources */,
 				5C27BAF51DB761D9005A2F8D /* PYPhotosViewController.m in Sources */,
 				5C913F9A1DBDEB0E00E567FB /* WeatherResult.swift in Sources */,
+				5C07FE491DC885360001850E /* SearchListModel.swift in Sources */,
 				BF9739CC1D9F714500E1B3EB /* MJGetToken.swift in Sources */,
 				5C913F921DBDEB0E00E567FB /* WeatherData.swift in Sources */,
 				BFD36CCB1DBA0202005005A3 /* TimeStampToDate.swift in Sources */,
@@ -2149,6 +2181,7 @@
 				BFAF23C21DB85EBC00294988 /* CircleInfoData.swift in Sources */,
 				BFFCE0521DBF28840045087A /* TotalRankHeadCell.swift in Sources */,
 				BF071EFE1D9A0D5F000551F7 /* SettingViewController.swift in Sources */,
+				5C07FE481DC885360001850E /* SearchListData.swift in Sources */,
 				BFD36CD11DBA1922005005A3 /* AllNoticeModel.swift in Sources */,
 				5C10E1261D9B59C6008AFAAF /* HKFPostJoinTeamVC.swift in Sources */,
 				BF071F081D9A0D5F000551F7 /* MJHeadImageCell.swift in Sources */,
@@ -2184,6 +2217,7 @@
 				BF071F431D9A10DA000551F7 /* QuanZiViewController.swift in Sources */,
 				BFAF23C11DB85EBC00294988 /* CircleInfoArray.swift in Sources */,
 				BF071F381D9A0D68000551F7 /* MJAlertView.swift in Sources */,
+				5C5C8F221DC9A2090019633F /* SignRankingData.swift in Sources */,
 				5C7C3A061DB5CE3F00EA598B /* DiscoveryModel.swift in Sources */,
 				BFC126A21DB48C2B00E11088 /* HistoryDongdouArray.swift in Sources */,
 				5CC5F93F1DAF8A450088A61E /* HKFCell_Cell.swift in Sources */,
@@ -2209,6 +2243,7 @@
 				BF071F061D9A0D5F000551F7 /* MJAllParterView.swift in Sources */,
 				BF2F6C9E1DAE25280050B437 /* imModel.swift in Sources */,
 				BF9739D11D9F81ED00E1B3EB /* TempLeftViewController.swift in Sources */,
+				5C07FE4B1DC88AB40001850E /* SearchFieldData.swift in Sources */,
 				5C90F13A1D8FCFA0005E16AF /* YJBadgeView.m in Sources */,
 				BFD36CC01DB9AEF3005005A3 /* myFoundImage.swift in Sources */,
 				BF071F3D1D9A0D68000551F7 /* MyDongdouView.swift in Sources */,
@@ -2249,6 +2284,7 @@
 				5C42CACB1DC0584100669EB5 /* HKFPostField_TwoVC.swift in Sources */,
 				5C343A001D90E8AB0077BFDD /* SignRankCell.swift in Sources */,
 				5C343A041D91366F0077BFDD /* SignRankBtnController.swift in Sources */,
+				5C07FE471DC885360001850E /* SearchFieldArray.swift in Sources */,
 				BFC65D1D1D869FD1004E7E99 /* AppDelegate.swift in Sources */,
 				BFD36CC41DB9BB0C005005A3 /* circleMemberData.swift in Sources */,
 				BFD36CD01DBA1922005005A3 /* AllNoticeData.swift in Sources */,

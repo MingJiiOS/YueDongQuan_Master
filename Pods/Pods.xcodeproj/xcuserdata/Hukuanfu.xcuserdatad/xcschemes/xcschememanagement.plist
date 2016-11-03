@@ -64,9 +64,24 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>XLProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>035168295695716E9DC25EE83DBF836B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>29D9BD3D1A35EF51A58CE57BC962E3D7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>29DD99664D189A7CA206368F493B1E0B</key>
 		<dict>
 			<key>primary</key>
@@ -77,17 +92,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5CB82CA9E8591168B2E8C26DF7BAE701</key>
+		<key>775927C8C1DA08A9B579A49E2B43D4D9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7A911F2BA80B2ABA1736537E3376B200</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -102,11 +112,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7F3C169C0DC21D732CA24D29C5870DFB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>8414A901CE9B9B11524A4DB02696A660</key>
 		<dict>
 			<key>primary</key>
@@ -117,12 +122,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E04D20C4433CE8AF3E3DAF829418C3C8</key>
+		<key>AD40891145B537B31A102EF6F8EAA820</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EA5F1970FC1552B4104F6A04EE9464DE</key>
+		<key>BCF4407A22D09A0E034E1DFF1B374BCF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F6724A247139493307B7804191F6D9F6</key>
 		<dict>
 			<key>primary</key>
 			<true/>

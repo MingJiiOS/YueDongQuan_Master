@@ -22,6 +22,7 @@ PODS:
   - SwiftyJSON (2.3.2)
   - TZImagePickerController (1.6.7)
   - XHImageViewer (0.1.2)
+  - XLProgressHUD (1.0.5)
 
 DEPENDENCIES:
   - Alamofire (~> 3.5.0)
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - SwiftyJSON (~> 2.3.2)
   - TZImagePickerController (~> 1.6.7)
   - XHImageViewer (= 0.1.2)
+  - XLProgressHUD (~> 1.0.5)
 
 SPEC CHECKSUMS:
   Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
@@ -56,7 +58,8 @@ SPEC CHECKSUMS:
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   TZImagePickerController: d3b16a1ab3393b251a23fbb22ac2d6bc83a50d5f
   XHImageViewer: 7b275d2aa829e56761c30303b9d51cae086a90b9
+  XLProgressHUD: 43835d0404b2efdee052c25851eb082e2f98ca99
 
-PODFILE CHECKSUM: 866573d7d5dc0abca64e32408118076b5267b981
+PODFILE CHECKSUM: fb86ff5ef79e7a709432ce87dd0c40c5e8da5601
 
 COCOAPODS: 1.0.1

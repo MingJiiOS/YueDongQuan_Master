@@ -52,7 +52,7 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
         self.view.addSubview(_textField)
         
         publishPhotosView = PYPhotosView()
-        publishPhotosView.backgroundColor = UIColor.redColor()
+        publishPhotosView.backgroundColor = UIColor.whiteColor()
         publishPhotosView.py_x = 2*5
         publishPhotosView.py_y = 2*2 + 64
         publishPhotosView.pageType = .Label
@@ -68,7 +68,8 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
         self.view.addSubview(showLocationView)
         
         let locationImg = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
-        locationImg.backgroundColor = UIColor.redColor()
+        locationImg.backgroundColor = UIColor.whiteColor()
+        locationImg.image = UIImage(named: "location")
         showLocationView.addSubview(locationImg)
         
         let showLocationLabel = UILabel(frame: CGRect(x: CGRectGetMaxX(locationImg.frame) + 3, y: 3, width: ScreenWidth - 40, height: 24))
@@ -100,20 +101,20 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
     func setNav(){
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "发布视频说说"
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-        let imgView = UIImageView(frame:leftView.frame)
-        imgView.image = UIImage(named: "")
-        imgView.contentMode = .Center
-        leftView.addSubview(imgView)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(back))
-        
-        leftView.addGestureRecognizer(tap)
+//        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+//        let imgView = UIImageView(frame:leftView.frame)
+//        imgView.image = UIImage(named: "")
+//        imgView.contentMode = .Center
+//        leftView.addSubview(imgView)
+//        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(back))
+//        
+//        leftView.addGestureRecognizer(tap)
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftView)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(back))
         self.navigationController?.navigationBar.barTintColor = UIColor ( red: 0.0941, green: 0.3529, blue: 0.6784, alpha: 1.0 )
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发送", style: UIBarButtonItemStyle.Done, target: self, action: #selector(send))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: UIBarButtonItemStyle.Done, target: self, action: #selector(send))
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }

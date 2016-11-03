@@ -52,7 +52,8 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
         self.view.addSubview(selectQZView)
         
         let selectImg = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
-        selectImg.backgroundColor = UIColor.redColor()
+        selectImg.backgroundColor = UIColor.whiteColor()
+        selectImg.image = UIImage(named: "QUANZI")
         selectQZView.addSubview(selectImg)
         
         selectQzLabel = UILabel(frame: CGRect(x: CGRectGetMaxX(selectImg.frame) + 2, y: 3, width: 64, height: 24))
@@ -78,7 +79,8 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
         self.view.addSubview(showLocationView)
         
         let locationImg = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
-        locationImg.backgroundColor = UIColor.redColor()
+        locationImg.backgroundColor = UIColor.whiteColor()
+        locationImg.image = UIImage(named: "location")
         showLocationView.addSubview(locationImg)
         
         let showLocationLabel = UILabel(frame: CGRect(x: CGRectGetMaxX(locationImg.frame) + 3, y: 3, width: ScreenWidth - 40, height: 24))
@@ -104,22 +106,23 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     
     func setNav(){
         
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-        let imgView = UIImageView(frame:leftView.frame)
-        imgView.image = UIImage(named: "")
-        imgView.contentMode = .Center
-        leftView.addSubview(imgView)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissVC))
-        
-        leftView.addGestureRecognizer(tap)
-        
+//        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+//        let imgView = UIImageView(frame:leftView.frame)
+//        imgView.image = UIImage(named: "")
+//        imgView.contentMode = .Center
+//        leftView.addSubview(imgView)
+//        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissVC))
+//        
+//        leftView.addGestureRecognizer(tap)
+//        
+        self.title = "发布招募说说"
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftView)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(dismissVC))
         self.navigationController?.navigationBar.barTintColor = UIColor ( red: 0.102, green: 0.3647, blue: 0.6745, alpha: 1.0 )
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发送", style: UIBarButtonItemStyle.Done, target: self, action: #selector(send))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: UIBarButtonItemStyle.Done, target: self, action: #selector(send))
         
         
     }

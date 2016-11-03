@@ -11,13 +11,13 @@ import SnapKit
 
 class SignRankCell: UITableViewCell {
 
-    var rankImage = UIImageView()
-    var rankLabel = UILabel()
-    var headerImage = UIImageView()
-    var certificateImage = UIImageView()
+    var rankImage = UIImageView()//排名图片
+    var rankLabel = UILabel()//排名名次
+    var headerImage = UIImageView()//头像
+    var certificateImage = UIImageView()//认证标志
     
-    var userName = UILabel()
-    var signCount = UILabel()
+    var userName = UILabel()//昵称
+    var signCount = UILabel()//签到次数
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

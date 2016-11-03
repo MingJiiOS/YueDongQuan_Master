@@ -17,11 +17,11 @@ import MJRefresh
 
 
 class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationManagerDelegate{
-    let titleArray = ["最新", "图片", "视频","活动", "约战", "求加入", "招募"]
+    let titleArray = ["最新", "图片", "视频","活动", "约战", "求加入", "招募","附近","我的关注"]
     var segementControl : HMSegmentedControl!
     //底部容器(用于装tableview)
     private var scrollContentView = UIScrollView()
-    var hud = MBProgressHUD()
+    
     
     var manger = AMapLocationManager()
     var datasource = [DiscoveryArray]()
@@ -53,14 +53,11 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     private var tableiewForMatch = UITableView(frame: CGRect(x: ScreenWidth*4, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
     private var tableiewForJoinTeam = UITableView(frame: CGRect(x: ScreenWidth*5, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
     private var tableiewForZhaoMu = UITableView(frame: CGRect(x: ScreenWidth*6, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForNearBy = UITableView(frame: CGRect(x: ScreenWidth*7, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForMyNotify = UITableView(frame: CGRect(x: ScreenWidth*8, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
     
     private var tableViews = [UITableView]()
-    var currentShowTableViewIndex = 0 {
-        didSet{
-            dropDownRef()
-        }
-    }
-
+    var currentShowTableViewIndex = 0
     private var http = DiscorveryDataAPI.shareInstance
     
     //最新model
@@ -77,6 +74,11 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     private var joinModelData = [DiscoveryArray]()
     //招募dataModel
     private var zhaomuModelData = [DiscoveryArray]()
+    //附近dataModel
+    private var nearbyModelData = [DiscoveryArray]()
+    //我的关注dataModel
+    private var myNotifyModelData = [DiscoveryArray]()
+    
     
     
     private func setTableViewInfo()  {
@@ -87,6 +89,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         tableViews.append(tableiewForMatch)
         tableViews.append(tableiewForJoinTeam)
         tableViews.append(tableiewForZhaoMu)
+        tableViews.append(tableiewForNearBy)
+        tableViews.append(tableiewForMyNotify)
         
         for i in 0..<tableViews.count {
             
@@ -118,6 +122,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         //        manger.allowsBackgroundLocationUpdates = true
         manger.delegate = self
         manger.startUpdatingLocation()
+        
+        NSLog("Uid = \(userInfo.uid)")
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear), name: UIKeyboardWillShowNotification, object: nil)
         
@@ -154,9 +160,10 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         segementControl.selectedSegmentIndex = 0
         segementControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.blueColor()]
         segementControl.indexChangeBlock = { (index) in
-            
+            NSLog("xxxIndex = \(index)")
+            self.currentShowTableViewIndex = index
             self.indexOfType = index
-            
+            self.dropDownRef()
             
         }
         segementControl.addTarget(self, action: #selector(DiscoverViewController.segmentedControlChangedValue(_:)), forControlEvents: UIControlEvents.ValueChanged)
@@ -164,6 +171,9 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         
         setScrollContentView()
         setTableViewInfo()
+        
+        dropDownRef()
+        
         
     }
     
@@ -195,7 +205,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     func say_sayModelChangeProcess(notify:NSNotification){
         let index = notify.object as! Int
         
-        if index != 100 {
+        
+        if index != 10 {
             tableViews[index].mj_footer.endRefreshing()
             tableViews[index].mj_header.endRefreshing()
             
@@ -221,11 +232,17 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
             case 6:
                 let zhaomuDataTemp = http.getZhaoMuDataList()
                 self.zhaomuModelData = zhaomuDataTemp
+            case 7:
+                let nearbyDataTemp = http.getNearByDataList()
+                self.nearbyModelData = nearbyDataTemp
+            case 8:
+                let myNotifyDataTemp = http.getMyNotifyDataList()
+                self.myNotifyModelData = myNotifyDataTemp
             default:
                 break
             }
-            tableViews[index].reloadData()
-            
+            tableViews[currentShowTableViewIndex].reloadData()
+            self.view.hideActivity()
         }
     }
     
@@ -233,25 +250,39 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     //下拉请求默认数据
     func dropDownRef(){
+        let message = "加载中..."
+        self.view.showLoadingTilteActivity(message, position: "center")
         
-        
-        
+        http.removeAllModelData()
         
         switch currentShowTableViewIndex {
         case 0:
-            http.requestLastestDataList("", pageNo: 1)
+            http.removeAllModelData()
+            http.requestLastestDataList("17", pageNo: 1)
         case 1:
+            http.removeAllModelData()
             http.requestImageDataList("11", pageNo: 1)
         case 2:
+            http.removeAllModelData()
             http.requestVideoDataList("12", pageNo: 1)
         case 3:
+            http.removeAllModelData()
             http.requestActivityDataList("13", pageNo: 1)
         case 4:
+            http.removeAllModelData()
             http.requestMatchDataList("14", pageNo: 1)
         case 5:
+            http.removeAllModelData()
             http.requestJoinTeamDataList("15", pageNo: 1)
         case 6:
-            http.requestJoinTeamDataList("16", pageNo: 1)
+            http.removeAllModelData()
+            http.requestZhaoMuDataList("16", pageNo: 1)
+        case 7:
+            http.removeAllModelData()
+            http.requestNearByDataList("18", pageNo: 1, latitude: self.userLatitude, longitude: self.userLongitude)
+        case 8:
+            http.removeAllModelData()
+            http.requestMyNotifyDataList("19", pageNo: 1)
         default:
             break
         }
@@ -267,7 +298,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         
         switch currentShowTableViewIndex {
         case 0:
-            http.requestLastestMoreDataList("")
+            http.requestLastestMoreDataList("17")
         case 1:
             http.requestImageMoreDataList("11")
         case 2:
@@ -280,6 +311,10 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
             http.requestJoinTeamMoreDataList("15")
         case 6:
             http.requestZhaoMuMoreDataList("16")
+        case 7:
+            http.requestNearByMoreDataList("18",latitude: self.userLatitude,longitude: self.userLongitude)
+        case 8:
+            http.requestMyNotifyMoreDataList("19")
         default:
             break
         }
@@ -287,13 +322,17 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     
     func segmentedControlChangedValue(segemnet : HMSegmentedControl) {
-        self.currentShowTableViewIndex = segemnet.selectedSegmentIndex
+        http.removeAllModelData()
+        
+//        self.currentShowTableViewIndex = segemnet.selectedSegmentIndex
         let offSet = ScreenWidth*CGFloat(segemnet.selectedSegmentIndex)
         scrollContentView.contentOffset = CGPoint(x: offSet, y: 0)
-        
+//        dropDownRef()
         
         
     }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -302,8 +341,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     }
     
     override func viewWillAppear(animated: Bool) {
-//        hud.
-        dropDownRef()
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -369,6 +408,10 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
             return joinModelData.count
         case 6:
             return zhaomuModelData.count
+        case 7:
+            return nearbyModelData.count
+        case 8:
+            return myNotifyModelData.count
         default:
             return 0
         }
@@ -436,6 +479,22 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
             let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
             cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
             return cell
+        case 7:
+            cell.delegate = self
+            cell.headTypeView?.hidden = true
+            let model = self.nearbyModelData[indexPath.row]
+            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
+            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
+            return cell
+        case 8:
+            cell.delegate = self
+            cell.headTypeView?.hidden = true
+            let model = self.myNotifyModelData[indexPath.row]
+            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
+            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
+            return cell
         default:
             return cell
         }
@@ -445,16 +504,6 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-//        let model = self.datasource[indexPath.row]
-//        let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
-//            let cell = sourceCell as! HKFTableViewCell
-//            cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
-//            }) { () -> [NSObject : AnyObject]! in
-//                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
-//                model.shouldUpdateCache = false
-//                return cache as [NSObject:AnyObject]
-//        }
-//        return h
         
         switch tableView.tag {
         case 0:
@@ -523,8 +572,30 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
                 return cache as [NSObject:AnyObject]
             }
             return h
-        case 5:
+        case 6:
             let model = self.zhaomuModelData[indexPath.row]
+            let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                let cell = sourceCell as! HKFTableViewCell
+                cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+                model.shouldUpdateCache = false
+                return cache as [NSObject:AnyObject]
+            }
+            return h
+        case 7:
+            let model = self.nearbyModelData[indexPath.row]
+            let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                let cell = sourceCell as! HKFTableViewCell
+                cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheStateKey:"\(model.id)",kHYBCacheUniqueKey:"",kHYBRecalculateForStateKey:(true)]
+                model.shouldUpdateCache = false
+                return cache as [NSObject:AnyObject]
+            }
+            return h
+        case 8:
+            let model = self.myNotifyModelData[indexPath.row]
             let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
                 let cell = sourceCell as! HKFTableViewCell
                 cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
@@ -567,8 +638,38 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     
     
     func clickDianZanBtnAtIndexPath(indexPath: NSIndexPath) {
-        let foundId = self.datasource[indexPath.row].id
-        requestDianZan(foundId!)
+        switch currentShowTableViewIndex {
+        case 0:
+            let foundId = self.lastestModelData[indexPath.row].id
+            requestDianZan(foundId!)
+        case 1:
+            let foundId = self.imageModelData[indexPath.row].id
+            requestDianZan(foundId!)
+        case 2:
+            let foundId = self.videoModelData[indexPath.row].id
+            requestDianZan(foundId!)
+        case 3:
+            let foundId = self.activityModelData[indexPath.row].id
+            requestDianZan(foundId!)
+        case 4:
+            let foundId = self.matchModelData[indexPath.row].id
+            requestDianZan(foundId!)
+        case 5:
+            let foundId = self.joinModelData[indexPath.row].id
+            requestDianZan(foundId!)
+        case 6:
+            let foundId = self.zhaomuModelData[indexPath.row].id
+            requestDianZan(foundId!)
+        case 7:
+            let foundId = self.nearbyModelData[indexPath.row].id
+            requestDianZan(foundId!)
+        case 8:
+            let foundId = self.myNotifyModelData[indexPath.row].id
+            requestDianZan(foundId!)
+        default:
+            break
+        }
+        
         
     }
     
@@ -583,6 +684,7 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         let player = AVPlayer(URL: NSURL(string: "http://static.tripbe.com/videofiles/20121214/9533522808.f4v.mp4")!)
         let playerVC = MudPlayerViewContoller()
         playerVC.player = player
+        
         player.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
         self.view.addSubview(playerVC.view)
         self.presentViewController(playerVC, animated: true, completion: nil)
@@ -699,22 +801,44 @@ extension DiscoverViewController:UITextFieldDelegate {
             model.commentId = 0
             model.content = self.textField.text!
             model.foundId = self.sayId
-            model.id = (self.commentModel?.id)! + 1
+            model.id = (self.index?.row)! + 1
             model.reply = ""
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
             
-            self.datasource[(index?.row)!].comment.append(model)
+//            self.datasource[(index?.row)!].comment.append(model)
+            switch currentShowTableViewIndex {
+            case 0:
+                self.lastestModelData[(self.index?.row)!].comment.append(model)
+            case 1:
+                self.imageModelData[(self.index?.row)!].comment.append(model)
+            case 2:
+                self.videoModelData[(self.index?.row)!].comment.append(model)
+            case 3:
+                self.activityModelData[(self.index?.row)!].comment.append(model)
+            case 4:
+                self.matchModelData[(self.index?.row)!].comment.append(model)
+            case 5:
+                self.joinModelData[(self.index?.row)!].comment.append(model)
+            case 6:
+                self.zhaomuModelData[(self.index?.row)!].comment.append(model)
+            case 7:
+                self.nearbyModelData[(self.index?.row)!].comment.append(model)
+            case 8:
+                self.myNotifyModelData[(self.index?.row)!].comment.append(model)
+            default:
+                break
+            }
             
             
-                self.tableViews[currentShowTableViewIndex].reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
+            self.tableViews[currentShowTableViewIndex].reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
             
             requestCommentSay("", content: self.textField.text!, foundId: self.sayId!)
             
         case .selectCell :
             let model = DiscoveryCommentModel()
             model.netName = userInfo.name
-            model.commentId = self.commentModel?.commentId
+            model.commentId = self.commentModel?.uid
             model.content = self.textField.text!
             model.foundId = self.sayId
             model.id = (self.commentModel?.id)! + 1
@@ -722,12 +846,35 @@ extension DiscoverViewController:UITextFieldDelegate {
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
             
-            self.datasource[(index?.row)!].comment.append(model)
+//            self.datasource[(index?.row)!].comment.append(model)
+            switch currentShowTableViewIndex {
+            case 0:
+                self.lastestModelData[(self.index?.row)!].comment.append(model)
+            case 1:
+                self.imageModelData[(self.index?.row)!].comment.append(model)
+            case 2:
+                self.videoModelData[(self.index?.row)!].comment.append(model)
+            case 3:
+                self.activityModelData[(self.index?.row)!].comment.append(model)
+            case 4:
+                self.matchModelData[(self.index?.row)!].comment.append(model)
+            case 5:
+                self.joinModelData[(self.index?.row)!].comment.append(model)
+            case 6:
+                self.zhaomuModelData[(self.index?.row)!].comment.append(model)
+            case 7:
+                self.nearbyModelData[(self.index?.row)!].comment.append(model)
+            case 6:
+                self.myNotifyModelData[(self.index?.row)!].comment.append(model)
+            default:
+                break
+            }
+
             
             
             self.tableViews[currentShowTableViewIndex].reloadRowsAtIndexPaths([self.index!], withRowAnimation: UITableViewRowAnimation.Fade)
             
-            requestCommentSay((self.commentModel?.commentId.description)!, content: self.textField.text!, foundId: self.sayId!)
+            requestCommentSay((self.commentModel?.uid.description)!, content: self.textField.text!, foundId: self.sayId!)
             
         }
         

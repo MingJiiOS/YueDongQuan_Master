@@ -302,7 +302,9 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
 //        }else{
 //            
 //        }
-        
+        if model.isPraise != 0{
+            self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
+        }
         
         switch model.typeId {
         case 11:
@@ -443,7 +445,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
 //        let cell : HKFCommentCell = tableView.dequeueReusableCellWithIdentifier("HKFCommentCell", forIndexPath: indexPath) as! HKFCommentCell
         var cell = HKFCommentCell()
         cell = tableView.dequeueReusableCellWithIdentifier("HKFCommentCell") as! HKFCommentCell
-        
+        cell.getCommentArray((self.testModel?.comment)!)
         let model = self.testModel?.comment[indexPath.row]
         cell.configCellWithModel(model!)
         return cell

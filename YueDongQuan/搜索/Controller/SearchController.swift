@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+import Alamofire
+import SwiftyJSON
+import MJRefresh
 
 enum SearchType {
     case Circle
@@ -22,6 +24,11 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
     var searchTableView : UITableView!
     var searchType = SearchType.Circle
     var quanziSelect = UIButton()
+    var searchText = UITextField()
+    private var searchContext = String()
+    
+    private var circleModel = [SearchCircleArray]()
+    private var fieldModel = [SearchFieldArray]()
     
     private var scrollView = UIScrollView(frame: CGRect(x: 0, y: 45, width: ScreenWidth, height: ScreenHeight - 64 - 45 - 49))
     
@@ -56,12 +63,13 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
         quanziSelect.addTarget(self, action: #selector(clickSelectQuanZiBtn), forControlEvents: UIControlEvents.TouchUpInside)
         searchBgView.addSubview(quanziSelect)
         
-        let searchText = UITextField(frame: CGRect(x: CGRectGetMaxX(quanziSelect.frame), y: 5, width: ScreenWidth - 60*2 - 20, height: 30))
+        searchText = UITextField(frame: CGRect(x: CGRectGetMaxX(quanziSelect.frame), y: 5, width: ScreenWidth - 60*2 - 20, height: 30))
         searchText.placeholder = "搜索圈子或场地"
         searchText.clearButtonMode = .WhileEditing
         searchText.backgroundColor = UIColor ( red: 0.9176, green: 0.9176, blue: 0.9529, alpha: 1.0 )
         searchText.delegate = self
         searchBgView.addSubview(searchText)
+        searchText.addTarget(self, action: #selector(SearchController.getSearchFieldText(_:)), forControlEvents: UIControlEvents.AllEvents)
         
         let searchBtn = UIButton(frame: CGRect(x: CGRectGetMaxX(searchText.frame) + 8, y: 5, width: 50, height: 30))
         searchBtn.setTitle("搜索", forState: UIControlState.Normal)
@@ -115,18 +123,22 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
         searchTableView.dataSource = self
         searchTableView.separatorStyle = .None
         searchTableView.registerClass(SearchResultCell.self, forCellReuseIdentifier: "SearchResultCell")
-        
-        
+        searchTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(SearchController.pullUpref))
+        let vCode = NSObject.getEncodeString("20160901")
+        print("vcode=\(vCode)")
     }
     
     
     func searchBtnClick(){
         switch searchType {
         case .Circle:
-            print("圈子搜索")
+            fieldModel = []
+            requestSearchCircle(self.searchContext, typeId: "1")
         case .Field:
-            print("场地搜索")
+            circleModel = []
+            requestSearchField(self.searchContext, typeId: "2")
         }
+
     }
     
     
@@ -140,11 +152,30 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
             searchType = SearchType.Field
         }
         
-        
+        searchTableView.reloadData()
         
     }
     
+    func pullUpref(){
+        searchTableView.mj_header.endRefreshing()
+        UIView.animateWithDuration(1, animations: {
+            self.scrollView.contentOffset = CGPoint(x: 0, y: 0)
+        }) { (flag : Bool) in
+            
+        }
+        
+        if searchText.isFirstResponder() {
+            searchText.resignFirstResponder()
+        }
+    }
     
+    
+    func getSearchFieldText(textField : UITextField){
+        NSLog("textField = \(textField.text)")
+        self.searchContext = textField.text!
+        
+        
+    }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
@@ -171,9 +202,9 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
         
         switch searchType {
         case .Circle:
-            return 64
+            return fieldModel.count
         case .Field:
-            return 64
+            return circleModel.count
         }
 
     }
@@ -198,22 +229,27 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
         
         switch searchType {
         case .Circle:
-            let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath) as! SearchResultCell
+            let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cell")
+            cell.imageView?.sd_setImageWithURL(NSURL(string:self.fieldModel[indexPath.row].name), placeholderImage: UIImage(named: "img_message_2x"))
+            cell.detailTextLabel?.text = self.fieldModel[indexPath.row].name
+            cell.detailTextLabel?.textColor = UIColor.grayColor()
+            cell.detailTextLabel?.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
             return cell
 
         case .Field:
 
-            let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath) as! SearchResultCell
+            
+            let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell") as! SearchResultCell
+//            cell.fieldImage.sd_setImageWithURL(NSURL(string:self.circleModel[indexPath.row].originalSrc), placeholderImage: UIImage(named: "img_message_2x"))
+            cell.fieldName.text = self.circleModel[indexPath.row].name
+            
             return cell
         }
         
         
     }
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        
-        return true
-    }
+    
     
     func textFieldDidBeginEditing(textField: UITextField) {
         UIView.animateWithDuration(1, animations: {
@@ -228,15 +264,19 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        UIView.animateWithDuration(1, animations: {
-            self.scrollView.contentOffset = CGPoint(x: 0, y: 0)
-        }) { (flag : Bool) in
-            
+        self.searchContext = textField.text!
+        switch searchType {
+        case .Circle:
+            fieldModel = []
+            requestSearchCircle(self.searchContext, typeId: "1")
+        case .Field:
+            circleModel = []
+            requestSearchField(self.searchContext, typeId: "2")
         }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        return false
+        return true
     }
     
 
@@ -248,12 +288,55 @@ class SearchController: UIViewController,UICollectionViewDelegate,UICollectionVi
 
 }
 extension SearchController {
-    func requestSearchCircle() {
+    func requestSearchCircle(content:String,typeId:String) {
+        let vCode = NSObject.getEncodeString("20160901")
         
+        let para = ["v":vCode,"content":content,"typeId":typeId]
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/search")!, parameters: para).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                let dict = json.object
+                
+                let model = SearchListModel.init(fromDictionary: dict as! NSDictionary)
+                NSLog("Model =\(model.typeId)")
+                if model.code == "200" && model.flag == "1" {
+                    self.fieldModel = model.fieldData.fieldArray
+                    self.searchTableView.reloadData()
+                }
+                NSLog("self.fieldModel =\(self.fieldModel.first?.name)")
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+
     }
     
-    func requestSearchField() {
+    func requestSearchField(content:String,typeId:String) {
+        let vCode = NSObject.getEncodeString("20160901")
         
+        let para = ["v":vCode,"content":content,"typeId":typeId]
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/search")!, parameters: para).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                let dict = json.object
+                NSLog("dict = \(dict)")
+                let model = SearchListModel.init(fromDictionary: dict as! NSDictionary)
+                if model.code == "200" && model.flag == "1" {
+                    self.circleModel = model.circleData.circleArray
+                    self.searchTableView.reloadData()
+                }
+                NSLog("circleModel =\(self.circleModel.first?.originalSrc)")
+                
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
     }
 }
 

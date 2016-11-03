@@ -24,13 +24,18 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     
     //移除所有模型的数据
     func removeAllModelData() {
-        persitencyManager?.removeLastestData()
-        persitencyManager?.removeImageData()
-        persitencyManager?.removeVideoData()
-        persitencyManager?.removeActivityData()
-        persitencyManager?.removeMatchData()
-        persitencyManager?.removeJoinTeamData()
-        persitencyManager?.removeZhaoMuData()
+//        persitencyManager?.removeLastestData()
+//        persitencyManager?.removeImageData()
+//        persitencyManager?.removeVideoData()
+//        persitencyManager?.removeActivityData()
+//        persitencyManager?.removeMatchData()
+//        persitencyManager?.removeJoinTeamData()
+//        persitencyManager?.removeZhaoMuData()
+//        persitencyManager?.removeNearByData()
+//        persitencyManager?.removeMyNotifyData()
+        
+        
+        persitencyManager?.removeAllData()
     }
     
     /**************************************/
@@ -67,6 +72,16 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         return (persitencyManager?.getZhaoMuDefaultData())!
     }
     
+    /**************************************/
+    func getNearByDataList() -> [DiscoveryArray] {
+        return (persitencyManager?.getNearByDefaultData())!
+    }
+    
+    /**************************************/
+    func getMyNotifyDataList() -> [DiscoveryArray] {
+        return (persitencyManager?.getMyNotifyDefaultData())!
+    }
+    
     
     func requestLastestDataList(typeId:String,pageNo:Int) {
         persitencyManager?.removeLastestData()
@@ -97,6 +112,16 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func requestZhaoMuDataList(typeId:String,pageNo:Int) {
         persitencyManager?.removeZhaoMuData()
         httpClient?.requestSay_SayZhaoMuData(typeId, pageNo: pageNo)
+    }
+    
+    func requestNearByDataList(typeId:String,pageNo:Int,latitude:Double,longitude:Double) {
+        persitencyManager?.removeNearByData()
+        httpClient?.requestSay_SayNearByData(typeId, pageNo: pageNo,latitude:latitude ,longitude:longitude )
+    }
+    
+    func requestMyNotifyDataList(typeId:String,pageNo:Int) {
+        persitencyManager?.removeMyNotifyData()
+        httpClient?.requestSay_SayMyNotifyData(typeId, pageNo: pageNo)
     }
     /*******************************************/
     func requestLastestMoreDataList(typeId:String) {
@@ -175,6 +200,32 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         
         httpClient?.requestSay_SayZhaoMuData(typeId, pageNo: pageNo)
     }
+    
+    
+    func requestNearByMoreDataList(typeId:String,latitude:Double,longitude:Double) {
+        let cnt = persitencyManager?.getNearByDefaultData().count
+        var pageNo = (cnt! + 10 - 1)/10
+        if cnt < 10 {
+            persitencyManager?.removeNearByData()
+        }else{
+            pageNo += 1
+        }
+        
+        httpClient?.requestSay_SayNearByData(typeId, pageNo: pageNo,latitude: longitude,longitude: longitude)
+    }
+    
+    func requestMyNotifyMoreDataList(typeId:String) {
+        let cnt = persitencyManager?.getMyNotifyDefaultData().count
+        var pageNo = (cnt! + 10 - 1)/10
+        if cnt < 10 {
+            persitencyManager?.removeMyNotifyData()
+        }else{
+            pageNo += 1
+        }
+        
+        httpClient?.requestSay_SayMyNotifyData(typeId, pageNo: pageNo)
+    }
+    
 
     func say_sayLastestDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
@@ -212,6 +263,18 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func say_sayZhaoMuDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
             persitencyManager?.addZhaoMuData(model.data.array)
+        }
+    }
+    
+    func say_sayNearByDataFromServer(model: DiscoveryModel) {
+        if model.code == "200" && model.flag == "1" {
+            persitencyManager?.addNearByData(model.data.array)
+        }
+    }
+    
+    func say_sayMyNotifyDataFromServer(model: DiscoveryModel) {
+        if model.code == "200" && model.flag == "1" {
+            persitencyManager?.addMyNotifyData(model.data.array)
         }
     }
     
