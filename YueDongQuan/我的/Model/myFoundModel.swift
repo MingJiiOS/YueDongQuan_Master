@@ -1,5 +1,8 @@
 //
 //	myFoundModel.swift
+//
+//	Create by 方果 黄 on 2/11/2016
+//	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
@@ -10,7 +13,8 @@ class myFoundModel : NSObject, NSCoding{
 	var code : String!
 	var data : myFoundData!
 	var flag : String!
-
+    var isExpand = false
+    
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
@@ -28,7 +32,7 @@ class myFoundModel : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
 		if code != nil{
 			dictionary["code"] = code
 		}

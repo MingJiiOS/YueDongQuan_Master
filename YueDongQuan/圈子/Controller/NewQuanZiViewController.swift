@@ -40,6 +40,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "新建圈子"
         self.navigationController?.navigationBar.barTintColor = kBlueColor
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜返回", style: .Plain, target: self, action: #selector(back))

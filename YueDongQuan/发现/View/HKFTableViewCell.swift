@@ -552,23 +552,14 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
     }
     
-    func getTimeString(time:Int) -> String{
-//        let currentTime = NSDate().timeIntervalSince1970
-//        print(currentTime)
-//        let createTime = Double(time/1000)
-//        print(createTime)
-////        let timer = currentTime - createTime
-////        
-////        print(timer)
+        private func getTimeString(time:Int) -> String{
         
         let timeTemp = NSDate.init(timeIntervalSince1970: Double(time/1000))
         
         let timeInterval = timeTemp.timeIntervalSince1970
         
         let timer = NSDate().timeIntervalSince1970 - timeInterval//currentTime - createTime
-        
-        
-        
+       
         let second = timer
         if second < 60 {
             let result = String(format: "刚刚")

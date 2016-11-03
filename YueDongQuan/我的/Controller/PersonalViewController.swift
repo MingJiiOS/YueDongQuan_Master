@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class PersonalViewController: MainViewController,UITableViewDelegate,UITableViewDataSource {
+class PersonalViewController: MainViewController{
 
     var headerBgView = UIView()
     lazy var userHeadView = UIImageView()
@@ -21,6 +21,13 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
     var myinfoModel : myInfoModel?
     //我的说说信息
     var myfoundmodel : myFoundModel?
+    var replayTheSeletedCellModel : CommentModel?
+    var seletedCellHeight : CGFloat?
+    var history_Y_offset : CGFloat?
+    var chatKeyBoard : ChatKeyBoard?
+    var currentIndexPath : NSIndexPath?
+    
+    
     
     override func loadView() {
         super.loadView()
@@ -97,6 +104,7 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
         MainBgTableView.dataSource = self
         MainBgTableView.custom_CellAcceptEventInterval = 2
         MainBgTableView.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
+        MainBgTableView.registerClass(HKFTableViewCell.self, forCellReuseIdentifier: "hkfCell")
     }
     
    
@@ -142,6 +150,31 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
 
   
 
+    
+       override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+}
+extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UITableViewDataSource {
+    func deleteSayContentFromMySayContent(index: NSIndexPath) {
+        let dict = ["v":v,
+                    "foundId":self.myfoundmodel?.data.array[index.row].id.description,
+                    "uid":userInfo.uid.description]
+        MJNetWorkHelper().deletefound(deletefound, deletefoundModel: dict, success: { (responseDic, success) in
+            
+            }) { (error) in
+                
+        }
+    }
+    func reloadCellHeightForModel(model: myFoundModel, indexPath: NSIndexPath) {
+        
+    }
+    func passCellHeightWithMessageModel(model: myFoundModel, commentModel: CommentModel, indexPath: NSIndexPath, cellHeight: CGFloat, commentCell: MJCommentCell, messageCell: MJMessageCell) {
+        
+    }
+    
     //1.1默认返回一组
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -177,7 +210,7 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
                 }
             }
             
-           
+            
         }
         return 0
     }
@@ -189,24 +222,33 @@ class PersonalViewController: MainViewController,UITableViewDelegate,UITableView
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
         if(indexPath.section == 0){
             
-            return 1;
+            return 1
             
         }else if (indexPath.section == 1){
             
-            return 55;
-  
-        }else{
-           /* if (self.dataSource.count >= indexPath.row) {
-                let cellLayout = self.dataSource[indexPath.row]
+            return 55
             
-              return cellLayout.height*/
-//            }
-return 55
+        }else{
+            
+            
+            let h = MJMessageCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                let cell = sourceCell as! MJMessageCell
+                cell.configCellWithModel(self.myfoundmodel!, indexpath: indexPath)
+                }, cache: { () -> [NSObject : AnyObject]! in
+                    
+                    return [kHYBCacheUniqueKey : (self.myfoundmodel?.data.array[indexPath.row].id.description)!,
+                        kHYBCacheStateKey:"",
+                        kHYBRecalculateForStateKey:1]
+            })
+            
+            return h
+            
+            
         }
-       
+        
     }
     
-     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
         if (section == 0) {
             if self.myinfoModel != nil {
@@ -214,12 +256,11 @@ return 55
                 bgView.configContent(self.myinfoModel!, isBigV: false)
                 return bgView
             }
-        
             
-            //MARK:下载头像
-//            bgView.headImage.sd_setImageWithURL((NSURL(string: (self.myinfoModel?.data.originalSrc)!)), placeholderImage: UIImage(named: ""), options: .AllowInvalidSSLCertificates)
-          
-
+            
+            
+            
+            
         }else{
             return view
         }
@@ -244,7 +285,7 @@ return 55
     //1.5每组的底部高度
     
     func tableView(tableView: UITableView, heightForFooterInSection
-                                           section: Int) -> CGFloat {
+        section: Int) -> CGFloat {
         
         return 3;
         
@@ -253,58 +294,84 @@ return 55
     //1.6 返回数据源
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath
-                                           indexPath: NSIndexPath)
-                                           -> UITableViewCell {
-        
-        let identifier="identtifier";
-        var cell = tableView.dequeueReusableCellWithIdentifier(identifier)
-        if (cell == nil) {
-            cell = UITableViewCell(style: .Default,
-                                   reuseIdentifier: identifier)
-        }
-        if(indexPath.section == 0){
+        indexPath: NSIndexPath)
+        -> UITableViewCell {
             
-            
-        }else if (indexPath.section == 1){
-            var cell = MyDongdouTableViewCell?()
-            
-            cell=tableView.dequeueReusableCellWithIdentifier(identifier) as? MyDongdouTableViewCell
+            let identifier="identtifier";
+            var cell = tableView.dequeueReusableCellWithIdentifier(identifier)
             if (cell == nil) {
-                cell = MyDongdouTableViewCell(style: UITableViewCellStyle.Value1,
-                                              reuseIdentifier: identifier);
+                cell = UITableViewCell(style: .Default,
+                                       reuseIdentifier: identifier)
             }
-            
-            cell!.imageView?.image = UIImage(named: "ic_doudong")
-            
-            cell!.textLabel?.text = "我的动豆"
-            cell!.textLabel?.textColor = UIColor(red: 244 / 255,
-                                                green: 158 / 255,
-                                                blue: 23 / 255,
-                                                alpha: 1)
-            cell?.textLabel?.font = UIFont(name: "Times New Roman", size: 18.0)
-            cell!.accessoryType = .DisclosureIndicator
-            cell!.accessoryType=UITableViewCellAccessoryType.DisclosureIndicator;
-            if self.myinfoModel != nil {
-                cell?.number.text = self.myinfoModel?.data.dongdou
-            }
-            return cell!
-        }
-        else if(indexPath.section == 2){
-            if self.myfoundmodel != nil {
-                if self.myfoundmodel?.code == "405" {
-                    
-                }else{
-                    cell?.textLabel?.text = self.myfoundmodel?.data.array[indexPath.row].content
+            if(indexPath.section == 0){
+                
+                
+            }else if (indexPath.section == 1){
+                var cell = MyDongdouTableViewCell?()
+                
+                cell=tableView.dequeueReusableCellWithIdentifier(identifier) as? MyDongdouTableViewCell
+                if (cell == nil) {
+                    cell = MyDongdouTableViewCell(style: UITableViewCellStyle.Value1,
+                                                  reuseIdentifier: identifier);
                 }
+                
+                cell!.imageView?.image = UIImage(named: "ic_doudong")
+                
+                cell!.textLabel?.text = "我的动豆"
+                cell!.textLabel?.textColor = UIColor(red: 244 / 255,
+                                                     green: 158 / 255,
+                                                     blue: 23 / 255,
+                                                     alpha: 1)
+                cell?.textLabel?.font = UIFont(name: "Times New Roman", size: 18.0)
+                cell!.accessoryType = .DisclosureIndicator
+                cell!.accessoryType=UITableViewCellAccessoryType.DisclosureIndicator;
+                if self.myinfoModel != nil {
+                    cell?.number.text = self.myinfoModel?.data.dongdou
+                }
+                return cell!
+            }
+            else if(indexPath.section == 2){
+                var messageCell = tableView.dequeueReusableCellWithIdentifier(identifier) as? MJMessageCell
+                messageCell?.indexPath = indexPath
+                messageCell = MJMessageCell(style: .Default, reuseIdentifier: identifier)
+                let window = UIApplication.sharedApplication().keyWindow
+                let weakSelf = self
+                let weakWindow = window
+                let weakTable = tableView
+                messageCell?.delegate = self
+                if self.myfoundmodel != nil {
+                    messageCell?.configCellWithModel(self.myfoundmodel!,indexpath: indexPath)
+                }
+                
+                messageCell?.CommentBtnClick({ (commentBtn, indexPath) in
+                    self.replayTheSeletedCellModel = nil
+                    weakSelf.seletedCellHeight = 0
+                    weakSelf.chatKeyBoard?.placeHolder = String(format: "评论%@",(weakSelf.myfoundmodel?.data.array[indexPath.row].aname)!)
+                    weakSelf.history_Y_offset = commentBtn.convertRect(commentBtn.bounds, toView: weakWindow).origin.y
+                    weakSelf.currentIndexPath = indexPath
+                    weakSelf.chatKeyBoard?.keyboardUpforComment()
+                })
+                messageCell?.TapOnImage({ (index, dataSource, indexPath) in
+                    weakSelf.chatKeyBoard?.keyboardDownForComment()
+                })
+                messageCell?.tapOnDesLabel({ (desLabel) in
+                    
+                })
+                messageCell?.MoreBtnClick({ (zanBtn, indexPath) in
+                    weakSelf.chatKeyBoard?.keyboardDownForComment()
+                    weakSelf.chatKeyBoard?.placeHolder = nil
+                    self.myfoundmodel?.isExpand = !(self.myfoundmodel?.isExpand)!
+                    weakTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                })
+                return messageCell!
+                
+                
             }
             
-           
-        }
-        
-        
-        return cell!
-        
-        
+            
+            return cell!
+            
+            
     }
     
     //1.7 表格点击事件
@@ -314,28 +381,21 @@ return 55
         //取消选中的样式
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
-
+        
         print("选中了第几组",indexPath.section)
         if indexPath.section ==  1{
-        let dongdou = MyDongDouViewController()
+            let dongdou = MyDongDouViewController()
             self.navigationController?.pushViewController(dongdou, animated: true)
         }
         
-
+        
     }
-
+    
     func updateUI() {
         MainBgTableView.reloadData()
     }
-    
-       override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
 }
-
-
 
 
 
