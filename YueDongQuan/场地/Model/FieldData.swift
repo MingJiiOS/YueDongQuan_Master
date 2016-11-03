@@ -27,6 +27,7 @@ class FieldData{
                 model.longitude = dic["longitude"] as? Float
                 model.name = dic["name"] as? String
                 model.thumbnailSrc = dic["thumbnailSrc"] as? String
+                model.telephone = dic["telephone"] as? String
 				array.append(model)
 			}
 		}

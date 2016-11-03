@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import XLProgressHUD
 
 
 protocol DiscorveryHTTPClientDelegate {
@@ -19,6 +20,8 @@ protocol DiscorveryHTTPClientDelegate {
     func say_sayMatchDataFromServer(model:DiscoveryModel)
     func say_sayJoinTeamDataFromServer(model:DiscoveryModel)
     func say_sayZhaoMuDataFromServer(model:DiscoveryModel)
+    func say_sayNearByDataFromServer(model:DiscoveryModel)
+    func say_sayMyNotifyDataFromServer(model:DiscoveryModel)
 }
 
 
@@ -27,11 +30,12 @@ class DiscorveryHTTPClient {
     var delegate : DiscorveryHTTPClientDelegate?
     
     
-    //请求发现页面最新的默认数据
+    //17 请求发现页面最新的默认数据
     func requestSay_SayLatestData(typeId:String,pageNo:Int){
         let vcode = NSObject.getEncodeString("20160901")
-        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
         
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
+        NSLog("para =\(para)")
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
@@ -49,10 +53,10 @@ class DiscorveryHTTPClient {
  
     }
     
-    //请求发现页面图片的默认数据
+    //11 请求发现页面图片的默认数据
     func requestSay_SayImageData(typeId:String,pageNo:Int){
         let vcode = NSObject.getEncodeString("20160901")
-        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
@@ -70,10 +74,10 @@ class DiscorveryHTTPClient {
         }
     }
     
-    //请求发现页面的视频的默认数据
+    //12 请求发现页面的视频的默认数据
     func requestSay_SayVideoData(typeId:String,pageNo:Int){
         let vcode = NSObject.getEncodeString("20160901")
-        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
@@ -91,10 +95,10 @@ class DiscorveryHTTPClient {
         }
     }
     
-    //请求发现页面的活动的默认数据
+    //13 请求发现页面的活动的默认数据
     func requestSay_SayActivityData(typeId:String,pageNo:Int){
         let vcode = NSObject.getEncodeString("20160901")
-        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
@@ -112,10 +116,10 @@ class DiscorveryHTTPClient {
         }
     }
     
-    //请求发现页面的约战的默认数据
+    //14 请求发现页面的约战的默认数据
     func requestSay_SayMatchData(typeId:String,pageNo:Int){
         let vcode = NSObject.getEncodeString("20160901")
-        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
@@ -133,10 +137,10 @@ class DiscorveryHTTPClient {
         }
     }
     
-    //请求发现页面的求加入的默认数据
+    //15 请求发现页面的求加入的默认数据
     func requestSay_SayVJoinTeamData(typeId:String,pageNo:Int){
         let vcode = NSObject.getEncodeString("20160901")
-        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
@@ -154,10 +158,10 @@ class DiscorveryHTTPClient {
         }
     }
     
-    //请求发现页面的招募的默认数据
+    //16 请求发现页面的招募的默认数据
     func requestSay_SayZhaoMuData(typeId:String,pageNo:Int){
         let vcode = NSObject.getEncodeString("20160901")
-        let para = ["v":vcode,"Uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
@@ -176,5 +180,48 @@ class DiscorveryHTTPClient {
     }
     
     
+    //18 请求发现页面的附近的默认数据
+    func requestSay_SayNearByData(typeId:String,pageNo:Int,latitude:Double,longitude:Double){
+        let vcode = NSObject.getEncodeString("20160901")
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10,"latitude":latitude,"longitude":longitude]
+        NSLog("nearBy= \(para)")
+        Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                NSLog("Say-json = \(json)")
+                
+                let dict = json.object
+                
+                self.delegate?.say_sayNearByDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary))
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    
+    //19 请求发现页面的我的关注的默认数据
+    func requestSay_SayMyNotifyData(typeId:String,pageNo:Int){
+        let vcode = NSObject.getEncodeString("20160901")
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10]
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                NSLog("Say-json = \(json)")
+                
+                let dict = json.object
+                
+                self.delegate?.say_sayMyNotifyDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary))
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+
     
 }

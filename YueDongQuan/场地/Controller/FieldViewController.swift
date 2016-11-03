@@ -321,8 +321,8 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
 extension FieldViewController : FieldCellDelegate {
     func clickConfirmFieldBtn(indexPath: NSIndexPath) {
         NSLog("点击了预定")
-        _ = (self.fieldModel?.data.array[indexPath.section].id)!
-        let telNumber = "18798812521"
+        let telNumber = (self.fieldModel?.data.array[indexPath.section].telephone)!
+        
         
         let alertView = YoYoAlertView(title: "我要订场", message: telNumber, cancelButtonTitle: "取消", sureButtonTitle: "确定")
         
@@ -388,7 +388,7 @@ extension FieldViewController {
     func request(latitude:Double,longitude:Double){
         let v = NSObject.getEncodeString("20160901")
         
-        let para = ["v":v,"uid":userInfo.uid,"latitude":latitude,"longitude":longitude,"pageSize":"10"]
+        let para = ["v":v,"latitude":latitude,"longitude":longitude]
         print(para.description)
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/sites")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
@@ -425,7 +425,7 @@ extension FieldViewController {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                NSLog("weather = \(json)")
+                
                 let str = json.object
                 self.weatherModel = WeatherModel.init(fromDictionary: str as! NSDictionary )
                 

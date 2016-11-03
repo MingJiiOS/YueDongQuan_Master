@@ -16,6 +16,7 @@ import SwiftyJSON
 
 class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate{
 
+    private var helper = MJAmapHelper()
     var selectedImages = [UIImage]()
     var imageStr = String()
     var manger = AMapLocationManager()
@@ -51,7 +52,7 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         self.view.addSubview(_textField)
         
         publishPhotosView = PYPhotosView()
-        publishPhotosView.backgroundColor = UIColor.redColor()
+        publishPhotosView.backgroundColor = UIColor.whiteColor()
         publishPhotosView.py_x = 2*5
         publishPhotosView.py_y = 2*2 + 64
         publishPhotosView.pageType = .Label
@@ -61,38 +62,59 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         publishPhotosView.delegate = self
         self.view.addSubview(publishPhotosView)
         
-        self.showLocationBtn = UIButton()
-        self.showLocationBtn.frame = CGRectMake(0, publishPhotosView.tz_bottom + 20, ScreenWidth, 30)
-        showLocationBtn.setTitle("显示位置", forState: .Normal)
-        self.showLocationBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 200)
-        showLocationBtn.setTitleColor(UIColor(red: 0.1843, green: 0.1882, blue: 0.1922, alpha: 1.0), forState: .Normal)
-        self.showLocationBtn.titleLabel!.font = UIFont.systemFontOfSize(14)
-        self.showLocationBtn.backgroundColor = UIColor(red: 0.9451, green: 0.949, blue: 0.9569, alpha: 1.0)
-        self.view.addSubview(showLocationBtn)
-
+        let showLocationView = UIView(frame: CGRect(x: 0, y: CGRectGetMaxY(publishPhotosView.frame) + 10, width: ScreenWidth, height: 30))
+        showLocationView.backgroundColor = UIColor.whiteColor()
+        self.view.addSubview(showLocationView)
         
+        let locationImg = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
+        locationImg.backgroundColor = UIColor.whiteColor()
+        locationImg.image = UIImage(named: "location")
+        showLocationView.addSubview(locationImg)
+        
+        let showLocationLabel = UILabel(frame: CGRect(x: CGRectGetMaxX(locationImg.frame) + 3, y: 3, width: ScreenWidth - 40, height: 24))
+        
+        showLocationLabel.text = "显示位置"
+        showLocationLabel.font = UIFont.systemFontOfSize(12)
+        showLocationLabel.textAlignment = .Left
+        showLocationLabel.textColor = UIColor.blackColor()
+        
+        showLocationView.addSubview(showLocationLabel)
+        
+        let showLocationTap = UITapGestureRecognizer(target: self, action: #selector(clickShowLocationBtn))
+        showLocationView.addGestureRecognizer(showLocationTap)
+        
+        helper.getAddressBlockValue { (address) in
+            NSLog("招募address = \(address)")
+            showLocationLabel.text = address
+            
+        }
+
         
     }
     
     func setNav(){
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "发布说说"
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-        let imgView = UIImageView(frame:leftView.frame)
-        imgView.image = UIImage(named: "")
-        imgView.contentMode = .Center
-        leftView.addSubview(imgView)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(back))
-        
-        leftView.addGestureRecognizer(tap)
+//        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+//        let imgView = UIImageView(frame:leftView.frame)
+//        imgView.image = UIImage(named: "")
+//        imgView.contentMode = .Center
+//        leftView.addSubview(imgView)
+//        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(back))
+//        
+//        leftView.addGestureRecognizer(tap)
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftView)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HKFPostPictureSayVC.back))
         self.navigationController?.navigationBar.barTintColor = UIColor ( red: 0.0941, green: 0.3529, blue: 0.6784, alpha: 1.0 )
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发送", style: UIBarButtonItemStyle.Done, target: self, action: #selector(send))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: UIBarButtonItemStyle.Done, target: self, action: #selector(send))
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+    }
+    
+    func clickShowLocationBtn(){
+        helper.getGeocodeAction()
     }
     
     func back(){

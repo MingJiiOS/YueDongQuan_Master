@@ -26,6 +26,7 @@ class DiscoveryArray{
     var num : Int!
     var name : String!
     var compressUrl : String!
+    var isPraise : Int!
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
@@ -79,6 +80,7 @@ class DiscoveryArray{
         }else{
             compressUrl = ""
         }
+        isPraise = dictionary["isPraise"] as? Int
         
 	}
 

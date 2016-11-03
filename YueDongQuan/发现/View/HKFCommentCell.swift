@@ -10,21 +10,21 @@ import UIKit
 
 class HKFCommentCell: UITableViewCell {
     
-    var contentLabel : UILabel?
-    
+    private var contentLabel : UILabel?
+    private var commentArray = [DiscoveryCommentModel]()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.contentLabel = UILabel()
         self.contentView.addSubview(self.contentLabel!)
-        self.contentLabel?.preferredMaxLayoutWidth  = UIScreen.mainScreen().bounds.width - 110
+        self.contentLabel?.preferredMaxLayoutWidth  = ScreenWidth - 20
         self.contentLabel?.numberOfLines = 0
         self.contentLabel?.font = UIFont.systemFontOfSize(13)
-        weak var weakSelf = self
+//        weak var weakSelf = self
         self.contentLabel?.snp_makeConstraints(closure: { (make) in
-            make.edges.equalTo((weakSelf?.contentView)!)
-            //            make.left.right.top.equalTo(0)
+//            make.edges.equalTo((weakSelf?.contentView)!)
+                        make.left.right.top.equalTo(0)
         })
         self.hyb_lastViewInCell = self.contentLabel
         self.hyb_bottomOffsetToCell  = 0
@@ -35,14 +35,20 @@ class HKFCommentCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func getCommentArray(comment:[DiscoveryCommentModel]){
+        self.commentArray = comment
+    }
     
     func configCellWithModel(model : DiscoveryCommentModel) {
-        let str = String(format: "%@回复%@：%@",model.netName,model.reply!,model.content)
-        //        let h = cellHeightByData(str)
-        //        self.contentLabel?.snp_updateConstraints(closure: { (make) in
-        //            make.height.equalTo(h)
-        //        })
         
+        var reply = ""
+        for item in self.commentArray {
+            if model.commentId == item.uid {
+                reply = item.netName
+            }
+        }
+        model.reply = reply
+        let str = String(format: "%@回复%@：%@",model.netName,model.reply!,model.content)
         
         let text = NSMutableAttributedString(string: str)
         

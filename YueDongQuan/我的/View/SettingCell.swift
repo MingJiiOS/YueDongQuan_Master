@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 class SettingCell: UITableViewCell {
+
     private  let kGAP = 10
     var headImage = UIImageView()
     var bigV = UIImageView()
