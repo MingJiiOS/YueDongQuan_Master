@@ -23,6 +23,9 @@ PODS:
   - TZImagePickerController (1.6.7)
   - XHImageViewer (0.1.2)
   - XLProgressHUD (1.0.5)
+  - YYKit (1.0.9):
+    - YYKit/no-arc (= 1.0.9)
+  - YYKit/no-arc (1.0.9)
 
 DEPENDENCIES:
   - Alamofire (~> 3.5.0)
@@ -40,6 +43,7 @@ DEPENDENCIES:
   - TZImagePickerController (~> 1.6.7)
   - XHImageViewer (= 0.1.2)
   - XLProgressHUD (~> 1.0.5)
+  - YYKit (~> 1.0.9)
 
 SPEC CHECKSUMS:
   Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
@@ -59,7 +63,8 @@ SPEC CHECKSUMS:
   TZImagePickerController: d3b16a1ab3393b251a23fbb22ac2d6bc83a50d5f
   XHImageViewer: 7b275d2aa829e56761c30303b9d51cae086a90b9
   XLProgressHUD: 43835d0404b2efdee052c25851eb082e2f98ca99
+  YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: fb86ff5ef79e7a709432ce87dd0c40c5e8da5601
+PODFILE CHECKSUM: 1b90d6f9d637823053a068d67c8a8eab0e9da23a
 
 COCOAPODS: 1.0.1

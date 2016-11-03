@@ -1,5 +1,8 @@
 //
 //	myFoundArray.swift
+//
+//	Create by 方果 黄 on 2/11/2016
+//	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
@@ -9,7 +12,7 @@ class myFoundArray : NSObject, NSCoding{
 
 	var aname : String!
 	var circleId : Int!
-	var comment : [AnyObject]!
+	var comment : [myFoundCommentComment]!
 	var content : String!
 	var csum : Int!
 	var id : Int!
@@ -18,15 +21,41 @@ class myFoundArray : NSObject, NSCoding{
 	var rname : String!
 	var time : Int!
 	var typeId : Int!
-
+    /*
+     
+     */
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
+    
+    
 	init(fromDictionary dictionary: NSDictionary){
 		aname = dictionary["aname"] as? String
 		circleId = dictionary["circleId"] as? Int
-		comment = dictionary["comment"] as? [AnyObject]
+//		comment = dictionary["comment"] as? [myFoundCommentComment]
+        comment = [myFoundCommentComment]()
+        if let arrayArray = dictionary["comment"] as? [NSDictionary]{
+            for dic in arrayArray{
+                //                let value = DiscoveryCommentModel(fromDictionary: dic)
+                //                comment.append(value)
+                let model = myFoundCommentComment()
+                model.commentId = dic["commentId"] as? Int
+                model.content = dic["content"] as? String
+                model.foundId = dic["foundId"] as? Int
+                model.id = dic["id"] as? Int
+                model.netName = dic["netName"] as? String
+                model.time = dic["time"] as? Int
+                model.uid = dic["uid"] as? Int
+//                if let replys = dic["reply"] as? String{
+//                    model.reply = replys
+//                }else{
+//                    model.reply = ""
+//                }
+                comment.append(model)
+            }
+        }
+        
 		content = dictionary["content"] as? String
 		csum = dictionary["csum"] as? Int
 		id = dictionary["id"] as? Int
@@ -48,7 +77,7 @@ class myFoundArray : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
 		if aname != nil{
 			dictionary["aname"] = aname
 		}
@@ -97,7 +126,7 @@ class myFoundArray : NSObject, NSCoding{
 	{
          aname = aDecoder.decodeObjectForKey("aname") as? String
          circleId = aDecoder.decodeObjectForKey("circleId") as? Int
-         comment = aDecoder.decodeObjectForKey("comment") as? [AnyObject]
+         comment = aDecoder.decodeObjectForKey("comment") as? [myFoundCommentComment]
          content = aDecoder.decodeObjectForKey("content") as? String
          csum = aDecoder.decodeObjectForKey("csum") as? Int
          id = aDecoder.decodeObjectForKey("id") as? Int

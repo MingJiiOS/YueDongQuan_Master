@@ -9,8 +9,10 @@
 import UIKit
 
 class SendPhoneNumberView: UIView {
-    private let kGAP =  10
-    private let kAvatar_Size = 40
+
+   private  let kGAP = 10
+   private let kAvatar_Size = 40
+
     lazy var topLabel = UILabel()
     lazy var phoneNumber = UILabel()
     lazy var yanZhengMaLabel = UIButton()
@@ -98,7 +100,4 @@ class SendPhoneNumberView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
-
 }

@@ -7,9 +7,26 @@
 //
 
 import UIKit
-
+protocol CirclesTableViewCellDelegate {
+    func clickJoinBtn(circlesModel:CirclesModel,indexPath:NSIndexPath)
+}
 class CirclesTableViewCell: UITableViewCell {
 
+    typealias clickCourlse = ( clicked:Bool,circlesModel:CirclesModel,indexPath:NSIndexPath)->Void
+    
+    var clickBlock : clickCourlse?
+    
+    func clickJoinBlock(block:clickCourlse?)  {
+        clickBlock = block
+    }
+    
+    var delegate : CirclesTableViewCellDelegate?
+    
+    var model : CirclesModel?
+    
+    var index = NSIndexPath()
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -42,6 +59,9 @@ class CirclesTableViewCell: UITableViewCell {
         btn.layer.cornerRadius = 10
         btn.layer.masksToBounds = true
         self.accessoryView = btn
-        
+        btn .addTarget(self, action: #selector(clickBtn), forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    func clickBtn()  {
+        self.delegate?.clickJoinBtn(self.model!, indexPath: self.index)
     }
 }

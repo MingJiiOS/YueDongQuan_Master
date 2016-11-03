@@ -55,7 +55,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
          loadData()
-       
+        self.title = "附近的圈子"
         whiteView.frame = CGRectMake(0, ScreenHeight, ScreenWidth ,ScreenHeight/3 )
         self.view.addSubview(whiteView)
         whiteView .addSubview(label)
@@ -254,6 +254,9 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         cell = CirclesTableViewCell(style: .Subtitle, reuseIdentifier: "useridentfier") as CirclesTableViewCell
         if self.circlesModel != nil {
               cell.config(self.circlesModel, indexPath: indexPath)
+              cell.delegate = self
+              cell.model = self.circlesModel
+              cell.index = indexPath
         }
       
         return cell
@@ -342,6 +345,23 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     
 
 }
+
+extension OtherQuanZiViewController: CirclesTableViewCellDelegate{
+    
+    func clickJoinBtn(circlesModel: CirclesModel, indexPath: NSIndexPath) {
+        let dict = ["v":v,"uid":userInfo.uid.description,"pw":"","circleId":circlesModel.data.array[indexPath.row].id,"name":circlesModel.data.array[indexPath.row].name,"typeLd":"2"]
+        MJNetWorkHelper().joinmember(joinmember,
+                                     joinmemberModel: dict,
+                                     success: { (responseDic, success) in
+            
+                                        
+            }) { (error) in
+                
+        }
+    }
+    
+}
+
 extension OtherQuanZiViewController {
     func loadData()  {
         
