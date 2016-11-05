@@ -114,6 +114,7 @@ class QuanZiViewController: RCConversationListViewController
                     case 2:
                         let newCircle = NewQuanZiViewController()
                         let nav = CustomNavigationBar(rootViewController: newCircle)
+                        nav.navigationBar.tintColor = UIColor.whiteColor()
                         self.navigationController?.presentViewController(nav, animated: true, completion: nil)
                         break
                     default:

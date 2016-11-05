@@ -20,6 +20,8 @@ class myFoundArray : NSObject, NSCoding{
 	var images : [myFoundImage]!
 	var rname : String!
 	var time : Int!
+    var compressUrl : String!
+    
 	var typeId : Int!
     /*
      
@@ -69,6 +71,7 @@ class myFoundArray : NSObject, NSCoding{
 		}
 		rname = dictionary["rname"] as? String
 		time = dictionary["time"] as? Int
+        compressUrl = dictionary["compressUrl"] as? String
 		typeId = dictionary["typeId"] as? Int
 	}
 
@@ -112,6 +115,9 @@ class myFoundArray : NSObject, NSCoding{
 		if time != nil{
 			dictionary["time"] = time
 		}
+        if compressUrl != nil {
+            dictionary["compressUrl"] = compressUrl
+        }
 		if typeId != nil{
 			dictionary["typeId"] = typeId
 		}
@@ -134,6 +140,7 @@ class myFoundArray : NSObject, NSCoding{
          images = aDecoder.decodeObjectForKey("images") as? [myFoundImage]
          rname = aDecoder.decodeObjectForKey("rname") as? String
          time = aDecoder.decodeObjectForKey("time") as? Int
+         compressUrl = aDecoder.decodeObjectForKey("compressUrl") as? String
          typeId = aDecoder.decodeObjectForKey("typeId") as? Int
 
 	}
@@ -174,6 +181,9 @@ class myFoundArray : NSObject, NSCoding{
 		if time != nil{
 			aCoder.encodeObject(time, forKey: "time")
 		}
+        if compressUrl != nil {
+            aCoder.encodeObject(compressUrl, forKey: "compressUrl")
+        }
 		if typeId != nil{
 			aCoder.encodeObject(typeId, forKey: "typeId")
 		}

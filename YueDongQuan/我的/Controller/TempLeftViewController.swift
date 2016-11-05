@@ -28,7 +28,7 @@ class TempLeftViewController: MainViewController {
 //                
 //        }
         
-        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧", isAnimate: true)
+        
     }
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
@@ -44,7 +44,9 @@ class TempLeftViewController: MainViewController {
         // Dispose of any resources that can be recreated.
     }
   
-
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.showMJProgressHUD("跳出来的动画", isAnimate: true)
+    }
     /*
     // MARK: - Navigation
 

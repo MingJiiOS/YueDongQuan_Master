@@ -26,7 +26,7 @@
 #import "SGAlertView.h"
 #import "RCAnimatedImagesView.h"
 #import "UITableView+ClickTime.h"
-#import "SDPhotoBrowser.h"
+
 #import "CommentModel.h"
 #import "UITableViewCell+HYBMasonryAutoCellHeight.h"
 #import "ChatKeyBoard.h"
