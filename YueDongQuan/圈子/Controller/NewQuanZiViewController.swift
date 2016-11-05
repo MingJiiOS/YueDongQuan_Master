@@ -42,7 +42,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         super.viewDidLoad()
         self.title = "新建圈子"
         self.navigationController?.navigationBar.barTintColor = kBlueColor
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+       
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜返回", style: .Plain, target: self, action: #selector(back))
         self.createView()
     }
@@ -176,7 +176,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     }
     override func viewWillAppear(animated: Bool) {
         self.view.endEditing(true)
-        
+         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
     //MARK:创建新的圈子
     func selectCircleLogo() {

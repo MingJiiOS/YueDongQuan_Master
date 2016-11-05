@@ -45,33 +45,53 @@ class MJCommentCell: UITableViewCell {
     }
     
     func configCellWithModel(model:myFoundCommentComment)  {
-//        let str : String?
-//
-////        if model != nil {
-////            str =  String(format: "%@回复%@:%@", userInfo.name,userInfo.name,"回复的消息")
-////        }else{
-//            str = String(format:"%@:%@",userInfo.name,"回复的消息")
-////        }
-//        let text = NSMutableAttributedString()
-//        text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, NSString(string:model.netName).length))
-        
-//        text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(NSString(string:userInfo.name).length + 2, NSString(string:userInfo.name).length))
-//        
-        let attributeString = NSMutableAttributedString(string: String(format: "%@:%@", model.netName,model.content))
-        //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-        attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "Helvetica", size: 14)!,
-                                     range: NSMakeRange(0, NSString(string:model.netName).length))
-        //设置字体颜色
+     let comId = model.commentId
+        if comId != 0 {
+            if model.uid == model.commentId{
+                let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:%@", model.netName,model.netName,model.content))
                 attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
-                                             range: NSMakeRange(0, NSString(string:model.netName).length+1))
-        //        //设置文字背景颜色
-        //        attributeString.addAttribute(NSBackgroundColorAttributeName, value: UIColor.greenColor(),
-        //                                     range: NSMakeRange(3,3))
-        
+                                             range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:model.netName).length+1))
+                attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+                                             range: NSMakeRange(0, NSString(string:model.netName).length))
+                
+                self.contentLabel?.attributedText = attributeString
+                
+                
+            }else{
+               //两个不同的人相互回复
+                let dict = ["v":v,"operateId":userInfo.uid.description,"uid":model.commentId.description]
+                MJNetWorkHelper().checkHeInfo(heinfo, HeInfoModel: dict, success: { (responseDic, success) in
+                    if success {
+                     let ohterName = responseDic["data"]!["name"] as! String
+                        let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:%@", model.netName,ohterName,model.content))
+                        //从文本0开始6个字符字体HelveticaNeue-Bold,16号
+                       
+                        //设置字体颜色
+                        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+                            range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:ohterName).length+1))
+                        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+                            range: NSMakeRange(0, NSString(string:model.netName).length))
+                        
+                        self.contentLabel?.attributedText = attributeString
+                    }
+                    }, fail: { (error) in
+                        
+                })
+                
+            }
+        }else{
+            let attributeString = NSMutableAttributedString(string: String(format: "%@:%@", model.netName,model.content))
+            //从文本0开始6个字符字体HelveticaNeue-Bold,16号
+//            attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "Helvetica", size: 14)!,
+//                                         range: NSMakeRange(0, NSString(string:model.netName).length))
+            //设置字体颜色
+            attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+                                         range: NSMakeRange(0, NSString(string:model.netName).length+1))
 
+            self.contentLabel?.attributedText = attributeString
+
+        }
         
-            
-             self.contentLabel?.attributedText = attributeString
         
       
         

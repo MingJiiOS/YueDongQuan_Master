@@ -18,7 +18,8 @@ class MainViewController: UIViewController {
         //将函数指针赋值给myClosure闭包
         clickClosure = closure
     }
-    
+    var HUDView = UIView()
+    var timer = NSTimer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,9 +82,28 @@ class MainViewController: UIViewController {
         print("点击了",sender.tag)
         
     }
-    func showMJProgressHUD(message:NSString,isAnimate:Bool)  {
+
+    
+    func methodTime()  {
         
-        let HUDView = UIView(frame:CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight - 134, ScreenWidth*0.7, 40) )
+            timer.invalidate();
+        
+        
+        UIView.beginAnimations(nil, context: nil);
+        
+        UIView.setAnimationCurve(.EaseIn)
+//        UIView.setAnimationDuration(1.5);
+        UIView.setAnimationDelegate(self);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+            self.HUDView .removeFromSuperview()
+        }
+        UIView.commitAnimations();
+    }
+     func showMJProgressHUD(message:NSString,isAnimate:Bool) {
+        
+        HUDView.removeFromSuperview()
+        
+        HUDView = UIView(frame:CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight - 134, ScreenWidth*0.7, 40) )
         HUDView.backgroundColor = UIColor.blackColor()
         HUDView.layer.cornerRadius = 5
         HUDView.layer.masksToBounds = true
@@ -91,40 +111,56 @@ class MainViewController: UIViewController {
         self.view.addSubview(HUDView)
         let image = UIImageView(frame: CGRectMake(0, 0, 40, 40))
         image.animationDuration = 4
-        HUDView .addSubview(image)
-        var ary = [UIImage]()
-        for var index = 1; index <= 90; index += 1{
-
-            let images = UIImage(named: NSString(format: "cool－%d（被拖移）.tiff", index) as String)
-            ary .append(images!)
-        }
         
-        image.animationImages = ary
-        image.startAnimating()
-       
-        if isAnimate != true {
-            
-        }else{
-            UIView.animateWithDuration(1.0, delay: 0.5, usingSpringWithDamping: 125, initialSpringVelocity: 20.0, options: UIViewAnimationOptions.Autoreverse, animations: {
-                HUDView.frame = CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight - 174, ScreenWidth*0.7, 40)
-                }, completion: nil)
-            
-           
-
-        }
         let subLabel = UILabel(frame: CGRectMake(40, 5, CGRectGetWidth(HUDView.frame)-40, 30))
         subLabel.text = message as String
         subLabel.textColor = kBlueColor
         subLabel.textAlignment = .Left
         subLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
         HUDView .addSubview(subLabel)
-        //消失
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
-            HUDView .removeFromSuperview()
+        
+        HUDView .addSubview(image)
+        var ary = [UIImage]()
+        for index in 1...90{
+            
+            let images = UIImage(named: NSString(format: "cool－%d（被拖移）.tiff", index) as String)
+            ary .append(images!)
         }
         
+        image.animationImages = ary
+        image.startAnimating()
+        
+        
+        func shakeToUpShow(aView: UIView) {
+            let animation = CAKeyframeAnimation(keyPath: "transform");
+            animation.duration = 0.3;
+            let values = NSMutableArray();
+            values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(0.8, 0.8, 1.0)))
+            values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(1.1, 1.1, 1.0)))
+            values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(0.9, 0.9, 1.0)))
+            values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(1.0, 1.0, 1.0)))
+            animation.values = values as [AnyObject];
+            aView.layer.addAnimation(animation, forKey: nil)
+        }
+        
+        func runTime() {
+            
+            timer = NSTimer(timeInterval: 0.5, target: self, selector: #selector(MainViewController.methodTime), userInfo: nil, repeats: true)
+            
+            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+            
+        }
+        if isAnimate != false {
+            shakeToUpShow(HUDView);
+            runTime();
+        }else{
+           
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                            self.HUDView .removeFromSuperview()
+                        }
+        }
+
     }
 
-  
 
 }
