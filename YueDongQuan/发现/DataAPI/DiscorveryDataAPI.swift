@@ -24,18 +24,18 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     
     //移除所有模型的数据
     func removeAllModelData() {
-//        persitencyManager?.removeLastestData()
-//        persitencyManager?.removeImageData()
-//        persitencyManager?.removeVideoData()
-//        persitencyManager?.removeActivityData()
-//        persitencyManager?.removeMatchData()
-//        persitencyManager?.removeJoinTeamData()
-//        persitencyManager?.removeZhaoMuData()
-//        persitencyManager?.removeNearByData()
-//        persitencyManager?.removeMyNotifyData()
+        persitencyManager?.removeLastestData()
+        persitencyManager?.removeImageData()
+        persitencyManager?.removeVideoData()
+        persitencyManager?.removeActivityData()
+        persitencyManager?.removeMatchData()
+        persitencyManager?.removeJoinTeamData()
+        persitencyManager?.removeZhaoMuData()
+        persitencyManager?.removeNearByData()
+        persitencyManager?.removeMyNotifyData()
         
         
-        persitencyManager?.removeAllData()
+        
     }
     
     /**************************************/
@@ -130,6 +130,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeLastestData()
+            pageNo = 1
         }else{
             pageNo += 1
         }
@@ -142,6 +143,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeImageData()
+            pageNo = 1
         }else{
             pageNo += 1
         }
@@ -152,6 +154,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeVideoData()
+            pageNo = 1
         }else{
             pageNo += 1
         }
@@ -162,6 +165,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeActivityData()
+            pageNo = 1
         }else{
             pageNo += 1
         }
@@ -172,6 +176,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeMatchData()
+            pageNo = 1
         }else{
             pageNo += 1
         }
@@ -183,6 +188,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeJoinTeamData()
+            pageNo = 1
         }else{
             pageNo += 1
         }
@@ -194,6 +200,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeZhaoMuData()
+            pageNo = 1
         }else{
             pageNo += 1
         }
@@ -207,6 +214,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeNearByData()
+            pageNo = 1
         }else{
             pageNo += 1
         }
@@ -219,6 +227,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeMyNotifyData()
+            pageNo = 1
         }else{
             pageNo += 1
         }

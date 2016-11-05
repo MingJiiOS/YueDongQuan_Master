@@ -292,18 +292,15 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         if model.csum != nil{
             self.pinglunBtn.setTitle("\(model.csum)", forState: UIControlState.Normal)
-            self.liulanCount.text = "\(model.csum)"
+            self.liulanCount.text = "\(model.csum + model.isPraise)"
         }else{
             self.pinglunBtn.setTitle("0", forState: UIControlState.Normal)
-            self.liulanCount.text = "0"
+            self.liulanCount.text = "\(model.isPraise)"
         }
-//        if model.num != nil {
-//            self.liulanCount.text = "\(model.num + model.csum)"
-//        }else{
-//            
-//        }
+
         if model.isPraise != 0{
             self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
+            self.dianzanBtn.setTitle("\(model.isPraise)", forState: UIControlState.Normal)
         }
         
         switch model.typeId {

@@ -84,7 +84,9 @@ class SignHeaderView: UIView {
             make.width.equalTo(ScreenWidth/4)
         }
         let attributeString = NSMutableAttributedString(string: yesterDayTime + "秒")
-        attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Bold", size: 14)!,range: NSMakeRange(0, yesterDayTime.characters.count))
+        attributeString.beginEditing()
+        attributeString.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(15)], range: NSRange(location: 0, length: yesterDayTime.characters.count))
+        attributeString.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(10)], range: NSRange(location: yesterDayTime.characters.count, length: 1))
         yesterdayCount.attributedText = attributeString
         yesterdayCount.textColor = UIColor ( red: 0.7333, green: 0.9529, blue: 0.5059, alpha: 1.0 )
         yesterdayCount.textAlignment = .Center

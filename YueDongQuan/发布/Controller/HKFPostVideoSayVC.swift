@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 import TZImagePickerController
-
+import XLProgressHUD
 import Alamofire
 import SwiftyJSON
 
@@ -48,6 +48,7 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
     func createUI(){
         _textField = CustomTextField(frame: CGRect(x: 10, y: 5, width: ScreenWidth - 20, height: 40), placeholder: "说点什么吧.....(120字内)", clear: true, fontSize: 15)
         _textField.delegate = self
+        _textField.textColor = UIColor.blackColor()
         _textField.addTarget(self, action: #selector(getTextFieldString(_:)), forControlEvents: UIControlEvents.AllEditingEvents)
         self.view.addSubview(_textField)
         
@@ -206,7 +207,7 @@ extension HKFPostVideoSayVC {
     
     
     func selectToPhotos() {
-        let imagePickerVc = TZImagePickerController(maxImagesCount: 9, columnNumber: 3, delegate: self)
+        let imagePickerVc = TZImagePickerController(maxImagesCount: 1, columnNumber: 1, delegate: self)
         imagePickerVc.allowPickingVideo = true
         imagePickerVc.allowPickingImage = true
         imagePickerVc.allowPickingOriginalPhoto = true
@@ -225,44 +226,47 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
     func imagePickerController(picker: TZImagePickerController!, didFinishPickingVideo coverImage: UIImage!, sourceAssets asset: AnyObject!) {
         self.selectedImages = [coverImage]
         self.publishPhotosView.reloadDataWithImages(NSMutableArray(array: [coverImage]))
-//        self.showLocationBtn.frame = CGRectMake(0, publishPhotosView.tz_bottom + 20, ScreenWidth, 30)
-        
-//        [[TZImageManager manager] getVideoOutputPathWithAsset:asset completion:^(NSString *outputPath) {
-            // NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
-            // Export completed, send video here, send by outputPath or NSData
-            // 导出完成，在这里写上传代码，通过路径或者通过NSData上传
+        let msg = "视频压缩中..."
+        self.view.showLoadingTilteActivity(msg, position: "center")
+        TZImageManager().getVideoOutputPathWithAsset(asset) { (outputPath : String!) in
+            NSLog("视频导出到本地完成,沙盒路径为:%@",outputPath)
+            let data = NSData(contentsOfFile: outputPath)
             
-//             }];
-        
-        
-        TZImageManager().getVideoOutputPathWithAsset(asset) { (outputPath:String!) in
-            NSLog("视频导出到本地完成,沙盒路径为:\(outputPath)")
+            self.videoData = data!
+            let fileSize = (data?.length)!/(1024*1024)
+            if fileSize >= 1024 {
             
+            }
+            self.view.showLoadingTilteActivity("压缩完成", position: "center")
+            self.view.hideActivity()
         }
         
         
-
-        PHCachingImageManager().requestAVAssetForVideo((asset as? PHAsset)!, options: nil) { (asset:AVAsset?, audioMix:AVAudioMix?, info:[NSObject : AnyObject]?) in
-            dispatch_async(dispatch_get_main_queue(), { 
-                let asset = asset as? AVURLAsset
-//                let data = NSData(contentsOfURL: asset!.URL)
-                JFCompressionVideo.compressedVideoOtherMethodWithURL(asset?.URL, compressionType: AVAssetExportPresetLowQuality, compressionResultPath: { (resultPath:String!, memorySize:Float) in
-                    NSLog("memorySize = \(memorySize),resultPath=\(resultPath)")
-                    let data = NSData(contentsOfFile: resultPath)
-                    
-                    self.videoData = data!
-                    let fileSize = (data?.length)!/(1024*1024)
-                    
-                    if fileSize >= 1024 {
-                        
-                    }
-                })
-                
-                
-                
-                
-            })
-        }
+        
+//        
+//        let asset = asset as? AVURLAsset
+//        //                let data = NSData(contentsOfURL: asset!.URL)
+//        JFCompressionVideo.compressedVideoOtherMethodWithURL(asset?.URL, compressionType: AVAssetExportPresetLowQuality, compressionResultPath: { (resultPath:String!, memorySize:Float) in
+//            NSLog("memorySize = \(memorySize),resultPath=\(resultPath)")
+//            self.view.hideActivity()
+//            
+//            let data = NSData(contentsOfFile: resultPath)
+//            
+//            self.videoData = data!
+//            let fileSize = (data?.length)!/(1024*1024)
+//            self.view.showLoadingTilteActivity("压缩完成", position: "center")
+//            self.view.hideActivity()
+//            if fileSize >= 1024 {
+//                
+//            }
+//        })
+        
+        
+//        PHCachingImageManager().requestAVAssetForVideo((asset as? PHAsset)!, options: nil) { (asset:AVAsset?, audioMix:AVAudioMix?, info:[NSObject : AnyObject]?) in
+//            dispatch_async(dispatch_get_main_queue(), {
+//                
+//            })
+//        }
         
         
     }

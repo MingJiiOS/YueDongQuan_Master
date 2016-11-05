@@ -4,18 +4,60 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/HKFPostField_TwoVC.swift"
-            timestampString = "499678742.102953"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/SignRankBtnController.swift"
+            timestampString = "499922187.832065"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "494"
-            endingLineNumber = "494"
-            landmarkName = "requestToEditorFieldInfo(_:latitude:logoId:phone:cost:name:address:)"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "clickTimeStatusBtn(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Manager/DiscoveryManager.swift"
+            timestampString = "499945430.267427"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "DiscoveryManager"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/LastestSay_SayVC.swift"
+            timestampString = "500004440.673529"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "say_say_LastestModelChangeProcess()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +67,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YueDongQuan/&#x641c;&#x7d22;/Controller/SearchController.swift"
-            timestampString = "499743460.529507"
+            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/LastestSay_SayVC.swift"
+            timestampString = "500004440.673529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "searchBtnClick()"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
+            landmarkName = "reloadCellHeightForModelAndAtIndexPath(_:indexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +83,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YueDongQuan/&#x641c;&#x7d22;/Controller/SearchController.swift"
-            timestampString = "499743583.967408"
+            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/LastestSay_SayVC.swift"
+            timestampString = "500004440.673529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "328"
-            endingLineNumber = "328"
-            landmarkName = "requestSearchField(_:typeId:)"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "pullUpRef()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/LastestSay_SayVC.swift"
+            timestampString = "500004440.673529"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "pullUpRef()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

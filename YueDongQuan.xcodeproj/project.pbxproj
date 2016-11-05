@@ -59,6 +59,22 @@
 		5C3B9A031D9D17A900AF7CFE /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3B9A021D9D17A900AF7CFE /* SearchResultCell.swift */; };
 		5C42CACB1DC0584100669EB5 /* HKFPostField_TwoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C42CACA1DC0584000669EB5 /* HKFPostField_TwoVC.swift */; };
 		5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4396CF1D9E135200F40749 /* SourceAnimation.swift */; };
+		5C4A59F01DCC2C7800A8AD9E /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C4A59EF1DCC2C7800A8AD9E /* WebKit.framework */; };
+		5C4A59F51DCC3EB000A8AD9E /* MySignArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A59F11DCC3EB000A8AD9E /* MySignArray.swift */; };
+		5C4A59F61DCC3EB000A8AD9E /* MySignData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A59F21DCC3EB000A8AD9E /* MySignData.swift */; };
+		5C4A59F71DCC3EB000A8AD9E /* MySignEndTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A59F31DCC3EB000A8AD9E /* MySignEndTime.swift */; };
+		5C4A59F81DCC3EB000A8AD9E /* MySignModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A59F41DCC3EB000A8AD9E /* MySignModel.swift */; };
+		5C4A59FE1DCC7B9700A8AD9E /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A59FD1DCC7B9700A8AD9E /* YYFPSLabel.m */; };
+		5C4A5A011DCC846100A8AD9E /* SegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A5A001DCC846100A8AD9E /* SegmentViewController.m */; };
+		5C4A5A031DCC869700A8AD9E /* LastestSay_SayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A5A021DCC869700A8AD9E /* LastestSay_SayVC.swift */; };
+		5C4A5A051DCC86AE00A8AD9E /* ImageSay_SayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A5A041DCC86AE00A8AD9E /* ImageSay_SayVC.swift */; };
+		5C4A5A071DCC872A00A8AD9E /* VideoSay_SayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A5A061DCC872A00A8AD9E /* VideoSay_SayVC.swift */; };
+		5C4A5A091DCC874400A8AD9E /* ActivitySay_SayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A5A081DCC874400A8AD9E /* ActivitySay_SayVC.swift */; };
+		5C4A5A0B1DCC87B700A8AD9E /* MatchSay_SayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A5A0A1DCC87B700A8AD9E /* MatchSay_SayVC.swift */; };
+		5C4A5A0D1DCC87D300A8AD9E /* JoinTeamSay_SayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A5A0C1DCC87D300A8AD9E /* JoinTeamSay_SayVC.swift */; };
+		5C4A5A0F1DCC880600A8AD9E /* ZhaoMuSay_SayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A5A0E1DCC880600A8AD9E /* ZhaoMuSay_SayVC.swift */; };
+		5C4A5A111DCC882700A8AD9E /* NearBySay_SayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A5A101DCC882700A8AD9E /* NearBySay_SayVC.swift */; };
+		5C4A5A131DCC884B00A8AD9E /* MyNotifySay_SayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A5A121DCC884B00A8AD9E /* MyNotifySay_SayVC.swift */; };
 		5C5C8F1D1DC98C110019633F /* 热动篮球LOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C5C8F1C1DC98C110019633F /* 热动篮球LOGO.png */; };
 		5C5C8F211DC9A2090019633F /* SignRankingArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5C8F1E1DC9A2090019633F /* SignRankingArray.swift */; };
 		5C5C8F221DC9A2090019633F /* SignRankingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5C8F1F1DC9A2090019633F /* SignRankingData.swift */; };
@@ -749,6 +765,24 @@
 		5C3B9A021D9D17A900AF7CFE /* SearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		5C42CACA1DC0584000669EB5 /* HKFPostField_TwoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostField_TwoVC.swift; sourceTree = "<group>"; };
 		5C4396CF1D9E135200F40749 /* SourceAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceAnimation.swift; sourceTree = "<group>"; };
+		5C4A59EF1DCC2C7800A8AD9E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		5C4A59F11DCC3EB000A8AD9E /* MySignArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySignArray.swift; sourceTree = "<group>"; };
+		5C4A59F21DCC3EB000A8AD9E /* MySignData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySignData.swift; sourceTree = "<group>"; };
+		5C4A59F31DCC3EB000A8AD9E /* MySignEndTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySignEndTime.swift; sourceTree = "<group>"; };
+		5C4A59F41DCC3EB000A8AD9E /* MySignModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySignModel.swift; sourceTree = "<group>"; };
+		5C4A59FC1DCC7B9700A8AD9E /* YYFPSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYFPSLabel.h; sourceTree = "<group>"; };
+		5C4A59FD1DCC7B9700A8AD9E /* YYFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYFPSLabel.m; sourceTree = "<group>"; };
+		5C4A59FF1DCC846100A8AD9E /* SegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentViewController.h; sourceTree = "<group>"; };
+		5C4A5A001DCC846100A8AD9E /* SegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentViewController.m; sourceTree = "<group>"; };
+		5C4A5A021DCC869700A8AD9E /* LastestSay_SayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastestSay_SayVC.swift; sourceTree = "<group>"; };
+		5C4A5A041DCC86AE00A8AD9E /* ImageSay_SayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSay_SayVC.swift; sourceTree = "<group>"; };
+		5C4A5A061DCC872A00A8AD9E /* VideoSay_SayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoSay_SayVC.swift; sourceTree = "<group>"; };
+		5C4A5A081DCC874400A8AD9E /* ActivitySay_SayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitySay_SayVC.swift; sourceTree = "<group>"; };
+		5C4A5A0A1DCC87B700A8AD9E /* MatchSay_SayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchSay_SayVC.swift; sourceTree = "<group>"; };
+		5C4A5A0C1DCC87D300A8AD9E /* JoinTeamSay_SayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinTeamSay_SayVC.swift; sourceTree = "<group>"; };
+		5C4A5A0E1DCC880600A8AD9E /* ZhaoMuSay_SayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZhaoMuSay_SayVC.swift; sourceTree = "<group>"; };
+		5C4A5A101DCC882700A8AD9E /* NearBySay_SayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearBySay_SayVC.swift; sourceTree = "<group>"; };
+		5C4A5A121DCC884B00A8AD9E /* MyNotifySay_SayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNotifySay_SayVC.swift; sourceTree = "<group>"; };
 		5C5C8F1C1DC98C110019633F /* 热动篮球LOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "热动篮球LOGO.png"; sourceTree = "<group>"; };
 		5C5C8F1E1DC9A2090019633F /* SignRankingArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignRankingArray.swift; sourceTree = "<group>"; };
 		5C5C8F1F1DC9A2090019633F /* SignRankingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignRankingData.swift; sourceTree = "<group>"; };
@@ -1431,6 +1465,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C4A59F01DCC2C7800A8AD9E /* WebKit.framework in Frameworks */,
 				BFC126A81DB4A56200E11088 /* Security.framework in Frameworks */,
 				BFDB2A881DA5E8F700A65DAD /* AdSupport.framework in Frameworks */,
 				BFFFB2AB1D9FEE0F00ADDB63 /* JavaScriptCore.framework in Frameworks */,
@@ -1478,6 +1513,7 @@
 		3D602F91B05F501B8CB40CE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5C4A59EF1DCC2C7800A8AD9E /* WebKit.framework */,
 				BFC126A71DB4A56200E11088 /* Security.framework */,
 				BFDB2A871DA5E8F700A65DAD /* AdSupport.framework */,
 				BFFFB2AA1D9FEE0F00ADDB63 /* JavaScriptCore.framework */,
@@ -3374,6 +3410,10 @@
 		BFC65D301D86A05D004E7E99 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5C4A59F11DCC3EB000A8AD9E /* MySignArray.swift */,
+				5C4A59F21DCC3EB000A8AD9E /* MySignData.swift */,
+				5C4A59F31DCC3EB000A8AD9E /* MySignEndTime.swift */,
+				5C4A59F41DCC3EB000A8AD9E /* MySignModel.swift */,
 				5C5C8F1E1DC9A2090019633F /* SignRankingArray.swift */,
 				5C5C8F1F1DC9A2090019633F /* SignRankingData.swift */,
 				5C5C8F201DC9A2090019633F /* SignRankingModel.swift */,
@@ -3488,6 +3528,17 @@
 			isa = PBXGroup;
 			children = (
 				BFC65D4D1D86A160004E7E99 /* DiscoverViewController.swift */,
+				5C4A5A021DCC869700A8AD9E /* LastestSay_SayVC.swift */,
+				5C4A5A041DCC86AE00A8AD9E /* ImageSay_SayVC.swift */,
+				5C4A5A061DCC872A00A8AD9E /* VideoSay_SayVC.swift */,
+				5C4A5A081DCC874400A8AD9E /* ActivitySay_SayVC.swift */,
+				5C4A5A0A1DCC87B700A8AD9E /* MatchSay_SayVC.swift */,
+				5C4A5A0C1DCC87D300A8AD9E /* JoinTeamSay_SayVC.swift */,
+				5C4A5A0E1DCC880600A8AD9E /* ZhaoMuSay_SayVC.swift */,
+				5C4A5A101DCC882700A8AD9E /* NearBySay_SayVC.swift */,
+				5C4A5A121DCC884B00A8AD9E /* MyNotifySay_SayVC.swift */,
+				5C4A59FC1DCC7B9700A8AD9E /* YYFPSLabel.h */,
+				5C4A59FD1DCC7B9700A8AD9E /* YYFPSLabel.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3617,6 +3668,8 @@
 				BFC65D571D86A1AF004E7E99 /* YXCustomActionSheet.h */,
 				BFC65D581D86A1AF004E7E99 /* YXCustomActionSheet.m */,
 				BFC65D541D86A1AE004E7E99 /* YueDongQuan-Bridging-Header.h */,
+				5C4A59FF1DCC846100A8AD9E /* SegmentViewController.h */,
+				5C4A5A001DCC846100A8AD9E /* SegmentViewController.m */,
 			);
 			path = CustomActionSheet;
 			sourceTree = "<group>";
@@ -4197,6 +4250,9 @@
 				5C27BB071DB761F2005A2F8D /* DACircularProgressView.m in Sources */,
 				BFD41FE11DC05F67005A22E6 /* SGScanningQRCodeView.m in Sources */,
 				5C6CD9991DC2FA0C001F3DA8 /* MudPlayerViewController.swift in Sources */,
+				5C4A5A111DCC882700A8AD9E /* NearBySay_SayVC.swift in Sources */,
+				5C4A5A091DCC874400A8AD9E /* ActivitySay_SayVC.swift in Sources */,
+				5C4A59F71DCC3EB000A8AD9E /* MySignEndTime.swift in Sources */,
 				5C2A95761D8D86EC006D1462 /* GlobalUI.m in Sources */,
 				BFCD98D11DAC7B0700AF915C /* DataSource.swift in Sources */,
 				5C27BAF01DB761D9005A2F8D /* MBProgressHUD+PY.m in Sources */,
@@ -4217,6 +4273,7 @@
 				5C913F921DBDEB0E00E567FB /* WeatherData.swift in Sources */,
 				BFD36CCB1DBA0202005005A3 /* TimeStampToDate.swift in Sources */,
 				BF140EE61DAF6A390029DC25 /* updateNameModel.swift in Sources */,
+				5C4A5A051DCC86AE00A8AD9E /* ImageSay_SayVC.swift in Sources */,
 				BF071F011D9A0D5F000551F7 /* MJModel.swift in Sources */,
 				BF071F3F1D9A0D68000551F7 /* SettingCell.swift in Sources */,
 				5CBAA8F01D99011F000E21E9 /* TZTestCell.m in Sources */,
@@ -4237,6 +4294,7 @@
 				BF071EFF1D9A0D5F000551F7 /* SubContentViewController.swift in Sources */,
 				5C27BAFA1DB761D9005A2F8D /* PYPhotoBrowseView.m in Sources */,
 				BFD41FDD1DC05F67005A22E6 /* SGGenerateQRCodeVC.m in Sources */,
+				5C4A59F61DCC3EB000A8AD9E /* MySignData.swift in Sources */,
 				5CC5F9431DAF8A550088A61E /* HKFTableViewCell.swift in Sources */,
 				BF071F3B1D9A0D68000551F7 /* MJTextFeild.swift in Sources */,
 				BF071F031D9A0D5F000551F7 /* MJQuanZiModel.swift in Sources */,
@@ -4247,6 +4305,7 @@
 				5C90F1381D8FCFA0005E16AF /* UIImage+YJImage.m in Sources */,
 				BFDB2A9A1DA6000600A65DAD /* YDQLoginRegisterViewController.swift in Sources */,
 				BF3CAC481DB22E15008A5C51 /* myCircleModel.swift in Sources */,
+				5C4A5A071DCC872A00A8AD9E /* VideoSay_SayVC.swift in Sources */,
 				BF071EFC1D9A0D5F000551F7 /* QuanZiSettingViewController.swift in Sources */,
 				BF071EFB1D9A0D5F000551F7 /* ParterDataViewController.swift in Sources */,
 				5CC5F9421DAF8A550088A61E /* HKFCommentCell.swift in Sources */,
@@ -4296,6 +4355,7 @@
 				BFFCE0281DBEF0820045087A /* TotalRankVC.swift in Sources */,
 				BF071F411D9A0D68000551F7 /* TotalDongdouCell.swift in Sources */,
 				BF071F0C1D9A0D5F000551F7 /* MJParterDataView.swift in Sources */,
+				5C4A5A0D1DCC87D300A8AD9E /* JoinTeamSay_SayVC.swift in Sources */,
 				BFAF23C21DB85EBC00294988 /* CircleInfoData.swift in Sources */,
 				BFFCE0521DBF28840045087A /* TotalRankHeadCell.swift in Sources */,
 				BF071EFE1D9A0D5F000551F7 /* SettingViewController.swift in Sources */,
@@ -4349,6 +4409,7 @@
 				5C4396D01D9E135200F40749 /* SourceAnimation.swift in Sources */,
 				5CA4EA401D8EC5EE001A8E8D /* FieldCell.swift in Sources */,
 				BF5738861DBB74930023B7DE /* CircleHeadView.swift in Sources */,
+				5C4A59F51DCC3EB000A8AD9E /* MySignArray.swift in Sources */,
 				5C27BAF41DB761D9005A2F8D /* PYPhotosReaderController.m in Sources */,
 				5C6CD9971DC2FA0C001F3DA8 /* MudPlayerControls.swift in Sources */,
 				BF071F3E1D9A0D68000551F7 /* SendPhoneNumberView.swift in Sources */,
@@ -4357,7 +4418,9 @@
 				BF071F2E1D9A0D68000551F7 /* SendPhoneViewController.swift in Sources */,
 				BF071EFD1D9A0D5F000551F7 /* SelectChangDiViewController.swift in Sources */,
 				5CA4EA3A1D8E7453001A8E8D /* UITableViewCell+HYBMasonryAutoCellHeight.m in Sources */,
+				5C4A59F81DCC3EB000A8AD9E /* MySignModel.swift in Sources */,
 				5C2A95781D8D86EC006D1462 /* UIImage+Extension.m in Sources */,
+				5C4A5A131DCC884B00A8AD9E /* MyNotifySay_SayVC.swift in Sources */,
 				BFC1269D1DB4792F00E11088 /* CirclesData.swift in Sources */,
 				5C8886B91DC7512C001BC7A8 /* DiscoveryManager.swift in Sources */,
 				BF071F0A1D9A0D5F000551F7 /* MJNoticeCell.swift in Sources */,
@@ -4411,7 +4474,9 @@
 				5C343A041D91366F0077BFDD /* SignRankBtnController.swift in Sources */,
 				5C07FE471DC885360001850E /* SearchFieldArray.swift in Sources */,
 				BFC65D1D1D869FD1004E7E99 /* AppDelegate.swift in Sources */,
+				5C4A5A0F1DCC880600A8AD9E /* ZhaoMuSay_SayVC.swift in Sources */,
 				BFD36CC41DB9BB0C005005A3 /* circleMemberData.swift in Sources */,
+				5C4A5A0B1DCC87B700A8AD9E /* MatchSay_SayVC.swift in Sources */,
 				BFD36CD01DBA1922005005A3 /* AllNoticeData.swift in Sources */,
 				BFC126A61DB4A42200E11088 /* MJKeyChainHelper.swift in Sources */,
 				5C27BAFC1DB761D9005A2F8D /* PYPhotosView.m in Sources */,
@@ -4428,9 +4493,11 @@
 				5C8886B51DC750EB001BC7A8 /* DiscorveryDataAPI.swift in Sources */,
 				BFB44F5D1DC9731B0066D49F /* FaceButton.m in Sources */,
 				BF071F001D9A0D5F000551F7 /* MJAutoHeightCell.swift in Sources */,
+				5C4A5A011DCC846100A8AD9E /* SegmentViewController.m in Sources */,
 				BF071F2C1D9A0D68000551F7 /* ChangeNameViewController.swift in Sources */,
 				5C343A021D91361C0077BFDD /* KYCircularProgress.swift in Sources */,
 				BFD41FBB1DC03D9F005A22E6 /* TodayDongdouModel.swift in Sources */,
+				5C4A59FE1DCC7B9700A8AD9E /* YYFPSLabel.m in Sources */,
 				BFC65D481D86A0F9004E7E99 /* MainViewController.swift in Sources */,
 				5C6CD9961DC2FA0C001F3DA8 /* Double+extension.swift in Sources */,
 				BF071F0B1D9A0D5F000551F7 /* MJOtherQuanZiView.swift in Sources */,
@@ -4438,6 +4505,7 @@
 				BFC1269C1DB4792F00E11088 /* CirclesArray.swift in Sources */,
 				BFAF23CC1DB8A9D700294988 /* MJLayerContentCell.swift in Sources */,
 				5C913F951DBDEB0E00E567FB /* WeatherLife.swift in Sources */,
+				5C4A5A031DCC869700A8AD9E /* LastestSay_SayVC.swift in Sources */,
 				BFC572941DA8EB72002E1995 /* MJProgressHUD.swift in Sources */,
 				BFD41FBE1DC04132005A22E6 /* NSData+AES256.m in Sources */,
 				BFD41FDC1DC05F67005A22E6 /* ScanSuccessJumpVC.m in Sources */,
