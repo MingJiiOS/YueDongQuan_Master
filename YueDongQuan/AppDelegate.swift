@@ -8,7 +8,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
-
+import Alamofire
 let AMAPAPIKEY = "cc7ada21dae93efe53c70dc7d6a46598"
 let RONGCLOUDAPPKEY = "ik1qhw0911hep"
 @UIApplicationMain
@@ -19,6 +19,9 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
 
     var window: UIWindow?
     
+    var timer = NSTimer()
+    
+    var HUDView = UIView()
     
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -36,17 +39,15 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         RCIM.sharedRCIM().initWithAppKey(RONGCLOUDAPPKEY)
 
         //初始化融云即登录
-//        MJLoginOpreationHelper()
 
         IQKeyboardManager.sharedManager().enable = true
         
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(statusNumber), name: RCKitDispatchConnectionStatusChangedNotification, object: nil)
-       
-
-       
-        //ShareSDK
-//        MJShareSDkHelper(isOpen: true)
+        //检测网络
+        judgeReachbility()
+        
+        //MARK:自动登录
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.valueForKey("token") != nil {
             let v = NSObject.getEncodeString("20160901")
@@ -95,21 +96,36 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         self.window!.makeKeyAndVisible()
         return true
     }
+    
     func statusNumber(fication:NSNotification)  {
         print("通知状态改变",fication.object)
         let number = fication.object as! NSNumber
         if number == 6 {
-            let alertt = UIAlertView(title: "", message: "您的账号在别处登录，本地被迫下线(づ￣3￣)づ╭❤～", delegate: self, cancelButtonTitle: "不是本人操作", otherButtonTitles: "是本人操作", "好")
+            let alertt = UIAlertView(title: "⚠️", message: "您的账号在其他设备上登录,请确定是否为本人操作,如非本人操作请及时修改您的登录密码", delegate: self, cancelButtonTitle: nil,otherButtonTitles: "好的")
             alertt.show()
+            
         }
         
     }
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: RCKitDispatchConnectionStatusChangedNotification, object: nil)
     }
+    //MARK:掉线操作
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        let login = YDQLoginRegisterViewController()
-        self.window?.rootViewController?.presentViewController(login, animated: true, completion: nil)
+        if buttonIndex == 0 {
+            userInfo.isLogin = false
+            let defaults = NSUserDefaults.standardUserDefaults()
+            for (key,_) in defaults.dictionaryRepresentation() {
+                defaults.removeObjectForKey(key)
+            }
+            defaults.synchronize()
+            RCIM.sharedRCIM().disconnect()
+            let login = YDQLoginRegisterViewController()
+            self.window?.rootViewController?.presentViewController(login, animated: true, completion: nil)
+        }else{
+            
+        }
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -141,31 +157,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         
         
     }
-    
-    func showMJProgressHUD(message:NSString)  {
-        
-        let HUDView = UIView(frame:CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight, ScreenWidth*0.7, 40) )
-        HUDView.backgroundColor = UIColor(white: 0.400, alpha: 1.0)
-        HUDView.alpha = 0.7
-        self.window?.addSubview(HUDView)
-        
-        UIView.animateWithDuration(1.0) {
-            HUDView.frame = CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight/1.2, ScreenWidth*0.7, 40)
-        }
-        
-        let subLabel = UILabel(frame: CGRectMake(40, 5, CGRectGetWidth(HUDView.frame)-40, 30))
-        subLabel.text = message as String
-        subLabel.textColor = kBlueColor
-        subLabel.textAlignment = .Left
-        subLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
-        HUDView .addSubview(subLabel)
-        
-        //消失
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, __int64_t(1.5)), dispatch_get_main_queue()) {
-            HUDView .removeFromSuperview()
-        }
-        
-    }
+
     func getUserInfoWithUserId(userId: String!, completion: ((RCUserInfo!) -> Void)!) {
         let jjj = RCUserInfo()
         jjj.name = "美女帅哥你们好"
@@ -181,3 +173,102 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
 
 }
 
+extension AppDelegate {
+    
+    func judgeReachbility()   {
+        let manager = NetworkReachabilityManager(host: "www.baidu.com")
+        manager!.listener = { status in
+            
+            switch status {
+            case .NotReachable:
+                print("网络不可用")
+             self.showMJProgressHUD("网络不可用", isAnimate: false)
+            case .Unknown:
+                print("未知网络")
+               self.showMJProgressHUD("未知网络", isAnimate: false)
+            case .Reachable(.EthernetOrWiFi):
+                print("您正处于WiFi状态")
+               self.showMJProgressHUD("您正处于WiFi状态", isAnimate: false)
+            case .Reachable(.WWAN):
+                print("您正处于蜂窝数据连接状态")
+                self.showMJProgressHUD("您正处于蜂窝数据连接状态", isAnimate: false)
+            }
+        }
+        manager!.startListening()
+        
+    }
+    func methodTime()  {
+        
+        timer.invalidate();
+        
+        
+        UIView.beginAnimations(nil, context: nil);
+        
+        UIView.setAnimationCurve(.EaseIn)
+        UIView.setAnimationDuration(0.5);
+        UIView.setAnimationDelegate(self);
+        HUDView.alpha = 0.0;
+        UIView.commitAnimations();
+    }
+    func showMJProgressHUD(message:NSString,isAnimate:Bool) {
+        
+        HUDView = UIView(frame:CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight - 134, ScreenWidth*0.7, 40) )
+        HUDView.backgroundColor = UIColor.blackColor()
+        HUDView.layer.cornerRadius = 5
+        HUDView.layer.masksToBounds = true
+        HUDView.alpha = 0.7
+        self.window!.addSubview(HUDView)
+        let image = UIImageView(frame: CGRectMake(0, 0, 40, 40))
+        image.animationDuration = 4
+        
+        let subLabel = UILabel(frame: CGRectMake(40, 5, CGRectGetWidth(HUDView.frame)-40, 30))
+        subLabel.text = message as String
+        subLabel.textColor = kBlueColor
+        subLabel.textAlignment = .Left
+        subLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+        HUDView .addSubview(subLabel)
+        
+        HUDView .addSubview(image)
+        var ary = [UIImage]()
+        for index in 1...90{
+            
+            let images = UIImage(named: NSString(format: "cool－%d（被拖移）.tiff", index) as String)
+            ary .append(images!)
+        }
+        
+        image.animationImages = ary
+        image.startAnimating()
+        
+        
+        func shakeToUpShow(aView: UIView) {
+            let animation = CAKeyframeAnimation(keyPath: "transform");
+            animation.duration = 0.3;
+            let values = NSMutableArray();
+            values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(0.8, 0.8, 1.0)))
+            values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(1.2, 1.2, 1.0)))
+            values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(0.9, 0.9, 1.0)))
+            values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(1.0, 1.0, 1.0)))
+            animation.values = values as [AnyObject];
+            aView.layer.addAnimation(animation, forKey: nil)
+        }
+        
+        func runTime() {
+            
+            timer = NSTimer(timeInterval: 0.5, target: self, selector: #selector(MainViewController.methodTime), userInfo: nil, repeats: true)
+            
+            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+            
+        }
+        if isAnimate != false {
+            shakeToUpShow(HUDView);
+            runTime();
+        }else{
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                self.HUDView .removeFromSuperview()
+            }
+        }
+        
+    }
+
+}

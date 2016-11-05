@@ -288,10 +288,6 @@
 		BF9739D11D9F81ED00E1B3EB /* TempLeftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9739D01D9F81ED00E1B3EB /* TempLeftViewController.swift */; };
 		BF9739D31D9F89CF00E1B3EB /* InterfaceFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9739D21D9F89CF00E1B3EB /* InterfaceFile.swift */; };
 		BF9CA16F1DC86FAA0043F535 /* MJMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9CA16E1DC86FAA0043F535 /* MJMessageCell.swift */; };
-		BF9CA1711DC86FDF0043F535 /* MJJGGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9CA1701DC86FDF0043F535 /* MJJGGView.swift */; };
-		BF9CA17A1DC870750043F535 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9CA1741DC870750043F535 /* SDBrowserImageView.m */; };
-		BF9CA17B1DC870750043F535 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9CA1761DC870750043F535 /* SDPhotoBrowser.m */; };
-		BF9CA17C1DC870750043F535 /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9CA1791DC870750043F535 /* SDWaitingView.m */; };
 		BF9CA17E1DC87D000043F535 /* MJCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9CA17D1DC87D000043F535 /* MJCommentCell.swift */; };
 		BF9CA1811DC87EFD0043F535 /* CommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9CA1801DC87EFD0043F535 /* CommentModel.m */; };
 		BFA3273D1D9CF7200003AA4D /* MJGreenAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA3273C1D9CF7200003AA4D /* MJGreenAnnotationView.swift */; };
@@ -613,7 +609,6 @@
 		BFC126A21DB48C2B00E11088 /* HistoryDongdouArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1269F1DB48C2B00E11088 /* HistoryDongdouArray.swift */; };
 		BFC126A31DB48C2B00E11088 /* HistoryDongdouData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC126A01DB48C2B00E11088 /* HistoryDongdouData.swift */; };
 		BFC126A41DB48C2B00E11088 /* HistoryDongdouModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC126A11DB48C2B00E11088 /* HistoryDongdouModel.swift */; };
-		BFC126A61DB4A42200E11088 /* MJKeyChainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC126A51DB4A42200E11088 /* MJKeyChainHelper.swift */; };
 		BFC126A81DB4A56200E11088 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC126A71DB4A56200E11088 /* Security.framework */; };
 		BFC126AE1DB4ADCA00E11088 /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC126AC1DB4ADCA00E11088 /* TokenData.swift */; };
 		BFC126AF1DB4ADCA00E11088 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC126AD1DB4ADCA00E11088 /* TokenModel.swift */; };
@@ -999,14 +994,6 @@
 		BF9739D01D9F81ED00E1B3EB /* TempLeftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempLeftViewController.swift; sourceTree = "<group>"; };
 		BF9739D21D9F89CF00E1B3EB /* InterfaceFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceFile.swift; sourceTree = "<group>"; };
 		BF9CA16E1DC86FAA0043F535 /* MJMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJMessageCell.swift; sourceTree = "<group>"; };
-		BF9CA1701DC86FDF0043F535 /* MJJGGView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJJGGView.swift; sourceTree = "<group>"; };
-		BF9CA1731DC870750043F535 /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
-		BF9CA1741DC870750043F535 /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
-		BF9CA1751DC870750043F535 /* SDPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowser.h; sourceTree = "<group>"; };
-		BF9CA1761DC870750043F535 /* SDPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoBrowser.m; sourceTree = "<group>"; };
-		BF9CA1771DC870750043F535 /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
-		BF9CA1781DC870750043F535 /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
-		BF9CA1791DC870750043F535 /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
 		BF9CA17D1DC87D000043F535 /* MJCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJCommentCell.swift; sourceTree = "<group>"; };
 		BF9CA17F1DC87EFD0043F535 /* CommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentModel.h; sourceTree = "<group>"; };
 		BF9CA1801DC87EFD0043F535 /* CommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentModel.m; sourceTree = "<group>"; };
@@ -1349,7 +1336,6 @@
 		BFC1269F1DB48C2B00E11088 /* HistoryDongdouArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryDongdouArray.swift; sourceTree = "<group>"; };
 		BFC126A01DB48C2B00E11088 /* HistoryDongdouData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryDongdouData.swift; sourceTree = "<group>"; };
 		BFC126A11DB48C2B00E11088 /* HistoryDongdouModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryDongdouModel.swift; sourceTree = "<group>"; };
-		BFC126A51DB4A42200E11088 /* MJKeyChainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJKeyChainHelper.swift; sourceTree = "<group>"; };
 		BFC126A71DB4A56200E11088 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BFC126AC1DB4ADCA00E11088 /* TokenData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
 		BFC126AD1DB4ADCA00E11088 /* TokenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenModel.swift; sourceTree = "<group>"; };
@@ -1848,7 +1834,6 @@
 		BF071F1C1D9A0D68000551F7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BF9CA1721DC870750043F535 /* SDPhotoBrowser */,
 				BF071F1D1D9A0D68000551F7 /* ConfirmOldPw.swift */,
 				BF071F1E1D9A0D68000551F7 /* HeaderView.swift */,
 				BF071F1F1D9A0D68000551F7 /* likeButton.swift */,
@@ -1867,7 +1852,6 @@
 				BFFCE0511DBF28840045087A /* TotalRankHeadCell.swift */,
 				BFFCE0531DBF471A0045087A /* SubTotalRankCell.swift */,
 				BF9CA16E1DC86FAA0043F535 /* MJMessageCell.swift */,
-				BF9CA1701DC86FDF0043F535 /* MJJGGView.swift */,
 				BF9CA17D1DC87D000043F535 /* MJCommentCell.swift */,
 			);
 			path = View;
@@ -1987,20 +1971,6 @@
 				BFCD98D01DAC7B0700AF915C /* DataSource.swift */,
 			);
 			path = "网络请求";
-			sourceTree = "<group>";
-		};
-		BF9CA1721DC870750043F535 /* SDPhotoBrowser */ = {
-			isa = PBXGroup;
-			children = (
-				BF9CA1731DC870750043F535 /* SDBrowserImageView.h */,
-				BF9CA1741DC870750043F535 /* SDBrowserImageView.m */,
-				BF9CA1751DC870750043F535 /* SDPhotoBrowser.h */,
-				BF9CA1761DC870750043F535 /* SDPhotoBrowser.m */,
-				BF9CA1771DC870750043F535 /* SDPhotoBrowserConfig.h */,
-				BF9CA1781DC870750043F535 /* SDWaitingView.h */,
-				BF9CA1791DC870750043F535 /* SDWaitingView.m */,
-			);
-			path = SDPhotoBrowser;
 			sourceTree = "<group>";
 		};
 		BFAD63251D9E3E08006234E1 /* 融云IM */ = {
@@ -3594,7 +3564,6 @@
 				5C90F1351D8FCFA0005E16AF /* YJTabBarButton.h */,
 				5C90F1361D8FCFA0005E16AF /* YJTabBarButton.m */,
 				5C24BB6C1D9A492500A6D25F /* YDQPrefixHeader.pch */,
-				BFC126A51DB4A42200E11088 /* MJKeyChainHelper.swift */,
 			);
 			path = "配置文件";
 			sourceTree = "<group>";
@@ -4262,7 +4231,6 @@
 				BF071F451D9A110B000551F7 /* PersonalViewController.swift in Sources */,
 				5C27BAF11DB761D9005A2F8D /* UIView+PYExtension.m in Sources */,
 				BF44EA431DC319E600AD7B3D /* RegistVC.swift in Sources */,
-				BF9CA17A1DC870750043F535 /* SDBrowserImageView.m in Sources */,
 				BF071EF61D9A0D5F000551F7 /* AllNoticeViewController.swift in Sources */,
 				5C5DB9EF1DBB609700BF89EE /* DiscoveryImage.swift in Sources */,
 				BF9CA1811DC87EFD0043F535 /* CommentModel.m in Sources */,
@@ -4333,7 +4301,6 @@
 				5C2A956C1D8D86B2006D1462 /* CellModel.m in Sources */,
 				BF071F431D9A10DA000551F7 /* QuanZiViewController.swift in Sources */,
 				BFAF23C11DB85EBC00294988 /* CircleInfoArray.swift in Sources */,
-				BF9CA17C1DC870750043F535 /* SDWaitingView.m in Sources */,
 				BF071F381D9A0D68000551F7 /* MJAlertView.swift in Sources */,
 				5C5C8F221DC9A2090019633F /* SignRankingData.swift in Sources */,
 				BFB44F5E1DC9731B0066D49F /* FacePageView.m in Sources */,
@@ -4349,7 +4316,6 @@
 				5C6CD9971DC2FA0C001F3DA8 /* MudPlayerControls.swift in Sources */,
 				BF071F3E1D9A0D68000551F7 /* SendPhoneNumberView.swift in Sources */,
 				5C7C3A031DB5CE3F00EA598B /* DiscoveryCommentModel.swift in Sources */,
-				BF9CA17B1DC870750043F535 /* SDPhotoBrowser.m in Sources */,
 				BF071F2E1D9A0D68000551F7 /* SendPhoneViewController.swift in Sources */,
 				BF071EFD1D9A0D5F000551F7 /* SelectChangDiViewController.swift in Sources */,
 				5CA4EA3A1D8E7453001A8E8D /* UITableViewCell+HYBMasonryAutoCellHeight.m in Sources */,
@@ -4409,7 +4375,6 @@
 				BFC65D1D1D869FD1004E7E99 /* AppDelegate.swift in Sources */,
 				BFD36CC41DB9BB0C005005A3 /* circleMemberData.swift in Sources */,
 				BFD36CD01DBA1922005005A3 /* AllNoticeData.swift in Sources */,
-				BFC126A61DB4A42200E11088 /* MJKeyChainHelper.swift in Sources */,
 				5C27BAFC1DB761D9005A2F8D /* PYPhotosView.m in Sources */,
 				BFA6DDC71D895C11009017DE /* UIControl+Custom.m in Sources */,
 				BFBABCBC1DC1DEA1009F068E /* RCAnimatedImagesView.m in Sources */,
@@ -4445,7 +4410,6 @@
 				5C6CD9981DC2FA0C001F3DA8 /* MudPlayerView.swift in Sources */,
 				BF071F071D9A0D5F000551F7 /* MJBlacklistView.swift in Sources */,
 				5C913F961DBDEB0E00E567FB /* WeatherModel.swift in Sources */,
-				BF9CA1711DC86FDF0043F535 /* MJJGGView.swift in Sources */,
 				BFDB2A461DA3D77500A65DAD /* MJShareSDkHelper.swift in Sources */,
 				BFAD632A1D9E47BC006234E1 /* MJConversationViewController.swift in Sources */,
 				BFFF74DC1DBDB443005295D4 /* LoginModel.swift in Sources */,

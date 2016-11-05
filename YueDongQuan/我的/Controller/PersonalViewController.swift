@@ -8,7 +8,7 @@
 
 import UIKit
 import SnapKit
-
+import MJRefresh
 class PersonalViewController: MainViewController{
 
     var headerBgView = UIView()
@@ -27,6 +27,12 @@ class PersonalViewController: MainViewController{
     var chatKeyBoard : ChatKeyBoard?
     var currentIndexPath : NSIndexPath?
     
+    //条数
+    var pagesize = 0
+    
+    var judgeSayNumber = Int()
+    //单词请求条数
+    let singleRqusetNum = 3
     
     
     override func loadView() {
@@ -49,6 +55,10 @@ class PersonalViewController: MainViewController{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.hidden = false
+        let refresh = MJRefreshAutoNormalFooter(refreshingTarget: self,
+                                                refreshingAction: #selector(refreshDownloadData))
+        
+        MainBgTableView.mj_footer = refresh
         MainBgTableView.reloadData()
         let titleLabel = UILabel(frame: CGRect(x: 0,
             y: 0,
@@ -104,10 +114,9 @@ class PersonalViewController: MainViewController{
         MainBgTableView.dataSource = self
         MainBgTableView.custom_CellAcceptEventInterval = 2
         MainBgTableView.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
-        MainBgTableView.registerClass(HKFTableViewCell.self, forCellReuseIdentifier: "hkfCell")
+        
+        
     }
-    
-   
     //MARK:查询个人信息 下载数据
     func downloadData()  {
         let index = 1
@@ -118,7 +127,13 @@ class PersonalViewController: MainViewController{
         let v = NSObject.getEncodeString("20160901")
         let uid = userInfo.uid
         let pageNo = index
-        let pageSize = index + 5
+        //singleRqusetNum 默认的自加条数 自定
+        pagesize += singleRqusetNum
+        
+        print("请求的条数 = ",pagesize)
+        
+        
+        let pageSize =  pagesize
         //参数
         let dic = ["v":v,
                    "uid":uid,
@@ -134,7 +149,9 @@ class PersonalViewController: MainViewController{
                                                     
                       let model =  DataSource().getmyinfoData(responseDic)
                         self.myinfoModel = model
-                        self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.myinfoModel, waitUntilDone: true)
+                        self.performSelectorOnMainThread(#selector(self.updateUI),
+                                                          withObject: self.myinfoModel,
+                                                          waitUntilDone: true)
                         }, fail: { (error) in
                             
                     })
@@ -148,7 +165,10 @@ class PersonalViewController: MainViewController{
                 }
     }
 
-  
+    func refreshDownloadData()  {
+        MainBgTableView.mj_footer.beginRefreshing()
+        downloadData()
+    }
 
     
        override func didReceiveMemoryWarning() {
@@ -206,6 +226,8 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     self.showMJProgressHUD("暂时没有说说(づ￣3￣)づ╭❤～", isAnimate: true)
                     return 0
                 }else{
+                    print("我的说说条数",(self.myfoundmodel?.data.array.count)!)
+                    judgeSayNumber = (self.myfoundmodel?.data.array.count)!
                     return (self.myfoundmodel?.data.array.count)!
                 }
             }
@@ -331,41 +353,47 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                 return cell!
             }
             else if(indexPath.section == 2){
-                var messageCell = tableView.dequeueReusableCellWithIdentifier(identifier) as? MJMessageCell
-                messageCell?.indexPath = indexPath
-                messageCell = MJMessageCell(style: .Default, reuseIdentifier: identifier)
-                let window = UIApplication.sharedApplication().keyWindow
-                let weakSelf = self
-                let weakWindow = window
-                let weakTable = tableView
-                messageCell?.delegate = self
-                if self.myfoundmodel != nil {
-                    messageCell?.configCellWithModel(self.myfoundmodel!,indexpath: indexPath)
-                }
-                
-                messageCell?.CommentBtnClick({ (commentBtn, indexPath) in
-                    self.replayTheSeletedCellModel = nil
-                    weakSelf.seletedCellHeight = 0
-                    weakSelf.chatKeyBoard?.placeHolder = String(format: "评论%@",(weakSelf.myfoundmodel?.data.array[indexPath.row].aname)!)
-                    weakSelf.history_Y_offset = commentBtn.convertRect(commentBtn.bounds, toView: weakWindow).origin.y
-                    weakSelf.currentIndexPath = indexPath
-                    weakSelf.chatKeyBoard?.keyboardUpforComment()
-                })
-                messageCell?.TapOnImage({ (index, dataSource, indexPath) in
-                    weakSelf.chatKeyBoard?.keyboardDownForComment()
-                })
-                messageCell?.tapOnDesLabel({ (desLabel) in
+                if self.myfoundmodel?.code == "405" {
+                    let nonedataView = UIImageView(frame: CGRect(x: 0, y: 400, width: ScreenWidth, height: ScreenWidth))
+                    nonedataView.image = UIImage(named: "noneData")
+                    self.view.addSubview(nonedataView)
                     
-                })
-                messageCell?.MoreBtnClick({ (zanBtn, indexPath) in
-                    weakSelf.chatKeyBoard?.keyboardDownForComment()
-                    weakSelf.chatKeyBoard?.placeHolder = nil
-                    self.myfoundmodel?.isExpand = !(self.myfoundmodel?.isExpand)!
-                    weakTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-                })
-                return messageCell!
-                
-                
+                }else{
+                    var messageCell = tableView.dequeueReusableCellWithIdentifier(identifier) as? MJMessageCell
+                    messageCell?.indexPath = indexPath
+                    messageCell = MJMessageCell(style: .Default, reuseIdentifier: identifier)
+                    let window = UIApplication.sharedApplication().keyWindow
+                    let weakSelf = self
+                    let weakWindow = window
+                    let weakTable = tableView
+                    messageCell?.delegate = self
+                    if self.myfoundmodel != nil {
+                        messageCell?.configCellWithModel(self.myfoundmodel!,indexpath: indexPath)
+                    }
+                    
+                    messageCell?.CommentBtnClick({ (commentBtn, indexPath) in
+                        self.replayTheSeletedCellModel = nil
+                        weakSelf.seletedCellHeight = 0
+                        weakSelf.chatKeyBoard?.placeHolder = String(format: "评论%@",(weakSelf.myfoundmodel?.data.array[indexPath.row].aname)!)
+                        weakSelf.history_Y_offset = commentBtn.convertRect(commentBtn.bounds, toView: weakWindow).origin.y
+                        weakSelf.currentIndexPath = indexPath
+                        weakSelf.chatKeyBoard?.keyboardUpforComment()
+                    })
+                    messageCell?.TapOnImage({ (index, dataSource, indexPath) in
+                        weakSelf.chatKeyBoard?.keyboardDownForComment()
+                    })
+                    messageCell?.tapOnDesLabel({ (desLabel) in
+                        
+                    })
+                    messageCell?.MoreBtnClick({ (zanBtn, indexPath) in
+                        weakSelf.chatKeyBoard?.keyboardDownForComment()
+                        weakSelf.chatKeyBoard?.placeHolder = nil
+                        self.myfoundmodel?.isExpand = !(self.myfoundmodel?.isExpand)!
+                        weakTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    })
+                    return messageCell!
+
+                }
             }
             
             
@@ -393,8 +421,14 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
     
     func updateUI() {
         MainBgTableView.reloadData()
+        if pagesize - judgeSayNumber >= singleRqusetNum + 1 {
+            MainBgTableView.mj_footer.endRefreshingWithNoMoreData()
+        }else{
+            MainBgTableView.mj_footer.endRefreshing()
+        }
+       
     }
-
+   
 }
 
 

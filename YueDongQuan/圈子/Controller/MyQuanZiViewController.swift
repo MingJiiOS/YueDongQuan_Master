@@ -33,6 +33,10 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
         super.viewDidLoad()
          loadData()
         self.creatTableView()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "新建圈子", style: .Plain, target: self, action: #selector(creatNewQuanZi))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜我的圈子", style: .Plain, target: self, action:  #selector(pop))
+        
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -50,9 +54,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
         tableView.delegate = self
         tableView.dataSource = self
         self.view .addSubview(tableView)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "新建圈子", style: .Plain, target: self, action: #selector(creatNewQuanZi))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜我的圈子", style: .Plain, target: self, action:  #selector(pop))
+       
         
     }
     override func didReceiveMemoryWarning() {
@@ -63,6 +65,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     func creatNewQuanZi()  {
         let new = NewQuanZiViewController()
         let nav = CustomNavigationBar(rootViewController: new)
+        nav.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.presentViewController(nav, animated: true, completion: nil)
         
         
@@ -98,7 +101,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                 //MARK:权限为圈主的数据
                 var index: Int
                  let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cell")
-                    cell.imageView?.image = UIImage(named: "img_message_2x")
+                
 //                    cell.detailTextLabel?.text = self.myclrclemodel?.data.array[indexPath.row].number.description
                     cell.detailTextLabel?.textColor = UIColor.grayColor()
                     cell.detailTextLabel?.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
@@ -111,6 +114,13 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                     } 
                 }
                  cell.textLabel?.text = ownNameAry[indexPath.row] as? String
+                 cell.imageView?.snp_makeConstraints(closure: { (make) in
+                    make.left.equalTo(10)
+                    make.top.equalTo(5)
+                    make.bottom.equalTo(-5)
+                    make.width.equalTo(50)
+                 })
+                 cell.imageView?.sd_setImageWithURL(NSURL(string: thumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: ""))
                 print(ownClrcleIDAry)
                 
                 
@@ -119,7 +129,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
             }else{
                 var index: Int
                 let  cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cell")
-                    cell.imageView?.image = UIImage(named: "img_message_2x")
+                
                     cell.textLabel?.text = self.myclrclemodel?.data.array[indexPath.row].name
                     //                cell.detailTextLabel?.text = self.myclrclemodel?.data.array[indexPath.row].number.description
                     cell.detailTextLabel?.textColor = UIColor.grayColor()
@@ -134,6 +144,13 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                         }
                     }
                     cell.textLabel?.text = joinNameAry[indexPath.row] as? String
+                cell.imageView?.snp_makeConstraints(closure: { (make) in
+                    make.left.equalTo(10)
+                    make.top.equalTo(5)
+                    make.bottom.equalTo(-5)
+                    make.width.equalTo(50)
+                })
+                    cell.imageView?.sd_setImageWithURL(NSURL(string: jointhumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: ""))
                     return cell
                 
             }
@@ -265,9 +282,21 @@ extension MyQuanZiViewController {
         MJNetWorkHelper().mycircle(mycircle, mycircleModel: dic, success: { (responseDic, success) in
             let model = DataSource().getmycircleData(responseDic)
             self.myclrclemodel = model
-            self.tableView.reloadData()
+            if model.code != "405"{
+                
+                 self.tableView.reloadData()
+            }else{
+                self.tableView.removeFromSuperview()
+                let nonedataView = UIImageView()
+                nonedataView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenWidth)
+                nonedataView.center = self.view.center
+                nonedataView.backgroundColor = UIColor.blackColor()
+                nonedataView.image = UIImage(named: "noneData")
+                        
+                self.view.addSubview(nonedataView)
+                }
+
         }) { (error) in
-            
         }
     }
 }

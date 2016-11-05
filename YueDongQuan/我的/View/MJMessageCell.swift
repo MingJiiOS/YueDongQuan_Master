@@ -16,6 +16,8 @@ protocol MJMessageCellDelegate {
 class MJMessageCell: UITableViewCell {
 
     var displayView = PYPhotosView()
+    var videoView = PYPhotosView()
+    
     var commentModel = [myFoundCommentComment]()
     
     
@@ -103,7 +105,6 @@ class MJMessageCell: UITableViewCell {
     
     
     self.descLabel = UILabel()
-    self.descLabel?.backgroundColor = UIColor.groupTableViewBackgroundColor()
     self.descLabel?.font = UIFont(name: "Arial", size: kMidScaleOfFont)
     let tapTexts = UITapGestureRecognizer(target: self, action: #selector(tapOnText))
     self.descLabel?.addGestureRecognizer(tapTexts)
@@ -127,22 +128,6 @@ class MJMessageCell: UITableViewCell {
         make.top.equalTo(70)
     })
     
-//    self.moreBtn = UIButton(type: .Custom)
-//    self.moreBtn?.setTitle("全文", forState: UIControlState.Normal)
-//    self.moreBtn?.setTitle("收起", forState: UIControlState.Normal)
-//    self.moreBtn?.setTitleColor(UIColor(red: 92/255, green: 140/255, blue: 193/255, alpha: 1), forState: UIControlState.Normal)
-//    self.moreBtn?.setTitleColor(UIColor(red: 92/255, green: 140/255, blue: 193/255, alpha: 1), forState: UIControlState.Normal)
-//    self.moreBtn?.titleLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
-//    self.moreBtn?.contentHorizontalAlignment = .Left
-//    self.moreBtn?.selected = false
-//    self.moreBtn?.addTarget(self, action: #selector(moreAction
-//        ), forControlEvents: UIControlEvents.TouchUpInside)
-//    self.contentView .addSubview(self.moreBtn!)
-//    self.moreBtn?.snp_makeConstraints(closure: { (make) in
-//        make.left.equalTo(self.descLabel!)
-//        make.top.equalTo((self.descLabel?.snp_bottom)!)
-//    })
-    
     //MARK:九宫格
     //照片或视频展示
     self.contentView.addSubview(self.displayView)
@@ -153,6 +138,7 @@ class MJMessageCell: UITableViewCell {
         make.left.equalTo(10)
         make.top.equalTo((self.contentLabel?.snp_bottom)!).offset(10)
     })
+    
      self.seeBtn = UIButton(type: .Custom)
     
     
@@ -286,7 +272,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         self.commentModel = model.data.array[indexpath.row].comment
         
         self.nameLabel?.text = userInfo.name
-        self.say_type?.image = UIImage(named: "explain_vedio")
+        self.distinguishSayTypeWithTypeId(model, index: indexpath)
         
         let timeStr = TimeStampToDate().getTimeString(model.data.array[indexpath.row].time)
         self.descLabel?.text = timeStr
@@ -306,45 +292,9 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         }
         self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: ""))
         self.myfoundModel = model
-//        
-//        let mustyle = NSMutableParagraphStyle()
-//        mustyle.lineSpacing = 3
-//        mustyle.alignment = .Left
+
         let attrString = NSMutableAttributedString(string:  model.data.array[indexpath.row].content)
         self.contentLabel?.attributedText = attrString
-//        self.contentLabel?.userInteractionEnabled = true
-//        let attributes = [NSFontAttributeName:UIFont.systemFontOfSize(kMidScaleOfFont),NSParagraphStyleAttributeName:mustyle]
-//        let h = (model.data.array[indexpath.row].content)!.boundingRectWithSize(CGSize(width: ScreenWidth-10-40-20, height: CGFloat.max), options: .UsesLineFragmentOrigin, attributes: attributes, context: nil).size.height+0.5
-//        if h <= 60 {
-//            self.moreBtn?.snp_remakeConstraints(closure: { (make) in
-//                make.left.equalTo(self.contentLabel!)
-//                make.top.equalTo((self.contentLabel?.snp_bottom)!)
-//                make.size.equalTo(CGSize(width: 0,height: 0))
-//            })
-//        }else{
-//            self.moreBtn?.snp_makeConstraints(closure: { (make) in
-//                make.left.equalTo(self.contentLabel!)
-//                make.top.equalTo((self.contentLabel?.snp_bottom)!)
-//            })
-//        }
-//        if model.isExpand {
-//            self.contentLabel?.snp_remakeConstraints(closure: { (make) in
-//                make.left.equalTo(10)
-//                make.right.equalTo(-10)
-//                make.top.equalTo(self.headImageView!.snp_bottom).offset(10)
-//                make.height.equalTo(h);
-//            })
-//        }else{
-//            self.contentLabel?.snp_remakeConstraints(closure: { (make) in
-//                make.left.equalTo(10)
-//                make.right.equalTo(-10)
-//                make.top.equalTo(self.headImageView!.snp_bottom).offset(10)
-//                make.height.lessThanOrEqualTo(60)
-//            })
-//        }
-//        self.moreBtn?.selected = model.isExpand
-//        
-        
         
         
         if model.data.array[indexpath.row].images.count != 0 {
@@ -372,6 +322,16 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
             self.displayView.thumbnailUrls = thImageStr
             self.displayView.originalUrls = oringIMage
 
+        if model.data.array[indexpath.row].typeId == 12 {
+            self.displayView.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo((ScreenWidth-30)/3)
+            })
+            self.displayView.hidden = false
+            self.displayView.thumbnailUrls = ["http://cdn.duitang.com/uploads/item/201508/23/20150823182337_jMVv5.jpeg"]
+            self.displayView.originalUrls = ["http://cdn.duitang.com/uploads/item/201508/23/20150823182337_jMVv5.jpeg"]
+        }
+        
+        
         
         
         var tableViewHeight = CGFloat()
@@ -402,6 +362,37 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         self.tableView?.registerClass(MJCommentCell.self, forCellReuseIdentifier: "identtifier")
     }
 
+    func distinguishSayTypeWithTypeId(model:myFoundModel,index:NSIndexPath)  {
+ 
+        let sayArray = model.data.array[index.row]
+        
+        switch sayArray.typeId {
+        case 11:
+            self.say_type?.image = UIImage(named: "explain_pic")
+            break
+        case 12:
+            self.say_type?.image = UIImage(named: "explain_vedio")
+            break
+        case 13:
+            self.say_type?.image = UIImage(named: "explain_recruit")
+            break
+        case 14:
+            self.say_type?.image = UIImage(named: "explain_pic")
+            break
+        case 15:
+            self.say_type?.image = UIImage(named: "explain_enlist")
+            break
+        case 16:
+            self.say_type?.image = UIImage(named: "explain_JOIN")
+            break
+        default:
+            break
+        }
+        
+        
+    }
+    
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
