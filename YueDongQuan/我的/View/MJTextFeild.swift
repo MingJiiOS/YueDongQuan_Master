@@ -32,6 +32,7 @@ class MJLoginTextField: UITextField {
 
         self.tintColor = UIColor.whiteColor()
         self.textColor = UIColor.whiteColor()
+        //首先拿到画布
         let context = UIGraphicsGetCurrentContext()
         //两边向上小角的高度
         let cornerLength:CGFloat = 5

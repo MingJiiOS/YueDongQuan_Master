@@ -93,7 +93,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
         
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
+        let cell = stytemCell(style: .Default, reuseIdentifier: "cell")
         if self.myclrclemodel != nil {
             
             
@@ -128,7 +128,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                  return cell
             }else{
                 var index: Int
-                let  cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cell")
+                let  cell = stytemCell(style: .Subtitle, reuseIdentifier: "cell")
                 
                     cell.textLabel?.text = self.myclrclemodel?.data.array[indexPath.row].name
                     //                cell.detailTextLabel?.text = self.myclrclemodel?.data.array[indexPath.row].number.description
@@ -144,13 +144,10 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                         }
                     }
                     cell.textLabel?.text = joinNameAry[indexPath.row] as? String
-                cell.imageView?.snp_makeConstraints(closure: { (make) in
-                    make.left.equalTo(10)
-                    make.top.equalTo(5)
-                    make.bottom.equalTo(-5)
-                    make.width.equalTo(50)
-                })
-                    cell.imageView?.sd_setImageWithURL(NSURL(string: jointhumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: ""))
+                
+                
+                 cell.imageView?.sd_setImageWithURL(NSURL(string: jointhumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: ""))
+                 
                     return cell
                 
             }

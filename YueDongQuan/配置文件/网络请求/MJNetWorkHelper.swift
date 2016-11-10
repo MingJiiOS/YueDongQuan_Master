@@ -38,10 +38,6 @@ class MJNetWorkHelper: NSObject {
                 print("接口名 = \(interfaceName)",json)
 
                     success(responseDic: str as! NSDictionary, success: true)
-
-               
-
-                
             case .Failure(let error):
                 fail(error: error)
                 print(error)
@@ -77,6 +73,10 @@ class MJNetWorkHelper: NSObject {
     //MARK:他的信息
     func checkHeInfo(interfaceName:NSString,HeInfoModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {
         post(interfaceName, requestModel: HeInfoModel, success: success, fail: fail)
+    }
+    //MARK:他的说说
+    func checkHeFound(interfaceName:NSString,HeFoundModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock) {
+        post(interfaceName, requestModel: HeFoundModel, success: success, fail: fail)
     }
     //MARK:修改头像
     func updateHeadImage(interfaceName:NSString,updateHeadImageModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {

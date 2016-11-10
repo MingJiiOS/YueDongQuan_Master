@@ -37,10 +37,15 @@ print(indexSection,indexRow)
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
         self.tableView.reloadData()
         loadAllParterData()
     }
-
+  
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

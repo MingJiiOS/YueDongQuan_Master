@@ -16,6 +16,16 @@ class publishNoticeViewController: MainViewController,UITextViewDelegate{
     var circleId : String?
     
     var content : String?
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor ( red: 0.9176,
@@ -74,7 +84,7 @@ extension publishNoticeViewController {
                 self.navigationController?.popViewControllerAnimated(true)
             }) { (error) in
                 
-                self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～", isAnimate: true)
+                self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～", isAnimate: true,startY: ScreenHeight-40-45)
             }
         }else{
            self.navigationItem.rightBarButtonItem?.enabled = false

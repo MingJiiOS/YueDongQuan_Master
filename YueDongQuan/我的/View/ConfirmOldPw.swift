@@ -82,7 +82,7 @@ class ConfirmOldPw: UIView {
         whiteView .addSubview(passWord)
         //取消按钮
         let btnWith = (width - 130) / 2/2
-        cancelBtn.frame = CGRect(x: width-btnWith*2, y: 165, width: btnWith, height: 20)
+        cancelBtn.frame = CGRect(x: width-btnWith*2 - 10, y: 165, width: btnWith, height: 20)
         cancelBtn.backgroundColor = UIColor.whiteColor()
         cancelBtn.setTitleColor(RGB_Color(r: 150, g: 150, b: 150, a: 1), forState: UIControlState.Normal)
         cancelBtn.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
@@ -92,7 +92,7 @@ class ConfirmOldPw: UIView {
         cancelBtn.addTarget(self, action: #selector(clickBtnAction), forControlEvents: .TouchUpInside)
         whiteView.addSubview(cancelBtn)
         //确认按钮
-        sureBtn.frame = CGRect(x: width-btnWith , y: 165, width: btnWith, height: 20)
+        sureBtn.frame = CGRect(x: width-btnWith-10 , y: 165, width: btnWith, height: 20)
         sureBtn.backgroundColor = UIColor.whiteColor()
         sureBtn.setTitleColor(kBlueColor, forState: UIControlState.Normal)
         sureBtn.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)

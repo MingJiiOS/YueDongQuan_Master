@@ -95,9 +95,9 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RC
                     self.registModel = model
                     if self.registModel.isRegistSuccess != true{
                         
-                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false)
+                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
                     }else{
-                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false)
+                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
                         
                     }
                     }, fail: { (error) in
@@ -316,10 +316,10 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RC
                         print("返回结果",responseDic)
                         let model = updateNameModel(fromDictionary: responseDic)
                         if model.code == "201"{
-                            self.showMJProgressHUD("此号码已经注册,请检查", isAnimate: false)
+                            self.showMJProgressHUD("此号码已经注册,请检查", isAnimate: false,startY: ScreenHeight-40-45)
                         }
                         }, fail: { (error) in
-                           self.showMJProgressHUD(error.description, isAnimate: false)
+                           self.showMJProgressHUD(error.description, isAnimate: false,startY: ScreenHeight-40-45)
                     })
                 }
                 

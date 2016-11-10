@@ -33,7 +33,7 @@ class CircleHeadView: UIView,UITableViewDelegate,UITableViewDataSource {
         var cell = tableView.dequeueReusableCellWithIdentifier("cell")
         if cell == nil {
             cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-            let array = ["新的圈子","我的圈子"]
+            let array = ["附近的圈子","我的圈子"]
              let imageAry = ["img_newquanzi","img_myquanzi"]
              cell!.textLabel?.text = array[indexPath.row]
             cell!.imageView?.image = UIImage(named: imageAry[indexPath.row])

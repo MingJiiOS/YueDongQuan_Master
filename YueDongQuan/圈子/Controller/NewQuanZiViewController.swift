@@ -335,7 +335,7 @@ extension NewQuanZiViewController{
                                                             }
                             }) { (error) in
                                 
-                                self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: false)
+                                self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: false,startY: ScreenHeight-40-45)
                             }
 //                        }
 //                    }else{

@@ -18,6 +18,7 @@ class MJGreenAnnotationView: MAAnnotationView {
         self.image = UIImage(named: "img_putongquanzi")
         self.canShowCallout = true
         self.calloutOffset = CGPoint(x: -5, y: 0)
+        self.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure)
         
     }
     
@@ -37,7 +38,8 @@ class MJRedAnnotationView: MAAnnotationView {
         
         self.canShowCallout = true
         self.calloutOffset = CGPoint(x: -5, y: 0)
-        
+        self.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure)
+
     }
     
     required init?(coder aDecoder: NSCoder) {

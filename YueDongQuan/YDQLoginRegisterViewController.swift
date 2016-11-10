@@ -96,7 +96,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
                   let loginmodel = DataSource().getUserInfo(responseDic)
                     if loginmodel.code != "200"{
                         
-                        self.showMJProgressHUD("密码错误", isAnimate: false)
+                        self.showMJProgressHUD("密码错误", isAnimate: false,startY: ScreenHeight-40-45)
                     }else{
                         
                         //MARK:融云资料
@@ -155,9 +155,9 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
                     self.registModel = model
                     if self.registModel.isRegistSuccess != true{
                         
-                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false)
+                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
                     }else{
-                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false)
+                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
                         
                     }
                     }, fail: { (error) in
@@ -461,11 +461,11 @@ extension YDQLoginRegisterViewController {
                     if index == 2{
                         let send = SendPhoneViewController()
                         if password.length != 11 {
-                            self.showMJProgressHUD("电话号码有误", isAnimate: false)
+                            self.showMJProgressHUD("电话号码有误", isAnimate: false,startY: ScreenHeight-40-45)
                         }else if password.length == 11{
                             //判断电话是否存在
                             if validateUtils.validatePhoneNumber(password as String) != true {
-                                self.showMJProgressHUD("电话号码有误", isAnimate: false)
+                                self.showMJProgressHUD("电话号码有误", isAnimate: false,startY: ScreenHeight-40-45)
                             }else{
                                 send.phoneNumber = password as String
                                  self.navigationController?.pushViewController(send, animated: true)
@@ -493,18 +493,18 @@ extension YDQLoginRegisterViewController {
                 let model = DataSource().getoldpwData(responseDic)
                 if model.code != "200"{
                     
-                    self.showMJProgressHUD("原密码错误哦！( ⊙ o ⊙ )！", isAnimate: true)
+                    self.showMJProgressHUD("原密码错误哦！( ⊙ o ⊙ )！", isAnimate: true,startY: ScreenHeight-40-45)
                 }else{
                     let newpass = SetNewPasswordViewController()
                     self.navigationController?.pushViewController(newpass, animated: true)
                 }
             }) { (error) in
                 
-                self.showMJProgressHUD("网络出现有点坑呀", isAnimate: true)
+                self.showMJProgressHUD("网络出现有点坑呀", isAnimate: true,startY: ScreenHeight-40-45)
             }
         }else if oldPwModel.pw == ""{
             
-            self.showMJProgressHUD("您还没有输入原密码呢,😊", isAnimate: true)
+            self.showMJProgressHUD("您还没有输入原密码呢,😊", isAnimate: true,startY: ScreenHeight-40-45)
         }
         
         

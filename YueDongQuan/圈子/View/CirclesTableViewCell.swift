@@ -39,14 +39,23 @@ class CirclesTableViewCell: UITableViewCell {
     }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        let line = UIView()
+        self.contentView .addSubview(line)
+        line.snp_makeConstraints { (make) in
+            make.left.equalTo(0)
+            make.height.equalTo(1)
+            make.width.equalTo(ScreenWidth)
+            make.bottom.equalTo(0)
+        }
+        line.backgroundColor = UIColor.groupTableViewBackgroundColor()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     func config(circlesModel:CirclesModel,indexPath:NSIndexPath)  {
-        self.imageView?.image = UIImage(named: "img_message_2x")
+        self.imageView?.sd_setImageWithURL(NSURL(string: circlesModel.data.array[indexPath.row].thumbnailSrc), placeholderImage: nil)
+        
         self.textLabel?.text = circlesModel.data.array[indexPath.row].name
         self.detailTextLabel?.text = NSString(format: "%d 人在热论", circlesModel.data.array[indexPath.row].number) as String
         self.detailTextLabel?.textColor = UIColor.grayColor()
@@ -64,4 +73,22 @@ class CirclesTableViewCell: UITableViewCell {
     func clickBtn()  {
         self.delegate?.clickJoinBtn(self.model!, indexPath: self.index)
     }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.imageView?.frame = CGRect(x: 10,
+                                       y: 5,
+                                       width: self.contentView.frame.size.height-10,
+                                       height: self.contentView.frame.size.height-10)
+        
+        self.textLabel?.frame = CGRect(x: self.contentView.frame.size.height-10+10+10,
+                                       y: (self.textLabel?.frame.size.height)!-10,
+                                       width: (self.textLabel?.frame.size.width)!,
+                                       height: (self.textLabel?.frame.size.height)!)
+        
+        self.detailTextLabel?.frame = CGRect(x: self.contentView.frame.size.height-10+10+10,
+                                             y: ((self.textLabel?.frame.size.height)!*2+5)-10,
+                                             width: (self.detailTextLabel?.frame.size.width)!,
+                                             height: (self.detailTextLabel?.frame.size.height)!)
+    }
+
 }

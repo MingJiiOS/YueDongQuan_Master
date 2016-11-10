@@ -20,6 +20,15 @@ class HeaderView: UIView {
     let quanZiLabel = UILabel()
      let singleBtn = UIButton(type: .Custom)
      let renZheng = UIImageView()
+    
+    typealias clickTheFourBtnzClourse = (btnTag:Int)->Void
+    var clickBtnBlock : clickTheFourBtnzClourse?
+    func bringBtnTagBack(block:clickTheFourBtnzClourse?)  {
+        clickBtnBlock = block
+    }
+    
+    
+    
    override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(headerBgView)
@@ -93,6 +102,7 @@ class HeaderView: UIView {
                 guanZhu.setTitle("关注", forState: UIControlState.Normal)
                 guanZhu.custom_acceptEventInterval = 0.5
                 guanZhu.contentVerticalAlignment = .Bottom
+                guanZhu.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
                 guanZhu.setTitleColor(UIColor.whiteColor(),
                                       forState: UIControlState.Normal)
                 guanZhu .addTarget(self, action: #selector(self.click(_:)),
@@ -122,6 +132,7 @@ class HeaderView: UIView {
                 }
                 changDi.setTitle("粉丝", forState: UIControlState.Normal)
                 changDi.contentVerticalAlignment = .Bottom
+                changDi.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
                 changDi.setTitleColor(UIColor.whiteColor(),
                                       forState: UIControlState.Normal)
                 changDi .addTarget(self, action: #selector(self.click(_:)),
@@ -151,6 +162,7 @@ class HeaderView: UIView {
                 }
                 huoZan.setTitle("获赞", forState: UIControlState.Normal)
                 huoZan.contentVerticalAlignment = .Bottom
+                huoZan.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
                 huoZan.setTitleColor(UIColor.whiteColor(),
                                      forState: UIControlState.Normal)
                 huoZan .addTarget(self, action: #selector(self.click(_:)),
@@ -180,6 +192,7 @@ class HeaderView: UIView {
                 }
                 quanZi.setTitle("圈子", forState: UIControlState.Normal)
                 quanZi.contentVerticalAlignment = .Bottom
+                quanZi.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
                 quanZi.setTitleColor(UIColor.whiteColor(),
                                      forState: UIControlState.Normal)
                 quanZi .addTarget(self, action: #selector(self.click(_:)),
@@ -198,15 +211,16 @@ class HeaderView: UIView {
                 }
     }
     
-    func click(ttag:likeButton)  {
-        _ = PersonalViewController()
-//        kk.clickTheFourButton(ttag)
+    func click(ttag:UIButton)  {
+        if clickBtnBlock != nil {
+            clickBtnBlock!(btnTag:ttag.tag)
+        }
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configContent(model:myInfoModel,isBigV:Bool)  {
+    func configmyInfoContent(model:myInfoModel,isBigV:Bool)  {
         guanZhuLabel.text = model.data.bsum.description
         changDiLabel.text = model.data.msum.description
         huoZanLabel.text = model.data.asum.description
@@ -224,5 +238,25 @@ class HeaderView: UIView {
              singleBtn.setImage(UIImage(named: "ic_nan_ffffff"), forState: UIControlState.Normal)
         }
     }
-
+    func configHeInfoContent(model:HeInfoModel,isBigV:Bool)  {
+        guanZhuLabel.text = model.data.bsum.description
+        changDiLabel.text = model.data.msum.description
+        huoZanLabel.text = model.data.asum.description
+        quanZiLabel.text = model.data.psum.description
+        singleBtn.setTitle(userInfo.age, forState: UIControlState.Normal)
+        headImage.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc))
+        if isBigV != true {
+            renZheng.hidden = true
+        }else{
+            renZheng.image = UIImage(named: "v")
+        }
+        if userInfo.sex == "女" {
+            singleBtn.setImage(UIImage(named: "ic_nv_ffffff"), forState: UIControlState.Normal)
+        }else{
+            singleBtn.setImage(UIImage(named: "ic_nan_ffffff"), forState: UIControlState.Normal)
+        }
+    }
 }
+
+
+

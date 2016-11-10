@@ -81,10 +81,14 @@ class QuanZiViewController: RCConversationListViewController
         
         self.clickButtonTagClosure { (ButtonTag,event) in
             if ButtonTag == 3 {
-                let righttable = topRightTable(frame: CGRect(x: 0,
+                let righttable = CustomTable(frame: CGRect(x: 0,
                                                              y: 0,
                                                              width: 130,
                                                              height: 132))
+                righttable.titleLext =  ["扫一扫","上传场地","新建圈子"]
+                righttable.rowNumber = 3
+                righttable.rowHeight = 44
+                righttable.titleImage = ["ic_erweima","ic_shangchuan","ic_xinjianquanzi"]
                 let popview = WJPopoverViewController(showView: righttable)
                 popview.borderWidth = 0
                 popview.showPopoverWithBarButtonItemTouch(event,
