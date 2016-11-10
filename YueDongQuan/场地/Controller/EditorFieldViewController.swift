@@ -350,6 +350,24 @@ class EditorFieldViewController: UIViewController{
             imageId = (self.editModel?.data.id)!
         }
 
+        if field_Name == "" {
+            let alert = UIAlertView(title: "提示", message: "场地名不能为空", delegate: nil, cancelButtonTitle: "取消")
+            alert.show()
+            return
+            
+        }
+        
+        if field_Tel == "" {
+            let alert = UIAlertView(title: "提示", message: "电话号码不能为空", delegate: nil, cancelButtonTitle: "取消")
+            alert.show()
+            return
+        }
+        
+        if field_Price == "" {
+            let alert = UIAlertView(title: "提示", message: "价格不能为空", delegate: nil, cancelButtonTitle: "取消")
+            alert.show()
+            return
+        }
         
         requestToEditorFieldInfo(self.field_Id.description, imageId: imageId, phone: self.field_Tel, cost: self.field_Price, name: self.field_Name)
         
@@ -486,6 +504,9 @@ extension EditorFieldViewController : UIImagePickerControllerDelegate,UINavigati
                 print(str["code"])
                 
                 print(str["flag"])
+                
+                
+                
                 
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
                     self.navigationController?.popViewControllerAnimated(true)

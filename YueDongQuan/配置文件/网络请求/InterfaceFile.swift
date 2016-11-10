@@ -4,7 +4,7 @@ import Foundation
 
 let kURL = "http://192.168.3.20:8080/redong"
 
-let testUrl = "http://192.168.3.20:8080/redong"
+let testUrl = "http://192.168.3.22:8080/redong"//"http://ctyundong.com:8088/redong"//
 
 //MARK:接口名 获取融云token
 let getToken = "getToken"
