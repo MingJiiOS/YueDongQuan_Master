@@ -19,7 +19,20 @@ class SignHeaderView: UIView {
     var delegate : SignHeaderViewDelegate?
     
     var timeStatus = UILabel()//暂停还是继续
-    
+    var kaluliTemp = ""{
+        didSet{
+            let str = NSMutableAttributedString(string: "已消耗 \(kaluliTemp) 卡路里")
+            
+            str.beginEditing()
+            str.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(11)], range: NSRange(location: 0, length: 3))
+            str.addAttributes([NSForegroundColorAttributeName:UIColor.whiteColor()], range: NSRange(location: 4, length: kaluliTemp.characters.count))
+            str.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(18)], range: NSRange(location: 4, length: kaluliTemp.characters.count))
+            str.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(11)], range: NSRange(location: 5 + kaluliTemp.characters.count, length: 3))
+            
+            expendCaloric.attributedText = str
+            expendCaloric.textAlignment = .Center
+        }
+    }//消耗的卡路里
     var yesterDay = UILabel()
     var yesterdayCount = UILabel()
     var toDay = UILabel()
@@ -173,14 +186,14 @@ class SignHeaderView: UIView {
             make.width.equalTo(ScreenWidth/2)
             make.height.equalTo(30)
         }
-        let test = "200022"
-        let str = NSMutableAttributedString(string: "已消耗 \(test) 卡路里")
-        NSLog("str = \(str.length)")
+        
+        let str = NSMutableAttributedString(string: "已消耗 \(kaluliTemp) 卡路里")
+        
         str.beginEditing()
         str.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(11)], range: NSRange(location: 0, length: 3))
-        str.addAttributes([NSForegroundColorAttributeName:UIColor.whiteColor()], range: NSRange(location: 4, length: test.characters.count))
-        str.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(18)], range: NSRange(location: 4, length: test.characters.count))
-        str.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(11)], range: NSRange(location: 5 + test.characters.count, length: 3))
+        str.addAttributes([NSForegroundColorAttributeName:UIColor.whiteColor()], range: NSRange(location: 4, length: kaluliTemp.characters.count))
+        str.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(18)], range: NSRange(location: 4, length: kaluliTemp.characters.count))
+        str.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(11)], range: NSRange(location: 5 + kaluliTemp.characters.count, length: 3))
         
         expendCaloric.attributedText = str
         expendCaloric.textAlignment = .Center

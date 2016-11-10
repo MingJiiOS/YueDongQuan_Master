@@ -43,11 +43,13 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
         
         
+        
+        
         _mapView = MAMapView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenWidth*2/3))
         _mapView?.delegate = self
         _mapView?.showsUserLocation = true
         _mapView?.userTrackingMode = .Follow
-        _mapView?.zoomLevel = 12
+        _mapView?.setZoomLevel(13, animated: true)
         _mapView?.scaleOrigin = CGPointMake(10, CGRectGetMaxY(_mapView!.frame) - 15)
         _mapView!.showsCompass = false
         manger.delegate = self
@@ -55,7 +57,8 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
         
         let locationBtn = UIButton(frame: CGRect(x: 20, y: CGRectGetMaxY(_mapView!.frame) - 40, width: 25, height: 25))
-        locationBtn.backgroundColor = UIColor.brownColor()
+        locationBtn.backgroundColor = UIColor.whiteColor()
+        locationBtn.setImage(UIImage(named: "define_location"), forState: UIControlState.Normal)
         locationBtn.addTarget(self, action: #selector(clickLocationBtn), forControlEvents: UIControlEvents.TouchUpInside)
         _mapView?.addSubview(locationBtn)
         
@@ -63,12 +66,14 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         _mapView!.addSubview(addAndReduceView)
         
         let reduceBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
-        reduceBtn.backgroundColor = UIColor.blueColor()
+        reduceBtn.backgroundColor = UIColor.whiteColor()
+        reduceBtn.setImage(UIImage(named: "minus"), forState: UIControlState.Normal)
         reduceBtn.addTarget(self, action: #selector(reduceBtnClick), forControlEvents: UIControlEvents.TouchUpInside)
         addAndReduceView.addSubview(reduceBtn)
         
         let addBtn = UIButton(frame: CGRect(x: 0, y: 26, width: 25, height: 25))
-        addBtn.backgroundColor = UIColor.brownColor()
+        addBtn.backgroundColor = UIColor.whiteColor()
+        addBtn.setImage(UIImage(named: "plus49"), forState: UIControlState.Normal)
         addBtn.addTarget(self, action: #selector(addBtnClick), forControlEvents: UIControlEvents.TouchUpInside)
         addAndReduceView.addSubview(addBtn)
         
@@ -102,8 +107,22 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         shutBtn.setImage(UIImage(named: "photo_delete"), forState: UIControlState.Normal)
         shutBtn.addTarget(self, action: #selector(dismissWeatherView), forControlEvents: UIControlEvents.TouchUpInside)
         weatherView.addSubview(shutBtn)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FieldViewController.CheckSignInfoProcessTemp(_:)), name: "CheckSignInfoProcess", object: nil)
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         
+    }
+    
+    func CheckSignInfoProcessTemp(notice:NSNotification){
+        //["siteId":dataInfo.siteId,"startTime":dataInfo.startTime,"distance":dataInfo.distance,"nowTime":dataInfo.nowTime]
+        let siteId = notice.valueForKey("object")?.valueForKey("siteId")
+        let signvc = SignRankBtnController()
+        signvc.siteId = siteId as! Int
+        signvc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(signvc, animated: true)
+        signvc.hidesBottomBarWhenPushed = false
     }
     
     func dismissWeatherView(){
@@ -154,6 +173,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         super.viewWillAppear(animated)
         manger.startUpdatingLocation()
         setNav()
+        
         
     }
     

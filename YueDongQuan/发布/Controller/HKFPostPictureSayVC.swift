@@ -48,6 +48,7 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
     func createUI(){
         _textField = CustomTextField(frame: CGRect(x: 10, y: 5, width: ScreenWidth - 20, height: 40), placeholder: "说点什么吧.....(120字内)", clear: true, fontSize: 15)
         _textField.delegate = self
+        _textField.textColor = UIColor.blackColor()
         _textField.addTarget(self, action: #selector(getTextFieldString(_:)), forControlEvents: UIControlEvents.AllEditingEvents)
         self.view.addSubview(_textField)
         

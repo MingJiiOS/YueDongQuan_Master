@@ -42,7 +42,7 @@ class DiscoveryManager {
     //图片数据改变
     private var imageSenderFlag = 0 {
         didSet{
-            let notice = NSNotification(name: "ImageOrderDataChanged", object: nil)
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
             
             NSNotificationCenter.defaultCenter().postNotification(notice)
         }
@@ -50,7 +50,7 @@ class DiscoveryManager {
     //视频数据改变
     private var videoSenderFlag = 0 {
         didSet{
-            let notice = NSNotification(name: "VideoOrderDataChanged", object: nil)
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
             
             NSNotificationCenter.defaultCenter().postNotification(notice)
         }
@@ -58,7 +58,7 @@ class DiscoveryManager {
     //活动数据改变
     private var activitySenderFlag = 0 {
         didSet{
-            let notice = NSNotification(name: "ActivityOrderDataChanged", object: nil)
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
             
             NSNotificationCenter.defaultCenter().postNotification(notice)
         }
@@ -67,7 +67,7 @@ class DiscoveryManager {
     //约战数据改变
     private var matchSenderFlag = 0 {
         didSet{
-            let notice = NSNotification(name: "MatchOrderDataChanged", object: nil)
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
             
             NSNotificationCenter.defaultCenter().postNotification(notice)
         }
@@ -75,7 +75,7 @@ class DiscoveryManager {
     //求加入数据改变
     private var joinTeamSenderFlag = 0 {
         didSet{
-            let notice = NSNotification(name: "JoinTeamOrderDataChanged", object: nil)
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
             
             NSNotificationCenter.defaultCenter().postNotification(notice)
         }
@@ -84,7 +84,7 @@ class DiscoveryManager {
     //招募数据改变
     private var zhaoMuSenderFlag = 0 {
         didSet{
-            let notice = NSNotification(name: "ZhaoMuOrderDataChanged", object: nil)
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
             
             NSNotificationCenter.defaultCenter().postNotification(notice)
         }
@@ -93,7 +93,7 @@ class DiscoveryManager {
     //附近数据发生改变
     private var nearBySenderFlag = 0 {
         didSet{
-            let notice = NSNotification(name: "NearByOrderDataChanged", object: nil)
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
             
             NSNotificationCenter.defaultCenter().postNotification(notice)
         }
@@ -102,7 +102,7 @@ class DiscoveryManager {
     //我的关注
     private var myNotifySenderFlag = 0 {
         didSet{
-            let notice = NSNotification(name: "MyNotifyOrderDataChanged", object: nil)
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
             
             NSNotificationCenter.defaultCenter().postNotification(notice)
         }
@@ -123,6 +123,7 @@ class DiscoveryManager {
     }
     //添加数据
     func addLastestData(lastestsData : [DiscoveryArray]){
+        
         self.lastestData += lastestsData
         lastestSenderFlag += 1
     }

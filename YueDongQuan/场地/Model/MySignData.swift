@@ -25,8 +25,13 @@ class MySignData{
 		array = [MySignArray]()
 		if let arrayArray = dictionary["array"] as? [NSDictionary]{
 			for dic in arrayArray{
-				let value = MySignArray(fromDictionary: dic)
-				array.append(value)
+                let model = MySignArray()
+                model.endTime = dic["endTime"] as? Double
+                model.id = dic["id"] as? Int
+                model.name = dic["name"] as? String
+                model.originalSrc = dic["originalSrc"] as? String
+                model.uid = dic["uid"] as? Int
+				array.append(model)
 			}
 		}
 		id = dictionary["id"] as? Int

@@ -7,23 +7,55 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
-class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionSheetDelegate {
+
+class CheckDataInfo {
+    var distance = Int()
+    var flag = Bool()
+    var nowTime = Int()
+    var siteId = Int()
+    var startTime = Int()
+}
+
+class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionSheetDelegate,AMapLocationManagerDelegate {
 
     var controllerAry = NSMutableArray()
     var items = NSMutableArray()
-    
+    var manger = AMapLocationManager()
     let discover = DiscoverViewController()
     let changDi = FieldViewController()
     
     let quanZi = QuanZiViewController()
     let personal = PersonalViewController()
+    
+    var checkModel : CheckModel!
+    var dataInfo = CheckDataInfo()
+    
     var customTabBar : YJTabBar!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpAllChildVIewController()
         setUpTabBar()
+        
+        manger.delegate = self
+        manger.startUpdatingLocation()
+    }
+    
+    func amapLocationManager(manager: AMapLocationManager!, didFailWithError error: NSError!) {
+        
+    }
+    
+    func amapLocationManager(manager: AMapLocationManager!, didUpdateLocation location: CLLocation!) {
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
+        
+        manger.stopUpdatingLocation()
+        
+        checkFielSignYesAndNo(latitude, lng: longitude)
+        
     }
     
     override var hidesBottomBarWhenPushed: Bool{
@@ -69,7 +101,22 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         if (index == 0 && self.selectedIndex == index) {
             
         }
+        
+        
+        if index == 1 {
+            if dataInfo.flag {
+                NSLog("xxxxxxx")
+                let notify = ["siteId":dataInfo.siteId,"startTime":dataInfo.startTime,"distance":dataInfo.distance,"nowTime":dataInfo.nowTime]
+                let notice = NSNotification(name: "CheckSignInfoProcess", object: notify)
+                NSNotificationCenter.defaultCenter().postNotification(notice)
+                dataInfo.flag = false
+                
+            }
+            
+        }
+        
         self.selectedIndex = index
+        NSLog("self.selectedIndex= \(self.selectedIndex)")
     }
     
     func setUPOneChilViewControllerWithImageAndSelectImageAndTitle(vc:UIViewController,image:UIImage,selectImage:UIImage,title:String){
@@ -140,6 +187,40 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         
     }
     
+    
+    func checkFielSignYesAndNo(lat:Double,lng:Double){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":userInfo.uid,"lat":lat,"lng":lng]
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/getsigninfo")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                
+                NSLog("checkJson=\(json)")
+                let dict = (json.object) as! NSDictionary
+                
+                
+                if (dict["code"]! as! String == "200" && dict["flag"]! as! String == "1"){
+                        self.checkModel = CheckModel.init(fromDictionary: dict)
+                    if (self.checkModel.data.flag == true) {
+                        self.dataInfo.distance = self.checkModel.data.distance
+                        self.dataInfo.flag = self.checkModel.data.flag
+                        self.dataInfo.nowTime = self.checkModel.data.nowTime
+                        self.dataInfo.startTime = self.checkModel.data.startTime
+                        self.dataInfo.siteId = self.checkModel.data.siteId
+                    }
+                    
+                    }
+                
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
     
     
 

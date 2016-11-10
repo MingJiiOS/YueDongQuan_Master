@@ -83,35 +83,35 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     }
     
     
-    func requestLastestDataList(typeId:String,pageNo:Int) {
+    func requestLastestDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
         persitencyManager?.removeLastestData()
-        httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo,longitude:longitude,latitude: latitude )
     }
     
-    func requestImageDataList(typeId:String,pageNo:Int) {
+    func requestImageDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
         persitencyManager?.removeImageData()
-        httpClient?.requestSay_SayImageData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayImageData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
-    func requestVideoDataList(typeId:String,pageNo:Int) {
+    func requestVideoDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
         persitencyManager?.removeVideoData()
-        httpClient?.requestSay_SayVideoData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayVideoData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
-    func requestActivityDataList(typeId:String,pageNo:Int) {
+    func requestActivityDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
         persitencyManager?.removeActivityData()
-        httpClient?.requestSay_SayActivityData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayActivityData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
-    func requestMatchDataList(typeId:String,pageNo:Int) {
+    func requestMatchDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
         persitencyManager?.removeMatchData()
-        httpClient?.requestSay_SayMatchData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayMatchData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
-    func requestJoinTeamDataList(typeId:String,pageNo:Int) {
+    func requestJoinTeamDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
         persitencyManager?.removeJoinTeamData()
-        httpClient?.requestSay_SayVJoinTeamData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayVJoinTeamData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
 
-    func requestZhaoMuDataList(typeId:String,pageNo:Int) {
+    func requestZhaoMuDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
         persitencyManager?.removeZhaoMuData()
-        httpClient?.requestSay_SayZhaoMuData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayZhaoMuData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     
     func requestNearByDataList(typeId:String,pageNo:Int,latitude:Double,longitude:Double) {
@@ -119,12 +119,12 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         httpClient?.requestSay_SayNearByData(typeId, pageNo: pageNo,latitude:latitude ,longitude:longitude )
     }
     
-    func requestMyNotifyDataList(typeId:String,pageNo:Int) {
+    func requestMyNotifyDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
         persitencyManager?.removeMyNotifyData()
-        httpClient?.requestSay_SayMyNotifyData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayMyNotifyData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     /*******************************************/
-    func requestLastestMoreDataList(typeId:String) {
+    func requestLastestMoreDataList(typeId:String,longitude:Double,latitude:Double) {
         
         let cnt = persitencyManager?.getLastestDefaultData().count
         var pageNo = (cnt! + 10 - 1)/10
@@ -135,21 +135,21 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
             pageNo += 1
         }
         
-        httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     
-    func requestImageMoreDataList(typeId:String) {
+    func requestImageMoreDataList(typeId:String,longitude:Double,latitude:Double) {
         let cnt = persitencyManager?.getImageDefaultData().count
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeImageData()
-            pageNo = 1
+//            pageNo = 1
         }else{
             pageNo += 1
         }
-        httpClient?.requestSay_SayImageData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayImageData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
-    func requestVideoMoreDataList(typeId:String) {
+    func requestVideoMoreDataList(typeId:String,longitude:Double,latitude:Double) {
         let cnt = persitencyManager?.getVideoDefaultData().count
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
@@ -158,9 +158,9 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         }else{
             pageNo += 1
         }
-        httpClient?.requestSay_SayVideoData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayVideoData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
-    func requestActivityMoreDataList(typeId:String) {
+    func requestActivityMoreDataList(typeId:String,longitude:Double,latitude:Double) {
         let cnt = persitencyManager?.getActivityDefaultData().count
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
@@ -169,9 +169,9 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         }else{
             pageNo += 1
         }
-        httpClient?.requestSay_SayActivityData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayActivityData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
-    func requestMatchDataMoreList(typeId:String) {
+    func requestMatchDataMoreList(typeId:String,longitude:Double,latitude:Double) {
         let cnt = persitencyManager?.getMatchDefaultData().count
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
@@ -180,9 +180,9 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         }else{
             pageNo += 1
         }
-        httpClient?.requestSay_SayMatchData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayMatchData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
-    func requestJoinTeamMoreDataList(typeId:String) {
+    func requestJoinTeamMoreDataList(typeId:String,longitude:Double,latitude:Double) {
         
         let cnt = persitencyManager?.getJoinTeamDefaultData().count
         var pageNo = (cnt! + 10 - 1)/10
@@ -192,10 +192,10 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         }else{
             pageNo += 1
         }
-        httpClient?.requestSay_SayVJoinTeamData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayVJoinTeamData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     
-    func requestZhaoMuMoreDataList(typeId:String) {
+    func requestZhaoMuMoreDataList(typeId:String,longitude:Double,latitude:Double) {
         let cnt = persitencyManager?.getZhaoMuDefaultData().count
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
@@ -205,7 +205,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
             pageNo += 1
         }
         
-        httpClient?.requestSay_SayZhaoMuData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayZhaoMuData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     
     
@@ -222,7 +222,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         httpClient?.requestSay_SayNearByData(typeId, pageNo: pageNo,latitude: longitude,longitude: longitude)
     }
     
-    func requestMyNotifyMoreDataList(typeId:String) {
+    func requestMyNotifyMoreDataList(typeId:String,longitude:Double,latitude:Double) {
         let cnt = persitencyManager?.getMyNotifyDefaultData().count
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
@@ -232,11 +232,12 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
             pageNo += 1
         }
         
-        httpClient?.requestSay_SayMyNotifyData(typeId, pageNo: pageNo)
+        httpClient?.requestSay_SayMyNotifyData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     
 
     func say_sayLastestDataFromServer(model: DiscoveryModel) {
+        
         if model.code == "200" && model.flag == "1" {
             persitencyManager?.addLastestData(model.data.array)
         }

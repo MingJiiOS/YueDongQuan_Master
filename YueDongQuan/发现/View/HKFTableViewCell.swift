@@ -288,52 +288,56 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     func configCellWithModelAndIndexPath(model : DiscoveryArray,indexPath : NSIndexPath){
         
         self.indexPath = indexPath
+        let subModel = model
         
+        self.distanceLabel?.text = String(format: "%0.2fkm",(model.distance))
         
-        if model.csum != nil{
-            self.pinglunBtn.setTitle("\(model.csum)", forState: UIControlState.Normal)
-            self.liulanCount.text = "\(model.csum + model.isPraise)"
+        NSLog("distance=\(model.distance)")
+        
+        if subModel.csum != nil{
+            self.pinglunBtn.setTitle("\(subModel.csum)", forState: UIControlState.Normal)
+            self.liulanCount.text = "\(subModel.csum + subModel.isPraise)"
         }else{
             self.pinglunBtn.setTitle("0", forState: UIControlState.Normal)
-            self.liulanCount.text = "\(model.isPraise)"
+            self.liulanCount.text = "\(subModel.isPraise)"
         }
 
-        if model.isPraise != 0{
+        if subModel.isPraise != 0{
             self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
-            self.dianzanBtn.setTitle("\(model.isPraise)", forState: UIControlState.Normal)
+            self.dianzanBtn.setTitle("\(subModel.isPraise)", forState: UIControlState.Normal)
         }
         
-        switch model.typeId {
+        switch subModel.typeId {
         case 11:
 //            print("图片")
-            self.titleLabel?.text =  model.name
+            self.titleLabel?.text =  subModel.name
             self.typeStatusView?.image = UIImage(named: "explain_pic")
         case 12:
 //            print("视频")
-            self.titleLabel?.text =  model.name
+            self.titleLabel?.text =  subModel.name
             self.typeStatusView?.image = UIImage(named: "explain_vedio")
         case 13:
 //            print("活动")
-            self.titleLabel?.text = model.aname
+            self.titleLabel?.text = subModel.aname
             self.typeStatusView?.image = UIImage(named: "explain_recruit")
         case 14:
 //            print("约战")
-            self.titleLabel?.text =  model.name
+            self.titleLabel?.text =  subModel.name
             self.typeStatusView?.image = UIImage(named: "explain_pic")
         case 15:
 //            print("求加入")
-            self.titleLabel?.text =  model.name
+            self.titleLabel?.text =  subModel.name
             self.typeStatusView?.image = UIImage(named: "explain_enlist")
         case 16:
 //            print("招募")
-            self.titleLabel?.text =  model.rname
+            self.titleLabel?.text =  subModel.rname
             
             self.typeStatusView?.image = UIImage(named: "explain_JOIN")
         default:
             break
         }
         
-        if model.address == ""{
+        if subModel.address == ""{
             self.locationView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(0)
             })
@@ -343,9 +347,9 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.locationView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(14)
             })
-            self.distanceLabel?.text = model.address
+//            self.distanceLabel?.text = subModel.address
         }
-        let tempStr = "<body> " + model.content + " </body>"
+        let tempStr = "<body> " + subModel.content + " </body>"
         
         
         let resultStr1 = tempStr.stringByReplacingOccurrencesOfString("\\n", withString: "<br/>", options: NSStringCompareOptions.LiteralSearch, range: nil)
@@ -356,15 +360,15 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
         
         self.descLabel?.attributedText = html
-        self.locationLabel.text = model.address
-        self.headImageView?.sd_setImageWithURL(NSURL(string: model.thumbnailSrc))
-        self.testModel = model
+        self.locationLabel.text = subModel.address
+        self.headImageView?.sd_setImageWithURL(NSURL(string: subModel.thumbnailSrc))
+        self.testModel = subModel
         
-        self.timeStatus?.text = getTimeString(model.time)
+        self.timeStatus?.text = getTimeString(subModel.time)
         
-        if model.images.count != 0 {
-            let h1 = cellHeightByData1(model.images.count)
-            print(h1)
+        if subModel.images.count != 0 {
+            let h1 = cellHeightByData1(subModel.images.count)
+            
             self.displayView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(h1)
             })
@@ -377,7 +381,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         }
         
 //        NSLog("videoURL = \(model.compressUrl)")
-        if model.compressUrl != "" {
+        if subModel.compressUrl != "" {
             self.videoImage.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo((ScreenWidth - 30)/3)
             })
@@ -393,8 +397,8 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         var thumbnailImageUrls = [String]()
         var originalImageUrls = [String]()
-        if model.images.count != 0 {
-            for item in model.images {
+        if subModel.images.count != 0 {
+            for item in subModel.images {
                 thumbnailImageUrls.append(item.thumbnailSrc)
                 originalImageUrls.append(item.originalSrc)
             }
@@ -414,7 +418,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         var tableViewHeight :CGFloat = 0
         
-        for item  in model.comment {
+        for item  in subModel.comment {
             let cellHeight = HKFCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell : UITableViewCell!) in
                 
                 let cell = sourceCell as! HKFCommentCell

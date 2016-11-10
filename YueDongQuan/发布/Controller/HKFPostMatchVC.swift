@@ -145,7 +145,7 @@ extension HKFPostMatchVC {
                 let str = (json.object) as! NSDictionary
                 
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
-                    //                    self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismissViewControllerAnimated(true, completion: nil)
                 }
                 
                 

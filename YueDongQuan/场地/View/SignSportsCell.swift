@@ -41,6 +41,7 @@ class SignSportsCell: UITableViewCell {
             make.right.equalTo(0)
             make.height.equalTo(20)
         }
+        taolunCount.textColor = UIColor.blackColor()
         
         
         

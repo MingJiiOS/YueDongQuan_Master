@@ -43,7 +43,7 @@
     if (self = [super initWithFrame:frame]) {
         // 设置字体颜色
         [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+        [self setTitleColor:[UIColor colorWithRed:0.112 green:0.4752 blue:0.9795 alpha:1.0] forState:UIControlStateSelected];
         // 图片居中
         self.imageView.contentMode = UIViewContentModeCenter;
         // 文字居中
