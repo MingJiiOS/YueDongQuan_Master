@@ -27,12 +27,12 @@ class SubPersonCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView .addSubview(headImage)
         headImage.snp_makeConstraints { (make) in
-            make.top.equalTo(0)
+            make.top.equalTo(5)
             make.right.equalTo(0)
-            make.bottom.equalTo(0)
-            make.width.equalTo(60)
+            make.bottom.equalTo(-5)
+            make.width.equalTo(50)
         }
-        headImage.layer.cornerRadius = 30
+        headImage.layer.cornerRadius = 25
         headImage.layer.masksToBounds = true
     }
     

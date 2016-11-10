@@ -131,6 +131,7 @@
 		5CD981061D96546A007828E2 /* XTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD981051D96546A007828E2 /* XTimer.m */; };
 		5CE4A7E91D8AC1ED00F25CF6 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4A7E81D8AC1ED00F25CF6 /* HMSegmentedControl.m */; };
 		5CFA5A231DB8B24000267399 /* HKFPostVideoSayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA5A221DB8B24000267399 /* HKFPostVideoSayVC.swift */; };
+		BF0007BB1DD40FDF00EA58C8 /* stytemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0007BA1DD40FDF00EA58C8 /* stytemCell.swift */; };
 		BF071EF61D9A0D5F000551F7 /* AllNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071EDA1D9A0D5F000551F7 /* AllNoticeViewController.swift */; };
 		BF071EF71D9A0D5F000551F7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071EDB1D9A0D5F000551F7 /* ChatViewController.swift */; };
 		BF071EF81D9A0D5F000551F7 /* MyQuanZiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071EDC1D9A0D5F000551F7 /* MyQuanZiViewController.swift */; };
@@ -280,6 +281,14 @@
 		BF5738841DBB10690023B7DE /* myInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738821DBB10690023B7DE /* myInfoModel.swift */; };
 		BF5738861DBB74930023B7DE /* CircleHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738851DBB74930023B7DE /* CircleHeadView.swift */; };
 		BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */; };
+		BF6631181DD1BF5500263F67 /* HeInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6631171DD1BF5500263F67 /* HeInfoVC.swift */; };
+		BF66311B1DD1C42E00263F67 /* HeInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6631191DD1C42E00263F67 /* HeInfoData.swift */; };
+		BF66311C1DD1C42E00263F67 /* HeInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66311A1DD1C42E00263F67 /* HeInfoModel.swift */; };
+		BF6631221DD1D23B00263F67 /* HeFoundArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66311D1DD1D23B00263F67 /* HeFoundArray.swift */; };
+		BF6631231DD1D23B00263F67 /* HeFoundComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66311E1DD1D23B00263F67 /* HeFoundComment.swift */; };
+		BF6631241DD1D23B00263F67 /* HeFoundData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66311F1DD1D23B00263F67 /* HeFoundData.swift */; };
+		BF6631251DD1D23B00263F67 /* HeFoundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6631201DD1D23B00263F67 /* HeFoundImage.swift */; };
+		BF6631261DD1D23B00263F67 /* HeFoundModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6631211DD1D23B00263F67 /* HeFoundModel.swift */; };
 		BF6FD5241D9BAF0D00F52C48 /* MJAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */; };
 		BF7DDC9F1DA0AAC700772366 /* publishNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7DDC9E1DA0AAC700772366 /* publishNoticeViewController.swift */; };
 		BF9739CA1D9F6AD800E1B3EB /* MJClearCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9739C91D9F6AD800E1B3EB /* MJClearCache.swift */; };
@@ -635,7 +644,7 @@
 		BFD41FBB1DC03D9F005A22E6 /* TodayDongdouModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD41FB81DC03D9F005A22E6 /* TodayDongdouModel.swift */; };
 		BFD41FBE1DC04132005A22E6 /* NSData+AES256.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD41FBC1DC04132005A22E6 /* NSData+AES256.m */; };
 		BFD41FC11DC04849005A22E6 /* WJPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD41FC01DC04849005A22E6 /* WJPopoverViewController.m */; };
-		BFD41FC71DC05061005A22E6 /* topRightTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD41FC61DC05061005A22E6 /* topRightTable.swift */; };
+		BFD41FC71DC05061005A22E6 /* CustomTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD41FC61DC05061005A22E6 /* CustomTable.swift */; };
 		BFD41FDB1DC05F67005A22E6 /* CIImage+SGExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD41FCB1DC05F67005A22E6 /* CIImage+SGExtension.m */; };
 		BFD41FDC1DC05F67005A22E6 /* ScanSuccessJumpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD41FCE1DC05F67005A22E6 /* ScanSuccessJumpVC.m */; };
 		BFD41FDD1DC05F67005A22E6 /* SGGenerateQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD41FD01DC05F67005A22E6 /* SGGenerateQRCodeVC.m */; };
@@ -649,6 +658,13 @@
 		BFDB2A981DA5EA4300A65DAD /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BFDB2A941DA5EA4300A65DAD /* WeiboSDK.bundle */; };
 		BFDB2A9A1DA6000600A65DAD /* YDQLoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB2A991DA6000600A65DAD /* YDQLoginRegisterViewController.swift */; };
 		BFDB2A9C1DA600BB00A65DAD /* LoginRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDB2A9B1DA600BB00A65DAD /* LoginRegisterView.swift */; };
+		BFDBE2B81DD2AEBA0035B621 /* FollowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2B71DD2AEBA0035B621 /* FollowVC.swift */; };
+		BFDBE2BA1DD2AED60035B621 /* FansVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2B91DD2AED60035B621 /* FansVC.swift */; };
+		BFDBE2BC1DD2B2560035B621 /* FollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2BB1DD2B2560035B621 /* FollowView.swift */; };
+		BFDBE2BE1DD2B64C0035B621 /* FansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2BD1DD2B64C0035B621 /* FansView.swift */; };
+		BFDBE2C01DD2B7630035B621 /* DetailsSayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2BF1DD2B7630035B621 /* DetailsSayCell.swift */; };
+		BFDBE2C21DD2B9900035B621 /* DetailsCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2C11DD2B9900035B621 /* DetailsCommentCell.swift */; };
+		BFDBE2C41DD2C0480035B621 /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2C31DD2C0480035B621 /* DetailsVC.swift */; };
 		BFFCE0281DBEF0820045087A /* TotalRankVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFCE0271DBEF0820045087A /* TotalRankVC.swift */; };
 		BFFCE0521DBF28840045087A /* TotalRankHeadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFCE0511DBF28840045087A /* TotalRankHeadCell.swift */; };
 		BFFCE0541DBF471A0045087A /* SubTotalRankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFCE0531DBF471A0045087A /* SubTotalRankCell.swift */; };
@@ -833,6 +849,7 @@
 		5CE4A7E81D8AC1ED00F25CF6 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		5CFA5A221DB8B24000267399 /* HKFPostVideoSayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostVideoSayVC.swift; sourceTree = "<group>"; };
 		8F2702782B36855A0793C813 /* Pods-YueDongQuan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YueDongQuan.release.xcconfig"; path = "Pods/Target Support Files/Pods-YueDongQuan/Pods-YueDongQuan.release.xcconfig"; sourceTree = "<group>"; };
+		BF0007BA1DD40FDF00EA58C8 /* stytemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = stytemCell.swift; sourceTree = "<group>"; };
 		BF071EDA1D9A0D5F000551F7 /* AllNoticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllNoticeViewController.swift; sourceTree = "<group>"; };
 		BF071EDB1D9A0D5F000551F7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		BF071EDC1D9A0D5F000551F7 /* MyQuanZiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyQuanZiViewController.swift; sourceTree = "<group>"; };
@@ -986,6 +1003,14 @@
 		BF5738821DBB10690023B7DE /* myInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoModel.swift; sourceTree = "<group>"; };
 		BF5738851DBB74930023B7DE /* CircleHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHeadView.swift; sourceTree = "<group>"; };
 		BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesTableViewCell.swift; sourceTree = "<group>"; };
+		BF6631171DD1BF5500263F67 /* HeInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeInfoVC.swift; sourceTree = "<group>"; };
+		BF6631191DD1C42E00263F67 /* HeInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeInfoData.swift; sourceTree = "<group>"; };
+		BF66311A1DD1C42E00263F67 /* HeInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeInfoModel.swift; sourceTree = "<group>"; };
+		BF66311D1DD1D23B00263F67 /* HeFoundArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeFoundArray.swift; sourceTree = "<group>"; };
+		BF66311E1DD1D23B00263F67 /* HeFoundComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeFoundComment.swift; sourceTree = "<group>"; };
+		BF66311F1DD1D23B00263F67 /* HeFoundData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeFoundData.swift; sourceTree = "<group>"; };
+		BF6631201DD1D23B00263F67 /* HeFoundImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeFoundImage.swift; sourceTree = "<group>"; };
+		BF6631211DD1D23B00263F67 /* HeFoundModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeFoundModel.swift; sourceTree = "<group>"; };
 		BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MJAnnotation.swift; path = ../MJAnnotation.swift; sourceTree = "<group>"; };
 		BF7DDC9E1DA0AAC700772366 /* publishNoticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = publishNoticeViewController.swift; sourceTree = "<group>"; };
 		BF9739C91D9F6AD800E1B3EB /* MJClearCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJClearCache.swift; sourceTree = "<group>"; };
@@ -1369,7 +1394,7 @@
 		BFD41FBD1DC04132005A22E6 /* NSData+AES256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES256.h"; sourceTree = "<group>"; };
 		BFD41FBF1DC04849005A22E6 /* WJPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJPopoverViewController.h; sourceTree = "<group>"; };
 		BFD41FC01DC04849005A22E6 /* WJPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJPopoverViewController.m; sourceTree = "<group>"; };
-		BFD41FC61DC05061005A22E6 /* topRightTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = topRightTable.swift; sourceTree = "<group>"; };
+		BFD41FC61DC05061005A22E6 /* CustomTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTable.swift; sourceTree = "<group>"; };
 		BFD41FCA1DC05F67005A22E6 /* CIImage+SGExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+SGExtension.h"; sourceTree = "<group>"; };
 		BFD41FCB1DC05F67005A22E6 /* CIImage+SGExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+SGExtension.m"; sourceTree = "<group>"; };
 		BFD41FCD1DC05F67005A22E6 /* ScanSuccessJumpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanSuccessJumpVC.h; sourceTree = "<group>"; };
@@ -1400,6 +1425,13 @@
 		BFDB2A961DA5EA4300A65DAD /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
 		BFDB2A991DA6000600A65DAD /* YDQLoginRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YDQLoginRegisterViewController.swift; path = ../../YDQLoginRegisterViewController.swift; sourceTree = "<group>"; };
 		BFDB2A9B1DA600BB00A65DAD /* LoginRegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRegisterView.swift; sourceTree = "<group>"; };
+		BFDBE2B71DD2AEBA0035B621 /* FollowVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowVC.swift; sourceTree = "<group>"; };
+		BFDBE2B91DD2AED60035B621 /* FansVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FansVC.swift; sourceTree = "<group>"; };
+		BFDBE2BB1DD2B2560035B621 /* FollowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowView.swift; sourceTree = "<group>"; };
+		BFDBE2BD1DD2B64C0035B621 /* FansView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FansView.swift; sourceTree = "<group>"; };
+		BFDBE2BF1DD2B7630035B621 /* DetailsSayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsSayCell.swift; sourceTree = "<group>"; };
+		BFDBE2C11DD2B9900035B621 /* DetailsCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsCommentCell.swift; sourceTree = "<group>"; };
+		BFDBE2C31DD2C0480035B621 /* DetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
 		BFFCE0271DBEF0820045087A /* TotalRankVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankVC.swift; sourceTree = "<group>"; };
 		BFFCE0511DBF28840045087A /* TotalRankHeadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankHeadCell.swift; sourceTree = "<group>"; };
 		BFFCE0531DBF471A0045087A /* SubTotalRankCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubTotalRankCell.swift; sourceTree = "<group>"; };
@@ -1730,6 +1762,7 @@
 				BF071EE31D9A0D5F000551F7 /* SubContentViewController.swift */,
 				BFAD63291D9E47BC006234E1 /* MJConversationViewController.swift */,
 				BF7DDC9E1DA0AAC700772366 /* publishNoticeViewController.swift */,
+				BF6631171DD1BF5500263F67 /* HeInfoVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1737,6 +1770,13 @@
 		BF071EE41D9A0D5F000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BF66311D1DD1D23B00263F67 /* HeFoundArray.swift */,
+				BF66311E1DD1D23B00263F67 /* HeFoundComment.swift */,
+				BF66311F1DD1D23B00263F67 /* HeFoundData.swift */,
+				BF6631201DD1D23B00263F67 /* HeFoundImage.swift */,
+				BF6631211DD1D23B00263F67 /* HeFoundModel.swift */,
+				BF6631191DD1C42E00263F67 /* HeInfoData.swift */,
+				BF66311A1DD1C42E00263F67 /* HeInfoModel.swift */,
 				BFD36CCC1DBA1922005005A3 /* AllNoticeArray.swift */,
 				BFD36CCD1DBA1922005005A3 /* AllNoticeData.swift */,
 				BFD36CCE1DBA1922005005A3 /* AllNoticeModel.swift */,
@@ -1779,6 +1819,7 @@
 				BF071EF51D9A0D5F000551F7 /* QRCodeView.swift */,
 				BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */,
 				BF5738851DBB74930023B7DE /* CircleHeadView.swift */,
+				BF0007BA1DD40FDF00EA58C8 /* stytemCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1798,6 +1839,9 @@
 				BF9739D01D9F81ED00E1B3EB /* TempLeftViewController.swift */,
 				BFFCE0271DBEF0820045087A /* TotalRankVC.swift */,
 				BF44EA421DC319E600AD7B3D /* RegistVC.swift */,
+				BFDBE2B71DD2AEBA0035B621 /* FollowVC.swift */,
+				BFDBE2B91DD2AED60035B621 /* FansVC.swift */,
+				BFDBE2C31DD2C0480035B621 /* DetailsVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1853,6 +1897,10 @@
 				BFFCE0531DBF471A0045087A /* SubTotalRankCell.swift */,
 				BF9CA16E1DC86FAA0043F535 /* MJMessageCell.swift */,
 				BF9CA17D1DC87D000043F535 /* MJCommentCell.swift */,
+				BFDBE2BB1DD2B2560035B621 /* FollowView.swift */,
+				BFDBE2BD1DD2B64C0035B621 /* FansView.swift */,
+				BFDBE2BF1DD2B7630035B621 /* DetailsSayCell.swift */,
+				BFDBE2C11DD2B9900035B621 /* DetailsCommentCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2002,7 +2050,7 @@
 				BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */,
 				BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */,
 				BFD36CCA1DBA0202005005A3 /* TimeStampToDate.swift */,
-				BFD41FC61DC05061005A22E6 /* topRightTable.swift */,
+				BFD41FC61DC05061005A22E6 /* CustomTable.swift */,
 			);
 			path = "MJ工具类";
 			sourceTree = "<group>";
@@ -4156,10 +4204,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C8C3C691D927FAD00D756FF /* SignCellForHeader.swift in Sources */,
+				BF0007BB1DD40FDF00EA58C8 /* stytemCell.swift in Sources */,
 				46315AFE1D882BBC00B9D846 /* CustomNavigationBar.swift in Sources */,
 				BFD36CCF1DBA1922005005A3 /* AllNoticeArray.swift in Sources */,
 				5CC5F9471DAF8A600088A61E /* Extension_String.swift in Sources */,
 				5C27BB071DB761F2005A2F8D /* DACircularProgressView.m in Sources */,
+				BFDBE2B81DD2AEBA0035B621 /* FollowVC.swift in Sources */,
 				BFD41FE11DC05F67005A22E6 /* SGScanningQRCodeView.m in Sources */,
 				5C6CD9991DC2FA0C001F3DA8 /* MudPlayerViewController.swift in Sources */,
 				5C2A95761D8D86EC006D1462 /* GlobalUI.m in Sources */,
@@ -4173,6 +4223,7 @@
 				BF071EF81D9A0D5F000551F7 /* MyQuanZiViewController.swift in Sources */,
 				BFB44F671DC9731B0066D49F /* RFTextView.m in Sources */,
 				BFD41FDF1DC05F67005A22E6 /* SGAlertView.m in Sources */,
+				BF6631261DD1D23B00263F67 /* HeFoundModel.swift in Sources */,
 				5C3439FE1D90E6EA0077BFDD /* SignRankingCOntroller.swift in Sources */,
 				5C5C8F211DC9A2090019633F /* SignRankingArray.swift in Sources */,
 				5C27BAF51DB761D9005A2F8D /* PYPhotosViewController.m in Sources */,
@@ -4187,6 +4238,7 @@
 				5CBAA8F01D99011F000E21E9 /* TZTestCell.m in Sources */,
 				BF071F021D9A0D5F000551F7 /* MJNoticeModel.swift in Sources */,
 				5C019B401D92708900BAAAC1 /* SignHeaderView.swift in Sources */,
+				BF66311C1DD1C42E00263F67 /* HeInfoModel.swift in Sources */,
 				BF5738831DBB10690023B7DE /* myInfoData.swift in Sources */,
 				5CE4A7E91D8AC1ED00F25CF6 /* HMSegmentedControl.m in Sources */,
 				5C27BAF31DB761D9005A2F8D /* PYPhotosPreviewController.m in Sources */,
@@ -4195,6 +4247,7 @@
 				5C913F931DBDEB0E00E567FB /* WeatherF3h.swift in Sources */,
 				BFBABCC51DC1F9F0009F068E /* UITableView+ClickTime.m in Sources */,
 				BFAF23C31DB85EBC00294988 /* CircleInfoModel.swift in Sources */,
+				BFDBE2C41DD2C0480035B621 /* DetailsVC.swift in Sources */,
 				5C27BAFB1DB761D9005A2F8D /* PYPhotoCell.m in Sources */,
 				5C913F991DBDEB0E00E567FB /* WeatherRealtime.swift in Sources */,
 				BFB44F621DC9731B0066D49F /* PanelBottomView.m in Sources */,
@@ -4203,6 +4256,7 @@
 				5C27BAFA1DB761D9005A2F8D /* PYPhotoBrowseView.m in Sources */,
 				BFD41FDD1DC05F67005A22E6 /* SGGenerateQRCodeVC.m in Sources */,
 				5CC5F9431DAF8A550088A61E /* HKFTableViewCell.swift in Sources */,
+				BFDBE2BC1DD2B2560035B621 /* FollowView.swift in Sources */,
 				BF071F3B1D9A0D68000551F7 /* MJTextFeild.swift in Sources */,
 				BF071F031D9A0D5F000551F7 /* MJQuanZiModel.swift in Sources */,
 				BFFCE0541DBF471A0045087A /* SubTotalRankCell.swift in Sources */,
@@ -4229,14 +4283,17 @@
 				5C24BB771D9A709100A6D25F /* BRPlaceholderTextView.m in Sources */,
 				BFB44F641DC9731B0066D49F /* ChatToolBar.m in Sources */,
 				BF071F451D9A110B000551F7 /* PersonalViewController.swift in Sources */,
+				BF6631231DD1D23B00263F67 /* HeFoundComment.swift in Sources */,
 				5C27BAF11DB761D9005A2F8D /* UIView+PYExtension.m in Sources */,
 				BF44EA431DC319E600AD7B3D /* RegistVC.swift in Sources */,
 				BF071EF61D9A0D5F000551F7 /* AllNoticeViewController.swift in Sources */,
 				5C5DB9EF1DBB609700BF89EE /* DiscoveryImage.swift in Sources */,
 				BF9CA1811DC87EFD0043F535 /* CommentModel.m in Sources */,
+				BF6631251DD1D23B00263F67 /* HeFoundImage.swift in Sources */,
 				BFB44F601DC9731B0066D49F /* FaceSourceManager.m in Sources */,
 				5C072B601D8F8D2500420F6D /* YoYoAlertView.swift in Sources */,
 				BFAF23C91DB8600800294988 /* uploadImageData.swift in Sources */,
+				BF66311B1DD1C42E00263F67 /* HeInfoData.swift in Sources */,
 				5CC48A041D9CECF8009C4AFE /* SearchController.swift in Sources */,
 				BF071EF91D9A0D5F000551F7 /* NewQuanZiViewController.swift in Sources */,
 				5C913F9B1DBDEB0E00E567FB /* WeatherTemperature.swift in Sources */,
@@ -4292,7 +4349,7 @@
 				5C2A956F1D8D86C3006D1462 /* DynamicCell.m in Sources */,
 				BF071F3A1D9A0D68000551F7 /* MJDatePikerView.swift in Sources */,
 				BF9739D31D9F89CF00E1B3EB /* InterfaceFile.swift in Sources */,
-				BFD41FC71DC05061005A22E6 /* topRightTable.swift in Sources */,
+				BFD41FC71DC05061005A22E6 /* CustomTable.swift in Sources */,
 				5C24BB6B1D9A48A200A6D25F /* HKFPostImageVC.m in Sources */,
 				BFD41FB91DC03D9F005A22E6 /* TodayDongdouArray.swift in Sources */,
 				5CC5F93E1DAF8A450088A61E /* HKFCellModel.swift in Sources */,
@@ -4335,6 +4392,7 @@
 				BF071F091D9A0D5F000551F7 /* MJHeadimageWithSubimageView.swift in Sources */,
 				5C913F9C1DBDEB0E00E567FB /* WeatherWind.swift in Sources */,
 				5C3B9A011D9D0A0400AF7CFE /* QuanZiCell.swift in Sources */,
+				BF6631221DD1D23B00263F67 /* HeFoundArray.swift in Sources */,
 				5C7C3A041DB5CE3F00EA598B /* DiscoveryArray.swift in Sources */,
 				BFDB2A9C1DA600BB00A65DAD /* LoginRegisterView.swift in Sources */,
 				5C5CD06E1DBF28AB00D4C1FA /* HKFPostField_OneVC.swift in Sources */,
@@ -4374,6 +4432,8 @@
 				5C07FE471DC885360001850E /* SearchFieldArray.swift in Sources */,
 				BFC65D1D1D869FD1004E7E99 /* AppDelegate.swift in Sources */,
 				BFD36CC41DB9BB0C005005A3 /* circleMemberData.swift in Sources */,
+				BFDBE2C21DD2B9900035B621 /* DetailsCommentCell.swift in Sources */,
+				BF6631181DD1BF5500263F67 /* HeInfoVC.swift in Sources */,
 				BFD36CD01DBA1922005005A3 /* AllNoticeData.swift in Sources */,
 				5C27BAFC1DB761D9005A2F8D /* PYPhotosView.m in Sources */,
 				BFA6DDC71D895C11009017DE /* UIControl+Custom.m in Sources */,
@@ -4387,6 +4447,7 @@
 				5C27BAF61DB761D9005A2F8D /* PYPhoto.m in Sources */,
 				BFD41FC11DC04849005A22E6 /* WJPopoverViewController.m in Sources */,
 				5C8886B51DC750EB001BC7A8 /* DiscorveryDataAPI.swift in Sources */,
+				BFDBE2BE1DD2B64C0035B621 /* FansView.swift in Sources */,
 				BFB44F5D1DC9731B0066D49F /* FaceButton.m in Sources */,
 				BF071F001D9A0D5F000551F7 /* MJAutoHeightCell.swift in Sources */,
 				BF071F2C1D9A0D68000551F7 /* ChangeNameViewController.swift in Sources */,
@@ -4397,6 +4458,7 @@
 				BF071F0B1D9A0D5F000551F7 /* MJOtherQuanZiView.swift in Sources */,
 				5C27BAF81DB761D9005A2F8D /* PYProgressView.m in Sources */,
 				BFC1269C1DB4792F00E11088 /* CirclesArray.swift in Sources */,
+				BFDBE2BA1DD2AED60035B621 /* FansVC.swift in Sources */,
 				BFAF23CC1DB8A9D700294988 /* MJLayerContentCell.swift in Sources */,
 				5C913F951DBDEB0E00E567FB /* WeatherLife.swift in Sources */,
 				BFC572941DA8EB72002E1995 /* MJProgressHUD.swift in Sources */,
@@ -4410,12 +4472,14 @@
 				5C6CD9981DC2FA0C001F3DA8 /* MudPlayerView.swift in Sources */,
 				BF071F071D9A0D5F000551F7 /* MJBlacklistView.swift in Sources */,
 				5C913F961DBDEB0E00E567FB /* WeatherModel.swift in Sources */,
+				BFDBE2C01DD2B7630035B621 /* DetailsSayCell.swift in Sources */,
 				BFDB2A461DA3D77500A65DAD /* MJShareSDkHelper.swift in Sources */,
 				BFAD632A1D9E47BC006234E1 /* MJConversationViewController.swift in Sources */,
 				BFFF74DC1DBDB443005295D4 /* LoginModel.swift in Sources */,
 				BF071F0D1D9A0D5F000551F7 /* MJQRCodeView.swift in Sources */,
 				BFB44F581DC9731B0066D49F /* FaceThemeModel.m in Sources */,
 				BFB44F631DC9731B0066D49F /* MorePanel.m in Sources */,
+				BF6631241DD1D23B00263F67 /* HeFoundData.swift in Sources */,
 				BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */,
 				5C913F971DBDEB0E00E567FB /* WeatherPm25.swift in Sources */,
 				BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */,

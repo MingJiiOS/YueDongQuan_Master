@@ -228,9 +228,9 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     
 
     func say_sayLastestDataFromServer(model: DiscoveryModel) {
-        if model.code == "200" && model.flag == "1" {
-            persitencyManager?.addLastestData(model.data.array)
-        }
+//        if model.code == "200" && model.flag == "1" {
+//            persitencyManager?.addLastestData(model.data.array)
+//        }
     }
     func say_sayImageDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {

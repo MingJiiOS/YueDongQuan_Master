@@ -114,7 +114,7 @@ class MyDongdouView: UIView {
         
         let attributeString = NSMutableAttributedString(string: "\(numberStr)动豆")
         //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-        attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Bold", size: 30)!,
+        attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "HiraKaKuProN-W3", size: 30)!,
                                      range: NSMakeRange(0, numberStr.length))
         //设置字体颜色
         //        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blueColor(),

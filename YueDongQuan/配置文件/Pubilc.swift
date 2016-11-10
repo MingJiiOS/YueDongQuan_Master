@@ -16,5 +16,5 @@ class Pubilc: NSObject {
         return image
         
     }
-
+   
 }

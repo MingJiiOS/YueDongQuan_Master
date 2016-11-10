@@ -17,8 +17,6 @@ class MJGreenAnnotation:MAPointAnnotation {
 }
 
 class MJRedAnnotation: MAPointAnnotation {
-    override init() {
-        super.init()
-    }
+   
   
 }

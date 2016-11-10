@@ -27,6 +27,18 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         
+        print("接口验证参数",NSObject.getEncodeString("20160901"))
+        let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
+                    "operateId":1,
+                    "uid":8,
+                    "pageNo":1,
+                    "pageSize":5]
+        MJNetWorkHelper().checkHeFound(hefound, HeFoundModel: dict, success: { (responseDic, success) in
+            
+            }) { (error) in
+                
+        }
+        
         //设置网络缓存 － 4M 的内存缓存 20M 的磁盘缓存，使用默认的缓存路径 Caches/bundleId
         
         let cache = NSURLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
@@ -216,16 +228,16 @@ extension AppDelegate {
         HUDView.backgroundColor = UIColor.blackColor()
         HUDView.layer.cornerRadius = 5
         HUDView.layer.masksToBounds = true
-        HUDView.alpha = 0.7
+        HUDView.alpha = 0.9
         self.window!.addSubview(HUDView)
         let image = UIImageView(frame: CGRectMake(0, 0, 40, 40))
         image.animationDuration = 4
         
         let subLabel = UILabel(frame: CGRectMake(40, 5, CGRectGetWidth(HUDView.frame)-40, 30))
         subLabel.text = message as String
-        subLabel.textColor = kBlueColor
+        subLabel.textColor = UIColor.whiteColor()
         subLabel.textAlignment = .Left
-        subLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+        subLabel.font = UIFont.systemFontOfSize(kTopScaleOfFont)
         HUDView .addSubview(subLabel)
         
         HUDView .addSubview(image)

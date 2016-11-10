@@ -99,11 +99,11 @@ class MainViewController: UIViewController {
         }
         UIView.commitAnimations();
     }
-     func showMJProgressHUD(message:NSString,isAnimate:Bool) {
+    func showMJProgressHUD(message:NSString,isAnimate:Bool,startY:CGFloat) {
         
         HUDView.removeFromSuperview()
         
-        HUDView = UIView(frame:CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, ScreenHeight - 134, ScreenWidth*0.7, 40) )
+        HUDView = UIView(frame:CGRectMake((ScreenWidth-ScreenWidth*0.7)/2, startY, ScreenWidth*0.7, 40) )
         HUDView.backgroundColor = UIColor.blackColor()
         HUDView.layer.cornerRadius = 5
         HUDView.layer.masksToBounds = true
@@ -116,7 +116,7 @@ class MainViewController: UIViewController {
         subLabel.text = message as String
         subLabel.textColor = kBlueColor
         subLabel.textAlignment = .Left
-        subLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+        subLabel.font = UIFont.systemFontOfSize(kTopScaleOfFont)
         HUDView .addSubview(subLabel)
         
         HUDView .addSubview(image)

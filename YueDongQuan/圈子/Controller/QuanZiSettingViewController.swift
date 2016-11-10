@@ -33,8 +33,13 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
         loadData()
         print(self.circleId)
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
     }
     deinit{
         print("deinit")

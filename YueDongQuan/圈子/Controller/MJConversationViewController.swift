@@ -106,7 +106,9 @@ class MJConversationViewController: RCConversationViewController {
             self.navigationController?.pushViewController(personal, animated: true)
             
         }else{
-            
+           let heinfo = HeInfoVC()
+            heinfo.userid = userId
+            self.navigationController?.pushViewController(heinfo, animated: true)
         }
     }
     

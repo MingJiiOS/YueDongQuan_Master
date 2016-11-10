@@ -45,7 +45,7 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
         newChangDi.setTitle("新建场地", forState: UIControlState.Normal)
         newChangDi.backgroundColor = kBlueColor
         newChangDi.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        
+        newChangDi.addTarget(self, action: #selector(createNewChangDi), forControlEvents: UIControlEvents.TouchUpInside)
         sureSelect.snp_makeConstraints { (make) in
             make.left.equalTo(newChangDi.snp_right)
             make.right.equalTo(0)
@@ -59,6 +59,7 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
     }
     
     override func viewWillAppear(animated: Bool) {
+        checkSites()
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
     override func viewWillDisappear(animated: Bool) {
@@ -110,5 +111,34 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
     func sureSelectChangguan()  {
         self.navigationController?.popViewControllerAnimated(true)
     }
+    func createNewChangDi()  {
+        let newFiledVC  =  HKFPostField_OneVC()
+        let nav = CustomNavigationBar(rootViewController: newFiledVC)
+        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+    }
+}
+extension SelectChangDiViewController {
+    
+    func checkSites()  {
+        let helper = MJAmapHelper()
+        
+        helper.coordataBlockValue { (longitude, latitude) in
+         
+            let dict = ["v":v,
+                "uid":userInfo.uid.description,
+                "longitude":longitude.description,
+                "latitude":latitude.description
+            ]
+            MJNetWorkHelper().sites(sites, sitesModel: dict, success: { (responseDic, success) in
+                
+                }, fail: { (error) in
+                    
+            })
+        }
+        
+    }
+    
+    
+    
     
 }

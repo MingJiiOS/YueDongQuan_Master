@@ -8,7 +8,7 @@
 
 import UIKit
 
-class topRightTable: UIView {
+class CustomTable: UIView {
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -20,7 +20,14 @@ class topRightTable: UIView {
     
     typealias sendIndexValueClourse = (index:Int)->Void
     
-    var indexValueBlock : sendIndexValueClourse?
+   private var indexValueBlock : sendIndexValueClourse?
+    
+     var titleLext : NSArray?
+     var titleImage : NSArray?
+    var rowNumber : Int?
+    var rowHeight : CGFloat?
+    
+    
     
     func sendVlaueBack(block: sendIndexValueClourse)  {
         indexValueBlock = block
@@ -45,20 +52,24 @@ class topRightTable: UIView {
     }
 
 }
-extension topRightTable:UITableViewDelegate,UITableViewDataSource{
+extension CustomTable:UITableViewDelegate,UITableViewDataSource{
+    
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return rowHeight!
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-        let ary = ["扫一扫","上传场地","新建圈子"]
-        let imageAry = ["ic_erweima","ic_shangchuan","ic_xinjianquanzi"]
-        cell.imageView?.image = UIImage(named: imageAry[indexPath.row])
-        cell.textLabel?.text = ary[indexPath.row]
-        
+       cell.backgroundColor = kBlueColor
+        cell.imageView?.image = UIImage(named: self.titleImage![indexPath.row] as! String)
+        cell.textLabel?.text = self.titleLext![indexPath.row] as? String
+        cell.textLabel?.sizeToFit()
         
         return cell
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return rowNumber!
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

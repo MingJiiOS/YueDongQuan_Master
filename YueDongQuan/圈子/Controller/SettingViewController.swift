@@ -72,7 +72,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
             biVcell = SettingCell(style: .Default, reuseIdentifier: cellId)
             biVcell!.headImage.backgroundColor = UIColor.grayColor()
             biVcell!.headImage.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc))
-            biVcell!.bigV.backgroundColor = kBlueColor
+            biVcell!.bigV.hidden = true
             biVcell!.userName.text = userInfo.name
             biVcell!.userSex.text = userInfo.sex
             biVcell!.userAge.text = userInfo.age
@@ -223,18 +223,18 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
             let model = DataSource().getoldpwData(responseDic)
             if model.code != "200"{
                 
-                self.showMJProgressHUD("原密码错误哦！( ⊙ o ⊙ )！", isAnimate: true)
+                self.showMJProgressHUD("原密码错误哦！( ⊙ o ⊙ )！", isAnimate: true,startY: ScreenHeight-40-45)
             }else{
                 let newpass = SetNewPasswordViewController()
                 self.navigationController?.pushViewController(newpass, animated: true)
             }
         }) { (error) in
             
-            self.showMJProgressHUD("网络有点坑呀", isAnimate: true)
+            self.showMJProgressHUD("网络有点坑呀", isAnimate: true,startY: ScreenHeight-40-45)
         }
        }else if oldPwModel.pw == ""{
         
-        self.showMJProgressHUD("您还没有输入原密码呢,😊", isAnimate: true)
+        self.showMJProgressHUD("您还没有输入原密码呢,😊", isAnimate: true,startY: ScreenHeight-40-45)
         }
         
         

@@ -55,10 +55,7 @@ class PersonalViewController: MainViewController{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.hidden = false
-        let refresh = MJRefreshAutoNormalFooter(refreshingTarget: self,
-                                                refreshingAction: #selector(refreshDownloadData))
-        
-        MainBgTableView.mj_footer = refresh
+       
         MainBgTableView.reloadData()
         let titleLabel = UILabel(frame: CGRect(x: 0,
             y: 0,
@@ -79,7 +76,19 @@ class PersonalViewController: MainViewController{
             self.presentViewController(nav, animated: true, completion: nil)
         }else{
            downloadData()
-
+//            if self.myfoundmodel != nil {
+//                if self.myfoundmodel?.code != "405" {
+                    let refresh = MJRefreshAutoNormalFooter(refreshingTarget: self,
+                                                            refreshingAction: #selector(refreshDownloadData))
+                    
+                    MainBgTableView.mj_footer = refresh
+//
+//                }else{
+//                    MainBgTableView.mj_footer.removeFromSuperview()
+//                }
+//                
+//            }
+            
         }
       
         
@@ -183,9 +192,11 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     "foundId":self.myfoundmodel?.data.array[index.row].id.description,
                     "uid":userInfo.uid.description]
         MJNetWorkHelper().deletefound(deletefound, deletefoundModel: dict, success: { (responseDic, success) in
-            
+            if success {
+                self.performSelectorOnMainThread(#selector(self.updateUI), withObject: nil, waitUntilDone: true)
+            }
             }) { (error) in
-                
+            self.showMJProgressHUD("失败！ \(error.description)", isAnimate: true, startY: ScreenHeight-40-55-64)
         }
     }
     func reloadCellHeightForModel(model: myFoundModel, indexPath: NSIndexPath) {
@@ -223,8 +234,8 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     return 0
                 }else if self.myfoundmodel?.code == "405"{
                     
-                    self.showMJProgressHUD("暂时没有说说(づ￣3￣)づ╭❤～", isAnimate: true)
-                    return 0
+                    
+                    return 1
                 }else{
                     print("我的说说条数",(self.myfoundmodel?.data.array.count)!)
                     judgeSayNumber = (self.myfoundmodel?.data.array.count)!
@@ -248,34 +259,46 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
             
         }else if (indexPath.section == 1){
             
-            return 55
+            return 44 * ScreenWidth / 320 
             
         }else{
-            
-            
-            let h = MJMessageCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
-                let cell = sourceCell as! MJMessageCell
-                cell.configCellWithModel(self.myfoundmodel!, indexpath: indexPath)
-                }, cache: { () -> [NSObject : AnyObject]! in
-                    
-                    return [kHYBCacheUniqueKey : (self.myfoundmodel?.data.array[indexPath.row].id.description)!,
-                        kHYBCacheStateKey:"",
-                        kHYBRecalculateForStateKey:1]
-            })
-            
-            return h
-            
-            
+            if self.myfoundmodel != nil {
+                if self.myfoundmodel?.code == "405" {
+                    return ScreenWidth
+                }else{
+                    let h = MJMessageCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+                        let cell = sourceCell as! MJMessageCell
+                        cell.configCellWithModel(self.myfoundmodel!, indexpath: indexPath)
+                        }, cache: { () -> [NSObject : AnyObject]! in
+                            
+                            return [kHYBCacheUniqueKey : (self.myfoundmodel?.data.array[indexPath.row].id.description)!,
+                                kHYBCacheStateKey:"",
+                                kHYBRecalculateForStateKey:1]
+                    })
+                    return h+10
+                }
+            }
         }
-        
+   return 0
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
+        
         if (section == 0) {
             if self.myinfoModel != nil {
                 let bgView = HeaderView()
-                bgView.configContent(self.myinfoModel!, isBigV: false)
+                bgView.configmyInfoContent(self.myinfoModel!, isBigV: false)
+                bgView.bringBtnTagBack({ (btnTag) in
+                    switch btnTag {
+                    case 10:
+                        self.push(FollowVC())
+                    case 11:
+                        self.push(FansVC())
+                    default:
+                        break
+                    }
+                })
                 return bgView
             }
             
@@ -340,6 +363,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                 cell!.imageView?.image = UIImage(named: "ic_doudong")
                 
                 cell!.textLabel?.text = "我的动豆"
+                cell!.textLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
                 cell!.textLabel?.textColor = UIColor(red: 244 / 255,
                                                      green: 158 / 255,
                                                      blue: 23 / 255,
@@ -353,20 +377,28 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                 return cell!
             }
             else if(indexPath.section == 2){
-                if self.myfoundmodel?.code == "405" {
-                    let nonedataView = UIImageView(frame: CGRect(x: 0, y: 400, width: ScreenWidth, height: ScreenWidth))
-                    nonedataView.image = UIImage(named: "noneData")
-                    self.view.addSubview(nonedataView)
-                    
-                }else{
+               
                     var messageCell = tableView.dequeueReusableCellWithIdentifier(identifier) as? MJMessageCell
-                    messageCell?.indexPath = indexPath
+                
+//                    if self.myfoundmodel != nil {
+//                      messageCell!.dataCode = self.myfoundmodel?.code
+//                    }
+                    
                     messageCell = MJMessageCell(style: .Default, reuseIdentifier: identifier)
+                    messageCell?.indexPath = indexPath
+                    messageCell?.type = .local
+                //点击删除按钮
+                messageCell?.sendDeleteEvent({ (isDelete) in
+                    if isDelete {
+                        self.deleteSayContentFromMySayContent(indexPath)
+                    }
+
+                })
                     let window = UIApplication.sharedApplication().keyWindow
                     let weakSelf = self
                     let weakWindow = window
                     let weakTable = tableView
-                    messageCell?.delegate = self
+                   
                     if self.myfoundmodel != nil {
                         messageCell?.configCellWithModel(self.myfoundmodel!,indexpath: indexPath)
                     }
@@ -393,7 +425,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     })
                     return messageCell!
 
-                }
+                
             }
             
             
@@ -415,20 +447,42 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
             let dongdou = MyDongDouViewController()
             self.navigationController?.pushViewController(dongdou, animated: true)
         }
+        if indexPath.section == 2 {
+            let details = DetailsVC()
+            if self.myfoundmodel != nil {
+                details.sayArray = self.myfoundmodel?.data.array[indexPath.row]
+                details.detailCommentArray = (details.sayArray?.comment)!
+                self.push(details)
+            }
+           
+        }
         
         
     }
+    
+    func getDetailsSayData(idex:NSIndexPath) {
+        
+    }
+    
+    
     
     func updateUI() {
         MainBgTableView.reloadData()
         if pagesize - judgeSayNumber >= singleRqusetNum + 1 {
             MainBgTableView.mj_footer.endRefreshingWithNoMoreData()
         }else{
-            MainBgTableView.mj_footer.endRefreshing()
+//            if self.myfoundmodel != nil {
+//                if self.myfoundmodel?.code != "405" {
+                     MainBgTableView.mj_footer.endRefreshing()
+//                }else{
+//                    return
+//                }
+//            }
+           
         }
        
     }
-   
+
 }
 
 

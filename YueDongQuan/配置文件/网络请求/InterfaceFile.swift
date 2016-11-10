@@ -2,7 +2,7 @@
 import Foundation
 //MARK:接口地址
 
-let kURL = "http://192.168.3.20:8080/redong"
+let kURL = "http://ctyundong.com:8088/redong"
 
 let testUrl = "http://192.168.3.20:8080/redong"
 
@@ -20,6 +20,8 @@ let myinfo = "myinfo"
 let myfound = "myfound"
 //MARK:接口名 他的信息
 let heinfo = "heinfo"
+//MARK:接口名 他的说说
+let hefound = "hefound"
 //MARK:接口名 修改头像
 let updatehead = "updatehead"
 //MARK:接口名 修改姓名

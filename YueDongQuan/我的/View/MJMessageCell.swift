@@ -13,12 +13,24 @@ protocol MJMessageCellDelegate {
     func deleteSayContentFromMySayContent(index:NSIndexPath)
     
 }
+
+enum sayFromUserType {
+    case local
+    case other
+}
+
+
 class MJMessageCell: UITableViewCell {
+    
+    var type : sayFromUserType?
+    
 
     var displayView = PYPhotosView()
     var videoView = PYPhotosView()
     
     var commentModel = [myFoundCommentComment]()
+    
+    var hefoundCommentModel = [HeFoundComment]()
     
     
     typealias CommentBtnClickBlock = (commentBtn:UIButton,indexPath:NSIndexPath)->Void
@@ -44,6 +56,13 @@ class MJMessageCell: UITableViewCell {
         taptextBlock = block
     }
     
+    typealias deleteClourse = (isDelete:Bool)->Void
+    var deleteBlock : deleteClourse?
+    func sendDeleteEvent(block:deleteClourse?)  {
+        deleteBlock = block
+    }
+    
+    
     var delegate : MJMessageCellDelegate?
     private  var nameLabel : UILabel?
     private var say_type : UIImageView?
@@ -53,17 +72,33 @@ class MJMessageCell: UITableViewCell {
     private var seeBtn : UIButton?
     private var zanBtn : UIButton?
     private var commentBtn : UIButton?
-    private var deleteBtn : UIButton?
+    var deleteBtn : UIButton?
     private var moreBtn : UIButton?
     private var contentLabel : UILabel?
     
     var myfoundModel : myFoundModel?
-    var indexPath : NSIndexPath?
+    var indexPath = NSIndexPath()
+    var dataCode : String?
+    
+    
     
     var subIndex : NSIndexPath?
    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     self.selectionStyle = .None
+    
+//    if dataCode == "405" {
+//        let nonedataImage = UIImageView ()
+//        nonedataImage.snp_makeConstraints(closure: { (make) in
+//            make.left.right.top.bottom.equalTo(0)
+//        })
+//        nonedataImage.image = UIImage(named: "noneData")
+//        self.contentView .addSubview(nonedataImage)
+//        
+//    }else if dataCode == "201"{
+//        
+//    }else{
+
     //头像
     self.headImageView = UIImageView()
     self.headImageView?.backgroundColor = UIColor.blueColor()
@@ -83,7 +118,7 @@ class MJMessageCell: UITableViewCell {
     self.nameLabel?.textColor = UIColor(red: 54/255, green: 71/255, blue: 121/255, alpha: 0.9)
     self.nameLabel?.preferredMaxLayoutWidth = ScreenWidth - 10 - 40 - 30
     self.nameLabel?.numberOfLines = 0
-    self.nameLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+    self.nameLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
     self.nameLabel?.snp_makeConstraints(closure: { (make) in
         make.left.equalTo((WeakSelf!.headImageView!.snp_right)).offset(5)
         make.top.equalTo((WeakSelf!.headImageView!.snp_top))
@@ -105,7 +140,7 @@ class MJMessageCell: UITableViewCell {
     
     
     self.descLabel = UILabel()
-    self.descLabel?.font = UIFont(name: "Arial", size: kMidScaleOfFont)
+    self.descLabel?.font = UIFont(name: "Arial", size: kSmallScaleOfFont)
     let tapTexts = UITapGestureRecognizer(target: self, action: #selector(tapOnText))
     self.descLabel?.addGestureRecognizer(tapTexts)
     self.contentView .addSubview(self.descLabel!)
@@ -203,7 +238,7 @@ class MJMessageCell: UITableViewCell {
     })
     deleteBtn!.sizeToFit()
     deleteBtn?.titleLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
-    deleteBtn?.setTitle("删除", forState: UIControlState.Normal)
+    deleteBtn?.setImage(UIImage(named: "jubao"), forState: UIControlState.Normal)
     deleteBtn?.setTitleColor(kBlueColor, forState: UIControlState.Normal)
     deleteBtn?.addTarget(self, action: #selector(deleteSayContent), forControlEvents: UIControlEvents.TouchUpInside)
     
@@ -213,13 +248,13 @@ class MJMessageCell: UITableViewCell {
     self.contentView .addSubview(self.tableView!)
     self.tableView?.snp_makeConstraints(closure: { (make) in
         make.left.equalTo(self.displayView)
-        make.top.equalTo((self.commentBtn?.snp_bottom)!).offset(10)
+        make.top.equalTo((self.commentBtn?.snp_bottom)!).offset(5)
         make.trailing.equalTo(-10)
     })
     self.tableView?.separatorStyle = .None
     self.hyb_lastViewInCell = self.tableView
     self.hyb_bottomOffsetToCell = 0
-    
+//    }
     }
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -234,12 +269,12 @@ class MJMessageCell: UITableViewCell {
     func moreAction(sender:UIButton) {
         
         if ((self.moreBlock) != nil) {
-            self.moreBlock!(zanBtn: sender,indexPath: self.indexPath!);
+            self.moreBlock!(zanBtn: sender,indexPath: self.indexPath);
         }
     }
     func commentAction(sender:UIButton)  {
         if ((self.commentBlock) != nil) {
-            self.commentBlock!(commentBtn: sender,indexPath: self.indexPath!);
+            self.commentBlock!(commentBtn: sender,indexPath: self.indexPath);
         }
     }
     
@@ -261,10 +296,30 @@ class MJMessageCell: UITableViewCell {
 }
 extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
     
-    func deleteSayContent(sender:UIButton)  {
-        if self.indexPath != nil {
-            self.delegate?.deleteSayContentFromMySayContent(self.indexPath!)
+    func deleteSayContent(sender:UIButton,event:UIEvent)  {
+//        if self.indexPath != nil {
+            self.delegate?.deleteSayContentFromMySayContent(self.indexPath)
+       //        }
+        
+        let titleArr = ["删除"]
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(myJubao))
+        
+        let popView = SimplePopupView(frame: CGRect(x: 30, y: 0, width: 60, height: 30), andDirection: PopViewDirectionButton, andTitles: titleArr, andImages: nil, trianglePecent: 0.5)
+        popView.popTintColor  = UIColor.whiteColor()
+        popView.edgeLength = 10
+        popView.popColor = UIColor.blackColor()
+        popView.addGestureRecognizer(tap)
+        self.deleteBtn!.showPopView(popView, atPoint: CGPoint(x: 0.5, y: 0.3))
+        popView.show()
+       
+    }
+    
+    func myJubao()  {
+        if deleteBlock != nil {
+            self.deleteBlock!(isDelete:true)
         }
+
     }
     
     func configCellWithModel(model:myFoundModel,indexpath:NSIndexPath)  {
@@ -335,6 +390,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         
         
         var tableViewHeight = CGFloat()
+        
         for model in self.commentModel {
             let cellheight = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
                 if self.myfoundModel != nil{
@@ -362,32 +418,66 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         self.tableView?.registerClass(MJCommentCell.self, forCellReuseIdentifier: "identtifier")
     }
 
-    func distinguishSayTypeWithTypeId(model:myFoundModel,index:NSIndexPath)  {
- 
-        let sayArray = model.data.array[index.row]
+    func distinguishSayTypeWithTypeId(md:AnyObject,index:NSIndexPath)  {
         
-        switch sayArray.typeId {
-        case 11:
-            self.say_type?.image = UIImage(named: "explain_pic")
-            break
-        case 12:
-            self.say_type?.image = UIImage(named: "explain_vedio")
-            break
-        case 13:
-            self.say_type?.image = UIImage(named: "explain_recruit")
-            break
-        case 14:
-            self.say_type?.image = UIImage(named: "explain_pic")
-            break
-        case 15:
-            self.say_type?.image = UIImage(named: "explain_enlist")
-            break
-        case 16:
-            self.say_type?.image = UIImage(named: "explain_JOIN")
-            break
-        default:
-            break
+        if self.type != nil {
+            if self.type! == .local {
+                 let model = md as! myFoundModel
+                let sayArray = model.data.array[index.row]
+                
+                switch sayArray.typeId {
+                case 11:
+                    self.say_type?.image = UIImage(named: "explain_pic")
+                    break
+                case 12:
+                    self.say_type?.image = UIImage(named: "explain_vedio")
+                    break
+                case 13:
+                    self.say_type?.image = UIImage(named: "explain_recruit")
+                    break
+                case 14:
+                    self.say_type?.image = UIImage(named: "explain_pic")
+                    break
+                case 15:
+                    self.say_type?.image = UIImage(named: "explain_enlist")
+                    break
+                case 16:
+                    self.say_type?.image = UIImage(named: "explain_JOIN")
+                    break
+                default:
+                    break
+                }
+
+            }else{
+               let model = md as! HeFoundModel
+                let sayArray = model.data.array[index.row]
+                
+                switch sayArray.typeId {
+                case 11:
+                    self.say_type?.image = UIImage(named: "explain_pic")
+                    break
+                case 12:
+                    self.say_type?.image = UIImage(named: "explain_vedio")
+                    break
+                case 13:
+                    self.say_type?.image = UIImage(named: "explain_recruit")
+                    break
+                case 14:
+                    self.say_type?.image = UIImage(named: "explain_pic")
+                    break
+                case 15:
+                    self.say_type?.image = UIImage(named: "explain_enlist")
+                    break
+                case 16:
+                    self.say_type?.image = UIImage(named: "explain_JOIN")
+                    break
+                default:
+                    break
+                }
+
+            }
         }
+      
         
         
     }
@@ -399,33 +489,63 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         var cell = tableView.dequeueReusableCellWithIdentifier("identtifier") as! MJCommentCell
         cell = MJCommentCell(style: .Default, reuseIdentifier: "identtifier")
         cell.subIndex = indexPath
-//        if (self.commentModel != nil) {
-            cell.configCellWithModel(self.commentModel[indexPath.row])
-//        }
+        
+            if self.type! == .local {
+                cell.configCellWithModel(self.commentModel[indexPath.row])
+            }else{
+                cell.configHeFoundCellWithModel(self.hefoundCommentModel[indexPath.row])
+        }
        
         return cell
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     
-           return self.commentModel.count
-        
-        
+        if self.type != nil {
+            if self.type! == .local {
+                return self.commentModel.count
+            }else{
+                return self.hefoundCommentModel.count
+            }
+        }
+       return 0
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-      
-        let cell_height = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
-            if (self.myfoundModel != nil) {
-                let cell = cell as! MJCommentCell
-                cell.configCellWithModel(self.commentModel[indexPath.row])
-            }
-            
+        
+        if self.type != nil {
+           if self.type! == .local{
+            let cell_height = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
+                if (self.myfoundModel != nil) {
+                    let cell = cell as! MJCommentCell
+                    cell.configCellWithModel(self.commentModel[indexPath.row])
+                }
+                
             }) { () -> [NSObject : AnyObject]! in
                 let cache = [kHYBCacheUniqueKey:userInfo.uid,
                              kHYBCacheStateKey:"",
-                    kHYBRecalculateForStateKey:0]
+                             kHYBRecalculateForStateKey:0]
                 return cache as [NSObject : AnyObject]
+            }
+            return cell_height
+           }
+           
+           else
+           
+           {
+            let cell_height = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
+                if (self.myfoundModel != nil) {
+                    let cell = cell as! MJCommentCell
+                    cell.configHeFoundCellWithModel(self.hefoundCommentModel[indexPath.row])
+                }
+                
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheUniqueKey:userInfo.uid,
+                             kHYBCacheStateKey:"",
+                             kHYBRecalculateForStateKey:0]
+                return cache as [NSObject : AnyObject]
+            }
+            return cell_height
+            }
         }
-       return cell_height
+      return 0
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -467,5 +587,102 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         }
         return picHeight
         
+    }
+}
+//MARK:填充查看他的说说数据
+extension MJMessageCell{
+    func configHeFoundCellData(model:HeFoundModel,indexpath:NSIndexPath)  {
+        self.hefoundCommentModel = model.data.array[indexpath.row].comment
+        
+        self.nameLabel?.text = userInfo.name
+        self.distinguishSayTypeWithTypeId(model, index: indexpath)
+        
+        let timeStr = TimeStampToDate().getTimeString(model.data.array[indexpath.row].time)
+        self.descLabel?.text = timeStr
+        if model.data.array[indexpath.row].csum != nil {
+            self.seeBtn?.setTitle(model.data.array[indexpath.row].csum.description, forState: UIControlState.Normal)
+            
+            self.zanBtn?.setTitle(model.data.array[indexpath.row].csum.description, forState: UIControlState.Normal)
+        }else{
+            self.seeBtn?.setTitle("0", forState: UIControlState.Normal)
+            self.zanBtn?.setTitle("0", forState: UIControlState.Normal)
+        }
+        if model.data.array[indexpath.row].comment.count != 0 {
+            self.commentBtn?.setTitle(self.commentModel.count.description, forState: UIControlState.Normal)
+            
+        }else{
+            self.commentBtn?.setTitle("0", forState: UIControlState.Normal)
+        }
+        self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: ""))
+        
+        
+        let attrString = NSMutableAttributedString(string:  model.data.array[indexpath.row].content)
+        self.contentLabel?.attributedText = attrString
+        
+        
+        if model.data.array[indexpath.row].images.count != 0 {
+            let h1 = cellHeightByData1(model.data.array[indexpath.row].images.count)
+            
+            self.displayView.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(h1)
+            })
+            self.displayView.hidden = false
+            
+        }else{
+            self.displayView.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(0)
+            })
+            self.displayView.hidden = true
+        }
+        
+        var thImageStr = [String]()
+        var oringIMage = [String]()
+        
+        for imageModel in model.data.array[indexpath.row].images {
+            thImageStr.append(imageModel.thumbnailSrc)
+            oringIMage.append(imageModel.originalSrc)
+        }
+        self.displayView.thumbnailUrls = thImageStr
+        self.displayView.originalUrls = oringIMage
+        
+        if model.data.array[indexpath.row].typeId == 12 {
+            self.displayView.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo((ScreenWidth-30)/3)
+            })
+            self.displayView.hidden = false
+            self.displayView.thumbnailUrls = ["http://cdn.duitang.com/uploads/item/201508/23/20150823182337_jMVv5.jpeg"]
+            self.displayView.originalUrls = ["http://cdn.duitang.com/uploads/item/201508/23/20150823182337_jMVv5.jpeg"]
+        }
+        
+        
+        
+        
+        var tableViewHeight = CGFloat()
+        
+        for model in self.commentModel {
+            let cellheight = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
+                if self.myfoundModel != nil{
+                    let cell = sourceCell as! MJCommentCell
+                    cell.configCellWithModel(model)
+                }
+                
+                
+                }, cache: { () -> [NSObject : AnyObject]! in
+                    return [kHYBCacheUniqueKey : "",
+                        kHYBCacheStateKey :"",
+                        kHYBRecalculateForStateKey:1]
+            })
+            tableViewHeight += cellheight;
+        }
+        
+        
+        self.tableView?.snp_updateConstraints(closure: { (make) in
+            make.height.equalTo(tableViewHeight)
+        })
+        
+        self.tableView?.delegate = self
+        self.tableView?.dataSource = self
+        self.tableView?.reloadData()
+        self.tableView?.registerClass(MJCommentCell.self, forCellReuseIdentifier: "identtifier")
     }
 }

@@ -55,13 +55,14 @@ class DataSource: NSObject {
         return myfoundModel
     }
     //MARK:解析他的信息数据
-    func getheinfoData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getheinfoData(datasource:NSDictionary) -> HeInfoModel {
+       let model = HeInfoModel(fromDictionary: datasource)
+        return model
+    }
+    //MARK:解析他的说说数据
+    func gethefoundData(datasource:NSDictionary)->HeFoundModel{
+        let model = HeFoundModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析更新头像数据
     func getupdateheadData(datasource:NSDictionary) -> MJResponseModel {
