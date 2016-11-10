@@ -171,7 +171,7 @@ extension SignRankingCOntroller {
                 
                 print(dict["flag"])
                 let model = SignRankingModel.init(fromDictionary: dict)
-                NSLog("model=\(model.data.array.first?.originalSrc)")
+                
                 if model.code == "200" && model.flag == "1" {
                     self.signRankingModel = model.data.array
                     

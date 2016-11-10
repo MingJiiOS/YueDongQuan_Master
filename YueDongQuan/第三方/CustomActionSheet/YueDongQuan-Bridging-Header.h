@@ -62,7 +62,12 @@
 #import "UIView+SimplePopupView.h"
 #import "UIView+SetRect.h"
 #import "SimplePopupView.h"
+#import "YYFPSLabel.h"
+#import "JZVideoPlayerView.h"
+#import "VedioDetailViewController.h"
 
+
+#import "LiuXSegmentView.h"
 //高德地图
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <MAMapKit/MAMapKit.h>

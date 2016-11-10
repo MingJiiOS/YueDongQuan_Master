@@ -91,7 +91,7 @@ class FieldCell: UITableViewCell {
             make.height.width.equalTo(35)
         }
         qianDaoView.userInteractionEnabled = true
-        qianDaoView.image = UIImage(named: "ic_wode_0088ff")
+        qianDaoView.image = UIImage(named: "签到")
         let tap = UITapGestureRecognizer(target: self, action: #selector(clickQianDaoImage))
         qianDaoView.addGestureRecognizer(tap)
         

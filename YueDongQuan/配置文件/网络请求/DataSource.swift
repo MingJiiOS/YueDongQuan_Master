@@ -204,13 +204,9 @@ class DataSource: NSObject {
         return model!
     }
     //MARK:解析查询说说数据
-    func getfoundData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getfoundData(datasource:NSDictionary) -> DiscoveryModel {
+       let model = DiscoveryModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析上传场地数据
     func getuploadsiteData(datasource:NSDictionary) -> MJResponseModel {

@@ -11,18 +11,44 @@ import SnapKit
 import Alamofire
 import SwiftyJSON
 
+class SignInfo {
+    var name = String()
+    var num = Int()
+    var id = Int()
+    var thumbnailSrc = String()
+    var yesterday = Int()
+}
+
+
 class SignRankBtnController: UIViewController,SignHeaderViewDelegate {
     
     
     
-    
+    var mysignModel : MySignModel!
+    var mySignInfo = [SignInfo]()
+    var toDaySignInfo = [MySignArray]()
     var timeStr : Double = 0
     var timer : XTimer!
     var leftView : UIView!
     var imgView : UIImageView!
-    var siteId = Int()
+    var siteId = Int(){
+        didSet{
+            requestFieldSignData(siteId)
+        }
+    }
     
+    var sportTime : Double = 0
     
+    var SignFlag = Bool(){
+        didSet{
+            if SignFlag {
+                timer = XTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(backgroundThreadFire), userInfo: nil, repeats: true)
+            }else{
+//                timer = XTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(backgroundThreadFire), userInfo: nil, repeats: true)
+//                timer.invalidate()
+            }
+        }
+    }//用来判断是否签到
     
     private var signTableView : UITableView!
     let SignHeaderview = SignHeaderView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenWidth - 50))
@@ -38,10 +64,12 @@ class SignRankBtnController: UIViewController,SignHeaderViewDelegate {
         setUI()
         
         
-        timer = XTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(backgroundThreadFire), userInfo: nil, repeats: true)
+        
         
         
     }
+    
+    
     
     func clickTimeStatusBtn(sender: UIButton) {
         if sender.selected == true {
@@ -73,9 +101,9 @@ class SignRankBtnController: UIViewController,SignHeaderViewDelegate {
     func backgroundThreadFire(){
         
         timeStr += 1/10
-        
-        SignHeaderview.toDayTime = String(format: "%0.2f",timeStr)
-
+        let timeTemp = timeStr + sportTime
+        SignHeaderview.toDayTime = String(format: "%0.2f",timeTemp)
+        SignHeaderview.kaluliTemp = timeToMinute(timeTemp)
         SignHeaderview.cicleView.add = 0.01
     }
     
@@ -83,7 +111,11 @@ class SignRankBtnController: UIViewController,SignHeaderViewDelegate {
         timer.invalidate()
     }
     
-    
+    func timeToMinute(time:Double) -> String{
+        let minutes = Float((time/60)%60)
+        let kaluli = String(format:"%0.2f",minutes*10)
+        return kaluli
+    }
     
     func setNav(){
         
@@ -141,7 +173,7 @@ class SignRankBtnController: UIViewController,SignHeaderViewDelegate {
         
         imgView.image = UIImage(named: "")
         imgView.userInteractionEnabled = false
-        requestFieldSignData(self.siteId)
+        
 
     }
     override func viewWillDisappear(animated: Bool) {
@@ -166,9 +198,9 @@ extension SignRankBtnController : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            return mySignInfo.count
         }else{
-            return 10
+            return toDaySignInfo.count
         }
         
         
@@ -201,19 +233,24 @@ extension SignRankBtnController : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        let cell = UITableViewCell()
         if indexPath.section == 0 {
-            let cell : SignSportsCell = tableView.dequeueReusableCellWithIdentifier("SignSportsCell", forIndexPath: indexPath) as! SignSportsCell
-            
+            let cell : SignSportsCell = tableView.dequeueReusableCellWithIdentifier("SignSportsCell") as! SignSportsCell
+            cell.taolunName.text = mySignInfo[indexPath.row].name
+            cell.taolunImage.sd_setImageWithURL(NSURL(string: mySignInfo[indexPath.row].thumbnailSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
+            cell.taolunCount.text = mySignInfo[indexPath.row].num.description
             return cell
             
-        }else{
-            let cell : SignPersonCell = tableView.dequeueReusableCellWithIdentifier("SignPersonCell", forIndexPath: indexPath) as! SignPersonCell
+        }
+        if indexPath.section == 1{
+            let cell : SignPersonCell = tableView.dequeueReusableCellWithIdentifier("SignPersonCell") as! SignPersonCell
+            cell.bigHeaderView.sd_setImageWithURL(NSURL(string: toDaySignInfo[indexPath.row].originalSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
+            cell.userName.text = toDaySignInfo[indexPath.row].name
             
             return cell
         }
         
-        
+        return cell
     }
     
 }
@@ -231,10 +268,73 @@ extension SignRankBtnController {
             case .Success:
                 let json = JSON(data: response.data!)
                 NSLog("json1=\(json)")
-                let str = (json.object) as! NSDictionary
-                print(str["code"])
-                
-                print(str["flag"])
+                let dict = (json.object) as! NSDictionary
+                self.mysignModel = MySignModel.init(fromDictionary: dict)
+                if (self.mysignModel.code == "200" && self.mysignModel.flag == "1") {//签到成功
+                    self.SignFlag = true
+                    let model = SignInfo()
+                    model.id = self.mysignModel.data.id
+                    model.name = self.mysignModel.data.name
+                    model.num = self.mysignModel.data.num
+                    model.thumbnailSrc = self.mysignModel.data.thumbnailSrc
+                    model.yesterday = self.mysignModel.data.yesterday
+                    
+                    self.mySignInfo.append(model)
+                    self.SignHeaderview.yesterDayTime = self.mysignModel.data.yesterday.description
+                    self.SignHeaderview.sportStatus.text = "运动中"
+                    self.toDaySignInfo = self.mysignModel.data.array
+                    self.signTableView.reloadData()
+                }else if (self.mysignModel.code == "407" && self.mysignModel.flag == "1"){//间隔两小时才能在签到
+                    self.SignFlag = false
+                    
+                    let model = SignInfo()
+                    model.id = self.mysignModel.data.id
+                    model.name = self.mysignModel.data.name
+                    model.num = self.mysignModel.data.num
+                    model.thumbnailSrc = self.mysignModel.data.thumbnailSrc
+                    model.yesterday = self.mysignModel.data.yesterday
+                    
+                    self.mySignInfo.append(model)
+                    self.SignHeaderview.yesterDayTime = self.mysignModel.data.yesterday.description
+                    self.SignHeaderview.sportStatus.text = "未运动"
+                    self.toDaySignInfo = self.mysignModel.data.array
+                    self.signTableView.reloadData()
+                    
+                    self.signForMessage()
+                    self.imgView.image = UIImage(named: "ic_lanqiu")
+                    self.imgView.userInteractionEnabled = true
+                    
+                    
+                }else if (self.mysignModel.code == "406" && self.mysignModel.flag == "1"){//存在未签退
+                    self.SignFlag = true
+                    let model = SignInfo()
+                    model.id = self.mysignModel.data.id
+                    model.name = self.mysignModel.data.name
+                    model.num = self.mysignModel.data.num
+                    model.thumbnailSrc = self.mysignModel.data.thumbnailSrc
+                    model.yesterday = self.mysignModel.data.yesterday
+                    
+                    
+                    let timeTemp = NSDate.init(timeIntervalSince1970: Double((self.mysignModel.data.array.first?.endTime)!/1000))
+                    
+                    let timeInterval = timeTemp.timeIntervalSince1970
+                    
+                    let timer = NSDate().timeIntervalSince1970 - timeInterval
+                    NSLog("timer = \(timer)")
+                    
+                    self.sportTime = timer
+                    self.mySignInfo.append(model)
+                    self.SignHeaderview.yesterDayTime = self.mysignModel.data.yesterday.description
+                    
+                    self.SignHeaderview.sportStatus.text = "运动中"
+                    self.toDaySignInfo = self.mysignModel.data.array
+                    NSLog("count = \(self.toDaySignInfo.count)")
+                    self.signTableView.reloadData()
+
+                }else if (self.mysignModel.code == "401" && self.mysignModel.flag == "1"){//已经签到了
+                    
+                    
+                }
                 
                 //                if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
                 //                    self.navigationController?.popViewControllerAnimated(true)
@@ -261,10 +361,8 @@ extension SignRankBtnController {
                 let json = JSON(data: response.data!)
                 
                 NSLog("json2=\(json)")
-                let str = (json.object) as! NSDictionary
-                print(str["code"])
+                let dict = (json.object) as! NSDictionary
                 
-                print(str["flag"])
                 
                 //                if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
                 //                    self.navigationController?.popViewControllerAnimated(true)
@@ -277,6 +375,15 @@ extension SignRankBtnController {
         }
         
     }
+    
+    
+    
+    func signForMessage(){
+        let alert = UIAlertView(title: "提示", message: "您两小时过后才能再签到", delegate: nil, cancelButtonTitle: "确定")
+        alert.show()
+    }
+    
+    
     
 }
 

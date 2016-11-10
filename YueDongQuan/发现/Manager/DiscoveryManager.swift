@@ -30,28 +30,86 @@ class DiscoveryManager {
     //我的关注
     var myNotifyData = [DiscoveryArray]()
     
-    private var whichIndex = 10
-    private var senderFlag = 0 {
+    
+    //最新数据改变
+    private var lastestSenderFlag = 0 {
         didSet{
-            let notice = NSNotification(name: "OrderDataChanged", object: whichIndex)
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
+            
+            NSNotificationCenter.defaultCenter().postNotification(notice)
+        }
+    }
+    //图片数据改变
+    private var imageSenderFlag = 0 {
+        didSet{
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
+            
+            NSNotificationCenter.defaultCenter().postNotification(notice)
+        }
+    }
+    //视频数据改变
+    private var videoSenderFlag = 0 {
+        didSet{
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
+            
+            NSNotificationCenter.defaultCenter().postNotification(notice)
+        }
+    }
+    //活动数据改变
+    private var activitySenderFlag = 0 {
+        didSet{
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
+            
+            NSNotificationCenter.defaultCenter().postNotification(notice)
+        }
+    }
+    
+    //约战数据改变
+    private var matchSenderFlag = 0 {
+        didSet{
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
+            
+            NSNotificationCenter.defaultCenter().postNotification(notice)
+        }
+    }
+    //求加入数据改变
+    private var joinTeamSenderFlag = 0 {
+        didSet{
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
+            
+            NSNotificationCenter.defaultCenter().postNotification(notice)
+        }
+    }
+    
+    //招募数据改变
+    private var zhaoMuSenderFlag = 0 {
+        didSet{
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
+            
+            NSNotificationCenter.defaultCenter().postNotification(notice)
+        }
+    }
+    
+    //附近数据发生改变
+    private var nearBySenderFlag = 0 {
+        didSet{
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
+            
+            NSNotificationCenter.defaultCenter().postNotification(notice)
+        }
+    }
+    
+    //我的关注
+    private var myNotifySenderFlag = 0 {
+        didSet{
+            let notice = NSNotification(name: "LastestOrderDataChanged", object: nil)
             
             NSNotificationCenter.defaultCenter().postNotification(notice)
         }
     }
     
     
-    func removeAllData(){
-        lastestData = []
-        imageData = []
-        videoData = []
-        activityData = []
-        matchData = []
-        joinTeamData = []
-        zhaoMuData = []
-        nearByData = []
-        myNotifyData = []
-        senderFlag += 1
-    }
+    
     
     /**************************************/
     //返回最新的默认数据
@@ -61,14 +119,13 @@ class DiscoveryManager {
     //清空数据
     func removeLastestData(){
         lastestData = []
-        whichIndex = 0
-        senderFlag += 1
+
     }
     //添加数据
     func addLastestData(lastestsData : [DiscoveryArray]){
+        
         self.lastestData += lastestsData
-        whichIndex = 0
-        senderFlag += 1
+        lastestSenderFlag += 1
     }
     
     /**************************************/
@@ -79,14 +136,12 @@ class DiscoveryManager {
     //清空数据
     func removeImageData(){
         imageData = []
-        whichIndex = 1
-        senderFlag += 1
     }
     //添加数据
     func addImageData(imagesData : [DiscoveryArray]){
         self.imageData += imagesData
-        whichIndex = 1
-        senderFlag += 1
+        
+        imageSenderFlag += 1
     }
     
     
@@ -99,14 +154,11 @@ class DiscoveryManager {
     //清空数据
     func removeVideoData(){
         videoData = []
-        whichIndex = 2
-        senderFlag += 1
     }
     //添加数据
     func addVideoData(videosData : [DiscoveryArray]){
         self.videoData += videosData
-        whichIndex = 2
-        senderFlag += 1
+        videoSenderFlag += 1
     }
     
     /**************************************/
@@ -118,14 +170,11 @@ class DiscoveryManager {
     //清空数据
     func removeActivityData(){
         activityData = []
-        whichIndex = 3
-        senderFlag += 1
     }
     //添加数据
     func addActivityData(activitysData : [DiscoveryArray]){
         self.activityData += activitysData
-        whichIndex = 3
-        senderFlag += 1
+        activitySenderFlag += 1
     }
     
     /**************************************/
@@ -136,14 +185,12 @@ class DiscoveryManager {
     //清空数据
     func removeMatchData(){
         matchData = []
-        whichIndex = 4
-        senderFlag += 1
     }
     //添加数据
     func addMatchData(matchsData : [DiscoveryArray]){
         self.matchData += matchsData
-        whichIndex = 4
-        senderFlag += 1
+        
+        matchSenderFlag += 1
     }
     
     /**************************************/
@@ -155,14 +202,11 @@ class DiscoveryManager {
     //清空数据
     func removeJoinTeamData(){
         joinTeamData = []
-        whichIndex = 5
-        senderFlag += 1
     }
     //添加数据
     func addJoinTeamData(jointeamData : [DiscoveryArray]){
         self.joinTeamData += jointeamData
-        whichIndex = 5
-        senderFlag += 1
+        joinTeamSenderFlag += 1
     }
     /**************************************/
     //返回招募的默认数据
@@ -173,14 +217,13 @@ class DiscoveryManager {
     //清空数据
     func removeZhaoMuData(){
         zhaoMuData = []
-        whichIndex = 6
-        senderFlag += 1
+
     }
     //添加数据
     func addZhaoMuData(zhaomuData : [DiscoveryArray]){
         self.zhaoMuData += zhaomuData
-        whichIndex = 6
-        senderFlag += 1
+        
+        zhaoMuSenderFlag += 1
     }
     
     /**************************************/
@@ -192,14 +235,11 @@ class DiscoveryManager {
     //清空数据
     func removeNearByData(){
         nearByData = []
-        whichIndex = 7
-        senderFlag += 1
     }
     //添加数据
     func addNearByData(nearbyData : [DiscoveryArray]){
         self.nearByData += nearbyData
-        whichIndex = 7
-        senderFlag += 1
+        nearBySenderFlag += 1
     }
     
     /**************************************/
@@ -211,14 +251,11 @@ class DiscoveryManager {
     //清空数据
     func removeMyNotifyData(){
         myNotifyData = []
-        whichIndex = 8
-        senderFlag += 1
     }
     //添加数据
     func addMyNotifyData(myNotifyData : [DiscoveryArray]){
         self.myNotifyData += myNotifyData
-        whichIndex = 8
-        senderFlag += 1
+        myNotifySenderFlag += 1
     }
 
     

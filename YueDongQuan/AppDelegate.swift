@@ -22,7 +22,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     var timer = NSTimer()
     
     var HUDView = UIView()
-    
+    var isFullScreen = Bool()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
@@ -110,7 +110,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     }
     
     func statusNumber(fication:NSNotification)  {
-        print("通知状态改变",fication.object)
+//        print("通知状态改变",fication.object)
         let number = fication.object as! NSNumber
         if number == 6 {
             let alertt = UIAlertView(title: "⚠️", message: "您的账号在其他设备上登录,请确定是否为本人操作,如非本人操作请及时修改您的登录密码", delegate: self, cancelButtonTitle: nil,otherButtonTitles: "好的")
@@ -159,6 +159,18 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     func applicationWillTerminate(application: UIApplication) {
 
     }
+    
+    
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+        if isFullScreen{
+            return UIInterfaceOrientationMask.All
+            return [UIInterfaceOrientationMask.LandscapeRight,UIInterfaceOrientationMask.Portrait]
+        }
+        
+        return UIInterfaceOrientationMask.Portrait
+        
+    }
+    
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         var token = deviceToken.description
