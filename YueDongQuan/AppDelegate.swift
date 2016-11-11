@@ -183,10 +183,21 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     }
 
     func getUserInfoWithUserId(userId: String!, completion: ((RCUserInfo!) -> Void)!) {
-        let jjj = RCUserInfo()
-        jjj.name = "美女帅哥你们好"
-        jjj.portraitUri = "http://pic7.nipic.com/20100609/5136651_124423001651_2.jpg"
-        return completion(jjj)
+        let rcUser = RCUserInfo()
+        let dict = ["v":v,
+                    "operateId":userInfo.uid.description,
+                    "uid":userId]
+        MJNetWorkHelper().checkHeInfo(heinfo, HeInfoModel: dict, success: { (responseDic, success) in
+            if success {
+                
+            }
+            rcUser.name = DataSource().getheinfoData(responseDic).data.name
+            rcUser.portraitUri = DataSource().getheinfoData(responseDic).data.thumbnailSrc
+            
+            }) { (error) in
+                
+        }
+        return completion(rcUser)
     }
     func getGroupInfoWithGroupId(groupId: String!, completion: ((RCGroup!) -> Void)!) {
         let hhh = RCGroup()

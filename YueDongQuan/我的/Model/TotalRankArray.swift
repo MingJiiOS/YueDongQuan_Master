@@ -1,5 +1,5 @@
 //
-//	CircleInfoArray.swift
+//	TotalRankArray.swift
 //
 //	Create by 方果 黄 on 11/11/2016
 //	Copyright © 2016. All rights reserved.
@@ -8,12 +8,11 @@
 import Foundation
 
 
-class CircleInfoArray : NSObject, NSCoding{
+class TotalRankArray : NSObject, NSCoding{
 
-	var id : Int!
+	var dongdou : String!
 	var name : String!
-	var permissions : Int!
-	var thumbnailSrc : String!
+	var originalSrc : String!
 	var uid : Int!
 
 
@@ -21,10 +20,9 @@ class CircleInfoArray : NSObject, NSCoding{
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: NSDictionary){
-		id = dictionary["id"] as? Int
+		dongdou = dictionary["dongdou"] as? String
 		name = dictionary["name"] as? String
-		permissions = dictionary["permissions"] as? Int
-		thumbnailSrc = dictionary["thumbnailSrc"] as? String
+		originalSrc = dictionary["originalSrc"] as? String
 		uid = dictionary["uid"] as? Int
 	}
 
@@ -34,17 +32,14 @@ class CircleInfoArray : NSObject, NSCoding{
 	func toDictionary() -> NSDictionary
 	{
 		var dictionary = NSMutableDictionary()
-		if id != nil{
-			dictionary["id"] = id
+		if dongdou != nil{
+			dictionary["dongdou"] = dongdou
 		}
 		if name != nil{
 			dictionary["name"] = name
 		}
-		if permissions != nil{
-			dictionary["permissions"] = permissions
-		}
-		if thumbnailSrc != nil{
-			dictionary["thumbnailSrc"] = thumbnailSrc
+		if originalSrc != nil{
+			dictionary["originalSrc"] = originalSrc
 		}
 		if uid != nil{
 			dictionary["uid"] = uid
@@ -58,10 +53,9 @@ class CircleInfoArray : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         id = aDecoder.decodeObjectForKey("id") as? Int
+         dongdou = aDecoder.decodeObjectForKey("dongdou") as? String
          name = aDecoder.decodeObjectForKey("name") as? String
-         permissions = aDecoder.decodeObjectForKey("permissions") as? Int
-         thumbnailSrc = aDecoder.decodeObjectForKey("thumbnailSrc") as? String
+         originalSrc = aDecoder.decodeObjectForKey("originalSrc") as? String
          uid = aDecoder.decodeObjectForKey("uid") as? Int
 
 	}
@@ -72,17 +66,14 @@ class CircleInfoArray : NSObject, NSCoding{
     */
     @objc func encodeWithCoder(aCoder: NSCoder)
 	{
-		if id != nil{
-			aCoder.encodeObject(id, forKey: "id")
+		if dongdou != nil{
+			aCoder.encodeObject(dongdou, forKey: "dongdou")
 		}
 		if name != nil{
 			aCoder.encodeObject(name, forKey: "name")
 		}
-		if permissions != nil{
-			aCoder.encodeObject(permissions, forKey: "permissions")
-		}
-		if thumbnailSrc != nil{
-			aCoder.encodeObject(thumbnailSrc, forKey: "thumbnailSrc")
+		if originalSrc != nil{
+			aCoder.encodeObject(originalSrc, forKey: "originalSrc")
 		}
 		if uid != nil{
 			aCoder.encodeObject(uid, forKey: "uid")

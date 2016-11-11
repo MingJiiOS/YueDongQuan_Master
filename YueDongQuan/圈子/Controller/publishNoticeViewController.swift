@@ -38,6 +38,7 @@ class publishNoticeViewController: MainViewController,UITextViewDelegate{
         self.view.addSubview(textView)
         textView.delegate = self
         textView.maxTextLength = 300
+        
         self.view .addSubview(numerLabel)
         numerLabel.snp_makeConstraints { (make) in
             make.right.equalTo(textView.snp_right)
@@ -57,8 +58,13 @@ class publishNoticeViewController: MainViewController,UITextViewDelegate{
     }
     //MARK:textView delegate
     func textViewDidChange(textView: UITextView) {
-        content = textView.text
+        
         strLength = NSString(string: textView.text).length
+        if strLength <= 300 {
+            content = textView.text
+        }else{
+            textView.editable = false
+        }
         
         let attributeString = NSMutableAttributedString(string: "\(strLength)/300")
         numerLabel.attributedText = attributeString

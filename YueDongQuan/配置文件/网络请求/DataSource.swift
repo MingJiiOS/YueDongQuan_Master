@@ -415,13 +415,9 @@ class DataSource: NSObject {
         return model
     }
     //MARK:解析动豆总排行数据
-    func getdongdourankingData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getdongdourankingData(datasource:NSDictionary) -> TotalRankModel {
+        let model = TotalRankModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析获取动豆数据
     func getgetDongDouData(datasource:NSDictionary) -> MJResponseModel {

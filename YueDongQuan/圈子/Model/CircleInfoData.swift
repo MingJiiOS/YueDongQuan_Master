@@ -1,5 +1,8 @@
 //
 //	CircleInfoData.swift
+//
+//	Create by 方果 黄 on 11/11/2016
+//	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
@@ -10,12 +13,14 @@ class CircleInfoData : NSObject, NSCoding{
 	var announcement : String!
 	var array : [CircleInfoArray]!
 	var blacklist : Int!
+	var cmNum : Int!
 	var id : Int!
-	var latitude : Int!
-	var longitude : Int!
+	var latitude : Float!
+	var longitude : Float!
 	var name : String!
 	var permissions : Int!
-	var siteId : Int!
+	var pw : String!
+	var thumbnailSrc : String!
 	var time : Int!
 	var typeId : Int!
 
@@ -33,12 +38,14 @@ class CircleInfoData : NSObject, NSCoding{
 			}
 		}
 		blacklist = dictionary["blacklist"] as? Int
+		cmNum = dictionary["cmNum"] as? Int
 		id = dictionary["id"] as? Int
-		latitude = dictionary["latitude"] as? Int
-		longitude = dictionary["longitude"] as? Int
+		latitude = dictionary["latitude"] as? Float
+		longitude = dictionary["longitude"] as? Float
 		name = dictionary["name"] as? String
 		permissions = dictionary["permissions"] as? Int
-		siteId = dictionary["siteId"] as? Int
+		pw = dictionary["pw"] as? String
+		thumbnailSrc = dictionary["thumbnailSrc"] as? String
 		time = dictionary["time"] as? Int
 		typeId = dictionary["typeId"] as? Int
 	}
@@ -48,7 +55,7 @@ class CircleInfoData : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
 		if announcement != nil{
 			dictionary["announcement"] = announcement
 		}
@@ -61,6 +68,9 @@ class CircleInfoData : NSObject, NSCoding{
 		}
 		if blacklist != nil{
 			dictionary["blacklist"] = blacklist
+		}
+		if cmNum != nil{
+			dictionary["cmNum"] = cmNum
 		}
 		if id != nil{
 			dictionary["id"] = id
@@ -77,8 +87,11 @@ class CircleInfoData : NSObject, NSCoding{
 		if permissions != nil{
 			dictionary["permissions"] = permissions
 		}
-		if siteId != nil{
-			dictionary["siteId"] = siteId
+		if pw != nil{
+			dictionary["pw"] = pw
+		}
+		if thumbnailSrc != nil{
+			dictionary["thumbnailSrc"] = thumbnailSrc
 		}
 		if time != nil{
 			dictionary["time"] = time
@@ -98,12 +111,14 @@ class CircleInfoData : NSObject, NSCoding{
          announcement = aDecoder.decodeObjectForKey("announcement") as? String
          array = aDecoder.decodeObjectForKey("array") as? [CircleInfoArray]
          blacklist = aDecoder.decodeObjectForKey("blacklist") as? Int
+         cmNum = aDecoder.decodeObjectForKey("cmNum") as? Int
          id = aDecoder.decodeObjectForKey("id") as? Int
-         latitude = aDecoder.decodeObjectForKey("latitude") as? Int
-         longitude = aDecoder.decodeObjectForKey("longitude") as? Int
+         latitude = aDecoder.decodeObjectForKey("latitude") as? Float
+         longitude = aDecoder.decodeObjectForKey("longitude") as? Float
          name = aDecoder.decodeObjectForKey("name") as? String
          permissions = aDecoder.decodeObjectForKey("permissions") as? Int
-         siteId = aDecoder.decodeObjectForKey("siteId") as? Int
+         pw = aDecoder.decodeObjectForKey("pw") as? String
+         thumbnailSrc = aDecoder.decodeObjectForKey("thumbnailSrc") as? String
          time = aDecoder.decodeObjectForKey("time") as? Int
          typeId = aDecoder.decodeObjectForKey("typeId") as? Int
 
@@ -124,6 +139,9 @@ class CircleInfoData : NSObject, NSCoding{
 		if blacklist != nil{
 			aCoder.encodeObject(blacklist, forKey: "blacklist")
 		}
+		if cmNum != nil{
+			aCoder.encodeObject(cmNum, forKey: "cmNum")
+		}
 		if id != nil{
 			aCoder.encodeObject(id, forKey: "id")
 		}
@@ -139,8 +157,11 @@ class CircleInfoData : NSObject, NSCoding{
 		if permissions != nil{
 			aCoder.encodeObject(permissions, forKey: "permissions")
 		}
-		if siteId != nil{
-			aCoder.encodeObject(siteId, forKey: "siteId")
+		if pw != nil{
+			aCoder.encodeObject(pw, forKey: "pw")
+		}
+		if thumbnailSrc != nil{
+			aCoder.encodeObject(thumbnailSrc, forKey: "thumbnailSrc")
 		}
 		if time != nil{
 			aCoder.encodeObject(time, forKey: "time")

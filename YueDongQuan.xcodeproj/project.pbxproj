@@ -327,6 +327,12 @@
 		BF9CA17E1DC87D000043F535 /* MJCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9CA17D1DC87D000043F535 /* MJCommentCell.swift */; };
 		BF9CA1811DC87EFD0043F535 /* CommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9CA1801DC87EFD0043F535 /* CommentModel.m */; };
 		BFA3273D1D9CF7200003AA4D /* MJGreenAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA3273C1D9CF7200003AA4D /* MJGreenAnnotationView.swift */; };
+		BFA6D1031DD551B4008819BC /* CircleInfoArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6D1001DD551B4008819BC /* CircleInfoArray.swift */; };
+		BFA6D1041DD551B4008819BC /* CircleInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6D1011DD551B4008819BC /* CircleInfoData.swift */; };
+		BFA6D1051DD551B4008819BC /* CircleInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6D1021DD551B4008819BC /* CircleInfoModel.swift */; };
+		BFA6D1091DD56B1D008819BC /* TotalRankArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6D1061DD56B1D008819BC /* TotalRankArray.swift */; };
+		BFA6D10A1DD56B1D008819BC /* TotalRankData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6D1071DD56B1D008819BC /* TotalRankData.swift */; };
+		BFA6D10B1DD56B1D008819BC /* TotalRankModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6D1081DD56B1D008819BC /* TotalRankModel.swift */; };
 		BFA6DDBA1D88EC91009017DE /* PchFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6DDB91D88EC91009017DE /* PchFile.swift */; };
 		BFA6DDC71D895C11009017DE /* UIControl+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA6DDC61D895C11009017DE /* UIControl+Custom.m */; };
 		BFAD62FB1D9E0FE8006234E1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAD62FA1D9E0FE8006234E1 /* AVFoundation.framework */; };
@@ -353,9 +359,6 @@
 		BFAD63281D9E3E34006234E1 /* ConversationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD63261D9E3E34006234E1 /* ConversationListViewController.m */; };
 		BFAD632A1D9E47BC006234E1 /* MJConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD63291D9E47BC006234E1 /* MJConversationViewController.swift */; };
 		BFAD632C1D9E4BD0006234E1 /* MJMyInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD632B1D9E4BD0006234E1 /* MJMyInfoModel.swift */; };
-		BFAF23C11DB85EBC00294988 /* CircleInfoArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23BE1DB85EBC00294988 /* CircleInfoArray.swift */; };
-		BFAF23C21DB85EBC00294988 /* CircleInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23BF1DB85EBC00294988 /* CircleInfoData.swift */; };
-		BFAF23C31DB85EBC00294988 /* CircleInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C01DB85EBC00294988 /* CircleInfoModel.swift */; };
 		BFAF23C61DB85F6800294988 /* MJAmapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C51DB85F6800294988 /* MJAmapHelper.swift */; };
 		BFAF23C91DB8600800294988 /* uploadImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C71DB8600800294988 /* uploadImageData.swift */; };
 		BFAF23CA1DB8600800294988 /* uploadImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C81DB8600800294988 /* uploadImageModel.swift */; };
@@ -1081,6 +1084,12 @@
 		BF9CA17F1DC87EFD0043F535 /* CommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentModel.h; sourceTree = "<group>"; };
 		BF9CA1801DC87EFD0043F535 /* CommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentModel.m; sourceTree = "<group>"; };
 		BFA3273C1D9CF7200003AA4D /* MJGreenAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MJGreenAnnotationView.swift; path = ../MJGreenAnnotationView.swift; sourceTree = "<group>"; };
+		BFA6D1001DD551B4008819BC /* CircleInfoArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoArray.swift; sourceTree = "<group>"; };
+		BFA6D1011DD551B4008819BC /* CircleInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoData.swift; sourceTree = "<group>"; };
+		BFA6D1021DD551B4008819BC /* CircleInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoModel.swift; sourceTree = "<group>"; };
+		BFA6D1061DD56B1D008819BC /* TotalRankArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankArray.swift; sourceTree = "<group>"; };
+		BFA6D1071DD56B1D008819BC /* TotalRankData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankData.swift; sourceTree = "<group>"; };
+		BFA6D1081DD56B1D008819BC /* TotalRankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankModel.swift; sourceTree = "<group>"; };
 		BFA6DDB91D88EC91009017DE /* PchFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PchFile.swift; sourceTree = "<group>"; };
 		BFA6DDC51D895C11009017DE /* UIControl+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+Custom.h"; sourceTree = "<group>"; };
 		BFA6DDC61D895C11009017DE /* UIControl+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Custom.m"; sourceTree = "<group>"; };
@@ -1108,9 +1117,6 @@
 		BFAD63271D9E3E34006234E1 /* ConversationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListViewController.h; sourceTree = "<group>"; };
 		BFAD63291D9E47BC006234E1 /* MJConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJConversationViewController.swift; sourceTree = "<group>"; };
 		BFAD632B1D9E4BD0006234E1 /* MJMyInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJMyInfoModel.swift; sourceTree = "<group>"; };
-		BFAF23BE1DB85EBC00294988 /* CircleInfoArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoArray.swift; sourceTree = "<group>"; };
-		BFAF23BF1DB85EBC00294988 /* CircleInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoData.swift; sourceTree = "<group>"; };
-		BFAF23C01DB85EBC00294988 /* CircleInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoModel.swift; sourceTree = "<group>"; };
 		BFAF23C51DB85F6800294988 /* MJAmapHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJAmapHelper.swift; sourceTree = "<group>"; };
 		BFAF23C71DB8600800294988 /* uploadImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uploadImageData.swift; sourceTree = "<group>"; };
 		BFAF23C81DB8600800294988 /* uploadImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uploadImageModel.swift; sourceTree = "<group>"; };
@@ -1862,6 +1868,9 @@
 		BF071EE41D9A0D5F000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BFA6D1001DD551B4008819BC /* CircleInfoArray.swift */,
+				BFA6D1011DD551B4008819BC /* CircleInfoData.swift */,
+				BFA6D1021DD551B4008819BC /* CircleInfoModel.swift */,
 				BF66311D1DD1D23B00263F67 /* HeFoundArray.swift */,
 				BF66311E1DD1D23B00263F67 /* HeFoundComment.swift */,
 				BF66311F1DD1D23B00263F67 /* HeFoundData.swift */,
@@ -1878,9 +1887,6 @@
 				BFD36CC31DB9BB0C005005A3 /* circleMemberModel.swift */,
 				BFAF23C71DB8600800294988 /* uploadImageData.swift */,
 				BFAF23C81DB8600800294988 /* uploadImageModel.swift */,
-				BFAF23BE1DB85EBC00294988 /* CircleInfoArray.swift */,
-				BFAF23BF1DB85EBC00294988 /* CircleInfoData.swift */,
-				BFAF23C01DB85EBC00294988 /* CircleInfoModel.swift */,
 				BFC126991DB4792F00E11088 /* CirclesArray.swift */,
 				BFC1269A1DB4792F00E11088 /* CirclesData.swift */,
 				BFC1269B1DB4792F00E11088 /* CirclesModel.swift */,
@@ -1941,6 +1947,9 @@
 		BF071F151D9A0D68000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BFA6D1061DD56B1D008819BC /* TotalRankArray.swift */,
+				BFA6D1071DD56B1D008819BC /* TotalRankData.swift */,
+				BFA6D1081DD56B1D008819BC /* TotalRankModel.swift */,
 				BFB44FE71DC9C1040066D49F /* myFoundCommentComment.swift */,
 				BFB44FDF1DC9BBBD0066D49F /* myFoundArray.swift */,
 				BFB44FE01DC9BBBD0066D49F /* myFoundData.swift */,
@@ -4364,8 +4373,8 @@
 				5C7C3A0B1DB5CECC00EA598B /* YHMessageView.swift in Sources */,
 				5C913F931DBDEB0E00E567FB /* WeatherF3h.swift in Sources */,
 				BFBABCC51DC1F9F0009F068E /* UITableView+ClickTime.m in Sources */,
-				BFAF23C31DB85EBC00294988 /* CircleInfoModel.swift in Sources */,
 				BFDBE2C41DD2C0480035B621 /* DetailsVC.swift in Sources */,
+				BFA6D1031DD551B4008819BC /* CircleInfoArray.swift in Sources */,
 				5C27BAFB1DB761D9005A2F8D /* PYPhotoCell.m in Sources */,
 				5C913F991DBDEB0E00E567FB /* WeatherRealtime.swift in Sources */,
 				BFB44F621DC9731B0066D49F /* PanelBottomView.m in Sources */,
@@ -4383,6 +4392,7 @@
 				BF071F351D9A0D68000551F7 /* HeaderView.swift in Sources */,
 				BFB44F651DC9731B0066D49F /* OfficialAccountToolbar.m in Sources */,
 				BFAD63241D9E13BE006234E1 /* MJLoginOpreationHelper.swift in Sources */,
+				BFA6D1091DD56B1D008819BC /* TotalRankArray.swift in Sources */,
 				5C90F1381D8FCFA0005E16AF /* UIImage+YJImage.m in Sources */,
 				BFDB2A9A1DA6000600A65DAD /* YDQLoginRegisterViewController.swift in Sources */,
 				BF3CAC481DB22E15008A5C51 /* myCircleModel.swift in Sources */,
@@ -4437,7 +4447,6 @@
 				BFFCE0281DBEF0820045087A /* TotalRankVC.swift in Sources */,
 				BF071F411D9A0D68000551F7 /* TotalDongdouCell.swift in Sources */,
 				BF071F0C1D9A0D5F000551F7 /* MJParterDataView.swift in Sources */,
-				BFAF23C21DB85EBC00294988 /* CircleInfoData.swift in Sources */,
 				BFFCE0521DBF28840045087A /* TotalRankHeadCell.swift in Sources */,
 				BF071EFE1D9A0D5F000551F7 /* SettingViewController.swift in Sources */,
 				5C07FE481DC885360001850E /* SearchListData.swift in Sources */,
@@ -4452,6 +4461,7 @@
 				5C24BB741D9A5F4400A6D25F /* HKFPostRecruitmentVC.swift in Sources */,
 				5CD981061D96546A007828E2 /* XTimer.m in Sources */,
 				5C913F911DBDEB0E00E567FB /* Weather.swift in Sources */,
+				BFA6D1051DD551B4008819BC /* CircleInfoModel.swift in Sources */,
 				BFD41FDE1DC05F67005A22E6 /* SGScanningQRCodeVC.m in Sources */,
 				BFD41FBA1DC03D9F005A22E6 /* TodayDongdouData.swift in Sources */,
 				BFC126A31DB48C2B00E11088 /* HistoryDongdouData.swift in Sources */,
@@ -4477,7 +4487,6 @@
 				5C3B9A031D9D17A900AF7CFE /* SearchResultCell.swift in Sources */,
 				5C2A956C1D8D86B2006D1462 /* CellModel.m in Sources */,
 				BF071F431D9A10DA000551F7 /* QuanZiViewController.swift in Sources */,
-				BFAF23C11DB85EBC00294988 /* CircleInfoArray.swift in Sources */,
 				BF071F381D9A0D68000551F7 /* MJAlertView.swift in Sources */,
 				5C5C8F221DC9A2090019633F /* SignRankingData.swift in Sources */,
 				BFB44F5E1DC9731B0066D49F /* FacePageView.m in Sources */,
@@ -4558,6 +4567,7 @@
 				BFDBE2C21DD2B9900035B621 /* DetailsCommentCell.swift in Sources */,
 				BF6631181DD1BF5500263F67 /* HeInfoVC.swift in Sources */,
 				BFD36CD01DBA1922005005A3 /* AllNoticeData.swift in Sources */,
+				BFA6D10B1DD56B1D008819BC /* TotalRankModel.swift in Sources */,
 				5C27BAFC1DB761D9005A2F8D /* PYPhotosView.m in Sources */,
 				BFA6DDC71D895C11009017DE /* UIControl+Custom.m in Sources */,
 				BFBABCBC1DC1DEA1009F068E /* RCAnimatedImagesView.m in Sources */,
@@ -4588,6 +4598,7 @@
 				BFC572941DA8EB72002E1995 /* MJProgressHUD.swift in Sources */,
 				BFD41FBE1DC04132005A22E6 /* NSData+AES256.m in Sources */,
 				BFD41FDC1DC05F67005A22E6 /* ScanSuccessJumpVC.m in Sources */,
+				BFA6D10A1DD56B1D008819BC /* TotalRankData.swift in Sources */,
 				46315B001D882C2300B9D846 /* Pubilc.swift in Sources */,
 				5C7D28F81DD2D645000D26E7 /* VideoPlayerVC.swift in Sources */,
 				BFD41FDB1DC05F67005A22E6 /* CIImage+SGExtension.m in Sources */,
@@ -4603,6 +4614,7 @@
 				BF071F0D1D9A0D5F000551F7 /* MJQRCodeView.swift in Sources */,
 				BFB44F581DC9731B0066D49F /* FaceThemeModel.m in Sources */,
 				BFB44F631DC9731B0066D49F /* MorePanel.m in Sources */,
+				BFA6D1041DD551B4008819BC /* CircleInfoData.swift in Sources */,
 				BF6631241DD1D23B00263F67 /* HeFoundData.swift in Sources */,
 				BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */,
 				5C913F971DBDEB0E00E567FB /* WeatherPm25.swift in Sources */,

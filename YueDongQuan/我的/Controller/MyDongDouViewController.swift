@@ -13,6 +13,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
   lazy var mainScrollView = UIScrollView()
   lazy var todayDongdouTableView = UITableView()
   lazy var histroyDongdouTableView = UITableView()
+    var myDongdou : String?
     
     //数据模型
     var todayModel : TodayDongdouModel?
@@ -32,7 +33,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
         
         //头部红色背景图
        
-        headBgView = MyDongdouView(frame: CGRectMake(0, -64, ScreenWidth, ScreenHeight/2.5), numberStr: "2330")
+        headBgView = MyDongdouView(frame: CGRectMake(0, -64, ScreenWidth, ScreenHeight/2.5), numberStr: self.myDongdou!)
        
         headBgView!.backgroundColor = UIColor.redColor()
         animates()
@@ -132,6 +133,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
             }
             if index == 23 {
                 let total = TotalRankVC()
+                total.mydongdou = self.myDongdou
                 self.push(total)
             }
         }

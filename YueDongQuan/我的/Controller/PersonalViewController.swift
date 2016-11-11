@@ -259,7 +259,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
             
         }else if (indexPath.section == 1){
             
-            return 44 * ScreenWidth / 320 
+            return kAutoStaticCellHeight
             
         }else{
             if self.myfoundmodel != nil {
@@ -445,7 +445,11 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         print("选中了第几组",indexPath.section)
         if indexPath.section ==  1{
             let dongdou = MyDongDouViewController()
-            self.navigationController?.pushViewController(dongdou, animated: true)
+            if self.myinfoModel != nil {
+                dongdou.myDongdou = self.myinfoModel?.data.dongdou
+                 self.navigationController?.pushViewController(dongdou, animated: true)
+            }
+
         }
         if indexPath.section == 2 {
             let details = DetailsVC()
