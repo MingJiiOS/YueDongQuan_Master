@@ -29,7 +29,7 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
     var _textField : CustomTextField!
     var publishPhotosView : PYPhotosView!
     var contentText = ""
-    
+    var userAddress = String()
     
     private var userLatitude : Double = 0
     private var userLongitude : Double = 0
@@ -63,9 +63,16 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         publishPhotosView.delegate = self
         self.view.addSubview(publishPhotosView)
         
-        let showLocationView = UIView(frame: CGRect(x: 0, y: CGRectGetMaxY(publishPhotosView.frame) + 10, width: ScreenWidth, height: 30))
+        let showLocationView = UIView()
         showLocationView.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(showLocationView)
+        
+        showLocationView.snp_remakeConstraints { (make) in
+            make.left.right.equalTo(0)
+            make.width.equalTo(ScreenWidth)
+            make.top.equalTo(self.publishPhotosView.snp_bottom).offset(20)
+            make.height.equalTo(30)
+        }
         
         let locationImg = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
         locationImg.backgroundColor = UIColor.whiteColor()
@@ -87,7 +94,7 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         helper.getAddressBlockValue { (address) in
             NSLog("招募address = \(address)")
             showLocationLabel.text = address
-            
+            self.userAddress = address
         }
 
         
@@ -96,15 +103,6 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
     func setNav(){
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "发布说说"
-//        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-//        let imgView = UIImageView(frame:leftView.frame)
-//        imgView.image = UIImage(named: "")
-//        imgView.contentMode = .Center
-//        leftView.addSubview(imgView)
-//        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(back))
-//        
-//        leftView.addGestureRecognizer(tap)
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HKFPostPictureSayVC.back))
@@ -126,7 +124,25 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         self.contentText = textField.text!
     }
     
+    func textFieldDidEndEditing(textField: UITextField) {
+        self.contentText = textField.text!
+    }
+    
     func send(){
+        
+        if self.contentText == "" {
+            let alert = UIAlertView(title: "提示", message: "说说内容不能为空", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        if self.userAddress == ""{
+            let alert = UIAlertView(title: "提示", message: "说说地址不能为空", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        
         if self.selectedImages.count != 0 {
             for item in self.selectedImages {
                 
@@ -239,7 +255,7 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
         
         self.selectedImages = photos
         self.publishPhotosView.reloadDataWithImages(NSMutableArray(array: photos))
-        self.showLocationBtn.frame = CGRectMake(0, publishPhotosView.tz_bottom + 20, ScreenWidth, 30)
+      
     }
     
     func imagePickerController(picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [AnyObject]!, isSelectOriginalPhoto: Bool, infos: [[NSObject : AnyObject]]!) {
@@ -323,7 +339,7 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
                             
                             NSLog("图片字符串id=\(imageIdStr)")
                             
-                            self.requestToPostImagesSay(self.contentText, latitude: self.userLatitude, longitude: self.userLongitude, imgs: imageIdStr, address: "")
+                            self.requestToPostImagesSay(self.contentText, latitude: self.userLatitude, longitude: self.userLongitude, imgs: imageIdStr, address: self.userAddress)
                         }
                         
                     }

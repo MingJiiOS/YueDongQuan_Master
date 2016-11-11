@@ -277,10 +277,10 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
             tableiewForActivity.mj_header.endRefreshing()
         case 4:
             let model = http.getMatchDataList()
-            self.lastestModelData = model
+            self.matchModelData = model
             controlArray[currentShowTableViewIndex].reloadData()
             tableiewForMatch.mj_footer.endRefreshing()
-            tableViewForLastest.mj_header.endRefreshing()
+            tableiewForMatch.mj_header.endRefreshing()
         case 5:
             let model = http.getJoinTeamDataList()
             self.joinModelData = model
@@ -289,19 +289,19 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
             tableiewForJoinTeam.mj_header.endRefreshing()
         case 6:
             let model = http.getZhaoMuDataList()
-            self.lastestModelData = model
+            self.zhaomuModelData = model
             controlArray[currentShowTableViewIndex].reloadData()
             tableiewForZhaoMu.mj_footer.endRefreshing()
             tableiewForZhaoMu.mj_header.endRefreshing()
         case 7:
             let model = http.getNearByDataList()
-            self.lastestModelData = model
+            self.nearbyModelData = model
             controlArray[currentShowTableViewIndex].reloadData()
             tableiewForNearBy.mj_footer.endRefreshing()
             tableiewForNearBy.mj_header.endRefreshing()
         case 8:
             let model = http.getMyNotifyDataList()
-            self.lastestModelData = model
+            self.myNotifyModelData = model
             controlArray[currentShowTableViewIndex].reloadData()
             tableiewForMyNotify.mj_footer.endRefreshing()
             tableiewForMyNotify.mj_header.endRefreshing()
@@ -396,7 +396,7 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
             //            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
             return cell!
         case 2:
-            var cell = tableView.dequeueReusableCellWithIdentifier(cellID) as? HKFTableViewCell
+            weak var cell = tableView.dequeueReusableCellWithIdentifier(cellID) as? HKFTableViewCell
             cell?.indexPath = indexPath
             cell = HKFTableViewCell(style: .Default, reuseIdentifier: cellID)
             cell!.delegate = self
@@ -424,6 +424,7 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
             cell!.delegate = self
             cell!.headTypeView?.hidden = true
             let model = self.matchModelData[indexPath.row]
+            NSLog("1414Model = \(model.typeId)")
             cell!.configCellWithModelAndIndexPath(model, indexPath: indexPath)
             //            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
             //            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))

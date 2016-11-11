@@ -119,7 +119,7 @@ class DiscorveryHTTPClient {
     //14 请求发现页面的约战的默认数据
     func requestSay_SayMatchData(typeId:String,pageNo:Int,longitude:Double,latitude:Double){
         let vcode = NSObject.getEncodeString("20160901")
-        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10,"longitude":longitude,"latitude":latitude]
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":1,"pageSize":10,"longitude":longitude,"latitude":latitude]
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
