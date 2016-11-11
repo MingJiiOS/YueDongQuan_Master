@@ -1,5 +1,5 @@
 //
-//	CircleInfoModel.swift
+//	TotalRankModel.swift
 //
 //	Create by 方果 黄 on 11/11/2016
 //	Copyright © 2016. All rights reserved.
@@ -8,13 +8,12 @@
 import Foundation
 
 
-class CircleInfoModel : NSObject, NSCoding{
+class TotalRankModel : NSObject, NSCoding{
 
 	var code : String!
-	var data : CircleInfoData!
+	var data : TotalRankData!
 	var flag : String!
-    var isExpand = false
-    
+
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
@@ -22,7 +21,7 @@ class CircleInfoModel : NSObject, NSCoding{
 	init(fromDictionary dictionary: NSDictionary){
 		code = dictionary["code"] as? String
 		if let dataData = dictionary["data"] as? NSDictionary{
-			data = CircleInfoData(fromDictionary: dataData)
+			data = TotalRankData(fromDictionary: dataData)
 		}
 		flag = dictionary["flag"] as? String
 	}
@@ -32,7 +31,7 @@ class CircleInfoModel : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
 		if code != nil{
 			dictionary["code"] = code
 		}
@@ -52,7 +51,7 @@ class CircleInfoModel : NSObject, NSCoding{
     @objc required init(coder aDecoder: NSCoder)
 	{
          code = aDecoder.decodeObjectForKey("code") as? String
-         data = aDecoder.decodeObjectForKey("data") as? CircleInfoData
+         data = aDecoder.decodeObjectForKey("data") as? TotalRankData
          flag = aDecoder.decodeObjectForKey("flag") as? String
 
 	}

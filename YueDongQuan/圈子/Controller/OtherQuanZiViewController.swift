@@ -426,7 +426,36 @@ extension OtherQuanZiViewController: CirclesTableViewCellDelegate{
             }
         })
        }else{
+        let dict = ["v":v,
+                    "uid":userInfo.uid.description,
+                    "circleId":circlesModel.data.array[indexPath.row].id,
+                    "name":circlesModel.data.array[indexPath.row].name,
+                    "typeId":"1"]
         
+        MJNetWorkHelper().joinmember(joinmember,
+                                     joinmemberModel: dict,
+                                     success: { (responseDic, success) in
+                                        if success {
+                                            let model = DataSource().getupdatenameData(responseDic)
+                                            if model.code == "501"{
+                                                self.showMJProgressHUD("密码错误",
+                                                    isAnimate: true,
+                                                    startY: ScreenHeight-40-40-40)
+                                            }else if model.code == "303"{
+                                                self.showMJProgressHUD("加入失败",
+                                                    isAnimate: true,
+                                                    startY: ScreenHeight-40-40-40)
+                                            }else{
+                                                self.showMJProgressHUD("加入成功",
+                                                    isAnimate: true,
+                                                    startY: ScreenHeight-40-40-40)
+                                            }
+                                        }
+        }) { (error) in
+            self.showMJProgressHUD(error.description,
+                                   isAnimate: false,
+                                   startY: ScreenHeight-40-40-40)
+        }
         }
         
     }

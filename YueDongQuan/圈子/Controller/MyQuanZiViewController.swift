@@ -37,6 +37,9 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "新建圈子", style: .Plain, target: self, action: #selector(creatNewQuanZi))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜我的圈子", style: .Plain, target: self, action:  #selector(pop))
         
+      
+        
+        
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)

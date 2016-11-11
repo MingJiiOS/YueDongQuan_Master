@@ -65,7 +65,7 @@ class MJAutoHeightCell: UITableViewCell {
     func config(noticeModel model:CircleInfoModel,indexpath:NSIndexPath) {
         //        print("配置数据")
         titleLabel.text = "公告"
-        contentLabel.text = model.data.announcement
+//        contentLabel.text = model.data.announcement
         if model.isExpand != self.isExpand {
             self.isExpand = model.isExpand
         }

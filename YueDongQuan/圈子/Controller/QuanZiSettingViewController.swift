@@ -16,6 +16,9 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     
     var circleId : String?
     var circleinfoModel : CircleInfoModel?
+    
+    var memberModel : circleMemberModel?
+    
     //圈子名字
     var Circletitle : String?
     //圈子头像
@@ -163,10 +166,15 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
             return cell
         case 1:
             if indexPath.row == 0 {
-                var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)as?MJLayerContentCell
+                var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)as? MJLayerContentCell
                 cell?.accessoryType = .DisclosureIndicator
                 if cell == nil {
-                    cell = MJLayerContentCell(style: .Default, reuseIdentifier: cellIdentifier)
+                    
+                        cell = MJLayerContentCell(style: .Default,
+                                                  reuseIdentifier: cellIdentifier,
+                                                  model:self.memberModel!)
+                  
+
                 }
                 return cell!
             }
@@ -195,10 +203,6 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
             return cell
         case 4:
             let cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
-            cell.textLabel?.text = "清除聊天记录"
-            return cell
-        case 5:
-            let cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
             let overQuanzi = UIButton(type: .Custom)
             cell.contentView .addSubview(overQuanzi)
             overQuanzi.snp_makeConstraints { (make) in
@@ -214,6 +218,8 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
             overQuanzi.layer.cornerRadius = 5
             overQuanzi.layer.masksToBounds = true
             return cell
+        
+           
         default:
             break
         }
@@ -222,7 +228,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 6
+        return 5
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 3
@@ -239,14 +245,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                 self.push(all)
             }
         }else if indexPath.section == 4{
-            RCIMClient.sharedRCIMClient().deleteMessages(.ConversationType_GROUP,
-                                                         targetId: self.circleId,
-                                                         success: {
-                                                            self.showResult("清除消息记录成功")
-                }, error: { (errorCode:RCErrorCode) in
-               let errorStr = self.getErrorStringWithClearIM(errorCode.rawValue)
-                    self.showResult(errorStr)
-            })
+            //退出圈子
         }else if indexPath.section == 3{
             if indexPath.row == 0 {
                 
@@ -265,11 +264,23 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
         
         
     }
- 
+    //设置cell的显示动画
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell,
+                   forRowAtIndexPath indexPath: NSIndexPath){
+        //设置cell的显示动画为3D缩放
+        //xy方向缩放的初始值为0.1
+        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+        //设置动画时间为0.25秒，xy方向缩放的最终值为1
+        UIView.animateWithDuration(0.25, animations: {
+            cell.layer.transform=CATransform3DMakeScale(1, 1, 1)
+        })
+    }
 
 }
 
 extension QuanZiSettingViewController {
+    
+        
     func loadData()  {
         if self.circleId != nil {
             let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
@@ -292,7 +303,7 @@ extension QuanZiSettingViewController {
         let dict = ["v":v,"uid":userInfo.uid.description,"circleId":self.circleId]
         MJNetWorkHelper().kickingcircle(kickingcircle, kickingcircleModel: dict, success: { (responseDic, success) in
             if success {
-                self.navigationController?.popToViewController(MyQuanZiViewController(), animated: true)
+                self.navigationController?.popViewControllerAnimated(true)
             }
             }) { (error) in
                 

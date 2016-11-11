@@ -17,6 +17,8 @@ class CircleDataView: UIView, UITableViewDelegate,UITableViewDataSource{
         // Drawing code
     }
     */
+    var circleLogo : String?
+    var circleName : String?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,24 +38,24 @@ class CircleDataView: UIView, UITableViewDelegate,UITableViewDataSource{
         fatalError("init(coder:) has not been implemented")
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as? CircleDataCell
         
-        if cell == nil {
-            cell = UITableViewCell(style: .Value1, reuseIdentifier: "cell")
+            cell = CircleDataCell(style: .Value1, reuseIdentifier: "cell")
             cell?.accessoryType = .DisclosureIndicator
-        }
+        
         if indexPath.section == 0 {
             cell?.textLabel?.text = "圈子logo"
-            let image = UIImageView()
-            image.image = UIImage(named: "")
-            image.backgroundColor = UIColor.redColor()
-            cell?.accessoryView = image
+            
+            cell?.imageView?.sd_setImageWithURL(NSURL(string: circleLogo!),
+                                                placeholderImage: nil)
+            
             return cell!
         }
         if indexPath.section == 1 {
             let array = ["圈子名","主场"]
             cell?.textLabel?.text = array[indexPath.row]
-            cell?.detailTextLabel?.text = ""
+            
+            cell?.detailTextLabel?.text = self.circleName
             cell?.detailTextLabel?.textColor = UIColor.grayColor()
             return cell!
         }
@@ -65,10 +67,54 @@ class CircleDataView: UIView, UITableViewDelegate,UITableViewDataSource{
         }else{
             return 2
         }
-        
-        
+   
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return kAutoStaticCellHeight
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 }
+
+class CircleDataCell: UITableViewCell {
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        
+        let rect = CGRect(x: ScreenWidth-10-kAutoStaticCellHeight,
+                          y: 5,
+                          width: kAutoStaticCellHeight-10,
+                          height: kAutoStaticCellHeight-10)
+        
+        self.imageView?.frame = rect
+        self.textLabel?.frame = CGRect(x: 10,
+                                       y: 0,
+                                       width: ScreenWidth / 4,
+                                       height: kAutoStaticCellHeight-10)
+        self.textLabel?.centerY = self.contentView.centerY
+        
+        self.detailTextLabel?.frame = CGRect(x: ScreenWidth / 4+10+10,
+                                             y: 0,
+                                             width: ScreenWidth - ScreenWidth / 4 - 10 - 10 - 10,
+                                             height: kAutoStaticCellHeight-10)
+        
+        self.detailTextLabel?.centerY = self.contentView.centerY
+        self.detailTextLabel?.textAlignment = .Right
+        
+    }
+    
+}
+
+
+

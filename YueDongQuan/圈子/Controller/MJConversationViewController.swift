@@ -34,7 +34,23 @@ class MJConversationViewController: RCConversationViewController {
                 notice.circleId = self.circleid
                 notice.Circletitle = self.title
                 notice.thumbnailSrc = self.thumbnailSrc
-                self.push(notice)
+                
+                    let v = NSObject.getEncodeString("20160901")
+                    let circleid = self.circleid
+                    let dict = ["v":v,"circleId":circleid]
+                    MJNetWorkHelper().circlemember(circlemember,
+                        circlememberModel: dict,
+                        success: { (responseDic, success) in
+                            let model = DataSource().getcirclememberData(responseDic)
+                            notice.memberModel = model
+                            self.push(notice)
+                    }) { (error) in
+                        
+                    
+                }
+
+                
+                
             }
             if ButtonTag == 2{
                 
@@ -103,7 +119,7 @@ class MJConversationViewController: RCConversationViewController {
     override func didTapCellPortrait(userId: String!) {
         if userId == userInfo.uid.description {
             let personal = PersonalViewController()
-            self.navigationController?.pushViewController(personal, animated: true)
+//            self.navigationController?.pushViewController(personal, animated: true)
             
         }else{
            let heinfo = HeInfoVC()

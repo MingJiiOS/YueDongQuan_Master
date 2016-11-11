@@ -22,7 +22,7 @@ class HeInfoVC: MainViewController {
         super.viewDidLoad()
         loadData()
         heInfoTable = UITableView(frame: CGRectZero,
-                                style: UITableViewStyle.Plain)
+                                style: UITableViewStyle.Grouped)
         
         self.view .addSubview(heInfoTable)
         heInfoTable.snp_makeConstraints { (make) in
@@ -46,6 +46,7 @@ class HeInfoVC: MainViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        loadHeFoundData()
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
    
@@ -108,7 +109,10 @@ extension HeInfoVC:UITableViewDelegate,UITableViewDataSource{
 
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     return 2
+        if self.hefoundModel != nil {
+            return (self.hefoundModel?.data.array.count)!
+        }
+     return 0
     }
     //1.4每组的头部高度
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -126,7 +130,21 @@ extension HeInfoVC:UITableViewDelegate,UITableViewDataSource{
         }
         return view
     }
-   
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let h = MJMessageCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+            let cell = sourceCell as! MJMessageCell
+            if self.hefoundModel != nil{
+               cell.configHeFoundCellData(self.hefoundModel!, indexpath: indexPath) 
+            }
+            
+            }, cache: { () -> [NSObject : AnyObject]! in
+                
+                return [kHYBCacheUniqueKey:"key",
+                    kHYBCacheStateKey:"",
+                    kHYBRecalculateForStateKey:1]
+        })
+        return h+10
+    }
 }
 extension HeInfoVC {
     func loadData()  {

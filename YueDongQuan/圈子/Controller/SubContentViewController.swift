@@ -55,6 +55,8 @@ print(indexSection,indexRow)
             if Row == 0 {
                 
                 let circleData = CircleDataView(frame: CGRectMake(0, 0, ScreenWidth, ScreenHeight))
+                circleData.circleLogo = self.thumbnailSrc
+                circleData.circleName = self.circletitle
                 self.view = circleData
             }
         }

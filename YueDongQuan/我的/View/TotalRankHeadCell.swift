@@ -166,15 +166,15 @@ class TotalRankHeadCell: UITableViewCell {
     
     
     //填充cell内容
-    func config()  {
+    func config(dongDouNunmber:String,name:String,headUrl:String)  {
         
         
-        head.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+        head.sd_setImageWithURL(NSURL(string: headUrl))
         rankLabel.text = "380"
-        nickName.text = "姚明"
+        nickName.text = name
         explainLabel.text = "距离前一名还差50"
         dongdouBtn.setImage(UIImage(named: "ic_doudong"), forState: UIControlState.Normal)
-        dongdouBtn.setTitle("2330", forState: UIControlState.Normal)
+        dongdouBtn.setTitle(dongDouNunmber, forState: UIControlState.Normal)
     }
     func back()  {
         if backBlock != nil {
