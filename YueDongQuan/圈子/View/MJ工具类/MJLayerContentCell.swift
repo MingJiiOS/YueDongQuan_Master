@@ -14,7 +14,8 @@ class MJLayerContentCell: UITableViewCell {
     var addBtn = UIButton(type: UIButtonType.Custom)
     
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    
+     init(style: UITableViewCellStyle, reuseIdentifier: String?,model:circleMemberModel) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addBtn.frame = CGRect(x: 20, y: 8, width: 44, height: 44)
@@ -30,17 +31,17 @@ class MJLayerContentCell: UITableViewCell {
         addBtn.setBackgroundImage(UIImage(named: "addMember"), forState: UIControlState.Normal)
         self.selectionStyle = .None
         let image = UIImageView()
-        for index in 0...4 {
+        for index in 1...model.data.count {
             let circleLayer = CAShapeLayer()
             circleLayer.bounds = CGRect(x: 0, y: 0, width: 44, height: 44)
-            circleLayer.position = CGPoint(x: 104+index*64, y: 30)
+            circleLayer.position = CGPoint(x: 44+index*64, y: 30)
             circleLayer.backgroundColor = UIColor.blackColor().CGColor
             circleLayer.cornerRadius = circleLayer.bounds.size.width/2
             circleLayer.masksToBounds = true
             self.contentView.layer .addSublayer(circleLayer)
             let layerShadow = CALayer()
             layerShadow.bounds = CGRect(x: 0, y: 0, width: 44, height: 44)
-            layerShadow.position = CGPoint(x: 104+index*64, y: 30)
+            layerShadow.position = CGPoint(x: 44+index*64, y: 30)
             layerShadow.cornerRadius = layerShadow.bounds.size.width/2
             layerShadow.shadowColor = kBlueColor.CGColor
             layerShadow.shadowOffset = CGSize(width: 2, height: 1)
@@ -50,7 +51,7 @@ class MJLayerContentCell: UITableViewCell {
             self.contentView.layer .addSublayer(layerShadow)
             
             
-            image.sd_setImageWithURL(NSURL(string:"http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+            image.sd_setImageWithURL(NSURL(string:("http://4493bz.1985t.com/uploads/allimg/150127/4-15012G52133.jpg")))
             circleLayer.contents = image.image?.CGImage
             
         }
