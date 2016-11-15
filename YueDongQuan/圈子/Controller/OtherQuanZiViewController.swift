@@ -90,7 +90,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
             make.bottom.equalTo(whiteView.snp_top)
         }
         mapView.delegate = self
-                mapView.showsUserLocation = true
+        mapView.showsUserLocation = true
         //MARK:自定义经纬度
         annotations = NSMutableArray()
         
@@ -199,12 +199,11 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
                 annotation.coordinate = location.coordinate
                 self?.longitude = location.coordinate.longitude
                 self?.latitude = location.coordinate.latitude
+                //获取到经纬度后加载数据
                 self?.loadData()
                 if let regeocode = regeocode {
                     annotation.title = regeocode.formattedAddress
                     annotation.subtitle = "\(regeocode.citycode)-\(regeocode.adcode)-\(location.horizontalAccuracy)m"
-                 
-                    
                 }
                 else {
                     annotation.title = String(format: "lat:%.6f;lon:%.6f;", arguments: [location.coordinate.latitude, location.coordinate.longitude])
@@ -290,7 +289,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     func mapView(mapView: MAMapView!, viewForAnnotation annotation: MAAnnotation!) -> MAAnnotationView! {
         //绿色的大头针
         if annotation.isKindOfClass(MJGreenAnnotation) {
-            let greenReuseIndetifier = "pointReuseIndetifier"
+            let greenReuseIndetifier = "green"
             
             var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier)
             if greenAnnotation == nil {
@@ -311,6 +310,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         }
         return nil
     }
+
     func mapView(mapView: MAMapView!, didSelectAnnotationView view: MAAnnotationView!) {
         if view.isKindOfClass(MJGreenAnnotationView) {
             print("选中了绿色")
@@ -321,7 +321,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     }
     
     func mapView(mapView: MAMapView!, annotationView view: MAAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
-       showActionsheet()
+         showActionsheet()
     }
     func showActionsheet()  {
         let sheet = UIAlertController(title: nil, message: "打开方式", preferredStyle: .ActionSheet)

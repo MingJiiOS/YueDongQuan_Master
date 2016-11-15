@@ -298,6 +298,11 @@
 		BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC441DB22E15008A5C51 /* myCircleData.swift */; };
 		BF3CAC481DB22E15008A5C51 /* myCircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */; };
 		BF44EA431DC319E600AD7B3D /* RegistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF44EA421DC319E600AD7B3D /* RegistVC.swift */; };
+		BF49F54D1DDAD3340064FC6C /* RLCircleMemberInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49F54C1DDAD3340064FC6C /* RLCircleMemberInfo.swift */; };
+		BF49F55C1DDAD7390064FC6C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55A1DDAD7390064FC6C /* Realm.framework */; };
+		BF49F55D1DDAD7390064FC6C /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55A1DDAD7390064FC6C /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BF49F55E1DDAD7390064FC6C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55B1DDAD7390064FC6C /* RealmSwift.framework */; };
+		BF49F55F1DDAD7390064FC6C /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55B1DDAD7390064FC6C /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BF5738831DBB10690023B7DE /* myInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738811DBB10690023B7DE /* myInfoData.swift */; };
 		BF5738841DBB10690023B7DE /* myInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738821DBB10690023B7DE /* myInfoModel.swift */; };
 		BF5738861DBB74930023B7DE /* CircleHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738851DBB74930023B7DE /* CircleHeadView.swift */; };
@@ -359,12 +364,7 @@
 		BFAF23CC1DB8A9D700294988 /* MJLayerContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */; };
 		BFB01E921DD9C3A400DA2D1A /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E911DD9C3A400DA2D1A /* Realm.framework */; };
 		BFB01E941DD9C3B200DA2D1A /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E931DD9C3B200DA2D1A /* RealmSwift.framework */; };
-		BFB01E9D1DDA9C8500DA2D1A /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E9B1DDA9C8500DA2D1A /* Realm.framework */; };
-		BFB01E9E1DDA9C8500DA2D1A /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E9B1DDA9C8500DA2D1A /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BFB01E9F1DDA9C8500DA2D1A /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E9C1DDA9C8500DA2D1A /* RealmSwift.framework */; };
-		BFB01EA01DDA9C8500DA2D1A /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E9C1DDA9C8500DA2D1A /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BFB01EA31DDA9E0B00DA2D1A /* RLUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB01EA21DDA9E0B00DA2D1A /* RLUserInfo.swift */; };
-		BFB01EA51DDAB7E000DA2D1A /* RLCircleMemberInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB01EA41DDAB7E000DA2D1A /* RLCircleMemberInfo.swift */; };
 		BFB44E581DC9731A0066D49F /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB44CC21DC9731A0066D49F /* NSString+Emoji.m */; };
 		BFB44E591DC9731A0066D49F /* ChatKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB44CC41DC9731A0066D49F /* ChatKeyBoard.m */; };
 		BFB44E5A1DC9731A0066D49F /* Delete_ios7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB44CC81DC9731A0066D49F /* Delete_ios7@2x.png */; };
@@ -715,8 +715,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BFB01EA01DDA9C8500DA2D1A /* RealmSwift.framework in Embed Frameworks */,
-				BFB01E9E1DDA9C8500DA2D1A /* Realm.framework in Embed Frameworks */,
+				BF49F55F1DDAD7390064FC6C /* RealmSwift.framework in Embed Frameworks */,
+				BF49F55D1DDAD7390064FC6C /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1066,6 +1066,9 @@
 		BF3CAC441DB22E15008A5C51 /* myCircleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleData.swift; sourceTree = "<group>"; };
 		BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleModel.swift; sourceTree = "<group>"; };
 		BF44EA421DC319E600AD7B3D /* RegistVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistVC.swift; sourceTree = "<group>"; };
+		BF49F54C1DDAD3340064FC6C /* RLCircleMemberInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLCircleMemberInfo.swift; sourceTree = "<group>"; };
+		BF49F55A1DDAD7390064FC6C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		BF49F55B1DDAD7390064FC6C /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		BF5738811DBB10690023B7DE /* myInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoData.swift; sourceTree = "<group>"; };
 		BF5738821DBB10690023B7DE /* myInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoModel.swift; sourceTree = "<group>"; };
 		BF5738851DBB74930023B7DE /* CircleHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHeadView.swift; sourceTree = "<group>"; };
@@ -1129,10 +1132,7 @@
 		BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJLayerContentCell.swift; sourceTree = "<group>"; };
 		BFB01E911DD9C3A400DA2D1A /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "/Users/HFG/Desktop/realm-swift-2.0.3/ios/swift-2.3/Realm.framework"; sourceTree = "<absolute>"; };
 		BFB01E931DD9C3B200DA2D1A /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "/Users/HFG/Desktop/realm-swift-2.0.3/ios/swift-2.3/RealmSwift.framework"; sourceTree = "<absolute>"; };
-		BFB01E9B1DDA9C8500DA2D1A /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../../../Realm.framework; sourceTree = "<group>"; };
-		BFB01E9C1DDA9C8500DA2D1A /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../../../RealmSwift.framework; sourceTree = "<group>"; };
 		BFB01EA21DDA9E0B00DA2D1A /* RLUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLUserInfo.swift; sourceTree = "<group>"; };
-		BFB01EA41DDAB7E000DA2D1A /* RLCircleMemberInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLCircleMemberInfo.swift; sourceTree = "<group>"; };
 		BFB44CC11DC9731A0066D49F /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
 		BFB44CC21DC9731A0066D49F /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		BFB44CC31DC9731A0066D49F /* ChatKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatKeyBoard.h; sourceTree = "<group>"; };
@@ -1529,7 +1529,7 @@
 				BFAD631E1D9E1094006234E1 /* UIKit.framework in Frameworks */,
 				BFAD631A1D9E1082006234E1 /* QuartzCore.framework in Frameworks */,
 				BFAD63181D9E107C006234E1 /* OpenGLES.framework in Frameworks */,
-				BFB01E9F1DDA9C8500DA2D1A /* RealmSwift.framework in Frameworks */,
+				BF49F55E1DDAD7390064FC6C /* RealmSwift.framework in Frameworks */,
 				5C7D28F31DD2D49C000D26E7 /* MobileCoreServices.framework in Frameworks */,
 				5C7D28F11DD2D491000D26E7 /* MediaPlayer.framework in Frameworks */,
 				5C7D28EF1DD2D474000D26E7 /* libbz2.tbd in Frameworks */,
@@ -1545,7 +1545,7 @@
 				BFAD63161D9E106E006234E1 /* libz.tbd in Frameworks */,
 				BFAD63141D9E1067006234E1 /* libxml2.tbd in Frameworks */,
 				BFAD63121D9E1059006234E1 /* libsqlite3.tbd in Frameworks */,
-				BFB01E9D1DDA9C8500DA2D1A /* Realm.framework in Frameworks */,
+				BF49F55C1DDAD7390064FC6C /* Realm.framework in Frameworks */,
 				BFAD63131D9E1059006234E1 /* libstdc++.tbd in Frameworks */,
 				5C7D28EB1DD2D423000D26E7 /* IJKMediaFramework.framework in Frameworks */,
 				BFAD630E1D9E103F006234E1 /* libc++.tbd in Frameworks */,
@@ -1581,6 +1581,8 @@
 		3D602F91B05F501B8CB40CE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF49F55A1DDAD7390064FC6C /* Realm.framework */,
+				BF49F55B1DDAD7390064FC6C /* RealmSwift.framework */,
 				5C7D28F41DD2D4D0000D26E7 /* VideoToolbox.framework */,
 				5C7D28F21DD2D49C000D26E7 /* MobileCoreServices.framework */,
 				5C7D28F01DD2D491000D26E7 /* MediaPlayer.framework */,
@@ -2144,10 +2146,8 @@
 		BFA6D1481DD600AC008819BC /* Realm数据库 */ = {
 			isa = PBXGroup;
 			children = (
-				BFB01E9B1DDA9C8500DA2D1A /* Realm.framework */,
-				BFB01E9C1DDA9C8500DA2D1A /* RealmSwift.framework */,
 				BFB01EA21DDA9E0B00DA2D1A /* RLUserInfo.swift */,
-				BFB01EA41DDAB7E000DA2D1A /* RLCircleMemberInfo.swift */,
+				BF49F54C1DDAD3340064FC6C /* RLCircleMemberInfo.swift */,
 			);
 			path = "Realm数据库";
 			sourceTree = "<group>";
@@ -4404,7 +4404,6 @@
 				BFDBE2BC1DD2B2560035B621 /* FollowView.swift in Sources */,
 				5CA874FE1DD9C8A8009A57DE /* SearchFieldArray.swift in Sources */,
 				BF071F3B1D9A0D68000551F7 /* MJTextFeild.swift in Sources */,
-				BFB01EA51DDAB7E000DA2D1A /* RLCircleMemberInfo.swift in Sources */,
 				BF071F031D9A0D5F000551F7 /* MJQuanZiModel.swift in Sources */,
 				BFFCE0541DBF471A0045087A /* SubTotalRankCell.swift in Sources */,
 				BF071F351D9A0D68000551F7 /* HeaderView.swift in Sources */,
@@ -4552,6 +4551,7 @@
 				BF071F401D9A0D68000551F7 /* SubPersonCell.swift in Sources */,
 				BF071F301D9A0D68000551F7 /* SubPersonDataViewController.swift in Sources */,
 				5C27BB0C1DB7638D005A2F8D /* HKFPostPictureSayVC.swift in Sources */,
+				BF49F54D1DDAD3340064FC6C /* RLCircleMemberInfo.swift in Sources */,
 				5C7C3A101DB5CF3400EA598B /* FieldData.swift in Sources */,
 				5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */,
 				BFC1269E1DB4792F00E11088 /* CirclesModel.swift in Sources */,

@@ -9,7 +9,7 @@
 import UIKit
 import IQKeyboardManagerSwift
 import Alamofire
-
+import RealmSwift
 let AMAPAPIKEY = "cc7ada21dae93efe53c70dc7d6a46598"
 let RONGCLOUDAPPKEY = "ik1qhw0911hep"
 @UIApplicationMain
@@ -25,26 +25,20 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     var HUDView = UIView()
     var isFullScreen = Bool()
     
-     
+    var consumeItems:Results<RLUserInfo>?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
+        self.window = UIWindow(frame: CGRect(x: 0,
+                                             y: 0,
+                                         width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         
         print("接口验证参数",NSObject.getEncodeString("20160901"))
-        let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
-                    "operateId":1,
-                    "uid":8,
-                    "pageNo":1,
-                    "pageSize":5]
-        MJNetWorkHelper().checkHeFound(hefound, HeFoundModel: dict, success: { (responseDic, success) in
-            
-            }) { (error) in
-                
-        }
-        
+
         //设置网络缓存 － 4M 的内存缓存 20M 的磁盘缓存，使用默认的缓存路径 Caches/bundleId
         
-        let cache = NSURLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
+        let cache = NSURLCache(memoryCapacity: 4 * 1024 * 1024,
+                               diskCapacity: 20 * 1024 * 1024,
+                               diskPath: nil)
         
         NSURLCache.setSharedURLCache(cache)
 
@@ -58,22 +52,29 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         IQKeyboardManager.sharedManager().enable = true
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(statusNumber), name: RCKitDispatchConnectionStatusChangedNotification, object: nil)
-        //检测网络
-        judgeReachbility()
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(statusNumber),
+                                                         name: RCKitDispatchConnectionStatusChangedNotification,
+                                                         object: nil)
+         //检测网络
+         judgeReachbility()
          self.window?.rootViewController = HKFTableBarController()
         //MARK:自动登录
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.valueForKey("token") != nil {
+            var dic:[String:AnyObject] = NSDictionary() as! [String : AnyObject]
+            
            
-            let v = NSObject.getEncodeString("20160901")
-            let phone = defaults.valueForKey("phone")
-            let pw = defaults.valueForKey("pw")
-            let describe = UIDevice.currentDevice().systemName
-            let dic:[String:AnyObject] = ["v":v,
-                       "phone":phone!,
-                       "pw":pw!,
+                //调用数据库
+                getUserInfoDataBaseFromRealm()
+                let result = consumeItems?.first
+                let describe = UIDevice.currentDevice().systemName
+                dic = ["v":v,
+                       "phone":(result?.phone)!,
+                       "pw":(result?.password)!,
                        "describe":describe]
+            
+            
             MJNetWorkHelper().loginWithUserInfo(login, userModel: dic, success: { (responseDic, success) in
                 let loginmodel = DataSource().getUserInfo(responseDic)
                 //MARK:融云资料
@@ -81,10 +82,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
                 info.userId = loginmodel.data.uid.description
                 //                        info.portraitUri = loginmodel.data.thumbnailSrc
                 info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
-                
-                
-                
-                
+
                     MJGetToken().requestTokenFromServeris(getToken
                         , success: { (responseDic, success) in
                             let model = TokenModel(fromDictionary: responseDic)
@@ -112,11 +110,17 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         }else{
             self.window?.rootViewController?.presentViewController(YDQLoginRegisterViewController(), animated: true, completion: nil)
         }
-        //测试提交
-        
+
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         return true
+    }
+    
+    func getUserInfoDataBaseFromRealm()  {
+        //使用默认的数据库
+        let realm = try! Realm();
+        //查询所有的记录
+        consumeItems = realm.objects(RLUserInfo);
     }
     
     func statusNumber(fication:NSNotification)  {
