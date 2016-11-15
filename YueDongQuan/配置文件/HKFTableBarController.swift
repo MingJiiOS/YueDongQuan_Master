@@ -116,7 +116,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         }
         
         self.selectedIndex = index
-        NSLog("self.selectedIndex= \(self.selectedIndex)")
+        
     }
     
     func setUPOneChilViewControllerWithImageAndSelectImageAndTitle(vc:UIViewController,image:UIImage,selectImage:UIImage,title:String){
@@ -203,17 +203,17 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
                 let dict = (json.object) as! NSDictionary
                 
                 
-                if (dict["code"]! as! String == "200" && dict["flag"]! as! String == "1"){
-                        self.checkModel = CheckModel.init(fromDictionary: dict)
-                    if (self.checkModel.data.flag == true) {
-                        self.dataInfo.distance = self.checkModel.data.distance
-                        self.dataInfo.flag = self.checkModel.data.flag
-                        self.dataInfo.nowTime = self.checkModel.data.nowTime
-                        self.dataInfo.startTime = self.checkModel.data.startTime
-                        self.dataInfo.siteId = self.checkModel.data.siteId
-                    }
-                    
-                    }
+//                if (dict["code"]! as! String == "200" && dict["flag"]! as! String == "1"){
+//                        self.checkModel = CheckModel.init(fromDictionary: dict)
+//                    if (self.checkModel.data.flag == true) {
+//                        self.dataInfo.distance = self.checkModel.data.distance
+//                        self.dataInfo.flag = self.checkModel.data.flag
+//                        self.dataInfo.nowTime = self.checkModel.data.nowTime
+//                        self.dataInfo.startTime = self.checkModel.data.startTime
+//                        self.dataInfo.siteId = self.checkModel.data.siteId
+//                    }
+//                    
+//                }
                 
                 
             case .Failure(let error):

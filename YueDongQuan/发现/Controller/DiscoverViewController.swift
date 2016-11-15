@@ -40,6 +40,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     private var controlArray = [UITableView]()
     
     private var scrollView : UIScrollView!
+    
+    var segmentVC = LiuXSegmentView()
 
     /***********/
     private var tableViewForLastest = UITableView(frame: CGRect(x: 0 , y: 0, width: ScreenWidth, height: ScreenHeight - 153))
@@ -79,6 +81,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     private var myNotifyModelData = [DiscoveryArray]()
     
     
+    
     private let http = DiscorveryDataAPI.shareInstance
     
     private var currentShowTableViewIndex = 0 {
@@ -94,6 +97,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
 //        manger.startUpdatingLocation()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiscoverViewController.notifyChangeModel), name: "LastestOrderDataChanged", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiscoverViewController.NoDataNotifyProcess), name: "SenderNoDataNotify", object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear), name: UIKeyboardWillShowNotification, object: nil)
         
@@ -120,7 +124,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         fpsLabel.sizeToFit()
         self.view.addSubview(fpsLabel)
         
-        let segmentVC = LiuXSegmentView(frame: CGRect(x: 0, y: 64, width: ScreenWidth, height: 44), titles: titleArray) { (index:Int) in
+        segmentVC = LiuXSegmentView(frame: CGRect(x: 0, y: 64, width: ScreenWidth, height: 44), titles: titleArray) { (index:Int) in
             NSLog("index = \(index)")
             self.currentShowTableViewIndex = index - 1
         }
@@ -131,7 +135,10 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         
         setScrollView()
         setControllers()
+        
         pullDownRef()
+        
+        
         
     }
     
@@ -154,9 +161,10 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
             controlArray[i].delegate = self
             controlArray[i].separatorStyle = .None
             controlArray[i].tag = i
+            controlArray[i].registerClass(HKFTableViewCell.self, forCellReuseIdentifier: "cell")
             controlArray[i].mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(DiscoverViewController.pullDownRef))
             controlArray[i].mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(DiscoverViewController.pullUpRef))
-            controlArray[i].userInteractionEnabled = true
+
             
         }
     }
@@ -235,74 +243,56 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         switch currentShowTableViewIndex {
         case 0:
             let model = http.getLastestDataList()
-            
-            if lastestModelData.count > 0{
-            
-            for sayModel in model {
-                var flag = true
-                for sayModels in self.lastestModelData {
-                    if sayModel.id == sayModels.id {
-                        flag = false
-                        break
-                    }
-                }
-                if flag {
-                    self.lastestModelData.append(sayModel)
-                }
-            }
-            }else{
-               self.lastestModelData = model
-            }
-            
-            controlArray[currentShowTableViewIndex].reloadData()
+            self.lastestModelData = model
+            NSLog("1234Model = \(model.count)")
             tableViewForLastest.mj_footer.endRefreshing()
             tableViewForLastest.mj_header.endRefreshing()
         case 1:
             let model = http.getImageDataList()
             self.imageModelData = model
-            controlArray[currentShowTableViewIndex].reloadData()
+            
             tableiewForImage.mj_footer.endRefreshing()
             tableiewForImage.mj_header.endRefreshing()
         case 2:
             let model = http.getVideoDataList()
             self.videoModelData = model
-            controlArray[currentShowTableViewIndex].reloadData()
+            
             tableiewForVideo.mj_footer.endRefreshing()
             tableiewForVideo.mj_header.endRefreshing()
         case 3:
             let model = http.getActivityDataList()
             self.activityModelData = model
-            controlArray[currentShowTableViewIndex].reloadData()
+            
             tableiewForActivity.mj_footer.endRefreshing()
             tableiewForActivity.mj_header.endRefreshing()
         case 4:
             let model = http.getMatchDataList()
-            self.lastestModelData = model
-            controlArray[currentShowTableViewIndex].reloadData()
+            self.matchModelData = model
+            
             tableiewForMatch.mj_footer.endRefreshing()
-            tableViewForLastest.mj_header.endRefreshing()
+            tableiewForMatch.mj_header.endRefreshing()
         case 5:
             let model = http.getJoinTeamDataList()
             self.joinModelData = model
-            controlArray[currentShowTableViewIndex].reloadData()
+            
             tableiewForJoinTeam.mj_footer.endRefreshing()
             tableiewForJoinTeam.mj_header.endRefreshing()
         case 6:
             let model = http.getZhaoMuDataList()
-            self.lastestModelData = model
-            controlArray[currentShowTableViewIndex].reloadData()
+            self.zhaomuModelData = model
+            
             tableiewForZhaoMu.mj_footer.endRefreshing()
             tableiewForZhaoMu.mj_header.endRefreshing()
         case 7:
             let model = http.getNearByDataList()
-            self.lastestModelData = model
-            controlArray[currentShowTableViewIndex].reloadData()
+            self.nearbyModelData = model
+            
             tableiewForNearBy.mj_footer.endRefreshing()
             tableiewForNearBy.mj_header.endRefreshing()
         case 8:
             let model = http.getMyNotifyDataList()
-            self.lastestModelData = model
-            controlArray[currentShowTableViewIndex].reloadData()
+            self.myNotifyModelData = model
+            
             tableiewForMyNotify.mj_footer.endRefreshing()
             tableiewForMyNotify.mj_header.endRefreshing()
         default:
@@ -310,6 +300,47 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         }
         controlArray[currentShowTableViewIndex].reloadData()
     }
+    
+    func NoDataNotifyProcess(){
+        switch currentShowTableViewIndex {
+        case 0:
+            tableViewForLastest.mj_footer.endRefreshingWithNoMoreData()
+            
+        case 1:
+            tableiewForImage.mj_footer.endRefreshingWithNoMoreData()
+            
+        case 2:
+            tableiewForVideo.mj_footer.endRefreshingWithNoMoreData()
+            
+        case 3:
+            tableiewForActivity.mj_footer.endRefreshingWithNoMoreData()
+            
+        case 4:
+            
+            
+            
+            tableiewForMatch.mj_footer.endRefreshingWithNoMoreData()
+            
+        case 5:
+            
+            
+            tableiewForJoinTeam.mj_footer.endRefreshingWithNoMoreData()
+        case 6:
+            tableiewForZhaoMu.mj_footer.endRefreshingWithNoMoreData()
+            
+        case 7:
+            
+            tableiewForNearBy.mj_footer.endRefreshingWithNoMoreData()
+        case 8:
+            
+            tableiewForMyNotify.mj_footer.endRefreshingWithNoMoreData()
+
+        default:
+            break
+        }
+
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -332,7 +363,16 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-
+    
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+//        let page = Int(scrollView.contentOffset.x / ScreenWidth)
+//        
+//        NSLog("page123456=\(page)")
+//        self.currentShowTableViewIndex = page
+//        segmentVC.defaultIndex = page + 1
+        
+    }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
@@ -380,7 +420,7 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
             cell!.delegate = self
             cell!.headTypeView?.hidden = true
             let model = self.lastestModelData[indexPath.row]
-            cell!.configCellWithModelAndIndexPath(model, indexPath: indexPath)
+            cell!.configCellWithModelAndIndexPath(model , indexPath: indexPath)
             //            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
             //            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
             return cell!
@@ -424,6 +464,7 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
             cell!.delegate = self
             cell!.headTypeView?.hidden = true
             let model = self.matchModelData[indexPath.row]
+            NSLog("1414Model = \(model.typeId)")
             cell!.configCellWithModelAndIndexPath(model, indexPath: indexPath)
             //            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
             //            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
@@ -589,7 +630,7 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     
     
     
-    func clickVideoViewAtIndexPath(videoId: String) {
+    func clickVideoViewAtIndexPath(cell: HKFTableViewCell, videoId: String) {
 //        let playerVideo = VideoPlayerVC()
 //        playerVideo.videoURL = "http://static.tripbe.com/videofiles/20121214/9533522808.f4v.mp4"
 //        let nav = CustomNavigationBar(rootViewController: playerVideo)
@@ -601,6 +642,12 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         vc.tabBarController?.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         vc.tabBarController?.hidesBottomBarWhenPushed = false
+        
+        
+        
+        
+        
+        
     }
     
     func clickDianZanBtnAtIndexPath(indexPath: NSIndexPath) {

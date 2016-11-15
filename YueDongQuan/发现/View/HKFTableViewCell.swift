@@ -11,7 +11,7 @@ import Masonry
 import SnapKit
 import HYBMasonryAutoCellHeight
 import AVKit
-
+import YYKit
 
 
 protocol HKFTableViewCellDelegate {
@@ -20,7 +20,7 @@ protocol HKFTableViewCellDelegate {
     func selectCellPinglun(indexPath:NSIndexPath,commentIndexPath:NSIndexPath,sayId: Int,model:DiscoveryCommentModel,type:PingLunType)
     func clickDianZanBtnAtIndexPath(indexPath:NSIndexPath)
     func clickJuBaoBtnAtIndexPath(foundId:Int,typeId:Int)
-    func clickVideoViewAtIndexPath(videoId:String)
+    func clickVideoViewAtIndexPath(cell:HKFTableViewCell,videoId:String)
 }
 
 
@@ -178,7 +178,8 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.contentView.addSubview(self.videoImage)
         self.videoImage.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(10)
-            make.width.equalTo((ScreenWidth - 30)/3)
+//            make.width.equalTo(ScreenWidth - 20)
+            make.right.equalTo(-10)
             make.top.equalTo((weakSelf?.displayView.snp_bottom)!).offset(2)
         })
         
@@ -291,8 +292,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         let subModel = model
         
         self.distanceLabel?.text = String(format: "%0.2fkm",(model.distance))
-        
-        NSLog("distance=\(model.distance)")
+    
         
         if subModel.csum != nil{
             self.pinglunBtn.setTitle("\(subModel.csum)", forState: UIControlState.Normal)
@@ -350,15 +350,10 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
 //            self.distanceLabel?.text = subModel.address
         }
         let tempStr = "<body> " + subModel.content + " </body>"
-        
-        
         let resultStr1 = tempStr.stringByReplacingOccurrencesOfString("\\n", withString: "<br/>", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        
-        
         let data = resultStr1.dataUsingEncoding(NSUnicodeStringEncoding)
         let options = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
         let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
-        
         self.descLabel?.attributedText = html
         self.locationLabel.text = subModel.address
         self.headImageView?.sd_setImageWithURL(NSURL(string: subModel.thumbnailSrc))
@@ -386,6 +381,8 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
                 make.height.equalTo((ScreenWidth - 30)/3)
             })
             self.videoImage.hidden = false
+            self.videoImage.setImageWithURL(NSURL(string: model.compressUrl), placeholder: nil, options: YYWebImageOptions.AllowBackgroundTask, completion: nil)
+            
         }else{
             self.videoImage.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(0)
@@ -443,7 +440,6 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell : HKFCommentCell = tableView.dequeueReusableCellWithIdentifier("HKFCommentCell", forIndexPath: indexPath) as! HKFCommentCell
         var cell = HKFCommentCell()
         cell = tableView.dequeueReusableCellWithIdentifier("HKFCommentCell") as! HKFCommentCell
         cell.getCommentArray((self.testModel?.comment)!)
@@ -464,8 +460,6 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             }, cache: { () -> [NSObject : AnyObject]! in
                 return [kHYBCacheUniqueKey:model!.uid,kHYBCacheStateKey:"",kHYBRecalculateForStateKey:(true)]
         })
-        
-        
         
         return h
         
@@ -529,7 +523,8 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     //点击视频
     func clickVideoImageToPlayer(){
         let videoid = self.testModel?.compressUrl
-        self.delegate?.clickVideoViewAtIndexPath(videoid!)
+        
+        self.delegate?.clickVideoViewAtIndexPath(HKFTableViewCell(), videoId: videoid!)
     }
     
     

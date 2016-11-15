@@ -62,6 +62,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     }
     func creatTableView()  {
         tableView = UITableView(frame: CGRectMake(0, 0, ScreenWidth, ScreenHeight), style: .Grouped)
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0)
         tableView.delegate = self
         tableView.dataSource = self
         self.view .addSubview(tableView)

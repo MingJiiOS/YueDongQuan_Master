@@ -16,13 +16,13 @@ class HKFPostField_TwoVC: UIViewController {
 
     var fieldImage = UIImageView()
     var imagePicker : UIImagePickerController!
-    var imageUrl : UIImage?
+    private var imageUrl : UIImage?
     var editModel : FieldImageModel?
-    
-    var field_Name = ""
-    var field_Tel = ""
-    var field_Price = ""
-    var field_Id : Int = 0
+    private var imageData = NSData()
+    private var field_Name = ""
+    private var field_Tel = ""
+    private var field_Price = ""
+    private var field_Id : Int = 0
     
     var addressTemp = String()
     var userLocationTemp = CLLocation()
@@ -346,21 +346,57 @@ class HKFPostField_TwoVC: UIViewController {
     
     internal func clickSaveFieldInfoBtn(){
         NSLog("点击了保存信息")
+        
+        
+        if self.imageData.length == 0{
+            let alert = UIAlertView(title: "提示", message: "请选择场地图片", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        
+        if self.field_Name == ""{
+            let alert = UIAlertView(title: "提示", message: "请填写场地名称", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        if self.field_Tel == ""{
+            let alert = UIAlertView(title: "提示", message: "请填写场地联系电话", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        if self.field_Price == ""{
+            let alert = UIAlertView(title: "提示", message: "请填写场地价格", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        
         requestUpfile(self.imageUrl!)
         
         
-//        requestToEditorFieldInfo(self.field_Id.description, imageId: imageId, phone: self.field_Tel, cost: self.field_Price, name: self.field_Name)
-        
-        
-        
-        //        if self.imageUrl == nil {
-        //            return
-        //        }else{
-        //            requestUpfile()
-        //        }
     }
     
     internal func getTextField(textField:UITextField){
+        switch textField.tag {
+        case 100:
+            print(textField.text)
+            self.field_Name = textField.text!
+        case 200:
+            print(textField.text)
+            self.field_Tel = textField.text!
+        case 300:
+            print(textField.text)
+            self.field_Price = textField.text!
+        default:
+            break
+        }
+    }
+    
+    
+    func textFieldDidEndEditing(textField: UITextField) {
         switch textField.tag {
         case 100:
             print(textField.text)
@@ -410,6 +446,7 @@ extension HKFPostField_TwoVC : UIImagePickerControllerDelegate,UINavigationContr
         print(info.description)
         let image = info[UIImagePickerControllerOriginalImage] as? UIImage
         let data = UIImageJPEGRepresentation(image!, 0.5)
+        self.imageData = data!
         self.fieldImage.image =  UIImage(data: data!);
         self.imageUrl = image
         self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
