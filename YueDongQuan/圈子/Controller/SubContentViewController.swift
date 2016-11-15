@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import RealmSwift
 class SubContentViewController: MainViewController,UITableViewDelegate,UITableViewDataSource {
     //前一个页面点击的行数
     var   indexSection : NSInteger? = nil
@@ -23,18 +23,32 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
     //圈子头像
     var thumbnailSrc :String?
     
+//    var consumeItems:Results<RLCircleMemberInfo>?
+    
     override func viewDidLoad() {
         
         
         
         super.viewDidLoad()
-print(indexSection,indexRow)
+        
+        
+       
         
         self.createViewWithIndexSection(indexSection!, Row: indexRow!)
         
         
         // Do any additional setup after loading the view.
     }
+    
+//    func getUserInfoDataBaseFromRealm()  {
+//        //使用默认的数据库
+//        let realm = try! Realm();
+//        //查询所有的记录
+//        consumeItems = realm.objects(RLCircleMemberInfo);
+//        
+//        print("成员数据库资料 = ",consumeItems)
+//    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
          self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
@@ -141,6 +155,31 @@ extension SubContentViewController {
             let model = DataSource().getcirclememberData(responseDic)
             self.memberModel = model
             self.tableView.reloadData()
+        /*MARK:数据库起始线***********************************************************/
+        
+//        let realm = try! Realm()
+//        let items = realm.objects(RLCircleMemberInfo)
+//        if items.count > 0 {
+//            try! realm.write({
+//                realm.deleteAll()
+//            })
+//        }
+
+//            for index in 0...model.data.count-1{
+//                let item = RLCircleMemberInfo(value: [model.data[index].thumbnailSrc,
+//                                                      model.data[index].name,
+//                                                      model.data[index].uid.description,
+//                                                      model.data[index].permissions])
+//                try! realm.write({
+//                    realm.add(item)
+//                })
+//            }
+            
+//         self.getUserInfoDataBaseFromRealm()
+        
+        
+        
+        /*MARK:数据库结束线***********************************************************/
         }) { (error) in
             
         }
