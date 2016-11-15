@@ -315,14 +315,9 @@ extension SignRankBtnController {
                     model.yesterday = self.mysignModel.data.yesterday
                     
                     
-                    let timeTemp = NSDate.init(timeIntervalSince1970: Double((self.mysignModel.data.array.first?.endTime)!/1000))
                     
-                    let timeInterval = timeTemp.timeIntervalSince1970
                     
-                    let timer = NSDate().timeIntervalSince1970 - timeInterval
-                    NSLog("timer = \(timer)")
                     
-                    self.sportTime = timer
                     self.mySignInfo.append(model)
                     self.SignHeaderview.yesterDayTime = self.mysignModel.data.yesterday.description
                     
@@ -330,6 +325,17 @@ extension SignRankBtnController {
                     self.toDaySignInfo = self.mysignModel.data.array
                     NSLog("count = \(self.toDaySignInfo.count)")
                     self.signTableView.reloadData()
+                    
+                    if self.mysignModel.data.array.count == 0{
+                        return
+                    }
+                    let timeTemp = NSDate.init(timeIntervalSince1970: Double((self.mysignModel.data.array.first?.endTime)!/1000))
+                    
+                    let timeInterval = timeTemp.timeIntervalSince1970
+                    
+                    let timer = NSDate().timeIntervalSince1970 - timeInterval
+                    NSLog("timer = \(timer)")
+                    self.sportTime = timer
 
                 }else if (self.mysignModel.code == "401" && self.mysignModel.flag == "1"){//已经签到了
                     

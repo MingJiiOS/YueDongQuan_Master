@@ -1,7 +1,7 @@
 //
-//	SearchListArray.swift
+//	SearchCircleArray.swift
 //
-//	Create by 动 热 on 1/11/2016
+//	Create by 动 热 on 14/11/2016
 //	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 

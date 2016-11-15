@@ -64,6 +64,7 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         mapView.compassOrigin = CGPoint(x: mapView.compassOrigin.x, y: 22)
         mapView.scaleOrigin = CGPoint(x: mapView.scaleOrigin.x, y: 22)
         mapView.showsCompass = true
+        mapView.showsUserLocation = true
         mapView.zoomLevel = 13.1
         mapView.delegate = self
         self.view.addSubview(mapView)
@@ -80,7 +81,12 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         manager.delegate = self
         manager.startUpdatingLocation()
         
+        
+        
     }
+    
+    
+    
     
     func setNav(){
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
@@ -123,7 +129,8 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
     }
     
     func amapLocationManager(manager: AMapLocationManager!, didUpdateLocation location: CLLocation!) {
-        
+//        mapView.setCenterCoordinate(CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), animated: true)
+
         initSearch(location)
         manager.stopUpdatingLocation()
     }
@@ -132,6 +139,46 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         currentLocation = userLocation.location.copy() as! CLLocation
 //        initSearch()
         
+    }
+    
+    func mapView(mapView: MAMapView!, annotationView view: MAAnnotationView!, didChangeDragState newState: MAAnnotationViewDragState, fromOldState oldState: MAAnnotationViewDragState) {
+        
+        switch newState {
+        case .Starting:
+            print("开始拖拽")
+        case .Dragging:
+            print("正在拖拽")
+        case .Ending:
+            print("拖拽结束")
+        default:
+            break
+        }
+        
+        
+    }
+    
+    func mapView(mapView: MAMapView!, didLongPressedAtCoordinate coordinate: CLLocationCoordinate2D) {
+        NSLog("coordinate = \(coordinate.latitude)--\(coordinate.longitude)")
+        mapView.setCenterCoordinate(coordinate, animated: true)
+    }
+    
+    
+    
+    func mapView(mapView: MAMapView!, viewForAnnotation annotation: MAAnnotation!) -> MAAnnotationView! {
+        //绿色的大头针
+        if annotation.isKindOfClass(MJGreenAnnotation) {
+            let greenReuseIndetifier = "pointReuseIndetifier"
+            
+            var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier)
+            if greenAnnotation == nil {
+                greenAnnotation = MJGreenAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier)
+            }
+            greenAnnotation?.canShowCallout  = true
+            greenAnnotation?.draggable       = true
+            return greenAnnotation
+        }
+        
+        return nil
     }
     
     

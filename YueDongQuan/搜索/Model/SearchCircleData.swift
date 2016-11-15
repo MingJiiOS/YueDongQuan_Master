@@ -1,5 +1,5 @@
 //
-//	SearchFieldArray.swift
+//	SearchCircleData.swift
 //
 //	Create by 动 热 on 14/11/2016
 //	Copyright © 2016. All rights reserved.
@@ -7,22 +7,22 @@
 
 import Foundation
 
-class SearchFieldArray{
+class SearchCircleData{
 
-	var id : Int!
-	var name : String!
-	var number : Int!
-	var thumbnailSrc : String!
+	var array : [SearchCircleArray]!
 
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: NSDictionary){
-		id = dictionary["id"] as? Int
-		name = dictionary["name"] as? String
-		number = dictionary["number"] as? Int
-		thumbnailSrc = dictionary["thumbnailSrc"] as? String
+		array = [SearchCircleArray]()
+		if let arrayArray = dictionary["array"] as? [NSDictionary]{
+			for dic in arrayArray{
+				let value = SearchCircleArray(fromDictionary: dic)
+				array.append(value)
+			}
+		}
 	}
 
 }

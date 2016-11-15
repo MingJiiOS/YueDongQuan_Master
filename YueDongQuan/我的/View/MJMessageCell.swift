@@ -174,9 +174,7 @@ class MJMessageCell: UITableViewCell {
         make.top.equalTo((self.contentLabel?.snp_bottom)!).offset(10)
     })
     
-     self.seeBtn = UIButton(type: .Custom)
-    
-    
+    self.seeBtn = UIButton(type: .Custom)
     seeBtn?.titleLabel?.font = UIFont(name: "Arial", size: kMidScaleOfFont)
     seeBtn?.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
     seeBtn?.setImage(UIImage(named: "ic_liulan"), forState: UIControlState.Normal)

@@ -24,15 +24,15 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     
     //移除所有模型的数据
     func removeAllModelData() {
-        persitencyManager?.removeLastestData()
-        persitencyManager?.removeImageData()
-        persitencyManager?.removeVideoData()
-        persitencyManager?.removeActivityData()
-        persitencyManager?.removeMatchData()
-        persitencyManager?.removeJoinTeamData()
-        persitencyManager?.removeZhaoMuData()
-        persitencyManager?.removeNearByData()
-        persitencyManager?.removeMyNotifyData()
+        persitencyManager?.removeAllLastestData()
+        persitencyManager?.removeAllImageData()
+        persitencyManager?.removeAllVideoData()
+        persitencyManager?.removeAllActivityData()
+        persitencyManager?.removeAllMatchData()
+        persitencyManager?.removeAllJoinTeamData()
+        persitencyManager?.removeAllZhaoMuData()
+        persitencyManager?.removeAllNearByData()
+        persitencyManager?.removeAllMyNotifyData()
         
         
         
@@ -84,153 +84,170 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     
     
     func requestLastestDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
-        persitencyManager?.removeLastestData()
+        persitencyManager?.removeAllLastestData()
         httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo,longitude:longitude,latitude: latitude )
     }
     
     func requestImageDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
-        persitencyManager?.removeImageData()
+        persitencyManager?.removeAllImageData()
         httpClient?.requestSay_SayImageData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     func requestVideoDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
-        persitencyManager?.removeVideoData()
+        persitencyManager?.removeAllVideoData()
         httpClient?.requestSay_SayVideoData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     func requestActivityDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
-        persitencyManager?.removeActivityData()
+        persitencyManager?.removeAllActivityData()
         httpClient?.requestSay_SayActivityData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     func requestMatchDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
-        persitencyManager?.removeMatchData()
+        persitencyManager?.removeAllMatchData()
         httpClient?.requestSay_SayMatchData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     func requestJoinTeamDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
-        persitencyManager?.removeJoinTeamData()
+        persitencyManager?.removeAllJoinTeamData()
         httpClient?.requestSay_SayVJoinTeamData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
 
     func requestZhaoMuDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
-        persitencyManager?.removeZhaoMuData()
+        persitencyManager?.removeAllZhaoMuData()
         httpClient?.requestSay_SayZhaoMuData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     
     func requestNearByDataList(typeId:String,pageNo:Int,latitude:Double,longitude:Double) {
-        persitencyManager?.removeNearByData()
+        persitencyManager?.removeAllNearByData()
         httpClient?.requestSay_SayNearByData(typeId, pageNo: pageNo,latitude:latitude ,longitude:longitude )
     }
     
     func requestMyNotifyDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
-        persitencyManager?.removeMyNotifyData()
+        persitencyManager?.removeAllMyNotifyData()
         httpClient?.requestSay_SayMyNotifyData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     /*******************************************/
     func requestLastestMoreDataList(typeId:String,longitude:Double,latitude:Double) {
         
-        let cnt = persitencyManager?.getLastestDefaultData().count
+        let cnt = (persitencyManager?.getLastestDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
+        
+        NSLog("pageNo = \(pageNo)")
         if cnt < 10 {
             persitencyManager?.removeLastestData()
-            pageNo = 1
+            senderNoDataMessage()
         }else{
             pageNo += 1
         }
+        
+        
         
         httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     
     func requestImageMoreDataList(typeId:String,longitude:Double,latitude:Double) {
-        let cnt = persitencyManager?.getImageDefaultData().count
+        let cnt = (persitencyManager?.getImageDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeImageData()
-//            pageNo = 1
+            senderNoDataMessage()
         }else{
             pageNo += 1
         }
+        
+        
         httpClient?.requestSay_SayImageData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     func requestVideoMoreDataList(typeId:String,longitude:Double,latitude:Double) {
-        let cnt = persitencyManager?.getVideoDefaultData().count
+        let cnt = (persitencyManager?.getVideoDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeVideoData()
-            pageNo = 1
+            senderNoDataMessage()
         }else{
             pageNo += 1
         }
+        
+        
         httpClient?.requestSay_SayVideoData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     func requestActivityMoreDataList(typeId:String,longitude:Double,latitude:Double) {
-        let cnt = persitencyManager?.getActivityDefaultData().count
+        let cnt = (persitencyManager?.getActivityDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeActivityData()
-            pageNo = 1
+            senderNoDataMessage()
         }else{
             pageNo += 1
         }
+        
         httpClient?.requestSay_SayActivityData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     func requestMatchDataMoreList(typeId:String,longitude:Double,latitude:Double) {
-        let cnt = persitencyManager?.getMatchDefaultData().count
+        let cnt = (persitencyManager?.getMatchDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeMatchData()
-            pageNo = 1
+            senderNoDataMessage()
         }else{
             pageNo += 1
         }
+        
         httpClient?.requestSay_SayMatchData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     func requestJoinTeamMoreDataList(typeId:String,longitude:Double,latitude:Double) {
         
-        let cnt = persitencyManager?.getJoinTeamDefaultData().count
+        let cnt = (persitencyManager?.getJoinTeamDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeJoinTeamData()
-            pageNo = 1
+            senderNoDataMessage()
         }else{
             pageNo += 1
         }
+        
+        
         httpClient?.requestSay_SayVJoinTeamData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     
     func requestZhaoMuMoreDataList(typeId:String,longitude:Double,latitude:Double) {
-        let cnt = persitencyManager?.getZhaoMuDefaultData().count
+        let cnt = (persitencyManager?.getZhaoMuDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeZhaoMuData()
-            pageNo = 1
+            senderNoDataMessage()
         }else{
             pageNo += 1
         }
+        
+        
         
         httpClient?.requestSay_SayZhaoMuData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     
     
     func requestNearByMoreDataList(typeId:String,latitude:Double,longitude:Double) {
-        let cnt = persitencyManager?.getNearByDefaultData().count
+        let cnt = (persitencyManager?.getNearByDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeNearByData()
-            pageNo = 1
+            senderNoDataMessage()
         }else{
             pageNo += 1
         }
+        
         
         httpClient?.requestSay_SayNearByData(typeId, pageNo: pageNo,latitude: longitude,longitude: longitude)
     }
     
     func requestMyNotifyMoreDataList(typeId:String,longitude:Double,latitude:Double) {
-        let cnt = persitencyManager?.getMyNotifyDefaultData().count
+        let cnt = (persitencyManager?.getMyNotifyDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
         if cnt < 10 {
             persitencyManager?.removeMyNotifyData()
-            pageNo = 1
+            senderNoDataMessage()
+//            pageNo = 1
         }else{
             pageNo += 1
         }
+        
         
         httpClient?.requestSay_SayMyNotifyData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
@@ -239,54 +256,107 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func say_sayLastestDataFromServer(model: DiscoveryModel) {
         
         if model.code == "200" && model.flag == "1" {
+            
+            if model.data.array.count == 0 {
+                NSLog("没有数据了")
+                senderNoDataMessage()
+                return
+            }
+            
             persitencyManager?.addLastestData(model.data.array)
         }
     }
     func say_sayImageDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
+            if model.data.array.count == 0 {
+                NSLog("没有数据了")
+                senderNoDataMessage()
+                return
+            }
             persitencyManager?.addImageData(model.data.array)
         }
     }
     func say_sayVideoDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
+            if model.data.array.count == 0 {
+                NSLog("没有数据了")
+                senderNoDataMessage()
+                return
+            }
             persitencyManager?.addVideoData(model.data.array)
         }
     }
     
     func say_sayActivityDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
+            if model.data.array.count == 0 {
+                NSLog("没有数据了")
+                senderNoDataMessage()
+                return
+            }
             persitencyManager?.addActivityData(model.data.array)
         }
     }
     
     func say_sayMatchDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
+            if model.data.array.count == 0 {
+                NSLog("没有数据了")
+                senderNoDataMessage()
+                return
+            }
             persitencyManager?.addMatchData(model.data.array)
         }
     }
     
     func say_sayJoinTeamDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
+            if model.data.array.count == 0 {
+                NSLog("没有数据了")
+                senderNoDataMessage()
+                return
+            }
             persitencyManager?.addJoinTeamData(model.data.array)
         }
     }
     func say_sayZhaoMuDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
+            if model.data.array.count == 0 {
+                NSLog("没有数据了")
+                senderNoDataMessage()
+                return
+            }
             persitencyManager?.addZhaoMuData(model.data.array)
         }
     }
     
     func say_sayNearByDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
+            if model.data.array.count == 0 {
+                NSLog("没有数据了")
+                senderNoDataMessage()
+                return
+            }
             persitencyManager?.addNearByData(model.data.array)
         }
     }
     
     func say_sayMyNotifyDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
+            if model.data.array.count == 0 {
+                NSLog("没有数据了")
+                senderNoDataMessage()
+                return
+            }
             persitencyManager?.addMyNotifyData(model.data.array)
         }
     }
+    
+    
+    func senderNoDataMessage(){
+        NSNotificationCenter.defaultCenter().postNotificationName("SenderNoDataNotify", object: nil)
+    }
+    
     
     
 }
