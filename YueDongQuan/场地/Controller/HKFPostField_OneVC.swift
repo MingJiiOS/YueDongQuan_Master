@@ -128,6 +128,17 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         
     }
     
+    //添加大头针
+    func addAnnotationsToMapView(annotation: MAAnnotation) {
+//        mapView .addAnnotations(annotations as [AnyObject])
+        mapView.addAnnotation(annotation)
+//        mapView.showAnnotations(annotations as [AnyObject], animated: true)
+        mapView.selectAnnotation(annotation, animated: true)
+        mapView.setZoomLevel(15.1, animated: false)
+        mapView.setCenterCoordinate(annotation.coordinate, animated: true)
+        
+    }
+    
     func amapLocationManager(manager: AMapLocationManager!, didUpdateLocation location: CLLocation!) {
 //        mapView.setCenterCoordinate(CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), animated: true)
 
@@ -160,6 +171,11 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
     func mapView(mapView: MAMapView!, didLongPressedAtCoordinate coordinate: CLLocationCoordinate2D) {
         NSLog("coordinate = \(coordinate.latitude)--\(coordinate.longitude)")
         mapView.setCenterCoordinate(coordinate, animated: true)
+        
+        let annotation = MJRedAnnotation()
+        annotation.coordinate = coordinate
+        addAnnotationsToMapView(annotation)
+        
     }
     
     
