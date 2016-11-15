@@ -298,7 +298,6 @@
 		BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC441DB22E15008A5C51 /* myCircleData.swift */; };
 		BF3CAC481DB22E15008A5C51 /* myCircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */; };
 		BF44EA431DC319E600AD7B3D /* RegistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF44EA421DC319E600AD7B3D /* RegistVC.swift */; };
-		BF49F54D1DDAD3340064FC6C /* RLCircleMemberInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49F54C1DDAD3340064FC6C /* RLCircleMemberInfo.swift */; };
 		BF49F55C1DDAD7390064FC6C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55A1DDAD7390064FC6C /* Realm.framework */; };
 		BF49F55D1DDAD7390064FC6C /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55A1DDAD7390064FC6C /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BF49F55E1DDAD7390064FC6C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55B1DDAD7390064FC6C /* RealmSwift.framework */; };
@@ -725,8 +724,8 @@
 
 /* Begin PBXFileReference section */
 		08192597EA95AF20F9236B20 /* Pods-YueDongQuan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YueDongQuan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YueDongQuan/Pods-YueDongQuan.debug.xcconfig"; sourceTree = "<group>"; };
-		46315AFD1D882BBC00B9D846 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
-		46315AFF1D882C2300B9D846 /* Pubilc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pubilc.swift; sourceTree = "<group>"; };
+		46315AFD1D882BBC00B9D846 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomNavigationBar.swift; path = ../CustomNavigationBar.swift; sourceTree = "<group>"; };
+		46315AFF1D882C2300B9D846 /* Pubilc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pubilc.swift; path = ../Pubilc.swift; sourceTree = "<group>"; };
 		5289E30330F6E0C2F5AB302F /* Pods_YueDongQuan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YueDongQuan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C019B3F1D92708900BAAAC1 /* SignHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignHeaderView.swift; sourceTree = "<group>"; };
 		5C072B5F1D8F8D2500420F6D /* YoYoAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoYoAlertView.swift; sourceTree = "<group>"; };
@@ -737,7 +736,7 @@
 		5C1DC7211DB9BC41000F96BD /* JFCompressionVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFCompressionVideo.m; sourceTree = "<group>"; };
 		5C24BB691D9A48A200A6D25F /* HKFPostImageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKFPostImageVC.h; sourceTree = "<group>"; };
 		5C24BB6A1D9A48A200A6D25F /* HKFPostImageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKFPostImageVC.m; sourceTree = "<group>"; };
-		5C24BB6C1D9A492500A6D25F /* YDQPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YDQPrefixHeader.pch; sourceTree = "<group>"; };
+		5C24BB6C1D9A492500A6D25F /* YDQPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YDQPrefixHeader.pch; path = ../YDQPrefixHeader.pch; sourceTree = "<group>"; };
 		5C24BB6D1D9A4BEA00A6D25F /* CustomTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTextField.h; sourceTree = "<group>"; };
 		5C24BB6E1D9A4BEA00A6D25F /* CustomTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTextField.m; sourceTree = "<group>"; };
 		5C24BB701D9A5C9C00A6D25F /* HKFPostVideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKFPostVideoVC.h; sourceTree = "<group>"; };
@@ -746,8 +745,8 @@
 		5C24BB751D9A709100A6D25F /* BRPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPlaceholderTextView.h; sourceTree = "<group>"; };
 		5C24BB761D9A709100A6D25F /* BRPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPlaceholderTextView.m; sourceTree = "<group>"; };
 		5C24BB781D9A7D2800A6D25F /* HKFPostMatchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostMatchVC.swift; sourceTree = "<group>"; };
-		5C26FBAF1DD451B7005A6ABD /* CheckData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckData.swift; sourceTree = "<group>"; };
-		5C26FBB01DD451B7005A6ABD /* CheckModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckModel.swift; sourceTree = "<group>"; };
+		5C26FBAF1DD451B7005A6ABD /* CheckData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckData.swift; path = ../CheckData.swift; sourceTree = "<group>"; };
+		5C26FBB01DD451B7005A6ABD /* CheckModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckModel.swift; path = ../CheckModel.swift; sourceTree = "<group>"; };
 		5C27BAD01DB761D9005A2F8D /* MBProgressHUD+PY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+PY.h"; sourceTree = "<group>"; };
 		5C27BAD11DB761D9005A2F8D /* MBProgressHUD+PY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+PY.m"; sourceTree = "<group>"; };
 		5C27BAD21DB761D9005A2F8D /* UIView+PYExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PYExtension.h"; sourceTree = "<group>"; };
@@ -859,19 +858,19 @@
 		5C8C3C641D9276F500D756FF /* SignSportsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignSportsCell.swift; sourceTree = "<group>"; };
 		5C8C3C661D92771600D756FF /* SignPersonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignPersonCell.swift; sourceTree = "<group>"; };
 		5C8C3C681D927FAD00D756FF /* SignCellForHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignCellForHeader.swift; sourceTree = "<group>"; };
-		5C90F1271D8FCD03005E16AF /* HKFTableBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFTableBarController.swift; sourceTree = "<group>"; };
-		5C90F12D1D8FCFA0005E16AF /* UIBarButtonItem+YJItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+YJItem.h"; sourceTree = "<group>"; };
-		5C90F12E1D8FCFA0005E16AF /* UIBarButtonItem+YJItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+YJItem.m"; sourceTree = "<group>"; };
-		5C90F12F1D8FCFA0005E16AF /* UIImage+YJImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+YJImage.h"; sourceTree = "<group>"; };
-		5C90F1301D8FCFA0005E16AF /* UIImage+YJImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+YJImage.m"; sourceTree = "<group>"; };
-		5C90F1311D8FCFA0005E16AF /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
-		5C90F1321D8FCFA0005E16AF /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
-		5C90F1331D8FCFA0005E16AF /* YJBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJBadgeView.h; sourceTree = "<group>"; };
-		5C90F1341D8FCFA0005E16AF /* YJBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJBadgeView.m; sourceTree = "<group>"; };
-		5C90F1351D8FCFA0005E16AF /* YJTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJTabBarButton.h; sourceTree = "<group>"; };
-		5C90F1361D8FCFA0005E16AF /* YJTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJTabBarButton.m; sourceTree = "<group>"; };
-		5C90F13C1D8FD1EA005E16AF /* YJTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJTabBar.h; sourceTree = "<group>"; };
-		5C90F13D1D8FD1EA005E16AF /* YJTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJTabBar.m; sourceTree = "<group>"; };
+		5C90F1271D8FCD03005E16AF /* HKFTableBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HKFTableBarController.swift; path = ../HKFTableBarController.swift; sourceTree = "<group>"; };
+		5C90F12D1D8FCFA0005E16AF /* UIBarButtonItem+YJItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+YJItem.h"; path = "../UIBarButtonItem+YJItem.h"; sourceTree = "<group>"; };
+		5C90F12E1D8FCFA0005E16AF /* UIBarButtonItem+YJItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+YJItem.m"; path = "../UIBarButtonItem+YJItem.m"; sourceTree = "<group>"; };
+		5C90F12F1D8FCFA0005E16AF /* UIImage+YJImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+YJImage.h"; path = "../UIImage+YJImage.h"; sourceTree = "<group>"; };
+		5C90F1301D8FCFA0005E16AF /* UIImage+YJImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+YJImage.m"; path = "../UIImage+YJImage.m"; sourceTree = "<group>"; };
+		5C90F1311D8FCFA0005E16AF /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Frame.h"; path = "../UIView+Frame.h"; sourceTree = "<group>"; };
+		5C90F1321D8FCFA0005E16AF /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Frame.m"; path = "../UIView+Frame.m"; sourceTree = "<group>"; };
+		5C90F1331D8FCFA0005E16AF /* YJBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YJBadgeView.h; path = ../YJBadgeView.h; sourceTree = "<group>"; };
+		5C90F1341D8FCFA0005E16AF /* YJBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YJBadgeView.m; path = ../YJBadgeView.m; sourceTree = "<group>"; };
+		5C90F1351D8FCFA0005E16AF /* YJTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YJTabBarButton.h; path = ../YJTabBarButton.h; sourceTree = "<group>"; };
+		5C90F1361D8FCFA0005E16AF /* YJTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YJTabBarButton.m; path = ../YJTabBarButton.m; sourceTree = "<group>"; };
+		5C90F13C1D8FD1EA005E16AF /* YJTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YJTabBar.h; path = ../YJTabBar.h; sourceTree = "<group>"; };
+		5C90F13D1D8FD1EA005E16AF /* YJTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YJTabBar.m; path = ../YJTabBar.m; sourceTree = "<group>"; };
 		5C913F851DBDEB0E00E567FB /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		5C913F861DBDEB0E00E567FB /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		5C913F871DBDEB0E00E567FB /* WeatherF3h.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherF3h.swift; sourceTree = "<group>"; };
@@ -1066,7 +1065,6 @@
 		BF3CAC441DB22E15008A5C51 /* myCircleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleData.swift; sourceTree = "<group>"; };
 		BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleModel.swift; sourceTree = "<group>"; };
 		BF44EA421DC319E600AD7B3D /* RegistVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistVC.swift; sourceTree = "<group>"; };
-		BF49F54C1DDAD3340064FC6C /* RLCircleMemberInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLCircleMemberInfo.swift; sourceTree = "<group>"; };
 		BF49F55A1DDAD7390064FC6C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		BF49F55B1DDAD7390064FC6C /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		BF5738811DBB10690023B7DE /* myInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoData.swift; sourceTree = "<group>"; };
@@ -1099,7 +1097,7 @@
 		BFA6D1061DD56B1D008819BC /* TotalRankArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankArray.swift; sourceTree = "<group>"; };
 		BFA6D1071DD56B1D008819BC /* TotalRankData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankData.swift; sourceTree = "<group>"; };
 		BFA6D1081DD56B1D008819BC /* TotalRankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankModel.swift; sourceTree = "<group>"; };
-		BFA6DDB91D88EC91009017DE /* PchFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PchFile.swift; sourceTree = "<group>"; };
+		BFA6DDB91D88EC91009017DE /* PchFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PchFile.swift; path = ../PchFile.swift; sourceTree = "<group>"; };
 		BFA6DDC51D895C11009017DE /* UIControl+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+Custom.h"; sourceTree = "<group>"; };
 		BFA6DDC61D895C11009017DE /* UIControl+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Custom.m"; sourceTree = "<group>"; };
 		BFAD62FA1D9E0FE8006234E1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1445,8 +1443,8 @@
 		BFC65D1C1D869FD1004E7E99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFC65D261D869FD1004E7E99 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BFC65D281D869FD1004E7E99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BFC65D451D86A0F9004E7E99 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
-		BFC65D461D86A0F9004E7E99 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		BFC65D451D86A0F9004E7E99 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarViewController.swift; path = ../MainTabBarViewController.swift; sourceTree = "<group>"; };
+		BFC65D461D86A0F9004E7E99 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = ../MainViewController.swift; sourceTree = "<group>"; };
 		BFC65D491D86A14F004E7E99 /* MiddleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiddleViewController.swift; sourceTree = "<group>"; };
 		BFC65D4D1D86A160004E7E99 /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		BFC65D541D86A1AE004E7E99 /* YueDongQuan-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YueDongQuan-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -2133,6 +2131,34 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		BF49F5601DDADB850064FC6C /* 公共文件 */ = {
+			isa = PBXGroup;
+			children = (
+				BFC65D451D86A0F9004E7E99 /* MainTabBarViewController.swift */,
+				46315AFD1D882BBC00B9D846 /* CustomNavigationBar.swift */,
+				46315AFF1D882C2300B9D846 /* Pubilc.swift */,
+				BFC65D461D86A0F9004E7E99 /* MainViewController.swift */,
+				BFA6DDB91D88EC91009017DE /* PchFile.swift */,
+				5C90F1271D8FCD03005E16AF /* HKFTableBarController.swift */,
+				5C90F13C1D8FD1EA005E16AF /* YJTabBar.h */,
+				5C90F13D1D8FD1EA005E16AF /* YJTabBar.m */,
+				5C90F12D1D8FCFA0005E16AF /* UIBarButtonItem+YJItem.h */,
+				5C90F12E1D8FCFA0005E16AF /* UIBarButtonItem+YJItem.m */,
+				5C90F12F1D8FCFA0005E16AF /* UIImage+YJImage.h */,
+				5C90F1301D8FCFA0005E16AF /* UIImage+YJImage.m */,
+				5C90F1311D8FCFA0005E16AF /* UIView+Frame.h */,
+				5C90F1321D8FCFA0005E16AF /* UIView+Frame.m */,
+				5C90F1331D8FCFA0005E16AF /* YJBadgeView.h */,
+				5C90F1341D8FCFA0005E16AF /* YJBadgeView.m */,
+				5C90F1351D8FCFA0005E16AF /* YJTabBarButton.h */,
+				5C90F1361D8FCFA0005E16AF /* YJTabBarButton.m */,
+				5C24BB6C1D9A492500A6D25F /* YDQPrefixHeader.pch */,
+				5C26FBAF1DD451B7005A6ABD /* CheckData.swift */,
+				5C26FBB01DD451B7005A6ABD /* CheckModel.swift */,
+			);
+			path = "公共文件";
+			sourceTree = "<group>";
+		};
 		BF9739CD1D9F717E00E1B3EB /* 网络请求 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2147,7 +2173,6 @@
 			isa = PBXGroup;
 			children = (
 				BFB01EA21DDA9E0B00DA2D1A /* RLUserInfo.swift */,
-				BF49F54C1DDAD3340064FC6C /* RLCircleMemberInfo.swift */,
 			);
 			path = "Realm数据库";
 			sourceTree = "<group>";
@@ -3718,30 +3743,10 @@
 		BFC65D431D86A0C6004E7E99 /* 配置文件 */ = {
 			isa = PBXGroup;
 			children = (
+				BF49F5601DDADB850064FC6C /* 公共文件 */,
 				BFA6D1481DD600AC008819BC /* Realm数据库 */,
 				5C68263D1DAC910B0032B66E /* Tools */,
 				BF9739CD1D9F717E00E1B3EB /* 网络请求 */,
-				BFC65D451D86A0F9004E7E99 /* MainTabBarViewController.swift */,
-				46315AFD1D882BBC00B9D846 /* CustomNavigationBar.swift */,
-				46315AFF1D882C2300B9D846 /* Pubilc.swift */,
-				BFC65D461D86A0F9004E7E99 /* MainViewController.swift */,
-				BFA6DDB91D88EC91009017DE /* PchFile.swift */,
-				5C90F1271D8FCD03005E16AF /* HKFTableBarController.swift */,
-				5C90F13C1D8FD1EA005E16AF /* YJTabBar.h */,
-				5C90F13D1D8FD1EA005E16AF /* YJTabBar.m */,
-				5C90F12D1D8FCFA0005E16AF /* UIBarButtonItem+YJItem.h */,
-				5C90F12E1D8FCFA0005E16AF /* UIBarButtonItem+YJItem.m */,
-				5C90F12F1D8FCFA0005E16AF /* UIImage+YJImage.h */,
-				5C90F1301D8FCFA0005E16AF /* UIImage+YJImage.m */,
-				5C90F1311D8FCFA0005E16AF /* UIView+Frame.h */,
-				5C90F1321D8FCFA0005E16AF /* UIView+Frame.m */,
-				5C90F1331D8FCFA0005E16AF /* YJBadgeView.h */,
-				5C90F1341D8FCFA0005E16AF /* YJBadgeView.m */,
-				5C90F1351D8FCFA0005E16AF /* YJTabBarButton.h */,
-				5C90F1361D8FCFA0005E16AF /* YJTabBarButton.m */,
-				5C24BB6C1D9A492500A6D25F /* YDQPrefixHeader.pch */,
-				5C26FBAF1DD451B7005A6ABD /* CheckData.swift */,
-				5C26FBB01DD451B7005A6ABD /* CheckModel.swift */,
 			);
 			path = "配置文件";
 			sourceTree = "<group>";
@@ -4551,7 +4556,6 @@
 				BF071F401D9A0D68000551F7 /* SubPersonCell.swift in Sources */,
 				BF071F301D9A0D68000551F7 /* SubPersonDataViewController.swift in Sources */,
 				5C27BB0C1DB7638D005A2F8D /* HKFPostPictureSayVC.swift in Sources */,
-				BF49F54D1DDAD3340064FC6C /* RLCircleMemberInfo.swift in Sources */,
 				5C7C3A101DB5CF3400EA598B /* FieldData.swift in Sources */,
 				5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */,
 				BFC1269E1DB4792F00E11088 /* CirclesModel.swift in Sources */,
