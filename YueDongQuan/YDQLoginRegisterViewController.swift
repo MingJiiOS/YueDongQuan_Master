@@ -7,8 +7,8 @@
 //
 
 import UIKit
-
-class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RCAnimatedImagesViewDelegate{
+import RealmSwift
+class YDQLoginRegisterViewController: UIViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegate{
     
     var registModel : RegistModel!
     
@@ -39,8 +39,8 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
     let userModel = MJRequestModel()
     //注册model
     let registerModel = MJRequestModel()
-    
-     let sendMaskCode = UIButton(type: .Custom)
+
+    let sendMaskCode = UIButton(type: .Custom)
     let countDownLabel = UILabel(frame: CGRectZero)
     
     var _Seconds : Int?
@@ -49,20 +49,40 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
     
     var rotationLayer = CAShapeLayer()
     
+    var consumeItems:Results<RLUserInfo>?
+    //数据库电话号码
+    var dataBasePhone : String?
+    //数据库保存的密码
+    var dataBasePw : String?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
       self.view.backgroundColor = UIColor.whiteColor()
+        
+        
+        getUserInfoDataBaseFromRealm()
+        
        createTopView()
       loginOrRigsterAction()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(acountTextDidChange), name: UITextFieldTextDidChangeNotification, object: nil)
         
     }
+    
+    func getUserInfoDataBaseFromRealm()  {
+        //使用默认的数据库
+        let realm = try! Realm();
+        //查询所有的记录
+        consumeItems = realm.objects(RLUserInfo);
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
         self.navigationController?.navigationBar.hidden = false
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
         topView.stopAnimating()
     }
 
@@ -70,6 +90,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         super.viewWillAppear(animated)
         topView.startAnimating()
         self.navigationController?.navigationBar.hidden = true
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
     func initLayer()  {
         rotationLayer.bounds = CGRect(x: 0,
@@ -95,10 +116,37 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
                 MJNetWorkHelper().loginWithUserInfo(login, userModel: pramiters, success: { (responseDic, success) in
                   let loginmodel = DataSource().getUserInfo(responseDic)
                     if loginmodel.code != "200"{
-                        
-                        self.showMJProgressHUD("密码错误", isAnimate: false,startY: ScreenHeight-40-45)
+//                        self.showMJProgressHUD("密码错误", isAnimate: false,startY: ScreenHeight-40-45)
                     }else{
+                        /*MARK:数据库起始线***********************************************************/
                         
+                        let realm = try! Realm()
+                        let items = realm.objects(RLUserInfo)
+                        if items.count > 0 {
+                            try! realm.write({
+                                realm.deleteAll()
+                            })
+                        }
+                        
+                        if self.dataBasePhone != "" && self.dataBasePw != ""{
+                            let item = RLUserInfo(value: [self.dataBasePhone!,
+                                self.dataBasePw!,loginmodel.data.uid.description
+                                ])
+                            try! realm.write({
+                                realm.add(item)
+                            })
+                        }else{
+                           let item = RLUserInfo(value: [self.userModel.phone,
+                                self.userModel.pw,loginmodel.data.uid.description
+                                ])
+                            try! realm.write({
+                                realm.add(item)
+                            })
+                        }
+                        
+                        
+                        
+                        /*MARK:数据库结束线***********************************************************/
                         //MARK:融云资料
                         info.name = loginmodel.data.name
                         info.userId = loginmodel.data.uid.description
@@ -125,7 +173,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
                                         MJrcuserInfo.userId = userId as String
                                         helper.getConnectionStatus()
                                         
-                                        RCIM.sharedRCIM().userInfoDataSource = self
+                                        
                                         }, errorBlock: { (isLogin, errorValue) in
                                             
                                     })
@@ -134,10 +182,8 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
                                 
                         })
                         
-                        
-                        self.dismissViewControllerAnimated(true, completion: { 
-                        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
-                        })
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                       
    
                     }
                     }, fail: { (error) in
@@ -155,9 +201,9 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
                     self.registModel = model
                     if self.registModel.isRegistSuccess != true{
                         
-                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
+//                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
                     }else{
-                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
+//                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
                         
                     }
                     }, fail: { (error) in
@@ -207,7 +253,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         
         //帐号输入框
         let acountTextField = MJLoginTextField()
-        acountTextField.borderFillColor = UIColor.whiteColor()
+        acountTextField.borderFillColor = kBlueColor
         acountTextField.backgroundColor = UIColor.clearColor()
         acountTextField.keyboardType = .NumberPad
         self.view.addSubview(acountTextField)
@@ -225,6 +271,9 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         acountTextField.attributedPlaceholder = NSAttributedString(string: "手机号码",
                                                                    attributes:
                                                                    [NSForegroundColorAttributeName:color])
+        let result = consumeItems?.first
+        acountTextField.text = result?.phone
+        dataBasePhone = acountTextField.text
 //        acountTextField.addTarget(self, action: #selector(textFieldDidChange(_:)),
 //                                        forControlEvents:UIControlEvents.AllEditingEvents)
         
@@ -233,7 +282,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
 
         //密码输入框
         let pwTextfeild = MJLoginTextField()
-        pwTextfeild.borderFillColor = UIColor.whiteColor()
+        pwTextfeild.borderFillColor = kBlueColor
         pwTextfeild.secureTextEntry = true
         pwTextfeild.tag = 20
         self.view.addSubview(pwTextfeild)
@@ -252,7 +301,8 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
 
         pwTextfeild.attributedPlaceholder = NSAttributedString(string: "密码",
                                                                attributes: [NSForegroundColorAttributeName:color])
-
+        pwTextfeild.text = result?.password
+        dataBasePw = pwTextfeild.text
         //登录
         let loginActBtn = UIButton(type: .Custom)
         
@@ -309,9 +359,16 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
 
     func acountTextDidChange(fication:NSNotification)  {
         let textfield = fication.object as! UITextField
-        print(textfield.text)
+        
+        
+        
+        
+       
         switch textfield.tag {
         case 10:
+            
+            dataBasePhone = ""
+            
             if NSString(string: textfield.text!).length != 11 {
                 return
             }else if NSString(string: textfield.text!).length == 11{
@@ -337,6 +394,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
 
             break
         case 20:
+            dataBasePw = ""
             userModel.pw = textfield.text!
             break
         default:
@@ -348,23 +406,40 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
     func loginAction()  {
         //MARK:旋转的圈
         self.initLayer()
-        if NSString(string: userModel.phone).length != 11 || NSString(string:userModel.pw).length == 0{
-            return
-        }else if NSString(string: userModel.phone).length == 11 && NSString(string:userModel.pw).length == 0{
-            return
-        }else{
+        // 参数字典
+        var dic = NSDictionary()
+        //参数来源逻辑判断
+        if dataBasePhone != "" && dataBasePw != "" {
             
-            userModel.v = NSObject.getEncodeString("20160901")
-            let dic = ["v":userModel.v,
-                       "phone":userModel.phone,
-                       "pw":userModel.pw,
-                       "describe":userModel.describe]
+            dic = ["v":v,
+                   "phone":dataBasePhone!,
+                   "pw":dataBasePw!,
+                   "describe":userModel.describe]
             if loginOrrigsterClosure != nil{
                 loginOrrigsterClosure!(pramiters:dic,type:1)
-                
             }
+        }else{
+                if NSString(string: userModel.phone).length != 11 || NSString(string:userModel.pw).length == 0{
+                    return
+                }else if NSString(string: userModel.phone).length == 11 && NSString(string:userModel.pw).length == 0{
+                    return
+                }else{
+                    
+                        dic = ["v":v,
+                               "phone":userModel.phone,
+                               "pw":userModel.pw,
+                               "describe":userModel.describe]
+                    if loginOrrigsterClosure != nil{
+                        loginOrrigsterClosure!(pramiters:dic,type:1)
+                        
+                    }
+                }
         }
+
     }
+    
+   
+
     //MARK:用户注册操作
     func registerAction()  {
         let vCode = NSObject.getEncodeString("20160901")
@@ -378,16 +453,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCI
         }
     }
     
-    func getUserInfoWithUserId(userId: String!, completion: ((RCUserInfo!) -> Void)!) {
-        //MARK:融云资料
-//        info.name = loginmodel.data.name
-//        info.userId = loginmodel.data.uid.description
-        //                        info.portraitUri = loginmodel.data.thumbnailSrc
-        let jjj = RCUserInfo()
-        jjj.name = "成功了嚒"
-        jjj.portraitUri = "http://e.hiphotos.baidu.com/baike/w%3D268%3Bg%3D0/sign=22f7c4c0dbb44aed594eb9e28b27e03c/95eef01f3a292df544116b9fbd315c6035a8736e.jpg"
-        return completion(jjj)
-    }
+  
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -429,20 +495,7 @@ extension YDQLoginRegisterViewController {
             countDownLabel.text = "60秒后发送"
         }
     }
-    /*CATransition *caTransition = [CATransition animation];
-     caTransition.duration = 0.5;
-     caTransition.delegate = self;
-     
-     //    linear, easeIn, easeOut, easeInEaseOut, default
-     caTransition.timingFunction = [CAMediaTimingFunction functionWithName:@"easeInEaseOut"];//切换速度效果
-     
-     //    kCATransitionFade, kCATransitionMoveIn
-     //    kCATransitionPush, kCATransitionReveal
-     caTransition.type = kCATransitionReveal;//动画切换风格
-     
-     //    kCATransitionFromRight, kCATransitionFromLeft
-     //    kCATransitionFromTop, kCATransitionFromBottom
-     caTransition.subtype = kCATransitionFromLeft;//动画切换方向*/
+
     func toRegist()  {
         let regist = RegistVC()
         regist.view.backgroundColor = UIColor.whiteColor()
@@ -461,11 +514,11 @@ extension YDQLoginRegisterViewController {
                     if index == 2{
                         let send = SendPhoneViewController()
                         if password.length != 11 {
-                            self.showMJProgressHUD("电话号码有误", isAnimate: false,startY: ScreenHeight-40-45)
+//                            self.showMJProgressHUD("电话号码有误", isAnimate: false,startY: ScreenHeight-40-45)
                         }else if password.length == 11{
                             //判断电话是否存在
                             if validateUtils.validatePhoneNumber(password as String) != true {
-                                self.showMJProgressHUD("电话号码有误", isAnimate: false,startY: ScreenHeight-40-45)
+//                                self.showMJProgressHUD("电话号码有误", isAnimate: false,startY: ScreenHeight-40-45)
                             }else{
                                 send.phoneNumber = password as String
                                  self.navigationController?.pushViewController(send, animated: true)
@@ -493,18 +546,18 @@ extension YDQLoginRegisterViewController {
                 let model = DataSource().getoldpwData(responseDic)
                 if model.code != "200"{
                     
-                    self.showMJProgressHUD("原密码错误哦！( ⊙ o ⊙ )！", isAnimate: true,startY: ScreenHeight-40-45)
+//                    self.showMJProgressHUD("原密码错误哦！( ⊙ o ⊙ )！", isAnimate: true,startY: ScreenHeight-40-45)
                 }else{
                     let newpass = SetNewPasswordViewController()
                     self.navigationController?.pushViewController(newpass, animated: true)
                 }
             }) { (error) in
                 
-                self.showMJProgressHUD("网络出现有点坑呀", isAnimate: true,startY: ScreenHeight-40-45)
+//                self.showMJProgressHUD("网络出现有点坑呀", isAnimate: true,startY: ScreenHeight-40-45)
             }
         }else if oldPwModel.pw == ""{
             
-            self.showMJProgressHUD("您还没有输入原密码呢,😊", isAnimate: true,startY: ScreenHeight-40-45)
+//            self.showMJProgressHUD("您还没有输入原密码呢,😊", isAnimate: true,startY: ScreenHeight-40-45)
         }
         
         

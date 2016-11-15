@@ -9,6 +9,7 @@
 import UIKit
 import IQKeyboardManagerSwift
 import Alamofire
+
 let AMAPAPIKEY = "cc7ada21dae93efe53c70dc7d6a46598"
 let RONGCLOUDAPPKEY = "ik1qhw0911hep"
 @UIApplicationMain
@@ -23,6 +24,8 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     
     var HUDView = UIView()
     var isFullScreen = Bool()
+    
+     
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
@@ -58,10 +61,11 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(statusNumber), name: RCKitDispatchConnectionStatusChangedNotification, object: nil)
         //检测网络
         judgeReachbility()
-        
+         self.window?.rootViewController = HKFTableBarController()
         //MARK:自动登录
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.valueForKey("token") != nil {
+           
             let v = NSObject.getEncodeString("20160901")
             let phone = defaults.valueForKey("phone")
             let pw = defaults.valueForKey("pw")
@@ -77,6 +81,10 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
                 info.userId = loginmodel.data.uid.description
                 //                        info.portraitUri = loginmodel.data.thumbnailSrc
                 info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
+                
+                
+                
+                
                     MJGetToken().requestTokenFromServeris(getToken
                         , success: { (responseDic, success) in
                             let model = TokenModel(fromDictionary: responseDic)
@@ -101,16 +109,17 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
                 }, fail: { (error) in
                     print("返回错误信息",error)
             })
+        }else{
+            self.window?.rootViewController?.presentViewController(YDQLoginRegisterViewController(), animated: true, completion: nil)
         }
         //测试提交
-        self.window?.rootViewController = HKFTableBarController()
+        
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         return true
     }
     
     func statusNumber(fication:NSNotification)  {
-//        print("通知状态改变",fication.object)
         let number = fication.object as! NSNumber
         if number == 6 {
             let alertt = UIAlertView(title: "⚠️", message: "您的账号在其他设备上登录,请确定是否为本人操作,如非本人操作请及时修改您的登录密码", delegate: self, cancelButtonTitle: nil,otherButtonTitles: "好的")
@@ -133,7 +142,8 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
             defaults.synchronize()
             RCIM.sharedRCIM().disconnect()
             let login = YDQLoginRegisterViewController()
-            self.window?.rootViewController?.presentViewController(login, animated: true, completion: nil)
+            let nv = CustomNavigationBar(rootViewController: login)
+            self.window?.rootViewController?.presentViewController(nv, animated: true, completion: nil)
         }else{
             
         }
@@ -187,16 +197,20 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         let dict = ["v":v,
                     "operateId":userInfo.uid.description,
                     "uid":userId]
-        MJNetWorkHelper().checkHeInfo(heinfo, HeInfoModel: dict, success: { (responseDic, success) in
-            if success {
-                
-            }
-            rcUser.name = DataSource().getheinfoData(responseDic).data.name
-            rcUser.portraitUri = DataSource().getheinfoData(responseDic).data.thumbnailSrc
-            
+        MJNetWorkHelper().checkHeInfo(heinfo,
+                                      HeInfoModel: dict,
+                                      success: { (responseDic, success) in
+            let model = DataSource().getheinfoData(responseDic)
+                                        if model.flag != "0"{
+                                            rcUser.name = model.data.name
+                                            rcUser.portraitUri = model.data.thumbnailSrc
+                                        }else{
+                                            self.showMJProgressHUD("链接打不开", isAnimate: false)
+                                        }
             }) { (error) in
                 
         }
+        
         return completion(rcUser)
     }
     func getGroupInfoWithGroupId(groupId: String!, completion: ((RCGroup!) -> Void)!) {

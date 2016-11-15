@@ -65,6 +65,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"相册" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightBarButtonItenAction)];
 }
 
+
 #pragma mark - - - rightBarButtonItenAction 的点击事件
 - (void)rightBarButtonItenAction {
     [self readImageFromAlbum];
@@ -211,10 +212,14 @@
                             if (success) {
                                 NSString *code = [responseDic objectForKey:@"code"];
                                 if ([code isEqualToString:@"501"]) {
-                                    SGAlertView *alert = [[SGAlertView alloc]initWithTitle:@"⚠️" delegate:nil contentTitle:@"密码错误" alertViewBottomViewType:SGAlertViewBottomViewTypeOne];
-                                    [alert show];
+                                   
+                                    MainViewController *main = [[MainViewController alloc]init];
+                                    [main showMJProgressHUD:@"密码错误" isAnimate:false startY:[UIScreen mainScreen].bounds.size.height-40-40-40];
+                                    
                                 }else{
-                                    return ;
+                                    MainViewController *main = [[MainViewController alloc]init];
+                                    [main showMJProgressHUD:@"加入成功" isAnimate:false startY:[UIScreen mainScreen].bounds.size.height-40-40-40];
+                                    
                                 }
                             }
                         } fail:^(NSError * _Nonnull error) {

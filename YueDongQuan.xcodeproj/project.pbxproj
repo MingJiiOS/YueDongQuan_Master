@@ -206,6 +206,8 @@
 		BF071F451D9A110B000551F7 /* PersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF071F441D9A110B000551F7 /* PersonalViewController.swift */; };
 		BF140EE61DAF6A390029DC25 /* updateNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF140EE51DAF6A390029DC25 /* updateNameModel.swift */; };
 		BF1C0D6C1D8AAB5D009EA504 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C0D6B1D8AAB5D009EA504 /* CoreData.framework */; };
+		BF1CCB171DD6A4C8004B3739 /* FocusData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1CCB151DD6A4C8004B3739 /* FocusData.swift */; };
+		BF1CCB181DD6A4C8004B3739 /* FocusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1CCB161DD6A4C8004B3739 /* FocusModel.swift */; };
 		BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E16A91DA74518007985F3 /* validateUtils.m */; };
 		BF2F6C3F1DAE0D630050B437 /* cool－1（被拖移）.tiff in Resources */ = {isa = PBXBuildFile; fileRef = BF2F6BE51DAE0D630050B437 /* cool－1（被拖移）.tiff */; };
 		BF2F6C401DAE0D640050B437 /* cool－2（被拖移）.tiff in Resources */ = {isa = PBXBuildFile; fileRef = BF2F6BE61DAE0D630050B437 /* cool－2（被拖移）.tiff */; };
@@ -363,6 +365,14 @@
 		BFAF23C91DB8600800294988 /* uploadImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C71DB8600800294988 /* uploadImageData.swift */; };
 		BFAF23CA1DB8600800294988 /* uploadImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23C81DB8600800294988 /* uploadImageModel.swift */; };
 		BFAF23CC1DB8A9D700294988 /* MJLayerContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */; };
+		BFB01E921DD9C3A400DA2D1A /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E911DD9C3A400DA2D1A /* Realm.framework */; };
+		BFB01E941DD9C3B200DA2D1A /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E931DD9C3B200DA2D1A /* RealmSwift.framework */; };
+		BFB01E9D1DDA9C8500DA2D1A /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E9B1DDA9C8500DA2D1A /* Realm.framework */; };
+		BFB01E9E1DDA9C8500DA2D1A /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E9B1DDA9C8500DA2D1A /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BFB01E9F1DDA9C8500DA2D1A /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E9C1DDA9C8500DA2D1A /* RealmSwift.framework */; };
+		BFB01EA01DDA9C8500DA2D1A /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E9C1DDA9C8500DA2D1A /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BFB01EA31DDA9E0B00DA2D1A /* RLUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB01EA21DDA9E0B00DA2D1A /* RLUserInfo.swift */; };
+		BFB01EA51DDAB7E000DA2D1A /* RLCircleMemberInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB01EA41DDAB7E000DA2D1A /* RLCircleMemberInfo.swift */; };
 		BFB44E581DC9731A0066D49F /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB44CC21DC9731A0066D49F /* NSString+Emoji.m */; };
 		BFB44E591DC9731A0066D49F /* ChatKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB44CC41DC9731A0066D49F /* ChatKeyBoard.m */; };
 		BFB44E5A1DC9731A0066D49F /* Delete_ios7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB44CC81DC9731A0066D49F /* Delete_ios7@2x.png */; };
@@ -706,6 +716,21 @@
 		CF52B5278514852403EE8DCB /* Pods_YueDongQuan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5289E30330F6E0C2F5AB302F /* Pods_YueDongQuan.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BFB01EA11DDA9C8500DA2D1A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BFB01EA01DDA9C8500DA2D1A /* RealmSwift.framework in Embed Frameworks */,
+				BFB01E9E1DDA9C8500DA2D1A /* Realm.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		08192597EA95AF20F9236B20 /* Pods-YueDongQuan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YueDongQuan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YueDongQuan/Pods-YueDongQuan.debug.xcconfig"; sourceTree = "<group>"; };
 		46315AFD1D882BBC00B9D846 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
@@ -960,6 +985,8 @@
 		BF140EE51DAF6A390029DC25 /* updateNameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = updateNameModel.swift; sourceTree = "<group>"; };
 		BF1C0CB21D8A4CD5009EA504 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		BF1C0D6B1D8AAB5D009EA504 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BF1CCB151DD6A4C8004B3739 /* FocusData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusData.swift; sourceTree = "<group>"; };
+		BF1CCB161DD6A4C8004B3739 /* FocusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusModel.swift; sourceTree = "<group>"; };
 		BF1E16A81DA74518007985F3 /* validateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = validateUtils.h; sourceTree = "<group>"; };
 		BF1E16A91DA74518007985F3 /* validateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = validateUtils.m; sourceTree = "<group>"; };
 		BF2F6BE51DAE0D630050B437 /* cool－1（被拖移）.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "cool－1（被拖移）.tiff"; sourceTree = "<group>"; };
@@ -1121,6 +1148,12 @@
 		BFAF23C71DB8600800294988 /* uploadImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uploadImageData.swift; sourceTree = "<group>"; };
 		BFAF23C81DB8600800294988 /* uploadImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = uploadImageModel.swift; sourceTree = "<group>"; };
 		BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJLayerContentCell.swift; sourceTree = "<group>"; };
+		BFB01E911DD9C3A400DA2D1A /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "/Users/HFG/Desktop/realm-swift-2.0.3/ios/swift-2.3/Realm.framework"; sourceTree = "<absolute>"; };
+		BFB01E931DD9C3B200DA2D1A /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "/Users/HFG/Desktop/realm-swift-2.0.3/ios/swift-2.3/RealmSwift.framework"; sourceTree = "<absolute>"; };
+		BFB01E9B1DDA9C8500DA2D1A /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../../../Realm.framework; sourceTree = "<group>"; };
+		BFB01E9C1DDA9C8500DA2D1A /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../../../RealmSwift.framework; sourceTree = "<group>"; };
+		BFB01EA21DDA9E0B00DA2D1A /* RLUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLUserInfo.swift; sourceTree = "<group>"; };
+		BFB01EA41DDAB7E000DA2D1A /* RLCircleMemberInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLCircleMemberInfo.swift; sourceTree = "<group>"; };
 		BFB44CC11DC9731A0066D49F /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
 		BFB44CC21DC9731A0066D49F /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		BFB44CC31DC9731A0066D49F /* ChatKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatKeyBoard.h; sourceTree = "<group>"; };
@@ -1511,10 +1544,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFB01E941DD9C3B200DA2D1A /* RealmSwift.framework in Frameworks */,
+				BFB01E921DD9C3A400DA2D1A /* Realm.framework in Frameworks */,
 				5C7D28F51DD2D4D0000D26E7 /* VideoToolbox.framework in Frameworks */,
 				BFAD631E1D9E1094006234E1 /* UIKit.framework in Frameworks */,
 				BFAD631A1D9E1082006234E1 /* QuartzCore.framework in Frameworks */,
 				BFAD63181D9E107C006234E1 /* OpenGLES.framework in Frameworks */,
+				BFB01E9F1DDA9C8500DA2D1A /* RealmSwift.framework in Frameworks */,
 				5C7D28F31DD2D49C000D26E7 /* MobileCoreServices.framework in Frameworks */,
 				5C7D28F11DD2D491000D26E7 /* MediaPlayer.framework in Frameworks */,
 				5C7D28EF1DD2D474000D26E7 /* libbz2.tbd in Frameworks */,
@@ -1530,6 +1566,7 @@
 				BFAD63161D9E106E006234E1 /* libz.tbd in Frameworks */,
 				BFAD63141D9E1067006234E1 /* libxml2.tbd in Frameworks */,
 				BFAD63121D9E1059006234E1 /* libsqlite3.tbd in Frameworks */,
+				BFB01E9D1DDA9C8500DA2D1A /* Realm.framework in Frameworks */,
 				BFAD63131D9E1059006234E1 /* libstdc++.tbd in Frameworks */,
 				5C7D28EB1DD2D423000D26E7 /* IJKMediaFramework.framework in Frameworks */,
 				BFAD630E1D9E103F006234E1 /* libc++.tbd in Frameworks */,
@@ -1868,6 +1905,8 @@
 		BF071EE41D9A0D5F000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BF1CCB151DD6A4C8004B3739 /* FocusData.swift */,
+				BF1CCB161DD6A4C8004B3739 /* FocusModel.swift */,
 				BFA6D1001DD551B4008819BC /* CircleInfoArray.swift */,
 				BFA6D1011DD551B4008819BC /* CircleInfoData.swift */,
 				BFA6D1021DD551B4008819BC /* CircleInfoModel.swift */,
@@ -2120,6 +2159,17 @@
 				BFCD98D01DAC7B0700AF915C /* DataSource.swift */,
 			);
 			path = "网络请求";
+			sourceTree = "<group>";
+		};
+		BFA6D1481DD600AC008819BC /* Realm数据库 */ = {
+			isa = PBXGroup;
+			children = (
+				BFB01E9B1DDA9C8500DA2D1A /* Realm.framework */,
+				BFB01E9C1DDA9C8500DA2D1A /* RealmSwift.framework */,
+				BFB01EA21DDA9E0B00DA2D1A /* RLUserInfo.swift */,
+				BFB01EA41DDAB7E000DA2D1A /* RLCircleMemberInfo.swift */,
+			);
+			path = "Realm数据库";
 			sourceTree = "<group>";
 		};
 		BFAD63251D9E3E08006234E1 /* 融云IM */ = {
@@ -3702,6 +3752,7 @@
 		BFC65D431D86A0C6004E7E99 /* 配置文件 */ = {
 			isa = PBXGroup;
 			children = (
+				BFA6D1481DD600AC008819BC /* Realm数据库 */,
 				5C68263D1DAC910B0032B66E /* Tools */,
 				BF9739CD1D9F717E00E1B3EB /* 网络请求 */,
 				BFC65D451D86A0F9004E7E99 /* MainTabBarViewController.swift */,
@@ -3841,6 +3892,7 @@
 				BFC65D171D869FD1004E7E99 /* Resources */,
 				31459F2ABAF95EF74E08AB18 /* [CP] Embed Pods Frameworks */,
 				4B14D9A97FB50B1A3C03C750 /* [CP] Copy Pods Resources */,
+				BFB01EA11DDA9C8500DA2D1A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4387,6 +4439,7 @@
 				5CC5F9431DAF8A550088A61E /* HKFTableViewCell.swift in Sources */,
 				BFDBE2BC1DD2B2560035B621 /* FollowView.swift in Sources */,
 				BF071F3B1D9A0D68000551F7 /* MJTextFeild.swift in Sources */,
+				BFB01EA51DDAB7E000DA2D1A /* RLCircleMemberInfo.swift in Sources */,
 				BF071F031D9A0D5F000551F7 /* MJQuanZiModel.swift in Sources */,
 				BFFCE0541DBF471A0045087A /* SubTotalRankCell.swift in Sources */,
 				BF071F351D9A0D68000551F7 /* HeaderView.swift in Sources */,
@@ -4440,6 +4493,7 @@
 				5C24BB721D9A5C9C00A6D25F /* HKFPostVideoVC.m in Sources */,
 				BFFF74DB1DBDB443005295D4 /* LoginData.swift in Sources */,
 				5C8C3C671D92771600D756FF /* SignPersonCell.swift in Sources */,
+				BF1CCB181DD6A4C8004B3739 /* FocusModel.swift in Sources */,
 				BFB44FE61DC9BBBD0066D49F /* myFoundModel.swift in Sources */,
 				BF9739CA1D9F6AD800E1B3EB /* MJClearCache.swift in Sources */,
 				BFB44E581DC9731A0066D49F /* NSString+Emoji.m in Sources */,
@@ -4465,6 +4519,7 @@
 				BFD41FDE1DC05F67005A22E6 /* SGScanningQRCodeVC.m in Sources */,
 				BFD41FBA1DC03D9F005A22E6 /* TodayDongdouData.swift in Sources */,
 				BFC126A31DB48C2B00E11088 /* HistoryDongdouData.swift in Sources */,
+				BF1CCB171DD6A4C8004B3739 /* FocusData.swift in Sources */,
 				5C27BAF21DB761D9005A2F8D /* PYNavigationController.m in Sources */,
 				BFD36CC91DB9F19A005005A3 /* memberInfoModel.swift in Sources */,
 				BFC126A41DB48C2B00E11088 /* HistoryDongdouModel.swift in Sources */,
@@ -4555,6 +4610,7 @@
 				BF9CA16F1DC86FAA0043F535 /* MJMessageCell.swift in Sources */,
 				BF071F0E1D9A0D5F000551F7 /* QRCodeView.swift in Sources */,
 				BF071F041D9A0D5F000551F7 /* CircleDataView.swift in Sources */,
+				BFB01EA31DDA9E0B00DA2D1A /* RLUserInfo.swift in Sources */,
 				5C24BB6F1D9A4BEB00A6D25F /* CustomTextField.m in Sources */,
 				5C26FBB11DD451B7005A6ABD /* CheckData.swift in Sources */,
 				BF9CA17E1DC87D000043F535 /* MJCommentCell.swift in Sources */,
@@ -4744,6 +4800,9 @@
 					"$(PROJECT_DIR)/YueDongQuan/第三方/ShareSDK",
 					"$(PROJECT_DIR)/YueDongQuan/第三方/ShareSDK/UI",
 					"$(PROJECT_DIR)/YueDongQuan/第三方",
+					"$(PROJECT_DIR)/YueDongQuan/配置文件/Realm数据库",
+					"$(PROJECT_DIR)/YueDongQuan/配置文件/Realm数据库/swift-2.3",
+					"$(PROJECT_DIR)",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4802,6 +4861,8 @@
 					"\"TZImagePickerController\"",
 					"-framework",
 					"\"XHImageViewer\"",
+					"-framework",
+					"\"RealmSwift\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.redong.YueDongQuan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4833,6 +4894,9 @@
 					"$(PROJECT_DIR)/YueDongQuan/第三方/ShareSDK",
 					"$(PROJECT_DIR)/YueDongQuan/第三方/ShareSDK/UI",
 					"$(PROJECT_DIR)/YueDongQuan/第三方",
+					"$(PROJECT_DIR)/YueDongQuan/配置文件/Realm数据库",
+					"$(PROJECT_DIR)/YueDongQuan/配置文件/Realm数据库/swift-2.3",
+					"$(PROJECT_DIR)",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4891,6 +4955,8 @@
 					"\"TZImagePickerController\"",
 					"-framework",
 					"\"XHImageViewer\"",
+					"-framework",
+					"\"RealmSwift\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.redong.YueDongQuan;
 				PRODUCT_NAME = "$(TARGET_NAME)";

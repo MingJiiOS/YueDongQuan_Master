@@ -61,7 +61,7 @@ extension CustomTable:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-       cell.backgroundColor = kBlueColor
+       
         cell.imageView?.image = UIImage(named: self.titleImage![indexPath.row] as! String)
         cell.textLabel?.text = self.titleLext![indexPath.row] as? String
         cell.textLabel?.sizeToFit()

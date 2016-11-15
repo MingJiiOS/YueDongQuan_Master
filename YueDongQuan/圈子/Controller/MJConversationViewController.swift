@@ -25,9 +25,12 @@ class MJConversationViewController: RCConversationViewController {
     
     var permissions : NSInteger?
     
+    var memberModel : circleMemberModel?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.clickButtonTagClosure { (ButtonTag) in
             if ButtonTag == 3{
                 let notice = QuanZiSettingViewController()
@@ -81,9 +84,7 @@ class MJConversationViewController: RCConversationViewController {
              searchBtn.enabled = false
         }
         
-        MJLoginOpreationHelper().getUserInfoWithUserId(MJrcuserInfo.userId) { (userinfo) in
-            
-        }
+        
         
     }
     
@@ -111,6 +112,7 @@ class MJConversationViewController: RCConversationViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+        
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
@@ -127,6 +129,9 @@ class MJConversationViewController: RCConversationViewController {
             self.navigationController?.pushViewController(heinfo, animated: true)
         }
     }
-    
-  
+
+}
+
+extension MJConversationViewController {
+ 
 }
