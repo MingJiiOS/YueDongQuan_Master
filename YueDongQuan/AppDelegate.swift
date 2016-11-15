@@ -10,6 +10,7 @@ import UIKit
 import IQKeyboardManagerSwift
 import Alamofire
 import RealmSwift
+import Realm
 let AMAPAPIKEY = "cc7ada21dae93efe53c70dc7d6a46598"
 let RONGCLOUDAPPKEY = "ik1qhw0911hep"
 @UIApplicationMain
@@ -33,7 +34,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
                                          width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         
         print("接口验证参数",NSObject.getEncodeString("20160901"))
-
+        print("数据库地址",RLMRealmConfiguration.defaultConfiguration().fileURL)
         //设置网络缓存 － 4M 的内存缓存 20M 的磁盘缓存，使用默认的缓存路径 Caches/bundleId
         
         let cache = NSURLCache(memoryCapacity: 4 * 1024 * 1024,
@@ -119,6 +120,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     func getUserInfoDataBaseFromRealm()  {
         //使用默认的数据库
         let realm = try! Realm();
+        
         //查询所有的记录
         consumeItems = realm.objects(RLUserInfo);
     }
@@ -231,20 +233,19 @@ extension AppDelegate {
     func judgeReachbility()   {
         let manager = NetworkReachabilityManager(host: "www.baidu.com")
         manager!.listener = { status in
-            
             switch status {
             case .NotReachable:
                 print("网络不可用")
-             self.showMJProgressHUD("网络不可用", isAnimate: false)
+             self.showMJProgressHUD("您正处于离线状态", isAnimate: false)
             case .Unknown:
                 print("未知网络")
                self.showMJProgressHUD("未知网络", isAnimate: false)
             case .Reachable(.EthernetOrWiFi):
                 print("您正处于WiFi状态")
-               self.showMJProgressHUD("您正处于WiFi状态", isAnimate: false)
+               
             case .Reachable(.WWAN):
                 print("您正处于蜂窝数据连接状态")
-                self.showMJProgressHUD("您正处于蜂窝数据连接状态", isAnimate: false)
+                
             }
         }
         manager!.startListening()

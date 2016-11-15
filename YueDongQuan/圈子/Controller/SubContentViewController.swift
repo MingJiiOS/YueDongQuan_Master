@@ -164,18 +164,17 @@ extension SubContentViewController {
 //                realm.deleteAll()
 //            })
 //        }
-
+//
 //            for index in 0...model.data.count-1{
 //                let item = RLCircleMemberInfo(value: [model.data[index].thumbnailSrc,
-//                                                      model.data[index].name,
 //                                                      model.data[index].uid.description,
-//                                                      model.data[index].permissions])
+//                                                      model.data[index].name])
 //                try! realm.write({
 //                    realm.add(item)
 //                })
 //            }
-            
-//         self.getUserInfoDataBaseFromRealm()
+//            
+//         self.getCircleMemberInfoDataBaseFromRealm()
         
         
         
@@ -184,6 +183,13 @@ extension SubContentViewController {
             
         }
     }
+//    func getCircleMemberInfoDataBaseFromRealm()  {
+//        //使用默认的数据库
+//        let realm = try! Realm();
+//        //查询所有的记录
+//        consumeItems = realm.objects(RLCircleMemberInfo);
+//        print("圈子成员资料 = ",consumeItems)
+//    }
     func loadBlacklistData()  {
         let v = NSObject.getEncodeString("20160901")
         let circleid = self.circleId
