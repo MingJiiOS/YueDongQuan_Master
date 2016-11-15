@@ -8,9 +8,6 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
-import XLProgressHUD
-
 
 protocol DiscorveryHTTPClientDelegate {
     func say_sayLastestDataFromServer(model:DiscoveryModel)
@@ -39,12 +36,15 @@ class DiscorveryHTTPClient {
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
-                let json = JSON(data: response.data!)
-                
-                
-                let dict = json.object
-                self.delegate?.say_sayLastestDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary ))
-                
+                let dict:NSDictionary?
+                do {
+                    dict = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    
+                    
+                    self.delegate?.say_sayLastestDataFromServer(DiscoveryModel.init(fromDictionary: dict!))
+                }catch _ {
+                    //解析错误时发出通知
+                }
                 
             case .Failure(let error):
                 print(error)
@@ -61,12 +61,17 @@ class DiscorveryHTTPClient {
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
-                let json = JSON(data: response.data!)
+                let dict:NSDictionary?
+                do {
+                    dict = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    
+                    
+                    self.delegate?.say_sayImageDataFromServer(DiscoveryModel.init(fromDictionary: dict!))
+                }catch _ {
+                    //解析错误时发出通知
+                }
                 
                 
-                let dict = json.object
-                
-                self.delegate?.say_sayImageDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary))
                 
             case .Failure(let error):
                 print(error)
@@ -82,13 +87,15 @@ class DiscorveryHTTPClient {
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
-                let json = JSON(data: response.data!)
-                
-                
-                let dict = json.object
-                
-                self.delegate?.say_sayVideoDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary))
-                
+                let dict:NSDictionary?
+                do {
+                    dict = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    
+                    
+                    self.delegate?.say_sayVideoDataFromServer(DiscoveryModel.init(fromDictionary: dict!))
+                }catch _ {
+                    //解析错误时发出通知
+                }
             case .Failure(let error):
                 print(error)
             }
@@ -103,13 +110,15 @@ class DiscorveryHTTPClient {
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
-                let json = JSON(data: response.data!)
-                
-                
-                let dict = json.object
-                
-                self.delegate?.say_sayActivityDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary))
-                
+                let dict:NSDictionary?
+                do {
+                    dict = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    
+                    
+                    self.delegate?.say_sayActivityDataFromServer(DiscoveryModel.init(fromDictionary: dict!))
+                }catch _ {
+                    //解析错误时发出通知
+                }
             case .Failure(let error):
                 print(error)
             }
@@ -124,12 +133,15 @@ class DiscorveryHTTPClient {
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
-                let json = JSON(data: response.data!)
-                
-                
-                let dict = json.object
-                
-                self.delegate?.say_sayMatchDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary))
+                let dict:NSDictionary?
+                do {
+                    dict = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    
+                    
+                    self.delegate?.say_sayMatchDataFromServer(DiscoveryModel.init(fromDictionary: dict!))
+                }catch _ {
+                    //解析错误时发出通知
+                }
                 
             case .Failure(let error):
                 print(error)
@@ -145,13 +157,15 @@ class DiscorveryHTTPClient {
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
-                let json = JSON(data: response.data!)
-                
-                
-                let dict = json.object
-                
-                self.delegate?.say_sayJoinTeamDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary))
-                
+                let dict:NSDictionary?
+                do {
+                    dict = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    
+                    
+                    self.delegate?.say_sayJoinTeamDataFromServer(DiscoveryModel.init(fromDictionary: dict!))
+                }catch _ {
+                    //解析错误时发出通知
+                }
             case .Failure(let error):
                 print(error)
             }
@@ -166,13 +180,15 @@ class DiscorveryHTTPClient {
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
-                let json = JSON(data: response.data!)
-                
-                
-                let dict = json.object
-                
-                self.delegate?.say_sayZhaoMuDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary))
-                
+                let dict:NSDictionary?
+                do {
+                    dict = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    
+                    
+                    self.delegate?.say_sayZhaoMuDataFromServer(DiscoveryModel.init(fromDictionary: dict!))
+                }catch _ {
+                    //解析错误时发出通知
+                }
             case .Failure(let error):
                 print(error)
             }
@@ -188,13 +204,15 @@ class DiscorveryHTTPClient {
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
-                let json = JSON(data: response.data!)
-                
-                
-                let dict = json.object
-                
-                self.delegate?.say_sayNearByDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary))
-                
+                let dict:NSDictionary?
+                do {
+                    dict = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    
+                    
+                    self.delegate?.say_sayNearByDataFromServer(DiscoveryModel.init(fromDictionary: dict!))
+                }catch _ {
+                    //解析错误时发出通知
+                }
             case .Failure(let error):
                 print(error)
             }
@@ -210,13 +228,15 @@ class DiscorveryHTTPClient {
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
-                let json = JSON(data: response.data!)
-                
-                
-                let dict = json.object
-                
-                self.delegate?.say_sayMyNotifyDataFromServer(DiscoveryModel.init(fromDictionary: dict as! NSDictionary))
-                
+                let dict:NSDictionary?
+                do {
+                    dict = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
+                    
+                    
+                    self.delegate?.say_sayMyNotifyDataFromServer(DiscoveryModel.init(fromDictionary: dict!))
+                }catch _ {
+                    //解析错误时发出通知
+                }
             case .Failure(let error):
                 print(error)
             }

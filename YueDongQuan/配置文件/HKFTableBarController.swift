@@ -116,7 +116,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         }
         
         self.selectedIndex = index
-        NSLog("self.selectedIndex= \(self.selectedIndex)")
+        
     }
     
     func setUPOneChilViewControllerWithImageAndSelectImageAndTitle(vc:UIViewController,image:UIImage,selectImage:UIImage,title:String){

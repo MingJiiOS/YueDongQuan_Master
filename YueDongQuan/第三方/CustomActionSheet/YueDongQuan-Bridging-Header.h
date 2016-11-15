@@ -9,12 +9,6 @@
 
 
 
-#import "DynamicCell.h"
-#import "UIImage+Extension.h"
-#import "NSString+Extension.h"
-
-#import "GlobalUI.h"
-
 
 //黄方果导入的
 #import "MHRadioButton.h"
@@ -65,6 +59,11 @@
 #import "YYFPSLabel.h"
 #import "JZVideoPlayerView.h"
 #import "VedioDetailViewController.h"
+
+//重写发现
+//#import "SegmentViewController.h"
+//#import "UIView+frame.h"
+
 
 
 #import "LiuXSegmentView.h"
