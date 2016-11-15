@@ -396,13 +396,10 @@ class DataSource: NSObject {
         return model!
     }
     //MARK:解析关注数据
-    func getfocusData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getfocusData(datasource:NSDictionary) -> FocusModel {
+        let model = FocusModel(fromDictionary: datasource)
+        
+        return model
     }
     //MARK:解析查询我的动豆（今日动豆）数据
     func gettodaydongdouData(datasource:NSDictionary) -> TodayDongdouModel {

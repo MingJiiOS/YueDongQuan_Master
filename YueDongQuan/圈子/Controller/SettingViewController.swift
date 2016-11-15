@@ -201,7 +201,8 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
             }
             defaults.synchronize()
             RCIM.sharedRCIM().disconnect()
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            let nv = CustomNavigationBar(rootViewController: YDQLoginRegisterViewController())
+            self.navigationController?.presentViewController(nv, animated: true, completion: nil)
         }
         
     }

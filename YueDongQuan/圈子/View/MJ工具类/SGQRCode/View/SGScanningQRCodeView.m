@@ -85,7 +85,7 @@ static CGFloat const timer_animation_Duration = 0.05;
     CGFloat top_ViewW = self.frame.size.width;
     CGFloat top_ViewH = scanContentViewY;
     top_View.frame = CGRectMake(top_ViewX, top_ViewY, top_ViewW, top_ViewH);
-    top_View.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:scanBorderOutsideViewAlpha];
+    top_View.backgroundColor = [UIColor colorWithRed:0 green:107/255 blue:186/255 alpha:1];
     [self addSubview:top_View];
 
     // 左侧View的创建
@@ -95,7 +95,7 @@ static CGFloat const timer_animation_Duration = 0.05;
     CGFloat left_ViewW = scanContent_X;
     CGFloat left_ViewH = scanContentViewH;
     left_View.frame = CGRectMake(left_ViewX, left_ViewY, left_ViewW, left_ViewH);
-    left_View.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:scanBorderOutsideViewAlpha];
+    left_View.backgroundColor =  [UIColor colorWithRed:0 green:107/255 blue:186/255 alpha:1];
     [self addSubview:left_View];
     
     // 右侧View的创建
@@ -105,7 +105,7 @@ static CGFloat const timer_animation_Duration = 0.05;
     CGFloat right_ViewW = scanContent_X;
     CGFloat right_ViewH = scanContentViewH;
     right_View.frame = CGRectMake(right_ViewX, right_ViewY, right_ViewW, right_ViewH);
-    right_View.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:scanBorderOutsideViewAlpha];
+    right_View.backgroundColor =  [UIColor colorWithRed:0 green:107/255 blue:186/255 alpha:1];
     [self addSubview:right_View];
 
     // 下面View的创建
@@ -115,7 +115,7 @@ static CGFloat const timer_animation_Duration = 0.05;
     CGFloat bottom_ViewW = self.frame.size.width;
     CGFloat bottom_ViewH = self.frame.size.height - bottom_ViewY;
     bottom_View.frame = CGRectMake(bottom_ViewX, bottom_ViewY, bottom_ViewW, bottom_ViewH);
-    bottom_View.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:scanBorderOutsideViewAlpha];
+    bottom_View.backgroundColor =  [UIColor colorWithRed:0 green:107/255 blue:186/255 alpha:1];
     [self addSubview:bottom_View];
 
     // 提示Label

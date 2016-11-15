@@ -55,28 +55,32 @@ class DetailsCommentCell: UITableViewCell {
     func getAllCommentData(model:[myFoundCommentComment])  {
         self.allCommentAry = model
     }
-    func configSubCommentCellWithModel(model:[myFoundCommentComment],index:NSIndexPath)  {
+    func configSubCommentCellWithModel(model:myFoundCommentComment)  {
      
 //           self.allComment { (md) in
-        if self.allCommentAry != nil {
-            for subModel in self.allCommentAry! {
-                if model[index.row].commentId == subModel.commentId{
-                    let attributeString = NSMutableAttributedString(string: String(format: "%@回复:%@", model[index.row].netName,model[index.row].content))
-                    //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-                    
-                    //设置字体颜色
-                    attributeString.addAttribute(NSForegroundColorAttributeName,
-                                                 value: kBlueColor,
-                                                 range: NSMakeRange(0,
-                                                    NSString(string:model[index.row].netName).length+2))
-                    
-                    
-                    self.contentLabel?.attributedText = attributeString
-                }
+//        if self.allCommentAry != nil {
+        
+            
                 
-            }
+                        
+                        let attributeString = NSMutableAttributedString(string: String(format: "%@回复:%@", model.netName,model.content))
+                        //从文本0开始6个字符字体HelveticaNeue-Bold,16号
+                        
+                        //设置字体颜色
+                        attributeString.addAttribute(NSForegroundColorAttributeName,
+                                                     value: kBlueColor,
+                                                     range: NSMakeRange(0,
+                                                        NSString(string:model.netName).length+2))
+                        
+                        
+                        self.contentLabel?.attributedText = attributeString
+                    
+                
+                
+                
+            
 
-        }
+//        }
         
 
 //        }

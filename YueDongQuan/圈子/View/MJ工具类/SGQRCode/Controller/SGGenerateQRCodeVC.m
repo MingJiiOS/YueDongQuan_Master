@@ -38,7 +38,15 @@
     [self setupGenerate_Color_QRCode];
 
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.tabBarController.hidesBottomBarWhenPushed = YES;
+}
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.tabBarController.hidesBottomBarWhenPushed = NO;
+}
 // 生成二维码
 - (void)setupGenerateQRCode {
     

@@ -71,9 +71,8 @@ class PersonalViewController: MainViewController{
      
         if userInfo.isLogin != true{
             let login = YDQLoginRegisterViewController()
-            let nav = CustomNavigationBar(rootViewController: login)
-            login.modalPresentationStyle = .PageSheet
-            self.presentViewController(nav, animated: true, completion: nil)
+            let nv = CustomNavigationBar(rootViewController: login)
+            self.navigationController?.presentViewController(nv, animated: true, completion: nil)
         }else{
            downloadData()
 //            if self.myfoundmodel != nil {

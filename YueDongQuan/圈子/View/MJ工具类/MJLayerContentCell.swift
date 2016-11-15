@@ -49,16 +49,26 @@ class MJLayerContentCell: UITableViewCell {
             layerShadow.borderColor = UIColor.whiteColor().CGColor
             layerShadow.borderWidth = 2
             self.contentView.layer .addSublayer(layerShadow)
-            
-            
+
             image.sd_setImageWithURL(NSURL(string:("http://4493bz.1985t.com/uploads/allimg/150127/4-15012G52133.jpg")))
             circleLayer.contents = image.image?.CGImage
-            
+            addTransfromAnimate(circleLayer)
+            addTransfromAnimate(layerShadow)
         }
         
   
     }
-    
+    func addTransfromAnimate(layer:CALayer)  {
+        let animation = CAKeyframeAnimation(keyPath: "transform");
+        animation.duration = 0.3;
+        let values = NSMutableArray();
+        values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(0.8, 0.8, 1.0)))
+        values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(1.2, 1.2, 1.0)))
+        values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(0.9, 0.9, 1.0)))
+        values.addObject(NSValue(CATransform3D: CATransform3DMakeScale(1.0, 1.0, 1.0)))
+        animation.values = values as [AnyObject];
+        layer.addAnimation(animation, forKey: nil)
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

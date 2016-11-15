@@ -26,7 +26,7 @@ class MainViewController: UIViewController {
         self.edgesForExtendedLayout = .None
         self.view.backgroundColor = UIColor.whiteColor()
         
-        
+
     }
  
     //MARK:  导航栏视图
