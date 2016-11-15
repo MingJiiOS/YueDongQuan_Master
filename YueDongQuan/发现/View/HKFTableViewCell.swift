@@ -356,7 +356,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
         self.descLabel?.attributedText = html
         self.locationLabel.text = subModel.address
-        self.headImageView?.sd_setImageWithURL(NSURL(string: subModel.thumbnailSrc))
+//        self.headImageView?.sd_setImageWithURL(NSURL(string: subModel.thumbnailSrc))
         self.testModel = subModel
         
         self.timeStatus?.text = getTimeString(subModel.time)
