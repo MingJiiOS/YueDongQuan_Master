@@ -8,9 +8,11 @@
 
 import UIKit
 
-class RegistVC: UIViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegate{
+class RegistVC: MainViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegate{
     
     var registModel : RegistModel!
+    var sendphoneModel : SendPhoneModel?
+    var maskCodeString : String?
     
     //点击登录和注册时使用闭包传参数值
     typealias LoginOrRigsterClosure = (pramiters:NSDictionary, type:NSInteger) -> Void //声明闭包，点击按钮传值
@@ -95,9 +97,9 @@ class RegistVC: UIViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegat
                     self.registModel = model
                     if self.registModel.isRegistSuccess != true{
                         
-//                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
+                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
                     }else{
-//                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
+                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
                         
                     }
                     }, fail: { (error) in
@@ -201,7 +203,7 @@ class RegistVC: UIViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegat
                 maskCode.leftViewMode = .Always
                 maskCode.leftView = leftV4
                 maskCode.tag = 40
-        
+                
                 maskCode.attributedPlaceholder = NSAttributedString(string: "手机验证码", attributes: [NSForegroundColorAttributeName:color])
 //                maskCode.addTarget(self, action: #selector(textFieldDidChange), forControlEvents: .EditingChanged)
         
@@ -217,6 +219,7 @@ class RegistVC: UIViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegat
                     make.top.equalTo(phoneNumber.snp_bottom).offset(margin)
                     make.height.equalTo(40)
                 }
+                sendMaskCode.enabled = false
                 sendMaskCode.setTitle("发送验证码", forState: UIControlState.Normal)
                 sendMaskCode.layer.cornerRadius = 5
                 sendMaskCode.layer.masksToBounds = true
@@ -299,12 +302,14 @@ class RegistVC: UIViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegat
         switch textfield.tag {
             case 30:
             if NSString(string: textfield.text!).length != 11 {
+                self.sendMaskCode.enabled = false
                 return
             }else if NSString(string: textfield.text!).length == 11{
                 //判断电话是否存在
                 if validateUtils.validatePhoneNumber(textfield.text) != true {
                     print("电话号码错误")
                 }else{
+                    
                     //MARK:注册时判断电话是否已经注册
                     let phoneModel = MJRequestModel()
                     
@@ -316,16 +321,19 @@ class RegistVC: UIViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegat
                         print("返回结果",responseDic)
                         let model = updateNameModel(fromDictionary: responseDic)
                         if model.code == "201"{
-//                            self.showMJProgressHUD("此号码已经注册,请检查", isAnimate: false,startY: ScreenHeight-40-45)
+                            self.showMJProgressHUD("此号码已经注册,请检查", isAnimate: false,startY: ScreenHeight-40-45)
+                        }else{
+                         self.sendMaskCode.enabled = true
                         }
                         }, fail: { (error) in
-//                           self.showMJProgressHUD(error.description, isAnimate: false,startY: ScreenHeight-40-45)
+                           self.showMJProgressHUD(error.description, isAnimate: false,startY: ScreenHeight-40-45)
                     })
                 }
                 
             }
             break
         case 40:
+            self.maskCodeString = textfield.text
             break
             
         case 50:
@@ -338,16 +346,28 @@ class RegistVC: UIViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegat
 
     //MARK:用户注册操作
     func registerAction()  {
-        let vCode = NSObject.getEncodeString("20160901")
-        let dic = ["v":vCode,
-                   "phone":registerModel.phone,
-                   "pw":registerModel.pw,
-                   "headId":"1"]
-        if loginOrrigsterClosure != nil {
-            loginOrrigsterClosure!(pramiters:dic,type:2)
-            self.loginOrRigsterAction()
+        
+        if self.sendphoneModel != nil {
+            if self.maskCodeString != self.sendphoneModel?.data.code{
+                self.showMJProgressHUD("验证码不正确", isAnimate: false, startY: ScreenHeight-40-40-40)
+            }else{
+                let vCode = NSObject.getEncodeString("20160901")
+                
+                let dic = ["v":vCode,
+                           "phone":registerModel.phone,
+                           "pw":registerModel.pw,
+                           "headId":"1"]
+                if loginOrrigsterClosure != nil {
+                    loginOrrigsterClosure!(pramiters:dic,type:2)
+                    self.loginOrRigsterAction()
+                }
+            }
+            
+        }else{
+            self.showMJProgressHUD("需要验证码", isAnimate: false, startY: ScreenHeight-40-40-40)
         }
-    }
+}
+        
     
     
     
@@ -371,6 +391,15 @@ extension RegistVC {
         sendMaskCode.hidden = true
         countDownLabel.hidden = false
         CountDown(60)
+        let dict = ["v":v,
+                    "phone":registerModel.phone]
+        MJNetWorkHelper().sendphone("sendphone", sendphoneModel: dict, success: { (responseDic, success) in
+            self.sendphoneModel = DataSource().getSendPhoneData(responseDic)
+            
+            }) { (error) in
+            self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40)
+        }
+        
     }
     func CountDown(seconds:Int)  {
         _Seconds = seconds

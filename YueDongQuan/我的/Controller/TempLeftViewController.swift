@@ -45,7 +45,9 @@ class TempLeftViewController: MainViewController {
     }
   
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.showMJProgressHUD("跳出来的动画", isAnimate: true,startY: ScreenHeight-40-45)
+        let nn = VerionUpdateView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-60))
+        nn.show()
+        self.view .addSubview(nn)
     }
     /*
     // MARK: - Navigation

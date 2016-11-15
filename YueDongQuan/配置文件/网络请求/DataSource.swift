@@ -443,5 +443,10 @@ class DataSource: NSObject {
         }
         return model!
     }
+    func getSendPhoneData(datasource:NSDictionary) -> SendPhoneModel {
+        let model = SendPhoneModel(fromDictionary: datasource)
+        return model
+        
+    }
     
 }

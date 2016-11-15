@@ -298,14 +298,19 @@
 		BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC441DB22E15008A5C51 /* myCircleData.swift */; };
 		BF3CAC481DB22E15008A5C51 /* myCircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */; };
 		BF44EA431DC319E600AD7B3D /* RegistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF44EA421DC319E600AD7B3D /* RegistVC.swift */; };
-		BF49F55C1DDAD7390064FC6C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55A1DDAD7390064FC6C /* Realm.framework */; };
-		BF49F55D1DDAD7390064FC6C /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55A1DDAD7390064FC6C /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BF49F55E1DDAD7390064FC6C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55B1DDAD7390064FC6C /* RealmSwift.framework */; };
-		BF49F55F1DDAD7390064FC6C /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF49F55B1DDAD7390064FC6C /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BF5738831DBB10690023B7DE /* myInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738811DBB10690023B7DE /* myInfoData.swift */; };
 		BF5738841DBB10690023B7DE /* myInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738821DBB10690023B7DE /* myInfoModel.swift */; };
 		BF5738861DBB74930023B7DE /* CircleHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738851DBB74930023B7DE /* CircleHeadView.swift */; };
+		BF5B75481DDB0B9D0035FF17 /* RLUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5B75471DDB0B9D0035FF17 /* RLUserInfo.swift */; };
+		BF5B754B1DDB0BC20035FF17 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF5B75491DDB0BC20035FF17 /* Realm.framework */; };
+		BF5B754C1DDB0BC20035FF17 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF5B75491DDB0BC20035FF17 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BF5B754D1DDB0BC20035FF17 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF5B754A1DDB0BC20035FF17 /* RealmSwift.framework */; };
+		BF5B754E1DDB0BC20035FF17 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF5B754A1DDB0BC20035FF17 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BF5B75501DDB0D7C0035FF17 /* TempDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5B754F1DDB0D7C0035FF17 /* TempDataBase.swift */; };
+		BF5B75521DDB12DD0035FF17 /* VerionUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5B75511DDB12DD0035FF17 /* VerionUpdateView.swift */; };
 		BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */; };
+		BF5E56231DDB2EBD00FC4312 /* SendPhoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E56211DDB2EBD00FC4312 /* SendPhoneData.swift */; };
+		BF5E56241DDB2EBD00FC4312 /* SendPhoneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E56221DDB2EBD00FC4312 /* SendPhoneModel.swift */; };
 		BF6631181DD1BF5500263F67 /* HeInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6631171DD1BF5500263F67 /* HeInfoVC.swift */; };
 		BF66311B1DD1C42E00263F67 /* HeInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6631191DD1C42E00263F67 /* HeInfoData.swift */; };
 		BF66311C1DD1C42E00263F67 /* HeInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66311A1DD1C42E00263F67 /* HeInfoModel.swift */; };
@@ -363,7 +368,6 @@
 		BFAF23CC1DB8A9D700294988 /* MJLayerContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */; };
 		BFB01E921DD9C3A400DA2D1A /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E911DD9C3A400DA2D1A /* Realm.framework */; };
 		BFB01E941DD9C3B200DA2D1A /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB01E931DD9C3B200DA2D1A /* RealmSwift.framework */; };
-		BFB01EA31DDA9E0B00DA2D1A /* RLUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB01EA21DDA9E0B00DA2D1A /* RLUserInfo.swift */; };
 		BFB44E581DC9731A0066D49F /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB44CC21DC9731A0066D49F /* NSString+Emoji.m */; };
 		BFB44E591DC9731A0066D49F /* ChatKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB44CC41DC9731A0066D49F /* ChatKeyBoard.m */; };
 		BFB44E5A1DC9731A0066D49F /* Delete_ios7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB44CC81DC9731A0066D49F /* Delete_ios7@2x.png */; };
@@ -714,8 +718,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BF49F55F1DDAD7390064FC6C /* RealmSwift.framework in Embed Frameworks */,
-				BF49F55D1DDAD7390064FC6C /* Realm.framework in Embed Frameworks */,
+				BF5B754E1DDB0BC20035FF17 /* RealmSwift.framework in Embed Frameworks */,
+				BF5B754C1DDB0BC20035FF17 /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1065,12 +1069,17 @@
 		BF3CAC441DB22E15008A5C51 /* myCircleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleData.swift; sourceTree = "<group>"; };
 		BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleModel.swift; sourceTree = "<group>"; };
 		BF44EA421DC319E600AD7B3D /* RegistVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistVC.swift; sourceTree = "<group>"; };
-		BF49F55A1DDAD7390064FC6C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		BF49F55B1DDAD7390064FC6C /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		BF5738811DBB10690023B7DE /* myInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoData.swift; sourceTree = "<group>"; };
 		BF5738821DBB10690023B7DE /* myInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoModel.swift; sourceTree = "<group>"; };
 		BF5738851DBB74930023B7DE /* CircleHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHeadView.swift; sourceTree = "<group>"; };
+		BF5B75471DDB0B9D0035FF17 /* RLUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLUserInfo.swift; sourceTree = "<group>"; };
+		BF5B75491DDB0BC20035FF17 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		BF5B754A1DDB0BC20035FF17 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		BF5B754F1DDB0D7C0035FF17 /* TempDataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempDataBase.swift; sourceTree = "<group>"; };
+		BF5B75511DDB12DD0035FF17 /* VerionUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerionUpdateView.swift; sourceTree = "<group>"; };
 		BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesTableViewCell.swift; sourceTree = "<group>"; };
+		BF5E56211DDB2EBD00FC4312 /* SendPhoneData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPhoneData.swift; sourceTree = "<group>"; };
+		BF5E56221DDB2EBD00FC4312 /* SendPhoneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPhoneModel.swift; sourceTree = "<group>"; };
 		BF6631171DD1BF5500263F67 /* HeInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeInfoVC.swift; sourceTree = "<group>"; };
 		BF6631191DD1C42E00263F67 /* HeInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeInfoData.swift; sourceTree = "<group>"; };
 		BF66311A1DD1C42E00263F67 /* HeInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeInfoModel.swift; sourceTree = "<group>"; };
@@ -1130,7 +1139,6 @@
 		BFAF23CB1DB8A9D700294988 /* MJLayerContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJLayerContentCell.swift; sourceTree = "<group>"; };
 		BFB01E911DD9C3A400DA2D1A /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "/Users/HFG/Desktop/realm-swift-2.0.3/ios/swift-2.3/Realm.framework"; sourceTree = "<absolute>"; };
 		BFB01E931DD9C3B200DA2D1A /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "/Users/HFG/Desktop/realm-swift-2.0.3/ios/swift-2.3/RealmSwift.framework"; sourceTree = "<absolute>"; };
-		BFB01EA21DDA9E0B00DA2D1A /* RLUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLUserInfo.swift; sourceTree = "<group>"; };
 		BFB44CC11DC9731A0066D49F /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
 		BFB44CC21DC9731A0066D49F /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		BFB44CC31DC9731A0066D49F /* ChatKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatKeyBoard.h; sourceTree = "<group>"; };
@@ -1527,7 +1535,7 @@
 				BFAD631E1D9E1094006234E1 /* UIKit.framework in Frameworks */,
 				BFAD631A1D9E1082006234E1 /* QuartzCore.framework in Frameworks */,
 				BFAD63181D9E107C006234E1 /* OpenGLES.framework in Frameworks */,
-				BF49F55E1DDAD7390064FC6C /* RealmSwift.framework in Frameworks */,
+				BF5B754D1DDB0BC20035FF17 /* RealmSwift.framework in Frameworks */,
 				5C7D28F31DD2D49C000D26E7 /* MobileCoreServices.framework in Frameworks */,
 				5C7D28F11DD2D491000D26E7 /* MediaPlayer.framework in Frameworks */,
 				5C7D28EF1DD2D474000D26E7 /* libbz2.tbd in Frameworks */,
@@ -1543,7 +1551,7 @@
 				BFAD63161D9E106E006234E1 /* libz.tbd in Frameworks */,
 				BFAD63141D9E1067006234E1 /* libxml2.tbd in Frameworks */,
 				BFAD63121D9E1059006234E1 /* libsqlite3.tbd in Frameworks */,
-				BF49F55C1DDAD7390064FC6C /* Realm.framework in Frameworks */,
+				BF5B754B1DDB0BC20035FF17 /* Realm.framework in Frameworks */,
 				BFAD63131D9E1059006234E1 /* libstdc++.tbd in Frameworks */,
 				5C7D28EB1DD2D423000D26E7 /* IJKMediaFramework.framework in Frameworks */,
 				BFAD630E1D9E103F006234E1 /* libc++.tbd in Frameworks */,
@@ -1579,8 +1587,8 @@
 		3D602F91B05F501B8CB40CE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BF49F55A1DDAD7390064FC6C /* Realm.framework */,
-				BF49F55B1DDAD7390064FC6C /* RealmSwift.framework */,
+				BF5B75491DDB0BC20035FF17 /* Realm.framework */,
+				BF5B754A1DDB0BC20035FF17 /* RealmSwift.framework */,
 				5C7D28F41DD2D4D0000D26E7 /* VideoToolbox.framework */,
 				5C7D28F21DD2D49C000D26E7 /* MobileCoreServices.framework */,
 				5C7D28F01DD2D491000D26E7 /* MediaPlayer.framework */,
@@ -1959,6 +1967,7 @@
 				BFDBE2B71DD2AEBA0035B621 /* FollowVC.swift */,
 				BFDBE2B91DD2AED60035B621 /* FansVC.swift */,
 				BFDBE2C31DD2C0480035B621 /* DetailsVC.swift */,
+				BF5B75511DDB12DD0035FF17 /* VerionUpdateView.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1966,6 +1975,8 @@
 		BF071F151D9A0D68000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BF5E56211DDB2EBD00FC4312 /* SendPhoneData.swift */,
+				BF5E56221DDB2EBD00FC4312 /* SendPhoneModel.swift */,
 				BFA6D1061DD56B1D008819BC /* TotalRankArray.swift */,
 				BFA6D1071DD56B1D008819BC /* TotalRankData.swift */,
 				BFA6D1081DD56B1D008819BC /* TotalRankModel.swift */,
@@ -2172,7 +2183,8 @@
 		BFA6D1481DD600AC008819BC /* Realm数据库 */ = {
 			isa = PBXGroup;
 			children = (
-				BFB01EA21DDA9E0B00DA2D1A /* RLUserInfo.swift */,
+				BF5B75471DDB0B9D0035FF17 /* RLUserInfo.swift */,
+				BF5B754F1DDB0D7C0035FF17 /* TempDataBase.swift */,
 			);
 			path = "Realm数据库";
 			sourceTree = "<group>";
@@ -4424,6 +4436,7 @@
 				BF071F341D9A0D68000551F7 /* ConfirmOldPw.swift in Sources */,
 				5C7C3A151DB6069800EA598B /* FieldImageModel.swift in Sources */,
 				5C9EBB7C1DD6F2B9005BCEAD /* SearchController.swift in Sources */,
+				BF5E56231DDB2EBD00FC4312 /* SendPhoneData.swift in Sources */,
 				5C913F941DBDEB0E00E567FB /* WeatherInfo.swift in Sources */,
 				BF3CAC461DB22E15008A5C51 /* myCircleArray.swift in Sources */,
 				BFAF23C61DB85F6800294988 /* MJAmapHelper.swift in Sources */,
@@ -4468,6 +4481,7 @@
 				BFB44E581DC9731A0066D49F /* NSString+Emoji.m in Sources */,
 				BFAF23CA1DB8600800294988 /* uploadImageModel.swift in Sources */,
 				BFFCE0281DBEF0820045087A /* TotalRankVC.swift in Sources */,
+				BF5B75481DDB0B9D0035FF17 /* RLUserInfo.swift in Sources */,
 				BF071F411D9A0D68000551F7 /* TotalDongdouCell.swift in Sources */,
 				BF071F0C1D9A0D5F000551F7 /* MJParterDataView.swift in Sources */,
 				BFFCE0521DBF28840045087A /* TotalRankHeadCell.swift in Sources */,
@@ -4502,6 +4516,7 @@
 				BF071F3A1D9A0D68000551F7 /* MJDatePikerView.swift in Sources */,
 				BF9739D31D9F89CF00E1B3EB /* InterfaceFile.swift in Sources */,
 				BFD41FC71DC05061005A22E6 /* CustomTable.swift in Sources */,
+				BF5B75501DDB0D7C0035FF17 /* TempDataBase.swift in Sources */,
 				5C24BB6B1D9A48A200A6D25F /* HKFPostImageVC.m in Sources */,
 				BFD41FB91DC03D9F005A22E6 /* TodayDongdouArray.swift in Sources */,
 				BF071F051D9A0D5F000551F7 /* MHRadioButton.m in Sources */,
@@ -4529,6 +4544,7 @@
 				5C4A59F81DCC3EB000A8AD9E /* MySignModel.swift in Sources */,
 				BFC1269D1DB4792F00E11088 /* CirclesData.swift in Sources */,
 				5C8886B91DC7512C001BC7A8 /* DiscoveryManager.swift in Sources */,
+				BF5E56241DDB2EBD00FC4312 /* SendPhoneModel.swift in Sources */,
 				BF071F0A1D9A0D5F000551F7 /* MJNoticeCell.swift in Sources */,
 				BF071F391D9A0D68000551F7 /* MJContextRef.swift in Sources */,
 				5C7C3A0A1DB5CECC00EA598B /* UIView+LQXkeyboard.m in Sources */,
@@ -4571,7 +4587,6 @@
 				BF9CA16F1DC86FAA0043F535 /* MJMessageCell.swift in Sources */,
 				BF071F0E1D9A0D5F000551F7 /* QRCodeView.swift in Sources */,
 				BF071F041D9A0D5F000551F7 /* CircleDataView.swift in Sources */,
-				BFB01EA31DDA9E0B00DA2D1A /* RLUserInfo.swift in Sources */,
 				5C24BB6F1D9A4BEB00A6D25F /* CustomTextField.m in Sources */,
 				5C26FBB11DD451B7005A6ABD /* CheckData.swift in Sources */,
 				BF9CA17E1DC87D000043F535 /* MJCommentCell.swift in Sources */,
@@ -4581,6 +4596,7 @@
 				BFC65D1D1D869FD1004E7E99 /* AppDelegate.swift in Sources */,
 				BFD36CC41DB9BB0C005005A3 /* circleMemberData.swift in Sources */,
 				BFDBE2C21DD2B9900035B621 /* DetailsCommentCell.swift in Sources */,
+				BF5B75521DDB12DD0035FF17 /* VerionUpdateView.swift in Sources */,
 				BF6631181DD1BF5500263F67 /* HeInfoVC.swift in Sources */,
 				BFD36CD01DBA1922005005A3 /* AllNoticeData.swift in Sources */,
 				5CA874FF1DD9C8A8009A57DE /* SearchFieldData.swift in Sources */,
