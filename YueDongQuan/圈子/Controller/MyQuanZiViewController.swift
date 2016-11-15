@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 typealias GetMyCicleIDAndCicleNameClosure = (cicleID:String,cicleName:String) -> Void
 
 class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableViewDataSource {
@@ -28,6 +30,12 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     var joinNameAry = NSMutableArray()
     var joinClrcleIDAry = NSMutableArray()
     var jointhumbnailSrcAry = NSMutableArray()
+    
+    //数据库资料
+    
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,7 +133,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                     make.width.equalTo(50)
                  })
                  cell.imageView?.sd_setImageWithURL(NSURL(string: thumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: ""))
-                print(ownClrcleIDAry)
+            
                 
                 
                 
@@ -209,7 +217,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
         if section == 0 {
             let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
             headLabel.text = "我管理的圈子"
-            headLabel.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
+            headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
             headLabel.textAlignment = .Center
             headLabel.textColor = UIColor.grayColor()
             return headLabel
@@ -217,7 +225,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
         else{
             let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
             headLabel.text = "我加入的圈子"
-            headLabel.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
+            headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
             headLabel.textAlignment = .Center
             headLabel.textColor = UIColor.grayColor()
             return headLabel
@@ -249,7 +257,11 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                 chatVC.conversationType = .ConversationType_GROUP
                 chatVC.circleid = ownClrcleIDAry[indexPath.row] as? String
                 chatVC.thumbnailSrc = thumbnailSrcAry[indexPath.row] as? String
+//                self.loadCircleMemberInfoWithCircleId((ownClrcleIDAry[indexPath.row] as? String)!)
                 self.push(chatVC)
+              
+                
+               
             }
             
             
@@ -266,7 +278,14 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                 chatVC.conversationType = .ConversationType_GROUP
                 chatVC.circleid = joinClrcleIDAry[indexPath.row] as? String
                 chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
-                self.push(chatVC)
+                
+//                self.loadCircleMemberInfoWithCircleId((joinClrcleIDAry[indexPath.row] as? String)!)
+                
+                  self.push(chatVC)
+              
+              
+
+                
             }
 
         }
@@ -275,6 +294,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     
 }
 extension MyQuanZiViewController {
+    
     func loadData()  {
         let myCircleModel = CircleModel()
         myCircleModel.uid = userInfo.uid
@@ -300,4 +320,16 @@ extension MyQuanZiViewController {
         }) { (error) in
         }
     }
+}
+extension MyQuanZiViewController {
+    //MARK:数据库写入操作
+//    private func populateDefaultDataWithDataSource(source:[circleMemberData]) {
+//        let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+//        
+//        let documentPath = path.first
+//        let Archiverpath = documentPath?.stringByAppendingString("memberList.archiver")
+//        
+//        NSKeyedArchiver.archiveRootObject(source, toFile: Archiverpath!)      
+//    }
+
 }

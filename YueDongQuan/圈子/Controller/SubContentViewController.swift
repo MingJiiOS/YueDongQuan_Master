@@ -76,6 +76,7 @@ print(indexSection,indexRow)
             }
             tableView.delegate = self
             tableView.dataSource = self
+            tableView.separatorStyle = .None
             //点击cell行数 跳转查看成员资料
             self.clickRowClourse = {(index) in
                 let parter = ParterDataViewController()

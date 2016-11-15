@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MJLoginOpreationHelper: NSObject,RCIMUserInfoDataSource,RCIMConnectionStatusDelegate{
+class MJLoginOpreationHelper: NSObject,RCIMConnectionStatusDelegate{
     //融云登录的token
     
     typealias   loginClourse = (isLogin:Bool,userId:NSString) -> Void
@@ -23,7 +23,7 @@ class MJLoginOpreationHelper: NSObject,RCIMUserInfoDataSource,RCIMConnectionStat
         IM.connectWithToken(userInfo.token,
                                            success: { (userId) -> Void in
                                             
-                                            RCIM.sharedRCIM().userInfoDataSource = self
+                                            
                                           
                                                 loginBlock(isLogin: true,userId: userId)
                                             
@@ -42,10 +42,7 @@ class MJLoginOpreationHelper: NSObject,RCIMUserInfoDataSource,RCIMConnectionStat
          IM.connectionStatusDelegate = self
     }
     
-    func getUserInfoWithUserId(userId: String!, completion: ((RCUserInfo!) -> Void)!) {
-        let userinfo = RCUserInfo()
-        return completion(userinfo)
-    }
+    
     
     func onRCIMConnectionStatusChanged(status: RCConnectionStatus) {
         IMConnectStatus = status

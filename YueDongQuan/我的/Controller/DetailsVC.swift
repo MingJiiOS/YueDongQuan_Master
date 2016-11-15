@@ -24,7 +24,7 @@ class DetailsVC: MainViewController {
         table = UITableView(frame: CGRectZero, style: UITableViewStyle.Grouped)
         self.view .addSubview(table!)
         
-        table?.frame = self.view.frame
+        table?.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-44-20)
         table?.delegate = self
         table?.dataSource = self
         table?.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
@@ -53,6 +53,14 @@ class DetailsVC: MainViewController {
         super.didReceiveMemoryWarning()
         
     }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
+    }
 }
 extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -69,22 +77,25 @@ extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
             var detailscommentCell = tableView.dequeueReusableCellWithIdentifier("cell") as? DetailsSayCell
              detailscommentCell = DetailsSayCell(style: .Default,
                                                  reuseIdentifier: "cell")
-             detailscommentCell!.getAllCommentData(self.detailCommentArray)
+             detailscommentCell!.getAllCommentData(self.ZeroCommentAry)
              detailscommentCell!.getCommentModel(self.NoZeroCommentAry)
-             detailscommentCell?.configPingLunCell(self.ZeroCommentAry,
-                                                   indexpath: indexPath)
+            
+            
+            
+            detailscommentCell?.configPingLunCell(self.ZeroCommentAry[indexPath.section - 1],subModel:self.NoZeroCommentAry,
+                                                      indexpath: 0)
+            
+            
             return detailscommentCell!
         }
         
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        }
-            return self.ZeroCommentAry.count
+        return 1
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-            return 2
+        //为什么要 +1 因为 第一组是显示说说内容详情的 ZeroCommentAry是表示回复者对象是说说发起者
+            return self.ZeroCommentAry.count + 1
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
@@ -102,11 +113,12 @@ extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
         }
         else
         {
+            
                 let h = DetailsSayCell.hyb_heightForTableView(tableView,
                                                               config: { (sourceCell:UITableViewCell!) in
                 let cell = sourceCell as! DetailsSayCell
-                cell.configPingLunCell(self.ZeroCommentAry,
-                                    indexpath: indexPath)
+                cell.configPingLunCell(self.ZeroCommentAry[indexPath.section - 1],subModel:self.NoZeroCommentAry,
+                                    indexpath: indexPath.row)
                 }, cache: { () -> [NSObject : AnyObject]! in
                 
                 return [kHYBCacheUniqueKey : (self.sayArray?.id.description)!,

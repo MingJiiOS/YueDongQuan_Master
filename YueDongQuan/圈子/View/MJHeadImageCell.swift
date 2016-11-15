@@ -33,6 +33,14 @@ class MJHeadImageCell: UITableViewCell {
             
         }
         
+        let line = UIView()
+        self.contentView .addSubview(line)
+        line.snp_makeConstraints { (make) in
+            make.left.right.equalTo(0)
+            make.bottom.equalTo(0)
+            make.height.equalTo(1)
+        }
+        line.backgroundColor = UIColor.groupTableViewBackgroundColor()
     }
     
     required init?(coder aDecoder: NSCoder) {

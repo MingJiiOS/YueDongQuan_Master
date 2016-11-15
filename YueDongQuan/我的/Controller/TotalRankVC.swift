@@ -24,8 +24,12 @@ class TotalRankVC: MainViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loadTotalRankData()
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
-    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
+    }
     func createView()  {
         
         self.navigationController?.navigationBar.hidden = true

@@ -51,20 +51,20 @@
 // 添加Label，加载扫描过来的内容
 - (void)setupLabel {
     // 提示文字
-    UILabel *prompt_message = [[UILabel alloc] init];
-    prompt_message.frame = CGRectMake(0, 200, self.view.frame.size.width, 30);
-    prompt_message.text = @"您扫描的条形码结果如下： ";
-    prompt_message.textColor = [UIColor redColor];
-    prompt_message.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:prompt_message];
+//    UILabel *prompt_message = [[UILabel alloc] init];
+//    prompt_message.frame = CGRectMake(0, 200, self.view.frame.size.width, 30);
+//    prompt_message.text = @"您扫描的条形码结果如下： ";
+//    prompt_message.textColor = [UIColor redColor];
+//    prompt_message.textAlignment = NSTextAlignmentCenter;
+//    [self.view addSubview:prompt_message];
     
     // 扫描结果
-    CGFloat label_Y = CGRectGetMaxY(prompt_message.frame);
-    UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(0, label_Y, self.view.frame.size.width, 30);
-    label.text = self.jump_bar_code;
-    label.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:label];
+//    CGFloat label_Y = CGRectGetMaxY(prompt_message.frame);
+//    UILabel *label = [[UILabel alloc] init];
+//    label.frame = CGRectMake(0, label_Y, self.view.frame.size.width, 30);
+//    label.text = self.jump_bar_code;
+//    label.textAlignment = NSTextAlignmentCenter;
+//    [self.view addSubview:label];
 }
 
 // 添加webView，加载扫描过来的内容
@@ -86,7 +86,15 @@
     
     [self.view addSubview:webView];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.tabBarController.hidesBottomBarWhenPushed = YES;
+}
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.tabBarController.hidesBottomBarWhenPushed = NO;
+}
 
 @end
 

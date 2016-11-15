@@ -16,13 +16,14 @@ class DetailsSayCell: UITableViewCell {
     private var replyBtn : UIButton?
     private var contentlabel : UILabel?
     private var tableView : UITableView?
-    var commentModel = [myFoundCommentComment]()
+    var commentModel = myFoundCommentComment()
     //子评论数组
     private var subCommentAry = [myFoundCommentComment]()
-    
+    //子评论行数
+    private var subCommentCount = 0
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -88,8 +89,6 @@ class DetailsSayCell: UITableViewCell {
         // MARK:分钟数
         self.timeAgo = UILabel()
         self.timeAgo?.font = UIFont(name: "Arial", size: kSmallScaleOfFont)
-        
-        
         self.contentView .addSubview(self.timeAgo!)
         self.timeAgo!.preferredMaxLayoutWidth = ScreenWidth-20 ;
         self.timeAgo!.numberOfLines = 0;
@@ -116,112 +115,134 @@ class DetailsSayCell: UITableViewCell {
         self.contentView .addSubview(self.tableView!)
         self.tableView?.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(self.userName!)
-            make.top.equalTo((self.contentlabel?.snp_bottom)!).offset(10)
+            make.top.equalTo((self.contentlabel?.snp_bottom)!).offset(5)
             make.trailing.equalTo(-10)
         })
         self.tableView?.separatorStyle = .None
         self.hyb_lastViewInCell = self.tableView
         self.hyb_bottomOffsetToCell = 0
-        
-        
+                
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func getCommentModel(model:[myFoundCommentComment])  {
-        self.subCommentAry = model
+    func getAllCommentData(model:[myFoundCommentComment]){
+//    self.commentModel = model
     }
-    func getAllCommentData(model:[myFoundCommentComment])  {
-        self.commentModel = model
+    func getCommentModel(model:[myFoundCommentComment]){
+        
+        
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("subModel", object: model, userInfo: nil)
     }
-    func configPingLunCell(model:[myFoundCommentComment],indexpath:NSIndexPath)  {
-
+   
+    func configPingLunCell(model:myFoundCommentComment,subModel:[myFoundCommentComment],indexpath:Int)  {
         
-        
-
-        
-        self.userName?.text = model[indexpath.row].netName
-        let time = TimeStampToDate().getTimeString(model[indexpath.row].time)
+        self.userName?.text = model.netName
+        let time = TimeStampToDate().getTimeString(model.time)
         self.timeAgo?.text = time
         self.replyBtn?.setTitle("回复", forState: UIControlState.Normal)
         self.replyBtn?.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        self.contentlabel?.text = model[indexpath.row].content
-        
-       
+        self.contentlabel?.text = model.content
         //孙子级评论
-        
-          
-        
-        
-        
         var tableViewHeight = CGFloat()
-        
-        for _ in self.subCommentAry {
-            let cellheight = DetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
-                
+        if subModel.count != 0 {
+            if subModel.count == 1 {
+                let cellheight = DetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
+                    
                     let cell = sourceCell as! DetailsCommentCell
-                    cell.configSubCommentCellWithModel(self.subCommentAry, index: indexpath)
-                }, cache: { () -> [NSObject : AnyObject]! in
-                    return [kHYBCacheUniqueKey : "",
-                        kHYBCacheStateKey :"",
-                        kHYBRecalculateForStateKey:1]
-            })
-            tableViewHeight += cellheight;
+                    cell.configSubCommentCellWithModel(subModel[0])
+                    }, cache: { () -> [NSObject : AnyObject]! in
+                        return [kHYBCacheUniqueKey : "",
+                            kHYBCacheStateKey :"",
+                            kHYBRecalculateForStateKey:1]
+                })
+                tableViewHeight += cellheight;
+                self.tableView?.snp_updateConstraints(closure: { (make) in
+                    make.height.equalTo(tableViewHeight)
+                })
+                self.tableView?.delegate = self
+                self.tableView?.dataSource = self
+                self.tableView?.reloadData()
+                self.tableView?.registerClass(DetailsCommentCell.self,
+                                              forCellReuseIdentifier: "identtifier")
+            }else{
+                for id in 0...subModel.count {
+                    let cellheight = DetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
+                        
+                        let cell = sourceCell as! DetailsCommentCell
+                        cell.configSubCommentCellWithModel(subModel[id - 1])
+                        }, cache: { () -> [NSObject : AnyObject]! in
+                            return [kHYBCacheUniqueKey : "",
+                                kHYBCacheStateKey :"",
+                                kHYBRecalculateForStateKey:1]
+                    })
+                    tableViewHeight += cellheight;
+                }
+                self.tableView?.snp_updateConstraints(closure: { (make) in
+                    make.height.equalTo(tableViewHeight)
+                })
+                self.tableView?.delegate = self
+                self.tableView?.dataSource = self
+                self.tableView?.reloadData()
+                self.tableView?.registerClass(DetailsCommentCell.self,
+                                              forCellReuseIdentifier: "identtifier")
+            }
+            
         }
+      
         
         
         
-        self.tableView?.snp_updateConstraints(closure: { (make) in
-            make.height.equalTo(tableViewHeight)
-        })
-        self.tableView?.delegate = self
-        self.tableView?.dataSource = self
-        self.tableView?.reloadData()
-        self.tableView?.registerClass(DetailsCommentCell.self, forCellReuseIdentifier: "identtifier")
+        
         
     }
 }
 extension DetailsSayCell : UITableViewDelegate,UITableViewDataSource{
-    
+    //数据源
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell = tableView.dequeueReusableCellWithIdentifier("identtifier") as! DetailsCommentCell
         cell = DetailsCommentCell(style: .Default, reuseIdentifier: "identtifier")
-        cell.getAllCommentData(self.commentModel)
-//        cell.allCommentAry = self.commentModel
-        cell.configSubCommentCellWithModel(self.subCommentAry, index: indexPath)
-  
-        return cell
+        if self.subCommentAry.count != 0 {
+            if self.subCommentAry[indexPath.row].commentId == self.commentModel.uid {
+                self.subCommentCount += 1
+                cell.configSubCommentCellWithModel(self.subCommentAry[indexPath.row])
+            }
+        }
+       return cell
     }
+    //确定行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
-        return self.subCommentAry.count
-        
+        return self.subCommentCount
     }
+    //计算高度
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
-                let cell_height = DetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
-                    
-                        let cell = cell as! DetailsCommentCell
-                        cell.configSubCommentCellWithModel(self.subCommentAry, index: indexPath)
-                }) { () -> [NSObject : AnyObject]! in
-                    let cache = [kHYBCacheUniqueKey:userInfo.uid,
-                                 kHYBCacheStateKey:"",
-                                 kHYBRecalculateForStateKey:0]
-                    return cache as [NSObject : AnyObject]
-                }
-                return cell_height    
+        
+        if self.subCommentCount != 0 {
+            let cell_height = DetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
+                let cell = cell as! DetailsCommentCell
+                cell.configSubCommentCellWithModel(self.subCommentAry[indexPath.row])
+            }) { () -> [NSObject : AnyObject]! in
+                let cache = [kHYBCacheUniqueKey:userInfo.uid,
+                             kHYBCacheStateKey:"",
+                             kHYBRecalculateForStateKey:0]
+                return cache as [NSObject : AnyObject]
+            }
+            return cell_height
+        }else{
+            return 0
+        }
+    
+    }
+    //取消选中样式
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath,
+                                         animated: true)
     }
 
 }
-
-
-
-
-
-
-
 //MARK:头部显示说说详情内容
 class DetailsHeaderCell: UITableViewCell {
     private var displayView = PYPhotosView()
@@ -234,8 +255,8 @@ class DetailsHeaderCell: UITableViewCell {
     private var commentBtn : UIButton?
     var deleteBtn : UIButton?
     private var contentLabel : UILabel?
-     var indexPath = NSIndexPath()
-  private  var commentModel = [myFoundCommentComment]()
+    private var indexPath = NSIndexPath()
+    private  var commentModel = [myFoundCommentComment]()
 
     typealias CommentBtnClickBlock = (commentBtn:UIButton,indexPath:NSIndexPath)->Void
     var commentBlock : CommentBtnClickBlock?
@@ -462,10 +483,10 @@ extension DetailsHeaderCell {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(myJubao))
         
-        let popView = SimplePopupView(frame: CGRect(x: 30, y: 0, width: 60, height: 30), andDirection: PopViewDirectionButton, andTitles: titleArr, andImages: nil, trianglePecent: 0.5)
+        let popView = SimplePopupView(frame: CGRect(x: 30, y: 0, width: 60, height: 30), andDirection: PopViewDirectionButton, andTitles: titleArr, andImages: nil, trianglePecent: 0.8)
         popView.popTintColor  = UIColor.whiteColor()
         popView.edgeLength = 10
-        popView.popColor = UIColor.blackColor()
+        popView.popColor = UIColor.darkGrayColor()
         popView.addGestureRecognizer(tap)
         self.deleteBtn!.showPopView(popView, atPoint: CGPoint(x: 0.5, y: 0.3))
         popView.show()

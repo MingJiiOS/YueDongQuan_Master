@@ -37,6 +37,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+        loadCircleMemberInfoWithCircleId(self.circleId!)
         loadData()
         print(self.circleId)
     }
@@ -211,15 +212,27 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                 make.bottom.equalTo(0)
                 make.top.equalTo(10)
             }
-            overQuanzi.setTitle("退出圈子", forState: UIControlState.Normal)
+            if self.circleinfoModel != nil{
+                
+                if self.circleinfoModel?.data.permissions != nil {
+                    if self.circleinfoModel?.data.permissions != 2 {
+                        if self.circleinfoModel?.data.permissions == 1{
+                            overQuanzi.setTitle("解散圈子", forState: UIControlState.Normal)
+                        }
+                    }else{
+                        overQuanzi.setTitle("退出圈子", forState: UIControlState.Normal)
+                    }
+                }else{
+                   overQuanzi.setTitle("加入圈子", forState: UIControlState.Normal)
+                }
+    
+            }
             overQuanzi.backgroundColor = UIColor(red: 254/255, green: 21/255, blue: 61/255, alpha: 1)
             overQuanzi.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            overQuanzi .addTarget(self, action: #selector(outCircle), forControlEvents: UIControlEvents.TouchUpInside)
+           
             overQuanzi.layer.cornerRadius = 5
             overQuanzi.layer.masksToBounds = true
             return cell
-        
-           
         default:
             break
         }
@@ -245,7 +258,17 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                 self.push(all)
             }
         }else if indexPath.section == 4{
-            //退出圈子
+            
+            if self.circleinfoModel != nil{
+                if self.circleinfoModel?.data.typeId == 2 {
+                    if self.circleinfoModel?.data.cmNum == 1{
+                        disluCircle()
+                    }
+                }else{
+                    //退出圈子
+                    outCircle()
+                }
+            }
         }else if indexPath.section == 3{
             if indexPath.row == 0 {
                 
@@ -267,20 +290,29 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     //设置cell的显示动画
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell,
                    forRowAtIndexPath indexPath: NSIndexPath){
-        //设置cell的显示动画为3D缩放
-        //xy方向缩放的初始值为0.1
-        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
-        //设置动画时间为0.25秒，xy方向缩放的最终值为1
-        UIView.animateWithDuration(0.25, animations: {
-            cell.layer.transform=CATransform3DMakeScale(1, 1, 1)
-        })
+        
     }
 
 }
 
 extension QuanZiSettingViewController {
     
-        
+    func loadCircleMemberInfoWithCircleId(id:String)  {
+        let dict = ["v":v,"circleId":id]
+        MJNetWorkHelper().circlemember(circlemember,
+                                       circlememberModel: dict,
+                                       success: { (responseDic, success) in
+                                        let model = DataSource().getcirclememberData(responseDic)
+                                        //                                        self.populateDefaultDataWithDataSource(model.data)
+                                        self.memberModel = model
+                                        self.tableView.reloadData()
+                                        
+        }) { (error) in
+            
+        }
+    }
+    
+    //圈子信息
     func loadData()  {
         if self.circleId != nil {
             let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
@@ -288,17 +320,27 @@ extension QuanZiSettingViewController {
                                            "circleId":self.circleId!]
             MJNetWorkHelper().circleinfo(circleinfo, circleinfoModel: dict, success: { (responseDic, success) in
                 let model = DataSource().getcircleinfoData(responseDic)
-                self.circleinfoModel = model
-                self.tableView.reloadData()
+                if model.flag != "0"{
+                     self.circleinfoModel = model
+                    self.tableView.reloadData()
+                }else{
+                    self.showMJProgressHUD("服务器异常",
+                        isAnimate: false,
+                        startY: ScreenHeight-40-40-40)
+                }
+               
+                
                 
             }) { (error) in
-                
+               self.showMJProgressHUD(error.description,
+                                      isAnimate: false,
+                                      startY: ScreenHeight-40-40-40)
             }
         }
         
         
     }
-    //离开圈子
+    //退出圈子
     func outCircle()  {
         let dict = ["v":v,"uid":userInfo.uid.description,"circleId":self.circleId]
         MJNetWorkHelper().kickingcircle(kickingcircle, kickingcircleModel: dict, success: { (responseDic, success) in
@@ -307,6 +349,23 @@ extension QuanZiSettingViewController {
             }
             }) { (error) in
                 
+        }
+    }
+    //解散圈子
+    func disluCircle()  {
+        let dict = ["v":v,
+                    "uid":userInfo.uid.description,
+                    "circleId":self.circleId]
+        MJNetWorkHelper().dissolution(dissolution,
+                                      dissolutionModel: dict,
+                                      success: { (responseDic, success) in
+            self.navigationController?.popViewControllerAnimated(true)
+                                        
+            }) { (error) in
+                
+             self.showMJProgressHUD(error.description,
+                                    isAnimate: false,
+                                    startY: ScreenHeight-40-40-40)
         }
     }
     func getErrorStringWithClearIM(errorCode:Int)->String{

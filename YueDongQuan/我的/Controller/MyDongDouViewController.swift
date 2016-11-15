@@ -61,7 +61,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
             make.height.equalTo(ScreenHeight)
         }
         mainScrollView.contentSize = CGSizeMake(ScreenWidth*2, ScreenHeight-headBgView!.frame.size.height)
-                mainScrollView.backgroundColor = UIColor.brownColor()
+        
         mainScrollView.delegate = self
         
         todayDongdouTableView = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight), style: .Plain)
@@ -71,7 +71,6 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
 //            make.top.equalTo(mainScrollView.snp_top)
 //            make.bottom.equalTo(mainScrollView.snp_bottom)
 //        }
-        todayDongdouTableView.backgroundColor = UIColor.blackColor()
         todayDongdouTableView.tag = 1
         todayDongdouTableView.delegate = self
         todayDongdouTableView.dataSource = self
@@ -92,8 +91,8 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
         histroyDongdouTableView.tag = 2
         histroyDongdouTableView.delegate = self
         histroyDongdouTableView.dataSource = self
-                histroyDongdouTableView.backgroundColor = UIColor.cyanColor()
-//        histroyDongdouTableView.scrollEnabled = false
+        
+
         //点击按钮左右滑动
         headBgView!.clickIndexClosure { (index) in
             if index == 1{
@@ -153,13 +152,10 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
         loadTodayData()
         loadHistroyData()
     self.navigationController?.navigationBar.hidden = true
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
     override func viewWillDisappear(animated: Bool) {
-//        
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(),
-//                                                                    forBarMetrics: .Default)
-//        self.navigationController?.navigationBar.shadowImage = nil
-//    self.navigationController?.navigationBar.hidden = false
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

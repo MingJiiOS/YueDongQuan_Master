@@ -258,8 +258,34 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+        return kAutoStaticCellHeight
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let notice = QuanZiSettingViewController()
+        notice.circleId = String(self.circlesModel.data.array[indexPath.row].id)
+        notice.Circletitle = self.title
+        notice.thumbnailSrc = self.circlesModel.data.array[indexPath.row].thumbnailSrc
+        
+        let v = NSObject.getEncodeString("20160901")
+        let circleid = String(self.circlesModel.data.array[indexPath.row].id)
+        let dict = ["v":v,"circleId":circleid]
+        MJNetWorkHelper().circlemember(circlemember,
+                                       circlememberModel: dict,
+                                       success: { (responseDic, success) in
+                                        let model = DataSource().getcirclememberData(responseDic)
+                                        notice.memberModel = model
+                                        self.push(notice)
+        }) { (error) in
+            
+        }
+    }
+    
+    
+    
     //MARK:自定义大头针
     func mapView(mapView: MAMapView!, viewForAnnotation annotation: MAAnnotation!) -> MAAnnotationView! {
         //绿色的大头针

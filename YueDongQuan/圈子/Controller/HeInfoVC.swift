@@ -14,6 +14,7 @@ class HeInfoVC: MainViewController {
     var userid : String?
     var heinfoModel : HeInfoModel?
     var hefoundModel : HeFoundModel?
+    var focusModel : FocusModel?
     
     var bottomView : UIButton?
     
@@ -42,6 +43,7 @@ class HeInfoVC: MainViewController {
             make.height.equalTo(40)
         })
         bottomView?.backgroundColor = kBlueColor
+        bottomView?.addTarget(self, action: #selector(focusOnHe), forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -153,8 +155,12 @@ extension HeInfoVC {
             if success {
             let model =  DataSource().getheinfoData(responseDic)
                 self.heinfoModel = model
+                if model.flag != "0"{
+                   self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.heinfoModel, waitUntilDone: true)
+                }else{
+                    self.showMJProgressHUD("服务器异常", isAnimate: true, startY: ScreenHeight-40-40-10)
+                }
                 
-                self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.heinfoModel, waitUntilDone: true)
             }
             
             }) { (error) in
@@ -182,6 +188,32 @@ extension HeInfoVC {
         }
         
     }
+    /*
+     v	接口验证参数
+     uid	被关注用户ID
+     operateId	当前系统操作者ID
+    */
+    func focusOnHe(sender:UIButton)  {
+        let dict = ["v":v,
+                    "uid":self.userid,
+                    "operateId":userInfo.uid.description]
+        MJNetWorkHelper().focus(focus,
+                                focusModel: dict,
+                                success: { (responseDic, success) in
+            
+                  self.focusModel = DataSource().getfocusData(responseDic)
+                  self.performSelectorOnMainThread(#selector(self.updateUI),
+                                                  withObject: self.focusModel,
+                                                  waitUntilDone: true)
+            }) { (error) in
+               self.showMJProgressHUD(error.description,
+                                      isAnimate: false,
+                                      startY: ScreenHeight-40-40-10)
+        }
+        
+    }
+    
+    
     
     func updateUI()  {
         self.heInfoTable.reloadData()
@@ -191,6 +223,9 @@ extension HeInfoVC {
             }else{
                 self.bottomView?.setTitle("关注他", forState: UIControlState.Normal)
             }
+        }
+        if self.focusModel != nil{
+            
         }
     }
 }

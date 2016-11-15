@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegistVC: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RCAnimatedImagesViewDelegate{
+class RegistVC: UIViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegate{
     
     var registModel : RegistModel!
     
@@ -95,9 +95,9 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RC
                     self.registModel = model
                     if self.registModel.isRegistSuccess != true{
                         
-                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
+//                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
                     }else{
-                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
+//                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
                         
                     }
                     }, fail: { (error) in
@@ -169,7 +169,7 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RC
         //        //手机号码
         //        // 添加通知
                 let phoneNumber = MJLoginTextField()
-                phoneNumber.borderFillColor = UIColor.whiteColor()
+                phoneNumber.borderFillColor = kBlueColor
                 phoneNumber.keyboardType = .NumberPad
                 topView .addSubview(phoneNumber)
                 phoneNumber.snp_makeConstraints { (make) in
@@ -189,7 +189,7 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RC
         
                 //验证码
                 let maskCode = MJLoginTextField()
-                maskCode.borderFillColor = UIColor.whiteColor()
+                maskCode.borderFillColor = kBlueColor
                 topView .addSubview(maskCode)
                 maskCode.snp_makeConstraints { (make) in
                     make.left.equalTo(0).offset(margin)
@@ -221,7 +221,7 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RC
                 sendMaskCode.layer.cornerRadius = 5
                 sendMaskCode.layer.masksToBounds = true
                 sendMaskCode.layer.borderWidth = 2
-                sendMaskCode.layer.borderColor = UIColor.whiteColor().CGColor
+                sendMaskCode.layer.borderColor = kBlueColor.CGColor
                 sendMaskCode.titleLabel?.adjustsFontSizeToFitWidth = true
                 sendMaskCode .addTarget(self, action: #selector(getVerficationCode), forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -244,7 +244,7 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RC
                 countDownLabel.hidden = true
                 //设置密码
                 let setPw = MJLoginTextField()
-                setPw.borderFillColor = UIColor.whiteColor()
+                setPw.borderFillColor = kBlueColor
                 topView .addSubview(setPw)
                 setPw.snp_makeConstraints { (make) in
                     make.left.equalTo(0).offset(margin)
@@ -316,10 +316,10 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RC
                         print("返回结果",responseDic)
                         let model = updateNameModel(fromDictionary: responseDic)
                         if model.code == "201"{
-                            self.showMJProgressHUD("此号码已经注册,请检查", isAnimate: false,startY: ScreenHeight-40-45)
+//                            self.showMJProgressHUD("此号码已经注册,请检查", isAnimate: false,startY: ScreenHeight-40-45)
                         }
                         }, fail: { (error) in
-                           self.showMJProgressHUD(error.description, isAnimate: false,startY: ScreenHeight-40-45)
+//                           self.showMJProgressHUD(error.description, isAnimate: false,startY: ScreenHeight-40-45)
                     })
                 }
                 
@@ -349,16 +349,7 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCIMUserInfoDataSource,RC
         }
     }
     
-    func getUserInfoWithUserId(userId: String!, completion: ((RCUserInfo!) -> Void)!) {
-        //MARK:融云资料
-        //        info.name = loginmodel.data.name
-        //        info.userId = loginmodel.data.uid.description
-        //                        info.portraitUri = loginmodel.data.thumbnailSrc
-        let jjj = RCUserInfo()
-        jjj.name = "成功了嚒"
-        jjj.portraitUri = "http://e.hiphotos.baidu.com/baike/w%3D268%3Bg%3D0/sign=22f7c4c0dbb44aed594eb9e28b27e03c/95eef01f3a292df544116b9fbd315c6035a8736e.jpg"
-        return completion(jjj)
-    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
