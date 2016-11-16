@@ -67,6 +67,9 @@
 		5C5CD06E1DBF28AB00D4C1FA /* HKFPostField_OneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5CD06D1DBF28AB00D4C1FA /* HKFPostField_OneVC.swift */; };
 		5C5DB9EF1DBB609700BF89EE /* DiscoveryImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5DB9EE1DBB609700BF89EE /* DiscoveryImage.swift */; };
 		5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */; };
+		5C750C911DDC0966001EA6D5 /* LCTabbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C750C8E1DDC0966001EA6D5 /* LCTabbar.m */; };
+		5C750C921DDC0966001EA6D5 /* LCTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C750C901DDC0966001EA6D5 /* LCTabBarButton.m */; };
+		5C750C951DDC09A7001EA6D5 /* LCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C750C941DDC09A7001EA6D5 /* LCTabBarController.m */; };
 		5C7C3A031DB5CE3F00EA598B /* DiscoveryCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */; };
 		5C7C3A041DB5CE3F00EA598B /* DiscoveryArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A001DB5CE3F00EA598B /* DiscoveryArray.swift */; };
 		5C7C3A051DB5CE3F00EA598B /* DiscoveryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A011DB5CE3F00EA598B /* DiscoveryData.swift */; };
@@ -817,6 +820,12 @@
 		5C5DB9EE1DBB609700BF89EE /* DiscoveryImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryImage.swift; sourceTree = "<group>"; };
 		5C68263E1DAC91250032B66E /* NSObject+EncodingString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+EncodingString.h"; sourceTree = "<group>"; };
 		5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+EncodingString.m"; sourceTree = "<group>"; };
+		5C750C8D1DDC0966001EA6D5 /* LCTabbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCTabbar.h; sourceTree = "<group>"; };
+		5C750C8E1DDC0966001EA6D5 /* LCTabbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCTabbar.m; sourceTree = "<group>"; };
+		5C750C8F1DDC0966001EA6D5 /* LCTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCTabBarButton.h; sourceTree = "<group>"; };
+		5C750C901DDC0966001EA6D5 /* LCTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCTabBarButton.m; sourceTree = "<group>"; };
+		5C750C931DDC09A7001EA6D5 /* LCTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCTabBarController.h; sourceTree = "<group>"; };
+		5C750C941DDC09A7001EA6D5 /* LCTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCTabBarController.m; sourceTree = "<group>"; };
 		5C7C39FF1DB5CE3F00EA598B /* DiscoveryCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryCommentModel.swift; sourceTree = "<group>"; };
 		5C7C3A001DB5CE3F00EA598B /* DiscoveryArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryArray.swift; sourceTree = "<group>"; };
 		5C7C3A011DB5CE3F00EA598B /* DiscoveryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryData.swift; sourceTree = "<group>"; };
@@ -2145,6 +2154,12 @@
 		BF49F5601DDADB850064FC6C /* 公共文件 */ = {
 			isa = PBXGroup;
 			children = (
+				5C750C8D1DDC0966001EA6D5 /* LCTabbar.h */,
+				5C750C8E1DDC0966001EA6D5 /* LCTabbar.m */,
+				5C750C8F1DDC0966001EA6D5 /* LCTabBarButton.h */,
+				5C750C901DDC0966001EA6D5 /* LCTabBarButton.m */,
+				5C750C931DDC09A7001EA6D5 /* LCTabBarController.h */,
+				5C750C941DDC09A7001EA6D5 /* LCTabBarController.m */,
 				BFC65D451D86A0F9004E7E99 /* MainTabBarViewController.swift */,
 				46315AFD1D882BBC00B9D846 /* CustomNavigationBar.swift */,
 				46315AFF1D882C2300B9D846 /* Pubilc.swift */,
@@ -4391,6 +4406,7 @@
 				BF9739CC1D9F714500E1B3EB /* MJGetToken.swift in Sources */,
 				5C913F921DBDEB0E00E567FB /* WeatherData.swift in Sources */,
 				BFD36CCB1DBA0202005005A3 /* TimeStampToDate.swift in Sources */,
+				5C750C951DDC09A7001EA6D5 /* LCTabBarController.m in Sources */,
 				BF140EE61DAF6A390029DC25 /* updateNameModel.swift in Sources */,
 				BF071F011D9A0D5F000551F7 /* MJModel.swift in Sources */,
 				BF071F3F1D9A0D68000551F7 /* SettingCell.swift in Sources */,
@@ -4541,6 +4557,7 @@
 				BF071EFD1D9A0D5F000551F7 /* SelectChangDiViewController.swift in Sources */,
 				5C7D28E31DD1BC3C000D26E7 /* LiuXSegmentView.m in Sources */,
 				5CA4EA3A1D8E7453001A8E8D /* UITableViewCell+HYBMasonryAutoCellHeight.m in Sources */,
+				5C750C911DDC0966001EA6D5 /* LCTabbar.m in Sources */,
 				5C4A59F81DCC3EB000A8AD9E /* MySignModel.swift in Sources */,
 				BFC1269D1DB4792F00E11088 /* CirclesData.swift in Sources */,
 				5C8886B91DC7512C001BC7A8 /* DiscoveryManager.swift in Sources */,
@@ -4651,6 +4668,7 @@
 				BFA6D1041DD551B4008819BC /* CircleInfoData.swift in Sources */,
 				BF6631241DD1D23B00263F67 /* HeFoundData.swift in Sources */,
 				BF1E16AA1DA74518007985F3 /* validateUtils.m in Sources */,
+				5C750C921DDC0966001EA6D5 /* LCTabBarButton.m in Sources */,
 				5C913F971DBDEB0E00E567FB /* WeatherPm25.swift in Sources */,
 				BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */,
 				BFB44E591DC9731A0066D49F /* ChatKeyBoard.m in Sources */,

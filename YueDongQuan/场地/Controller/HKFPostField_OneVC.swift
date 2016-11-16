@@ -15,6 +15,8 @@ class addressListCell: UITableViewCell {
 //    var selectView = UIImageView()
     var model : AMapPOI!
     
+    
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -41,7 +43,7 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
 
     var mapView = MAMapView()
     var manager = AMapLocationManager()
-    
+    var pushFlag = false//标记是从哪个页面push过来的
     var search = AMapSearchAPI()
     var currentLocation = CLLocation()
     var addressTableView : UITableView!
@@ -51,12 +53,16 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
     var addressString = String()
     var selectUserLoaction = CLLocation()
     
-    
+    private var annimationArray = [MJRedAnnotation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNav()
         
+        if pushFlag {
+            
+        }else{
+            setNav()
+        }
         self.title = "选择位置"
         
         self.edgesForExtendedLayout = .None
@@ -70,10 +76,10 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         self.view.addSubview(mapView)
         mapView.backgroundColor = UIColor.redColor()
         search.delegate = self
-        NSLog("mapView = \(mapView.frame)")
+//        NSLog("mapView = \(mapView.frame)")
         
         addressTableView = UITableView(frame: CGRect(x: 0, y: ScreenWidth - 64, width: ScreenWidth, height: ScreenHeight - ScreenWidth),style:.Plain)
-        NSLog("addressTableView = \(addressTableView.frame)")
+//        NSLog("addressTableView = \(addressTableView.frame)")
         addressTableView.delegate = self
         addressTableView.dataSource = self
         self.view.addSubview(addressTableView)
@@ -128,10 +134,24 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         
     }
     
+    //添加大头针
+    func addAnnotationsToMapView(annotation: MAAnnotation) {
+        mapView.addAnnotation(annotation)
+        mapView.selectAnnotation(annotation, animated: true)
+        mapView.setZoomLevel(15.1, animated: false)
+        mapView.setCenterCoordinate(annotation.coordinate, animated: true)
+        
+    }
+    
     func amapLocationManager(manager: AMapLocationManager!, didUpdateLocation location: CLLocation!) {
-//        mapView.setCenterCoordinate(CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), animated: true)
-
-        initSearch(location)
+        mapView.setCenterCoordinate(CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), animated: true)
+        
+        let annotation = MJRedAnnotation()
+        annotation.coordinate = location.coordinate
+        annimationArray.append(annotation)
+        mapView.addAnnotation(annotation)
+        
+        initSearch(CGFloat(location.coordinate.latitude), lng: CGFloat(location.coordinate.longitude))
         manager.stopUpdatingLocation()
     }
     
@@ -141,41 +161,42 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         
     }
     
-    func mapView(mapView: MAMapView!, annotationView view: MAAnnotationView!, didChangeDragState newState: MAAnnotationViewDragState, fromOldState oldState: MAAnnotationViewDragState) {
-        
-        switch newState {
-        case .Starting:
-            print("开始拖拽")
-        case .Dragging:
-            print("正在拖拽")
-        case .Ending:
-            print("拖拽结束")
-        default:
-            break
-        }
-        
-        
-    }
     
     func mapView(mapView: MAMapView!, didLongPressedAtCoordinate coordinate: CLLocationCoordinate2D) {
-        NSLog("coordinate = \(coordinate.latitude)--\(coordinate.longitude)")
+//        NSLog("coordinate = \(coordinate.latitude)--\(coordinate.longitude)")
         mapView.setCenterCoordinate(coordinate, animated: true)
+        
+        let annotation = MJRedAnnotation()
+        annotation.coordinate = coordinate
+        annimationArray.append(annotation)
+        for item in annimationArray {
+            if annimationArray.count == 1 {
+                mapView.addAnnotation(item)
+            }else{
+                if item == annimationArray.last {
+                    mapView.addAnnotation(item)
+                }else{
+                    mapView.removeAnnotation(item)
+                }
+            }
+            
+        }
+        
+        initSearch(CGFloat(coordinate.latitude), lng: CGFloat(coordinate.longitude))
+        
     }
     
     
     
     func mapView(mapView: MAMapView!, viewForAnnotation annotation: MAAnnotation!) -> MAAnnotationView! {
-        //绿色的大头针
-        if annotation.isKindOfClass(MJGreenAnnotation) {
-            let greenReuseIndetifier = "pointReuseIndetifier"
-            
-            var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier)
-            if greenAnnotation == nil {
-                greenAnnotation = MJGreenAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier)
+        //红色的大头针
+        if annotation.isKindOfClass(MJRedAnnotation) {
+            let redReuseIndetifier = "red"
+            var redAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(redReuseIndetifier)
+            if redAnnotation == nil {
+                redAnnotation = MJRedAnnotationView(annotation: annotation,reuseIdentifier: redReuseIndetifier)
             }
-            greenAnnotation?.canShowCallout  = true
-            greenAnnotation?.draggable       = true
-            return greenAnnotation
+            return redAnnotation
         }
         
         return nil
@@ -184,12 +205,7 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
     
     
     
-    func mapView(mapView: MAMapView!, didSelectAnnotationView view: MAAnnotationView!) {
-        if view.annotation.isKindOfClass(MAUserLocation) {
-            initAction()
-            
-        }
-    }
+    
 
     func initAction(){
         let request = AMapReGeocodeSearchRequest()
@@ -197,9 +213,9 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         search.AMapReGoecodeSearch(request)
     }
     
-    func initSearch(locationTemp:CLLocation){
+    func initSearch(lat:CGFloat,lng:CGFloat){
         let request = AMapPOIAroundSearchRequest()
-        request.location = AMapGeoPoint.locationWithLatitude(CGFloat(locationTemp.coordinate.latitude), longitude: CGFloat(locationTemp.coordinate.longitude))
+        request.location = AMapGeoPoint.locationWithLatitude(lat, longitude: CGFloat(lng))
         request.types = "风景名胜|商务住宅|政府机构|社会团体|交通设施服务|公司企业|道路附属设施|地名地址信息|餐饮服务|住宿服务|体育休闲服务"
         request.sortrule = 0
         request.requireExtension = true
@@ -221,7 +237,7 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         if response.pois.count == 0 {
             return
         }
-        NSLog("response = \(response.pois.description)")
+//        NSLog("response = \(response.pois.description)")
         dataArray = response.pois
         addressTableView.reloadData()
     }
@@ -268,8 +284,21 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         let location = CLLocation(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longtitude))
         print(location.description)
         
+        
+        
         self.selectUserLoaction = location
         self.addressString = address
+        
+        let dict = ["address":address,"latitude":latitude,"longtitude":longtitude]
+        let notify = NSNotification(name: "发送位置信息到约战页面", object: dict)
+        
+        
+        if pushFlag {
+            NSNotificationCenter.defaultCenter().postNotification(notify)
+            self.navigationController?.popViewControllerAnimated(true)
+        }else{
+            
+        }
         
     }
     

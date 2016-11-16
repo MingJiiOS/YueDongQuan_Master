@@ -19,6 +19,7 @@ PODS:
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
   - SnapKit (0.30.0.beta2)
+  - SVProgressHUD (2.0.3)
   - SwiftyJSON (2.3.2)
   - TZImagePickerController (1.6.7)
   - XHImageViewer (0.1.2)
@@ -39,6 +40,7 @@ DEPENDENCIES:
   - RongCloudIMKit (~> 2.7.2)
   - SDWebImage (~> 3.8.1)
   - SnapKit (~> 0.30.0.beta2)
+  - SVProgressHUD
   - SwiftyJSON (~> 2.3.2)
   - TZImagePickerController (~> 1.6.7)
   - XHImageViewer (= 0.1.2)
@@ -57,14 +59,15 @@ SPEC CHECKSUMS:
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   RongCloudIMKit: 9dcdee89da511bf1fa375ac0646754783cdb9c9e
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SDWebImage: '098e97e6176540799c27e804c96653ee0833d13c'
   SnapKit: c4bb32b1d3c5d18ff63bf95ffcbc599d2bab964c
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   TZImagePickerController: d3b16a1ab3393b251a23fbb22ac2d6bc83a50d5f
   XHImageViewer: 7b275d2aa829e56761c30303b9d51cae086a90b9
   XLProgressHUD: 43835d0404b2efdee052c25851eb082e2f98ca99
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 04c45dd241c51dd521af716718c539b21eaf398c
+PODFILE CHECKSUM: 3ca978b999d3152f7b5855b012a528bac167f205
 
 COCOAPODS: 1.0.1

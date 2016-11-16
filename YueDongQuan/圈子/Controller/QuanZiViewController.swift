@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+@objc(QuanZiViewController)
 class QuanZiViewController: RCConversationListViewController
 {
     var topTableView = UITableView(frame: CGRectZero, style: .Plain)

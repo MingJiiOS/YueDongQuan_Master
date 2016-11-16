@@ -200,7 +200,7 @@ class DiscorveryHTTPClient {
     func requestSay_SayNearByData(typeId:String,pageNo:Int,latitude:Double,longitude:Double){
         let vcode = NSObject.getEncodeString("20160901")
         let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10,"latitude":latitude,"longitude":longitude]
-        NSLog("nearBy= \(para)")
+//        NSLog("nearBy= \(para)")
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:

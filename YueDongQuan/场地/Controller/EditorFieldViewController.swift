@@ -42,24 +42,16 @@ class EditorFieldViewController: UIViewController{
     
     func setNav(){
         
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-        let imgView = UIImageView(frame:leftView.frame)
-        imgView.image = UIImage(named: "")
-        imgView.contentMode = .Center
-        leftView.addSubview(imgView)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissVC))
-        
-        leftView.addGestureRecognizer(tap)
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftView)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(dismissVC))
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 23.0 / 255, green: 89.0 / 255, blue: 172.0 / 255, alpha: 1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
     }
     
     func clickSelectImage(){
-        NSLog("点击选择照片")
+//        NSLog("点击选择照片")
         
         let actionSheetController: UIAlertController = UIAlertController(title: "请选择", message:nil, preferredStyle: .ActionSheet)
         
@@ -166,6 +158,7 @@ class EditorFieldViewController: UIViewController{
             make.height.equalTo(20)
         }
         editLabel.text = "场地图片"
+        editLabel.font = UIFont.systemFontOfSize(12)
         editLabel.textAlignment = .Left
         editLabel.textColor = UIColor.whiteColor()
         
@@ -336,12 +329,12 @@ class EditorFieldViewController: UIViewController{
         
     }
     
-    func dismissVC(){
+    @objc func dismissVC(){
         self.navigationController?.popViewControllerAnimated(true)
     }
     
     func clickSaveFieldInfoBtn(){
-        NSLog("点击了保存信息")
+//        NSLog("点击了保存信息")
         var imageId : Int = 0
         
         if self.editModel == nil {

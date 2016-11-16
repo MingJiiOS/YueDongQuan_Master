@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+@objc(MiddleViewController)
 class MiddleViewController: MainViewController {
 
     override func viewDidLoad() {

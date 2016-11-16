@@ -92,7 +92,7 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         showLocationView.addGestureRecognizer(showLocationTap)
         
         helper.getAddressBlockValue { (address) in
-            NSLog("招募address = \(address)")
+//            NSLog("招募address = \(address)")
             showLocationLabel.text = address
             self.userAddress = address
         }
@@ -322,7 +322,7 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
                         
                         if ((self.tempImageStr.count) == self.selectedImages.count) {
                             
-                            NSLog("最后一张上传完成")
+//                            NSLog("最后一张上传完成")
                             
                             var imageIdStr = String()
                             for str in self.tempImageStr {
@@ -337,7 +337,7 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
                                 }
                             }
                             
-                            NSLog("图片字符串id=\(imageIdStr)")
+//                            NSLog("图片字符串id=\(imageIdStr)")
                             
                             self.requestToPostImagesSay(self.contentText, latitude: self.userLatitude, longitude: self.userLongitude, imgs: imageIdStr, address: self.userAddress)
                         }

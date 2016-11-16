@@ -42,7 +42,7 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
             
         }
         textView.addTextViewEndEvent { (text:BRPlaceholderTextView!) in
-            NSLog("text = \(text)")
+//            NSLog("text = \(text)")
         }
         textView.delegate = self
         
@@ -96,7 +96,7 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
         showLocationView.addGestureRecognizer(showLocationTap)
         
         helper.getAddressBlockValue { (address) in
-            NSLog("招募address = \(address)")
+//            NSLog("招募address = \(address)")
             showLocationLabel.text = address
             self.address = address
         }
@@ -134,7 +134,7 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     
     
     func selectQuanZiClick(){
-        NSLog("点击了选择圈子")
+//        NSLog("点击了选择圈子")
         let cicrleVC = MyQuanZiViewController()
         cicrleVC.getCicleIDClosure = getMyCicleIdAndNameClosure
         cicrleVC.pushFlag = true
@@ -143,13 +143,13 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     }
     
     func showLocationClick(){
-        NSLog("点击了显示位置")
+//        NSLog("点击了显示位置")
         helper.getGeocodeAction()
         
     }
     
     func getMyCicleIdAndNameClosure(cicleId: String,cicleName:String) ->Void {
-        NSLog("cicleName = \(cicleName),cicleId = \(cicleId)")
+//        NSLog("cicleName = \(cicleName),cicleId = \(cicleId)")
         self.circleIdTemp = cicleId
         selectQzLabel.text = cicleName
     }
@@ -183,9 +183,9 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     
     
     func textViewDidChange(textView: UITextView) {
-        NSLog("textView.Change = \(textView.text)")
+//        NSLog("textView.Change = \(textView.text)")
         let str = textView.text
-        NSLog("str = \(str)")
+//        NSLog("str = \(str)")
     }
     
     

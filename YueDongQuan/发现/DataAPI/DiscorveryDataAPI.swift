@@ -129,7 +129,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         let cnt = (persitencyManager?.getLastestDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
         
-        NSLog("pageNo = \(pageNo)")
+//        NSLog("pageNo = \(pageNo)")
         if cnt < 10 {
             persitencyManager?.removeLastestData()
             senderNoDataMessage()
@@ -258,7 +258,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         if model.code == "200" && model.flag == "1" {
             
             if model.data.array.count == 0 {
-                NSLog("没有数据了")
+//                NSLog("没有数据了")
                 senderNoDataMessage()
                 return
             }
@@ -269,7 +269,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func say_sayImageDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
             if model.data.array.count == 0 {
-                NSLog("没有数据了")
+//                NSLog("没有数据了")
                 senderNoDataMessage()
                 return
             }
@@ -279,7 +279,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func say_sayVideoDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
             if model.data.array.count == 0 {
-                NSLog("没有数据了")
+//                NSLog("没有数据了")
                 senderNoDataMessage()
                 return
             }
@@ -290,7 +290,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func say_sayActivityDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
             if model.data.array.count == 0 {
-                NSLog("没有数据了")
+//                NSLog("没有数据了")
                 senderNoDataMessage()
                 return
             }
@@ -301,7 +301,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func say_sayMatchDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
             if model.data.array.count == 0 {
-                NSLog("没有数据了")
+//                NSLog("没有数据了")
                 senderNoDataMessage()
                 return
             }
@@ -312,7 +312,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func say_sayJoinTeamDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
             if model.data.array.count == 0 {
-                NSLog("没有数据了")
+//                NSLog("没有数据了")
                 senderNoDataMessage()
                 return
             }
@@ -322,7 +322,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func say_sayZhaoMuDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
             if model.data.array.count == 0 {
-                NSLog("没有数据了")
+//                NSLog("没有数据了")
                 senderNoDataMessage()
                 return
             }
@@ -333,7 +333,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func say_sayNearByDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
             if model.data.array.count == 0 {
-                NSLog("没有数据了")
+//                NSLog("没有数据了")
                 senderNoDataMessage()
                 return
             }
@@ -344,7 +344,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     func say_sayMyNotifyDataFromServer(model: DiscoveryModel) {
         if model.code == "200" && model.flag == "1" {
             if model.data.array.count == 0 {
-                NSLog("没有数据了")
+//                NSLog("没有数据了")
                 senderNoDataMessage()
                 return
             }

@@ -66,9 +66,10 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
             var dic:[String:AnyObject] = NSDictionary() as! [String : AnyObject]
             
            
+            let userData =  getUserInfoDataBaseFromRealm()
+            if userData.count != 0 {
                 //调用数据库
-               let userData =  getUserInfoDataBaseFromRealm()
-               if userData.count != 0 {
+
                 let result = userData.first
                 let describe = UIDevice.currentDevice().systemName
                 dic = ["v":v,
@@ -110,7 +111,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
                         print("返回错误信息",error)
                 })
             }
-            
+
         }else{
             self.window?.rootViewController?.presentViewController(YDQLoginRegisterViewController(), animated: true, completion: nil)
         }
@@ -122,10 +123,12 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     
     func getUserInfoDataBaseFromRealm() -> Results<RLUserInfo>  {
         //使用默认的数据库
-        let realm = try! Realm();
+        let realm = try? Realm();
         
         //查询所有的记录
-        consumeItems = realm.objects(RLUserInfo);
+
+        consumeItems = realm!.objects(RLUserInfo);
+
         return consumeItems!
     }
     
@@ -138,6 +141,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         }
         
     }
+        
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: RCKitDispatchConnectionStatusChangedNotification, object: nil)
     }

@@ -32,7 +32,7 @@ target 'YueDongQuan' do
 	pod 'MJRefresh', '~> 3.1.0'
     pod 'XLProgressHUD', '~> 1.0.5'
     pod 'YYKit', '~> 1.0.9'
-
+    pod 'SVProgressHUD'
   # Pods for YueDongQuan
 
 
