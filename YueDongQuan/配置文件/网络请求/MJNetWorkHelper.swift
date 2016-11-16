@@ -104,7 +104,9 @@ class MJNetWorkHelper: NSObject {
     }
     //MARK:短信验证手机号码
     //MARK:TODO:
-    
+    func sendphone(interfaceName:NSString,sendphoneModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {
+        post(interfaceName, requestModel: sendphoneModel, success: success, fail: fail)
+    }
     //MARK:说说点赞
     func praise(interfaceName:NSString,praiseModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {
         post(interfaceName, requestModel: praiseModel, success: success, fail: fail)

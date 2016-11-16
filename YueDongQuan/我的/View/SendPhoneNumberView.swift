@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import RealmSwift
 class SendPhoneNumberView: UIView {
 
    private  let kGAP = 10
@@ -19,6 +19,13 @@ class SendPhoneNumberView: UIView {
      var yanZhengMaFeild = MJTextFeild()
     lazy var reSendBtn = UIButton()
     lazy var nextStapBtn = UIButton()
+    var maskcodeString : String?
+    typealias sendMaskCodeClourse = (maskcode:String)->Void
+    var maskCodeBlock : sendMaskCodeClourse?
+    func sendMaskCodeback(block:sendMaskCodeClourse?)  {
+        maskCodeBlock = block
+    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,7 +52,7 @@ class SendPhoneNumberView: UIView {
             make.right.equalTo(0)
             make.height.equalTo(ScreenHeight/10)
         }
-        phoneNumber.text = "13556845876"
+       
         phoneNumber.textAlignment = .Center
         phoneNumber.textColor = UIColor.grayColor()
         yanZhengMaLabel.snp_makeConstraints { (make) in
@@ -66,6 +73,7 @@ class SendPhoneNumberView: UIView {
             make.bottom.equalTo(yanZhengMaLabel.snp_bottom)
             make.right.equalTo(-20)
         })
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(textvalue), name: UITextFieldTextDidChangeNotification, object: nil)
         yanZhengMaFeild.placeholder = "填写短信验证码"
         
         reSendBtn.snp_makeConstraints { (make) in
@@ -94,10 +102,26 @@ class SendPhoneNumberView: UIView {
         nextStapBtn.titleLabel?.textAlignment = .Center
         nextStapBtn.layer.cornerRadius = 5
         nextStapBtn.layer.masksToBounds = true
+        nextStapBtn.addTarget(self, action: #selector(yanZhengNext), forControlEvents: UIControlEvents.TouchUpInside)
     }
-    
+    func textvalue(textfield:NSNotification)  {
+        let textfiled = textfield.object as! UITextField
+        self.maskcodeString = textfiled.text
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    func yanZhengNext()  {
+        if self.maskcodeString != nil {
+            if self.maskCodeBlock != nil {
+                self.maskCodeBlock!(maskcode:self.maskcodeString!)
+                NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+            }
+        }else{
+            if self.maskCodeBlock != nil {
+                self.maskCodeBlock!(maskcode:"请确定验证码")
+                NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+            }
+        }
+    }
 }
