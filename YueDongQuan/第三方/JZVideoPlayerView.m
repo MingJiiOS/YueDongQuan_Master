@@ -98,7 +98,7 @@
 
 -(void)initLoadingView{
     loadView = [[UIView alloc] initWithFrame:self.playerLayer.frame];
-    NSLog(@"playerLayer:=====%f   %f",self.playerLayer.frame.size.width,self.playerLayer.frame.size.height);
+//    NSLog(@"playerLayer:=====%f   %f",self.playerLayer.frame.size.width,self.playerLayer.frame.size.height);
     loadView.backgroundColor = [UIColor clearColor];
 
     
@@ -187,7 +187,7 @@
     NSString *currentTime = [self getStringFromCMTime:self.player.currentTime];
     NSString *totalTime = [self getStringFromCMTime:self.player.currentItem.asset.duration];
     self.playTime.text = [NSString stringWithFormat:@"%@/%@",currentTime,totalTime];
-    NSLog(@"totalTime:%@",totalTime);
+//    NSLog(@"totalTime:%@",totalTime);
 }
 
 //添加计时器，显示/隐藏播放栏
@@ -224,21 +224,21 @@
     [super layoutSubviews];
     UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
     if (UIDeviceOrientationIsLandscape(deviceOrientation)) {
-        NSLog(@"横屏");
+//        NSLog(@"横屏");
         self.isFullScreen = YES;
         [self initLandscape];
     }else{
-        NSLog(@"竖屏");
+//        NSLog(@"竖屏");
         self.isFullScreen = NO;
         [self initPortraint];
     }
 }
 //initLandscape与initPortraint里面一样
 -(void)initLandscape{
-    NSLog(@"====%f",self.playerLayer.frame.size.width);
+//    NSLog(@"====%f",self.playerLayer.frame.size.width);
     float frameWidth = self.frame.size.width;
     float frameHeight = self.frame.size.height;
-    NSLog(@"横屏:width=%f   height=%f",frameWidth,frameHeight);
+//    NSLog(@"横屏:width=%f   height=%f",frameWidth,frameHeight);
     self.playerHUDBottomView.frame = CGRectMake(0, frameHeight-44, frameWidth, 44);
     self.zoomBtn.frame = CGRectMake(frameWidth-27, 10, 20, 20);
     self.progressBar.frame = CGRectMake(30, 11, frameWidth-60, 14);
@@ -248,7 +248,7 @@
 -(void)initPortraint{
     float frameWidth = self.frame.size.width;
     float frameHeight = self.frame.size.height;
-    NSLog(@"竖屏:width=%f   height=%f",frameWidth,frameHeight);
+//    NSLog(@"竖屏:width=%f   height=%f",frameWidth,frameHeight);
     self.playerHUDBottomView.frame = CGRectMake(0, frameHeight-44, frameWidth, 44);
     self.zoomBtn.frame = CGRectMake(frameWidth-27, 10, 20, 20);
     self.progressBar.frame = CGRectMake(30, 11, frameWidth-60, 14);
@@ -263,7 +263,7 @@
     }
 }
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    NSLog(@"touchesMoved");
+//    NSLog(@"touchesMoved");
 }
 
 -(void)OnPlayBtn:(UIButton *)sender{
@@ -275,7 +275,7 @@
 }
 
 -(void)OnZoomBtn:(UIButton *)sender{
-    NSLog(@"全屏/非全屏");
+//    NSLog(@"全屏/非全屏");
     self.isFullScreen = !self.isFullScreen;
     if (self.isFullScreen) {
         [self.zoomBtn setSelected:YES];
@@ -313,11 +313,11 @@
 -(void)addProgressObserver{
     __weak __typeof(self) weakself = self;
     AVPlayerItem *playerItem = self.player.currentItem;
-    NSLog(@"//添加播放进度条更新");
+//    NSLog(@"//添加播放进度条更新");
     playbackObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1.0, 1.0) queue:dispatch_get_main_queue() usingBlock:^(CMTime time){
         float current = CMTimeGetSeconds(time);
         float total = CMTimeGetSeconds(playerItem.duration);
-        NSLog(@"当前已经播放%.2fs。",current);
+//        NSLog(@"当前已经播放%.2fs。",current);
         //更新进度条
         float progress = current/total;
         weakself.progressBar.value = progress;
@@ -333,7 +333,7 @@
 }
 
 -(void)playbackFinished:(NSNotification *)notification{
-    NSLog(@"视频播放完成");
+//    NSLog(@"视频播放完成");
 }
 
 /**
@@ -366,15 +366,15 @@
         AVPlayerStatus status = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
         switch (status) {
             case AVPlayerStatusFailed:
-                NSLog(@"播放失败");
+//                NSLog(@"播放失败");
                 [loadView setHidden:NO];
                 break;
             case AVPlayerStatusReadyToPlay:
-                NSLog(@"正在播放...视频中长度为：%f",CMTimeGetSeconds(self.playerItem.duration));
+//                NSLog(@"正在播放...视频中长度为：%f",CMTimeGetSeconds(self.playerItem.duration));
                 [loadView setHidden:YES];
                 break;
             default:
-                NSLog(@"default:");
+//                NSLog(@"default:");
                 break;
         }
     }else if ([keyPath isEqualToString:@"loadedTimeRanges"]){//缓冲
@@ -385,7 +385,7 @@
         NSTimeInterval totalBuffer = startSeconds + durationSeconds;//缓冲总长度
         
         float durationTime = CMTimeGetSeconds([[self.player currentItem] duration]);//总时间
-        NSLog(@"共缓冲：%.2f，总时长为:%f",totalBuffer,durationTime);
+//        NSLog(@"共缓冲：%.2f，总时长为:%f",totalBuffer,durationTime);
         [self.loadProgressView setProgress:totalBuffer/durationTime animated:YES];
         
         if (self.playerIsBuffering && self.isPlaying) {
@@ -395,13 +395,13 @@
         
     }else if ([keyPath isEqualToString:@"playbackBufferEmpty"]){
         if(self.player.currentItem.playbackBufferEmpty){
-            NSLog(@"缓冲区为空");
+//            NSLog(@"缓冲区为空");
             self.playerIsBuffering = YES;
         }else{
-            NSLog(@"缓冲区不为空======");
+//            NSLog(@"缓冲区不为空======");
         }
     }else{
-        NSLog(@"++++++++++");
+//        NSLog(@"++++++++++");
     }
 }
 

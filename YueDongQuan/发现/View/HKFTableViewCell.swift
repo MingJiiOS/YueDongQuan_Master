@@ -44,6 +44,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     var displayView = PYPhotosView()//照片或者视频显示
     
     var videoImage = UIImageView()//视频展示
+//    var playVideoBtn = UIButton()//播放按钮
     
     
     var tableView : UITableView?//评论cell
@@ -227,7 +228,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         self.dianzanBtn.frame = CGRect(x: screenWidth/5, y: 0, width: screenWidth/6, height: 24)
 //        self.dianzanBtn.setImage(UIImage(named: "ic_zan_a6a6a6"), forState: UIControlState.Normal)
-        self.dianzanBtn.setTitle("0", forState: UIControlState.Normal)
+//        self.dianzanBtn.setTitle("0", forState: UIControlState.Normal)
         self.dianzanBtn.titleLabel?.font = UIFont.systemFontOfSize(10)
         self.dianzanBtn.setImage(UIImage(named: "ic_zan_a6a6a6"), forState: UIControlState.Normal)
         self.dianzanBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0,  screenWidth/10)
@@ -301,7 +302,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.pinglunBtn.setTitle("0", forState: UIControlState.Normal)
             self.liulanCount.text = "\(subModel.isPraise)"
         }
-
+        NSLog("dianzanCount = \(subModel.isPraise)")
         if subModel.isPraise != 0{
             self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
             self.dianzanBtn.setTitle("\(subModel.isPraise)", forState: UIControlState.Normal)
@@ -323,7 +324,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         case 14:
 //            print("约战")
             self.titleLabel?.text =  subModel.name
-            self.typeStatusView?.image = UIImage(named: "explain_pic")
+            self.typeStatusView?.image = UIImage(named: "约战")
         case 15:
 //            print("求加入")
             self.titleLabel?.text =  subModel.name
@@ -332,7 +333,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
 //            print("招募")
             self.titleLabel?.text =  subModel.rname
             
-            self.typeStatusView?.image = UIImage(named: "explain_JOIN")
+            self.typeStatusView?.image = UIImage(named: "招募")
         default:
             break
         }
@@ -356,7 +357,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
         self.descLabel?.attributedText = html
         self.locationLabel.text = subModel.address
-        self.headImageView?.sd_setImageWithURL(NSURL(string: subModel.thumbnailSrc))
+//        self.headImageView?.sd_setImageWithURL(NSURL(string: subModel.thumbnailSrc))
         self.testModel = subModel
         
         self.timeStatus?.text = getTimeString(subModel.time)
@@ -378,7 +379,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
 //        NSLog("videoURL = \(model.compressUrl)")
         if subModel.compressUrl != "" {
             self.videoImage.snp_updateConstraints(closure: { (make) in
-                make.height.equalTo((ScreenWidth - 30)/3)
+                make.height.equalTo(ScreenHeight/4)
             })
             self.videoImage.hidden = false
             self.videoImage.setImageWithURL(NSURL(string: model.compressUrl), placeholder: nil, options: YYWebImageOptions.AllowBackgroundTask, completion: nil)

@@ -86,7 +86,7 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
         showLocationView.addGestureRecognizer(showLocationTap)
         
         helper.getAddressBlockValue { (address) in
-            NSLog("招募address = \(address)")
+//            NSLog("招募address = \(address)")
             showLocationLabel.text = address
             self.address = address
         }
@@ -229,7 +229,7 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
         let msg = "视频压缩中..."
         self.view.showLoadingTilteActivity(msg, position: "center")
         TZImageManager().getVideoOutputPathWithAsset(asset) { (outputPath : String!) in
-            NSLog("视频导出到本地完成,沙盒路径为:%@",outputPath)
+//            NSLog("视频导出到本地完成,沙盒路径为:%@",outputPath)
             let data = NSData(contentsOfFile: outputPath)
             
             self.videoData = data!
@@ -299,7 +299,7 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
                 let str = (json.object) as! NSDictionary
                 
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
-                    NSLog("发布完成完成")
+//                    NSLog("发布完成完成")
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
                 
@@ -347,7 +347,7 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
                         self.requestToPostImagesSay(self.contentText, latitude: self.userLatitude, longitude: self.userLongitude, videoId: (videoId?.description)!, address: self.address)
                         
                         
-                        NSLog("最后一张上传完成")
+//                        NSLog("最后一张上传完成")
                         /*if ((self.tempImageStr.count) == self.selectedImages.count) {
                             
                             

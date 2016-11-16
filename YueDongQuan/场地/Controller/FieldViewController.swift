@@ -13,7 +13,7 @@ import SwiftyJSON
 import SDWebImage
 
 
-
+@objc(FieldViewController)
 class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationManagerDelegate ,UITableViewDelegate,UITableViewDataSource{
     
     var scroViewContent : UIScrollView!
@@ -146,7 +146,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     }
     
     func clickLocationBtn(){
-        NSLog("点击了定位")
+//        NSLog("点击了定位")
         manger.startUpdatingLocation()
     }
     
@@ -158,11 +158,11 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 65, height: 32))
         let searchBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
        
-        searchBtn.setImage(UIImage(named: "ic_add"), forState: UIControlState.Normal)
+        searchBtn.setImage(UIImage(named: "ic_search"), forState: UIControlState.Normal)
         searchBtn.addTarget(self, action: #selector(clickSearchBtn), forControlEvents: UIControlEvents.TouchUpInside)
         rightView.addSubview(searchBtn)
         let addBtn = UIButton(frame: CGRect(x: 33, y: 0, width: 32, height: 32))
-        addBtn.setImage(UIImage(named: "ic_search"), forState: UIControlState.Normal)
+        addBtn.setImage(UIImage(named: "ic_add"), forState: UIControlState.Normal)
         rightView.addSubview(addBtn)
         addBtn.addTarget(self, action: #selector(clickAddBtn), forControlEvents: UIControlEvents.TouchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightView)
@@ -178,18 +178,17 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     }
     
     func clickSearchBtn(){
-        let newFiledVC  =  HKFPostField_OneVC()
-        let nav = CustomNavigationBar(rootViewController: newFiledVC)
-        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+        let searchVC = SearchController()
+        self.navigationController?.pushViewController(searchVC, animated: true)
         
     }
     
     
     func clickAddBtn() {
-        let searchVC = SearchController()
-        self.navigationController?.pushViewController(searchVC, animated: true)
         
-        
+        let newFiledVC  =  HKFPostField_OneVC()
+        let nav = CustomNavigationBar(rootViewController: newFiledVC)
+        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -209,7 +208,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     /********************************************/
     
     func mapView(mapView: MAMapView!, didLongPressedAtCoordinate coordinate: CLLocationCoordinate2D) {
-        NSLog("coordinate = \(coordinate.latitude,coordinate.longitude)")
+//        NSLog("coordinate = \(coordinate.latitude,coordinate.longitude)")
     }
     
     
@@ -220,7 +219,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
         manager.requestLocationWithReGeocode(true) { (location:CLLocation!, geoCode:AMapLocationReGeocode!, error:NSError!) in
             if let error = error {
-                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
+//                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
                 
                 if error.code == AMapLocationErrorCode.LocateFailed.rawValue {
                     return;
@@ -230,7 +229,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
             if let location = location {
                 if let geocode = geoCode {
                     
-                    NSLog("regecode = \(geocode.neighborhood)")
+//                    NSLog("regecode = \(geocode.neighborhood)")
                     //地址信息
                     let cityName = geocode.province
                     self.requestWeather(cityName)
@@ -340,7 +339,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
 
 extension FieldViewController : FieldCellDelegate {
     func clickConfirmFieldBtn(indexPath: NSIndexPath) {
-        NSLog("点击了预定")
+//        NSLog("点击了预定")
         let telNumber = (self.fieldModel?.data.array[indexPath.section].telephone)!
         
         
@@ -359,7 +358,7 @@ extension FieldViewController : FieldCellDelegate {
         
     }
     func clickEditFieldBtn(indexPath: NSIndexPath) {
-        NSLog("点击了编辑")
+//        NSLog("点击了编辑")
         let vc = EditorFieldViewController()
         vc.hidesBottomBarWhenPushed = true
         
@@ -375,7 +374,7 @@ extension FieldViewController : FieldCellDelegate {
         
     }
     func clickSiginFieldBtn(indexPath: NSIndexPath) {
-        NSLog("点击了签到排行榜")
+//        NSLog("点击了签到排行榜")
         let signVC = SignRankingCOntroller()
         signVC.siteId = (self.fieldModel?.data.array[indexPath.section].id)!
         signVC.hidesBottomBarWhenPushed = true
@@ -415,7 +414,7 @@ extension FieldViewController {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                NSLog("fieldJson = \(json)")
+//                NSLog("fieldJson = \(json)")
                 let str = json.object
                 self.fieldModel = FieldModel.init(fromDictionary: str as! NSDictionary)
                 

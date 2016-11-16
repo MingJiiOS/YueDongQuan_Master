@@ -79,7 +79,7 @@
     
          // 如果没有自定义时间间隔，则默认为2秒
     
-        self.custom_acceptEventInterval = 2;
+        self.custom_acceptEventInterval = 0.5;
     
      }
     

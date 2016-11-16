@@ -66,29 +66,29 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
             var dic:[String:AnyObject] = NSDictionary() as! [String : AnyObject]
             
            
-                //调用数据库
-                getUserInfoDataBaseFromRealm()
-                let result = consumeItems?.first
+            let userData =  getUserInfoDataBaseFromRealm()
+            if userData.count != 0 {
+                let result = userData.first
                 let describe = UIDevice.currentDevice().systemName
                 dic = ["v":v,
                        "phone":(result?.phone)!,
                        "pw":(result?.password)!,
                        "describe":describe]
-            
-            
-            MJNetWorkHelper().loginWithUserInfo(login, userModel: dic, success: { (responseDic, success) in
-                let loginmodel = DataSource().getUserInfo(responseDic)
-                //MARK:融云资料
-                info.name = loginmodel.data.name
-                info.userId = loginmodel.data.uid.description
-                //                        info.portraitUri = loginmodel.data.thumbnailSrc
-                info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
-
+                
+                
+                MJNetWorkHelper().loginWithUserInfo(login, userModel: dic, success: { (responseDic, success) in
+                    let loginmodel = DataSource().getUserInfo(responseDic)
+                    //MARK:融云资料
+                    info.name = loginmodel.data.name
+                    info.userId = loginmodel.data.uid.description
+                    //                        info.portraitUri = loginmodel.data.thumbnailSrc
+                    info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
+                    
                     MJGetToken().requestTokenFromServeris(getToken
                         , success: { (responseDic, success) in
                             let model = TokenModel(fromDictionary: responseDic)
                             userInfo.token = model.data.token
-
+                            
                             let helper = MJLoginOpreationHelper()
                             if helper.IMConnectStatus == .ConnectionStatus_Connected{
                                 return
@@ -105,9 +105,10 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
                         }, fail: { (error) in
                             
                     })
-                }, fail: { (error) in
-                    print("返回错误信息",error)
-            })
+                    }, fail: { (error) in
+                        print("返回错误信息",error)
+                })
+            }
         }else{
             self.window?.rootViewController?.presentViewController(YDQLoginRegisterViewController(), animated: true, completion: nil)
         }
@@ -117,12 +118,13 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         return true
     }
     
-    func getUserInfoDataBaseFromRealm()  {
+    func getUserInfoDataBaseFromRealm() -> Results<RLUserInfo>  {
         //使用默认的数据库
-        let realm = try! Realm();
+        let realm = try? Realm();
         
         //查询所有的记录
-        consumeItems = realm.objects(RLUserInfo);
+        consumeItems = realm!.objects(RLUserInfo);
+        return consumeItems!
     }
     
     func statusNumber(fication:NSNotification)  {

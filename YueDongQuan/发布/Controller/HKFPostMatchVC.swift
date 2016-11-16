@@ -19,10 +19,12 @@ class HKFPostMatchVC: UIViewController,AMapLocationManagerDelegate,UITextViewDel
     var matchAddress = String()
     var addressManager = MJAmapHelper()
     
-    
+    private var selectQzLabel : UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(addressProcess(_:)), name: "发送位置信息到约战页面", object: nil)
         setNav()
         self.edgesForExtendedLayout = .None
         self.view.backgroundColor = UIColor ( red: 0.9176, green: 0.9176, blue: 0.9529, alpha: 1.0 )
@@ -49,7 +51,7 @@ class HKFPostMatchVC: UIViewController,AMapLocationManagerDelegate,UITextViewDel
         selectImg.image = UIImage(named: "location")
         selectQZView.addSubview(selectImg)
         
-        let selectQzLabel = UILabel(frame: CGRect(x: CGRectGetMaxX(selectImg.frame) + 2, y: 3, width: ScreenWidth - 40, height: 24))
+        selectQzLabel = UILabel(frame: CGRect(x: CGRectGetMaxX(selectImg.frame) + 2, y: 3, width: ScreenWidth - 40, height: 24))
         selectQzLabel.text = "显示位置"
         selectQzLabel.font = UIFont.systemFontOfSize(12)
         selectQzLabel.textAlignment = .Center
@@ -59,15 +61,26 @@ class HKFPostMatchVC: UIViewController,AMapLocationManagerDelegate,UITextViewDel
         let selectQZTap = UITapGestureRecognizer(target: self, action: #selector(selectQuanZiClick))
         selectQZView.addGestureRecognizer(selectQZTap)
         
-        addressManager.getAddressBlockValue { (address) in
-            selectQzLabel.text = address
-            self.matchAddress = address
-        }
         
     }
     func selectQuanZiClick(){
-        NSLog("点击了显示位置")
-        addressManager.getGeocodeAction()
+//        NSLog("点击了显示位置")
+        let selectAddress = HKFPostField_OneVC()
+        selectAddress.pushFlag = true
+        self.navigationController?.pushViewController(selectAddress, animated: true)
+    }
+    
+    
+    func addressProcess(notice :NSNotification){
+        let addTemp = notice.valueForKey("object")!.valueForKey("address")
+        let latTemp = notice.valueForKey("object")!.valueForKey("latitude")
+        let lngTemp = notice.valueForKey("object")!.valueForKey("longtitude")
+        self.matchAddress = addTemp as! String
+        self.userLatitude = latTemp as! Double
+        self.userLongitude = lngTemp as! Double
+        
+        selectQzLabel.text = addTemp as! String
+//        NSLog("result == \(addTemp)--\(latTemp)--\(lngTemp)")
     }
     
     func setNav(){

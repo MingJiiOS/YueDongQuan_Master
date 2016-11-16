@@ -14,17 +14,24 @@ import SDWebImage
 import AVKit
 import MJRefresh
 import YYKit
-import IJKMediaFramework
+import SVProgressHUD
 
 
 
+@objc(DiscoverViewController)
 class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationManagerDelegate,UIScrollViewDelegate{
     let titleArray = ["最新", "图片", "视频","活动", "约战", "求加入", "招募","附近","我的关注"]
     var manger = AMapLocationManager()
     var lastContentOffset:CGFloat?
     var keyboardHeight:CGFloat?
+    /*
+    private var wmPlayer : WMPlayer!
+    private var currentIndexPath : NSIndexPath!
+    private var isHiddenStatusBar = Bool()
+    private var isInCell = Bool()
+    weak var currentCell : HKFTableViewCell?
+    */
     
-    var player:IJKFFMoviePlayerController!
     
     private var selectTableView = UITableView()
     private var critiqueView : UIView!
@@ -41,42 +48,42 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     private var scrollView : UIScrollView!
     
-    var segmentVC = LiuXSegmentView()
+    private var segmentVC = LiuXSegmentView()
 
     /***********/
-    private var tableViewForLastest = UITableView(frame: CGRect(x: 0 , y: 0, width: ScreenWidth, height: ScreenHeight - 153))
+    private var tableViewForLastest = UITableView(frame: CGRect(x: 0 , y: 0, width: ScreenWidth, height: ScreenHeight - 93 - 20))
     //最新model
     private var lastestModelData = [DiscoveryArray]()
     
-    private var tableiewForImage = UITableView(frame: CGRect(x: ScreenWidth*1, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForImage = UITableView(frame: CGRect(x: ScreenWidth*1, y: 0, width: ScreenWidth, height: ScreenHeight - 93 - 20), style: UITableViewStyle.Plain)
     //图片Model
     private var imageModelData = [DiscoveryArray]()
     
-    private var tableiewForVideo = UITableView(frame: CGRect(x: ScreenWidth*2, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForVideo = UITableView(frame: CGRect(x: ScreenWidth*2, y: 0, width: ScreenWidth, height: ScreenHeight - 93 - 20), style: UITableViewStyle.Plain)
     //视频model
     private var videoModelData = [DiscoveryArray]()
     
-    private var tableiewForActivity = UITableView(frame: CGRect(x: ScreenWidth*3, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForActivity = UITableView(frame: CGRect(x: ScreenWidth*3, y: 0, width: ScreenWidth, height: ScreenHeight - 93 - 20), style: UITableViewStyle.Plain)
     //活动model
     private var activityModelData = [DiscoveryArray]()
     
-    private var tableiewForMatch = UITableView(frame: CGRect(x: ScreenWidth*4, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForMatch = UITableView(frame: CGRect(x: ScreenWidth*4, y: 0, width: ScreenWidth, height: ScreenHeight - 93 - 20), style: UITableViewStyle.Plain)
     //约战model
     private var matchModelData = [DiscoveryArray]()
     
-    private var tableiewForJoinTeam = UITableView(frame: CGRect(x: ScreenWidth*5, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForJoinTeam = UITableView(frame: CGRect(x: ScreenWidth*5, y: 0, width: ScreenWidth, height: ScreenHeight - 93 - 20), style: UITableViewStyle.Plain)
     //求加入model
     private var joinModelData = [DiscoveryArray]()
     
-    private var tableiewForZhaoMu = UITableView(frame: CGRect(x: ScreenWidth*6, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForZhaoMu = UITableView(frame: CGRect(x: ScreenWidth*6, y: 0, width: ScreenWidth, height: ScreenHeight - 93 - 20), style: UITableViewStyle.Plain)
     //招募dataModel
     private var zhaomuModelData = [DiscoveryArray]()
     
-    private var tableiewForNearBy = UITableView(frame: CGRect(x: ScreenWidth*7, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForNearBy = UITableView(frame: CGRect(x: ScreenWidth*7, y: 0, width: ScreenWidth, height: ScreenHeight - 93 - 20), style: UITableViewStyle.Plain)
     //附近dataModel
     private var nearbyModelData = [DiscoveryArray]()
     
-    private var tableiewForMyNotify = UITableView(frame: CGRect(x: ScreenWidth*8, y: 0, width: ScreenWidth, height: ScreenHeight - 153), style: UITableViewStyle.Plain)
+    private var tableiewForMyNotify = UITableView(frame: CGRect(x: ScreenWidth*8, y: 0, width: ScreenWidth, height: ScreenHeight - 93 - 20), style: UITableViewStyle.Plain)
     //我的关注dataModel
     private var myNotifyModelData = [DiscoveryArray]()
     
@@ -86,6 +93,9 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     private var currentShowTableViewIndex = 0 {
         didSet{
+            
+            
+            
             pullDownRef()
             scrollView.contentOffset = CGPoint(x: ScreenWidth*CGFloat(currentShowTableViewIndex), y: 0)
         }
@@ -95,6 +105,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         super.viewDidLoad()
         manger.delegate = self
 //        manger.startUpdatingLocation()
+        self.edgesForExtendedLayout = .None
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiscoverViewController.notifyChangeModel), name: "LastestOrderDataChanged", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiscoverViewController.NoDataNotifyProcess), name: "SenderNoDataNotify", object: nil)
@@ -112,23 +123,23 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         let searchBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
         searchBtn.setImage(UIImage(named: "ic_search"), forState: UIControlState.Normal)
         rightView.addSubview(searchBtn)
+        searchBtn.addTarget(self, action: #selector(clickSearchBtn), forControlEvents: UIControlEvents.TouchUpInside)
         let addBtn = UIButton(frame: CGRect(x: 33, y: 0, width: 32, height: 32))
-        addBtn.setImage(UIImage(named: "ic_search"), forState: UIControlState.Normal)
+        addBtn.setImage(UIImage(named: "ic_add"), forState: UIControlState.Normal)
+        addBtn.addTarget(self, action: #selector(clickAddBtn), forControlEvents: UIControlEvents.TouchUpInside)
         rightView.addSubview(addBtn)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightView)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         
         
-        let fpsLabel = YYFPSLabel(frame: CGRect(x: 200, y: 200, width: 50, height: 30))
-        fpsLabel.sizeToFit()
-        self.view.addSubview(fpsLabel)
         
-        segmentVC = LiuXSegmentView(frame: CGRect(x: 0, y: 64, width: ScreenWidth, height: 44), titles: titleArray) { (index:Int) in
-            NSLog("index = \(index)")
+        
+        segmentVC = LiuXSegmentView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 44), titles: titleArray) { (index:Int) in
+            
             self.currentShowTableViewIndex = index - 1
         }
-        segmentVC.backgroundColor = UIColor.whiteColor()
+        segmentVC.backgroundColor = UIColor.redColor()
         segmentVC.titleSelectColor = UIColor ( red: 0.112, green: 0.4752, blue: 0.9795, alpha: 1.0 )
         
         self.view.addSubview(segmentVC)
@@ -136,10 +147,25 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         setScrollView()
         setControllers()
         
+        
         pullDownRef()
         
+//        let fpsLabel = YYFPSLabel(frame: CGRect(x: 200, y: 200, width: 50, height: 30))
+//        fpsLabel.sizeToFit()
+//        self.navigationItem.titleView!.addSubview(fpsLabel)
         
-        
+    }
+    
+    //点击搜索按钮
+    @objc private func clickSearchBtn(){
+        let searchVC = SearchController()
+        self.navigationController?.pushViewController(searchVC, animated: true)
+    }
+    //点击添加按钮
+    @objc private func clickAddBtn(){
+        let newFiledVC  =  HKFPostField_OneVC()
+        let nav = CustomNavigationBar(rootViewController: newFiledVC)
+        self.navigationController?.presentViewController(nav, animated: true, completion: nil)
     }
     
     func setControllers(){
@@ -161,18 +187,20 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
             controlArray[i].delegate = self
             controlArray[i].separatorStyle = .None
             controlArray[i].tag = i
-            controlArray[i].registerClass(HKFTableViewCell.self, forCellReuseIdentifier: "cell")
+//            controlArray[i].registerClass(HKFTableViewCell.self, forCellReuseIdentifier: "cell")
             controlArray[i].mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(DiscoverViewController.pullDownRef))
             controlArray[i].mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(DiscoverViewController.pullUpRef))
+            controlArray[i].estimatedRowHeight = 100
+            controlArray[i].rowHeight = UITableViewAutomaticDimension
 
             
         }
     }
     
     func setScrollView(){
-        scrollView = UIScrollView(frame: CGRect(x: 0, y: 108, width: ScreenWidth, height:ScreenHeight - 108 - 49))
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: 44, width: ScreenWidth, height:ScreenHeight - 44 - 49 - 20))
         self.view.addSubview(scrollView)
-        scrollView.contentSize = CGSize(width: ScreenWidth*CGFloat(titleArray.count), height: ScreenHeight - 108 - 49)
+        scrollView.contentSize = CGSize(width: ScreenWidth*CGFloat(titleArray.count), height: ScreenHeight - 44 - 49 - 20)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
@@ -183,7 +211,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     }
     
     func pullDownRef(){
-        
+        SVProgressHUD.showWithStatus("请等待")
         http.removeAllModelData()
         
         
@@ -240,11 +268,14 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     
     func notifyChangeModel(){
+        
+        SVProgressHUD.showSuccessWithStatus("加载成功")
+        SVProgressHUD.dismissWithDelay(2)
+        
         switch currentShowTableViewIndex {
         case 0:
             let model = http.getLastestDataList()
             self.lastestModelData = model
-            NSLog("1234Model = \(model.count)")
             tableViewForLastest.mj_footer.endRefreshing()
             tableViewForLastest.mj_header.endRefreshing()
         case 1:
@@ -302,6 +333,10 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     }
     
     func NoDataNotifyProcess(){
+        
+        SVProgressHUD.showErrorWithStatus("没有更多数据了")
+        SVProgressHUD.dismissWithDelay(2)
+        
         switch currentShowTableViewIndex {
         case 0:
             tableViewForLastest.mj_footer.endRefreshingWithNoMoreData()
@@ -464,7 +499,7 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
             cell!.delegate = self
             cell!.headTypeView?.hidden = true
             let model = self.matchModelData[indexPath.row]
-            NSLog("1414Model = \(model.typeId)")
+//            NSLog("1414Model = \(model.typeId)")
             cell!.configCellWithModelAndIndexPath(model, indexPath: indexPath)
             //            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
             //            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
@@ -628,6 +663,7 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         return 0
     }
     
+ 
     
     
     func clickVideoViewAtIndexPath(cell: HKFTableViewCell, videoId: String) {
@@ -1045,7 +1081,7 @@ extension DiscoverViewController {
                 let json = JSON(data: response.data!)
                 _ = json.object
                 
-               NSLog("举报=\(json)")
+//               NSLog("举报=\(json)")
             case .Failure(let error):
                 print(error)
             }
@@ -1057,8 +1093,186 @@ extension DiscoverViewController {
     
 }
 
+/*
+extension DiscoverViewController : WMPlayerDelegate{
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        if isInCell {
+            return false
+        }
+        
+        if isHiddenStatusBar {
+            return true
+        }
+        return false
+    }
+    
+    func wmplayer(wmplayer: WMPlayer!, clickedCloseButton closeBtn: UIButton!) {
+        let currentCell = tableiewForVideo.cellForRowAtIndexPath(NSIndexPath(forRow: currentIndexPath.row, inSection: 0)) as! HKFTableViewCell
+        currentCell.videoImage.superview?.bringSubviewToFront(currentCell.videoImage)
+        if wmplayer.isFullscreen {
+            //
+            wmPlayer.isFullscreen = false
+            isHiddenStatusBar = false
+            isInCell = true
+            wmPlayer.closeBtnStyle = CloseBtnStyle.Close
+        }else{
+            //
+        }
+        
+    }
+    
+    func wmplayer(wmplayer: WMPlayer!, clickedFullScreenButton fullScreenBtn: UIButton!) {
+        wmplayer.removeFromSuperview()
+        if wmPlayer.isFullscreen {
+            let currentCell = tableiewForVideo.cellForRowAtIndexPath(NSIndexPath(forRow: currentIndexPath.row, inSection: 0)) as! HKFTableViewCell
+            currentCell.videoImage.addSubview(wmPlayer)
+            //
+            wmPlayer.isFullscreen = false
+            wmPlayer.closeBtnStyle = CloseBtnStyle.Close
+            
+        }else{
+            UIApplication.sharedApplication().keyWindow?.addSubview(wmPlayer)
+            //
+            wmPlayer.isFullscreen = true
+            wmPlayer.closeBtnStyle = .Close
+        }
+    }
+    
+    func wmplayer(wmplayer: WMPlayer!, singleTaped singleTap: UITapGestureRecognizer!) {
+        NSLog("didSingleTaped")
+    }
+    
+    func wmplayer(wmplayer: WMPlayer!, doubleTaped doubleTap: UITapGestureRecognizer!) {
+        NSLog("didDoubleTaped")
+    }
+    func wmplayerFailedPlay(wmplayer: WMPlayer!, WMPlayerStatus state: WMPlayerState) {
+        NSLog("wmplayerDidFailedPlay")
+    }
+    func wmplayerReadyToPlay(wmplayer: WMPlayer!, WMPlayerStatus state: WMPlayerState) {
+        NSLog("wmplayerDidReadyToPlay")
+    }
+    
+    func wmplayerFinishedPlay(wmplayer: WMPlayer!) {
+        NSLog("wmplayerDidFinishedPlay")
+        let currentCell = tableiewForVideo.cellForRowAtIndexPath(NSIndexPath(forRow: currentIndexPath.row, inSection: 0)) as! HKFTableViewCell
+        currentCell.videoImage.superview?.bringSubviewToFront(currentCell.videoImage)
+        //
+        wmPlayer.removeFromSuperview()
+    }
+    
+    func wmplayer(wmplayer: WMPlayer!, isHiddenTopAndBottomView isHidden: Bool) {
+        isHiddenStatusBar = isHidden
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    func onDeviceOrientationChange(notification:NSNotification){
+        if (wmPlayer == nil || wmPlayer.superview == nil ){
+            return
+        }
+        
+        let orientation = UIDevice.currentDevice().orientation
+        var interfaceOrientation = UIInterfaceOrientation(rawValue: 0)
+        
+        switch interfaceOrientation {
+        case UIInterfaceOrientation.PortraitUpsideDown:
+            NSLog("电池在下")
+            break
+        case UIInterfaceOrientation.Portrait:
+            NSLog("电池在上")
+            if wmPlayer.isFullscreen {
+                wmPlayer.removeFromSuperview()
+                let currentCell = tableiewForVideo.cellForRowAtIndexPath(NSIndexPath(forRow: currentIndexPath.row, inSection: 0)) as! HKFTableViewCell
+                currentCell.addSubview(wmPlayer)
+                //
+                wmPlayer.isFullscreen = false
+                isHiddenStatusBar = false
+                isInCell = true
+                wmPlayer.closeBtnStyle = .Close
+            }
+            break
+        case UIInterfaceOrientation.LandscapeLeft:
+            if !wmPlayer.isFullscreen {
+                wmPlayer.removeFromSuperview()
+                UIApplication.sharedApplication().keyWindow?.addSubview(wmPlayer)
+                wmPlayer.isFullscreen = true
+                isInCell = false
+                isHiddenStatusBar = true
+                wmPlayer.closeBtnStyle = .Pop
+            }
+            break
+        case UIInterfaceOrientation.LandscapeRight:
+            if !wmPlayer.isFullscreen {
+                wmPlayer.removeFromSuperview()
+                UIApplication.sharedApplication().keyWindow?.addSubview(wmPlayer)
+                wmPlayer.isFullscreen = true
+                isInCell = false
+                isHiddenStatusBar = true
+                wmPlayer.closeBtnStyle = .Pop
+            }
+            break
+        default:
+            break
+        }
+        
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    
+    func toOrientation(orientation:UIInterfaceOrientation){
+        let currentOrientation = UIApplication.sharedApplication().statusBarOrientation
+        
+        if currentOrientation == orientation {
+            return
+        }
+        
+        //根据要旋转的方向,使用Masonry重新修改限制
+        if (orientation == UIInterfaceOrientation.Portrait) {//
+            let currentCell = tableiewForVideo.cellForRowAtIndexPath(NSIndexPath(forRow: currentIndexPath.row, inSection: 0)) as! HKFTableViewCell
+//            wmPlayer mas_remakeConstraints:^(MASConstraintMaker *make) {
+//                make.top.equalTo(currentCell.backgroundIV).with.offset(0);
+//                make.left.equalTo(currentCell.backgroundIV).with.offset(0);
+//                make.right.equalTo(currentCell.backgroundIV).with.offset(0);
+//                make.height.equalTo(@(currentCell.backgroundIV.frame.size.height));
+//                }];
+            wmPlayer.snp_remakeConstraints(closure: { (make) in
+                make.top.equalTo(currentCell.videoImage).offset(0)
+                make.left.right.equalTo(currentCell.videoImage).offset(0)
+                make.height.equalTo(currentCell.videoImage.frame.size.height)
+            })
+        }else{
+            //这个地方加判断是为了从全屏的一侧,直接到全屏的另一侧不用修改限制,否则会出错;
+            if (currentOrientation == UIInterfaceOrientation.Portrait) {
+//                [wmPlayer mas_remakeConstraints:^(MASConstraintMaker *make) {
+//                    make.width.equalTo(@(kScreenHeight));
+//                    make.height.equalTo(@(kScreenWidth));
+//                    make.center.equalTo(wmPlayer.superview);
+//                    }];
+                wmPlayer.snp_remakeConstraints(closure: { (make) in
+                    make.width.equalTo(ScreenWidth)
+                    make.height.equalTo(ScreenHeight)
+                    make.center.equalTo(wmPlayer.superview!)
+                })
+            }
+        }
+        
+        
+        UIApplication.sharedApplication().setStatusBarOrientation(orientation, animated: false)
+        UIView.beginAnimations(nil, context: nil)
+        wmPlayer.transform = CGAffineTransformIdentity
+//        wmPlayer.transform = 
+        UIView.setAnimationDuration(1.0)
+        UIView.commitAnimations()
+        
+    }
+    
+}
 
 
 
 
+*/
 

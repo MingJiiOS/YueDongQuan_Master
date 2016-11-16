@@ -79,7 +79,7 @@ class HKFPostActivityVC: UIViewController,UITextViewDelegate,AMapLocationManager
     
     
     func selectQuanZiClick(){
-        NSLog("点击了选择圈子")
+//        NSLog("点击了选择圈子")
         helper.getGeocodeAction()
     }
     
@@ -161,7 +161,7 @@ extension HKFPostActivityVC {
                 
                 let str = (json.object) as! NSDictionary
                 
-                NSLog("json = \(json)")
+//                NSLog("json = \(json)")
                 
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
                     self.dismissViewControllerAnimated(true, completion: nil)

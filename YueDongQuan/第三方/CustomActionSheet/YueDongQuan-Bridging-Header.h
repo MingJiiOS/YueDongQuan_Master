@@ -65,7 +65,7 @@
 //重写发现
 //#import "SegmentViewController.h"
 //#import "UIView+frame.h"
-
+//#import "WMPlayer.h"//视频播放
 
 
 #import "LiuXSegmentView.h"

@@ -80,7 +80,7 @@ class SignRankBtnController: UIViewController,SignHeaderViewDelegate {
     }
     
     func clickSignBtn(sender: UIButton) {
-        NSLog("sender:\(sender.selected)")
+//        NSLog("sender:\(sender.selected)")
         
         
         
@@ -267,7 +267,7 @@ extension SignRankBtnController {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                NSLog("json1=\(json)")
+//                NSLog("json1=\(json)")
                 let dict = (json.object) as! NSDictionary
                 self.mysignModel = MySignModel.init(fromDictionary: dict)
                 if (self.mysignModel.code == "200" && self.mysignModel.flag == "1") {//签到成功
@@ -323,7 +323,7 @@ extension SignRankBtnController {
                     
                     self.SignHeaderview.sportStatus.text = "运动中"
                     self.toDaySignInfo = self.mysignModel.data.array
-                    NSLog("count = \(self.toDaySignInfo.count)")
+//                    NSLog("count = \(self.toDaySignInfo.count)")
                     self.signTableView.reloadData()
                     
                     if self.mysignModel.data.array.count == 0{
@@ -334,7 +334,7 @@ extension SignRankBtnController {
                     let timeInterval = timeTemp.timeIntervalSince1970
                     
                     let timer = NSDate().timeIntervalSince1970 - timeInterval
-                    NSLog("timer = \(timer)")
+//                    NSLog("timer = \(timer)")
                     self.sportTime = timer
 
                 }else if (self.mysignModel.code == "401" && self.mysignModel.flag == "1"){//已经签到了
@@ -366,7 +366,7 @@ extension SignRankBtnController {
             case .Success:
                 let json = JSON(data: response.data!)
                 
-                NSLog("json2=\(json)")
+//                NSLog("json2=\(json)")
                 let dict = (json.object) as! NSDictionary
                 
                 
