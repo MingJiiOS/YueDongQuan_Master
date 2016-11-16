@@ -53,7 +53,7 @@ class QuanZiViewController: RCConversationListViewController
         searchBtn.tag = 2
         searchBtn.setImage(UIImage(named:secondBtnImageString),
                                    forState: UIControlState.Normal)
-        searchBtn.custom_acceptEventInterval = 0.5
+//        searchBtn.custom_acceptEventInterval = 0.5
         searchBtn .addTarget(self, action: #selector(clickBtnAction),
                                    forControlEvents: .TouchUpInside)
         let settingBtn = UIButton(type: .Custom)
@@ -64,7 +64,7 @@ class QuanZiViewController: RCConversationListViewController
                                    forState: UIControlState.Normal)
         settingBtn.frame = CGRectMake(72, 5, 44, 44)
         settingBtn.tag = 3
-        settingBtn.custom_acceptEventInterval = 0.5
+//        settingBtn.custom_acceptEventInterval = 0.5
         settingBtn .addTarget(self, action: #selector(clickBtnAction),
                                     forControlEvents: .TouchUpInside)
         settingBtn.sizeToFit()

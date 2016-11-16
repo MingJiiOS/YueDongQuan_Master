@@ -9,7 +9,7 @@
 #import "YJTabBarButton.h"
 #import "YJBadgeView.h"
 #import "UIView+Frame.h"
-
+//#import "UIControl+Custom.h"
 
 #define YJImageRidio 0.7
 
@@ -50,7 +50,7 @@
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         // 设置文字字体
         self.titleLabel.font = [UIFont systemFontOfSize:12];
-        
+//        self.custom_acceptEventInterval = 100;
     }
     return self;
 }

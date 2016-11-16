@@ -8,7 +8,7 @@
 
 import UIKit
 import RealmSwift
-class YDQLoginRegisterViewController: UIViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegate{
+class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegate{
     
     var registModel : RegistModel!
     
@@ -182,13 +182,15 @@ class YDQLoginRegisterViewController: UIViewController,UITextFieldDelegate,RCAni
                                 
                         })
                         
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismissViewControllerAnimated(true, completion: { 
+                            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+                        })
                        
    
                     }
                     }, fail: { (error) in
-                        
-                     print("返回错误信息",error)
+                     self.showMJProgressHUD("请求超时", isAnimate: false, startY: ScreenHeight-40-40-40-20)
+                     
                        
                 })
             }
@@ -201,17 +203,15 @@ class YDQLoginRegisterViewController: UIViewController,UITextFieldDelegate,RCAni
                     self.registModel = model
                     if self.registModel.isRegistSuccess != true{
                         
-//                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
+                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
                     }else{
-//                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
+                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
                         
                     }
                     }, fail: { (error) in
                         
-                    print("返回错误信息",error)
-                        self.dismissViewControllerAnimated(true, completion: { 
-
-                        })
+                   self.showMJProgressHUD("请求超时", isAnimate: false, startY: ScreenHeight-40-40-40-20)
+                        
                 })
             }
             
@@ -360,10 +360,6 @@ class YDQLoginRegisterViewController: UIViewController,UITextFieldDelegate,RCAni
     func acountTextDidChange(fication:NSNotification)  {
         let textfield = fication.object as! UITextField
         
-        
-        
-        
-       
         switch textfield.tag {
         case 10:
             
@@ -374,7 +370,7 @@ class YDQLoginRegisterViewController: UIViewController,UITextFieldDelegate,RCAni
             }else if NSString(string: textfield.text!).length == 11{
                 //判断电话是否存在
                 if validateUtils.validatePhoneNumber(textfield.text) != true {
-                    print("电话号码错误")
+                    self.showMJProgressHUD("电话号码有误", isAnimate: true, startY: ScreenHeight-40-40-40-20)
                 }else{
                     //MARK:登录时判断电话是否已经注册
                     let phoneModel = MJRequestModel()

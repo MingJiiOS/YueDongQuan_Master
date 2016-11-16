@@ -75,6 +75,7 @@ class SendPhoneNumberView: UIView {
         })
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(textvalue), name: UITextFieldTextDidChangeNotification, object: nil)
         yanZhengMaFeild.placeholder = "填写短信验证码"
+        yanZhengMaFeild.keyboardType = .NumberPad
         
         reSendBtn.snp_makeConstraints { (make) in
             make.top.equalTo((yanZhengMaFeild.snp_bottom)).offset(kGAP)

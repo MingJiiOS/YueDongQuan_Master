@@ -4,7 +4,7 @@
 
 #import "YXActionSheetButton.h"
 #import "YXCustomActionSheet.h"
-#import "UIControl+Custom.h"
+//#import "UIControl+Custom.h"
 #import "HMSegmentedControl.h"
 
 
