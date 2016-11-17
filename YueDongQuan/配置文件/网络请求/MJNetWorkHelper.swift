@@ -37,7 +37,8 @@ class MJNetWorkHelper: NSObject {
                 let str = json.object
                 print("接口名 = \(interfaceName)",json)
 
-                    success(responseDic: str as! NSDictionary, success: true)
+                success(responseDic: str as! NSDictionary,
+                        success: true)
             case .Failure(let error):
                 fail(error: error)
                 print(error)

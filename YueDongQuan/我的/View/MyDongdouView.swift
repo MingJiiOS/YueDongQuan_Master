@@ -59,7 +59,7 @@ class MyDongdouView: UIView {
             make.height.equalTo(20)
         }
         backbtn.contentHorizontalAlignment = .Left
-        backbtn.custom_acceptEventInterval = 0.5
+//        backbtn.custom_acceptEventInterval = 0.5
         backbtn.setTitle("←|我的动豆", forState: UIControlState.Normal)
         backbtn.sizeToFit()
         backbtn .addTarget(self, action: #selector(back), forControlEvents: UIControlEvents.TouchUpInside)
@@ -75,7 +75,7 @@ class MyDongdouView: UIView {
         explainBtn.setTitle("说明", forState: UIControlState.Normal)
         explainBtn.titleLabel?.textColor = UIColor.whiteColor()
         explainBtn.sizeToFit()
-        explainBtn.custom_acceptEventInterval = 0.5
+//        explainBtn.custom_acceptEventInterval = 0.5
         
         //我的身家
         self .addSubview(myBody)
