@@ -100,7 +100,7 @@ class HeaderView: UIView {
                     make.width.equalTo((ScreenWidth-margin*2)/4)
                 }
                 guanZhu.setTitle("关注", forState: UIControlState.Normal)
-                guanZhu.custom_acceptEventInterval = 0.5
+//                guanZhu.custom_acceptEventInterval = 0.5
                 guanZhu.contentVerticalAlignment = .Bottom
                 guanZhu.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
                 guanZhu.setTitleColor(UIColor.whiteColor(),
@@ -123,7 +123,7 @@ class HeaderView: UIView {
                 let changDi = likeButton(type: .Custom)
                 changDi.tag = 11
                 headerBgView .addSubview(changDi)
-                changDi.custom_acceptEventInterval = 0.5
+//                changDi.custom_acceptEventInterval = 0.5
                 changDi.snp_makeConstraints { (make) in
                     make.left.equalTo(guanZhu.snp_right)
                     make.top.equalTo(singleBtn.snp_bottom)
@@ -152,7 +152,7 @@ class HeaderView: UIView {
                 //获赞
                 let huoZan = likeButton(type: .Custom)
                 headerBgView .addSubview(huoZan)
-                huoZan.custom_acceptEventInterval = 0.5
+//                huoZan.custom_acceptEventInterval = 0.5
                 huoZan.tag = 12
                 huoZan.snp_makeConstraints { (make) in
                     make.left.equalTo(changDi.snp_right)
@@ -182,7 +182,7 @@ class HeaderView: UIView {
                 //圈子
                 let quanZi = likeButton(type: .Custom)
                 headerBgView .addSubview(quanZi)
-                quanZi.custom_acceptEventInterval = 0.5
+//                quanZi.custom_acceptEventInterval = 0.5
                 quanZi.tag = 13
                 quanZi.snp_makeConstraints { (make) in
                     make.left.equalTo(huoZan.snp_right)
@@ -221,10 +221,10 @@ class HeaderView: UIView {
     }
     
     func configmyInfoContent(model:myInfoModel,isBigV:Bool)  {
-        guanZhuLabel.text = model.data.bsum.description
-        changDiLabel.text = model.data.msum.description
-        huoZanLabel.text = model.data.asum.description
-        quanZiLabel.text = model.data.psum.description
+        guanZhuLabel.text = model.data.asum.description
+        changDiLabel.text = model.data.bsum.description
+        huoZanLabel.text = model.data.psum.description
+        quanZiLabel.text = model.data.msum.description
         singleBtn.setTitle(userInfo.age, forState: UIControlState.Normal)
         headImage.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc))
         if isBigV != true {

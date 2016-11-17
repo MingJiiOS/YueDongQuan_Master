@@ -24,6 +24,9 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
     //场馆名字
     var changGuanName : String!
     
+    var fieldModel : FieldModel?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +36,7 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
         tableView.frame = self.view.frame
         tableView.delegate = self
         tableView.dataSource = self
+        
         self.view .addSubview(tableView)
         self.view .addSubview(newChangDi)
         self.view .addSubview(sureSelect)
@@ -73,28 +77,36 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
     
     //MARK dataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 9
+        if self.fieldModel != nil {
+            return (self.fieldModel?.data.array.count)!
+        }
+        return 0
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("cell")
         tableView.allowsSelection = false
-        cell = UITableViewCell(style:.Subtitle, reuseIdentifier: "cell")
-        cell?.imageView?.image = UIImage(named: "img_message_2x")
-        cell?.textLabel?.text = String(format: "重庆江南体育馆%d",indexPath.row)
-        cell?.detailTextLabel?.text = "离你 300m"
-        cell?.detailTextLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
-        cell?.textLabel?.textColor = UIColor.grayColor()
-        let btn = MHRadioButton(groupId: "firstGroup", atIndex: 0)
-        MHRadioButton.addObserver(self, forFroupId: "firstGroup")
-        btn.backgroundColor = UIColor.whiteColor()
-        
-        cell?.accessoryView = btn
-        
+        cell = stytemCell(style:.Subtitle, reuseIdentifier: "cell")
+        if self.fieldModel != nil {
+            cell?.imageView?.sd_setImageWithURL(NSURL(string: (self.fieldModel?.data.array[indexPath.row].thumbnailSrc)!), placeholderImage: nil)
+            cell?.textLabel?.text = String(format: (self.fieldModel?.data.array[indexPath.row].name)!)
+            
+            cell?.detailTextLabel?.text = String(format: "离你 %0.1fm", (self.fieldModel?.data.array[indexPath.row].distance)!)
+            cell?.detailTextLabel?.textColor = UIColor.grayColor()
+            cell?.detailTextLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+            cell?.textLabel?.textColor = UIColor.blackColor()
+            let btn = MHRadioButton(groupId: "firstGroup", atIndex: 0)
+            MHRadioButton.addObserver(self, forFroupId: "firstGroup")
+            btn.backgroundColor = UIColor.whiteColor()
+            cell?.accessoryView = btn
+            
+            
+        }
         return cell!
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+        return kAutoStaticCellHeight
     }
+   
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
@@ -130,7 +142,8 @@ extension SelectChangDiViewController {
                 "latitude":latitude.description
             ]
             MJNetWorkHelper().sites(sites, sitesModel: dict, success: { (responseDic, success) in
-                
+                self.fieldModel = DataSource().getsitesData(responseDic)
+                self.tableView.reloadData()
                 }, fail: { (error) in
                     
             })

@@ -182,7 +182,7 @@ extension HeInfoVC {
                      "pageSize":5]
         MJNetWorkHelper().checkHeFound(hefound, HeFoundModel: dict, success: { (responseDic, success) in
             self.hefoundModel = DataSource().gethefoundData(responseDic)
-            self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.hefoundModel, waitUntilDone: true)
+            self.performSelectorOnMainThread(#selector(self.updateHeFoundUI), withObject: self.hefoundModel, waitUntilDone: true)
             }) { (error) in
             self.showMJProgressHUD("请求发生错误", isAnimate: false, startY: ScreenHeight-80)
         }
@@ -194,38 +194,74 @@ extension HeInfoVC {
      operateId	当前系统操作者ID
     */
     func focusOnHe(sender:UIButton)  {
-        let dict = ["v":v,
-                    "uid":self.userid,
-                    "operateId":userInfo.uid.description]
-        MJNetWorkHelper().focus(focus,
-                                focusModel: dict,
-                                success: { (responseDic, success) in
-            
-                  self.focusModel = DataSource().getfocusData(responseDic)
-                  self.performSelectorOnMainThread(#selector(self.updateUI),
-                                                  withObject: self.focusModel,
-                                                  waitUntilDone: true)
-            }) { (error) in
-               self.showMJProgressHUD(error.description,
-                                      isAnimate: false,
-                                      startY: ScreenHeight-40-40-10)
+        
+        if self.heinfoModel != nil {
+            //发送单聊消息
+            if self.heinfoModel?.data.heIsFocus == true && self.heinfoModel?.data.meIsFocus == true {
+                let singleChat = RCConversationViewController()
+
+                singleChat.conversationType = .ConversationType_PRIVATE
+                singleChat.targetId = self.userid
+                singleChat.userName = userInfo.name
+                if self.heinfoModel != nil {
+                   singleChat.title = self.heinfoModel?.data.name
+                }
+               self.navigationController?.pushViewController(singleChat, animated: true)
+            }
+            if self.heinfoModel?.data.meIsFocus != true{
+                let dict = ["v":v,
+                            "uid":self.userid,
+                            "operateId":userInfo.uid.description]
+                MJNetWorkHelper().focus(focus,
+                                        focusModel: dict,
+                                        success: { (responseDic, success) in
+                                            
+                                            self.focusModel = DataSource().getfocusData(responseDic)
+                                            self.performSelectorOnMainThread(#selector(self.updateUI),
+                                                withObject: self.focusModel,
+                                                waitUntilDone: true)
+                }) { (error) in
+                    self.showMJProgressHUD(error.description,
+                                           isAnimate: false,
+                                           startY: ScreenHeight-40-40-10)
+                }
+            }
         }
         
+        
+        
+        
+    }
+    func updateHeFoundUI()  {
+        self.heInfoTable.reloadData()
+        if self.heinfoModel != nil {
+            
+            if self.heinfoModel?.data.heIsFocus == true && self.heinfoModel?.data.meIsFocus == true {
+                self.bottomView?.setTitle("发送消息", forState: UIControlState.Normal)
+            }
+            
+            if self.heinfoModel?.data.meIsFocus != true{
+                if self.heinfoModel?.data.sex != "男" {
+                    self.bottomView?.setTitle("关注她", forState: UIControlState.Normal)
+                }else{
+                    self.bottomView?.setTitle("关注他", forState: UIControlState.Normal)
+                }
+            }else{
+                self.bottomView?.setTitle("已关注", forState: UIControlState.Normal)
+            }
+        }
     }
     
     
-    
     func updateUI()  {
-        self.heInfoTable.reloadData()
-        if self.heinfoModel != nil {
-            if self.heinfoModel?.data.sex != "男" {
-                self.bottomView?.setTitle("关注她", forState: UIControlState.Normal)
-            }else{
-                self.bottomView?.setTitle("关注他", forState: UIControlState.Normal)
-            }
-        }
+       
         if self.focusModel != nil{
-            
+           if self.focusModel?.data.meIsFocus == true{
+                self.bottomView?.setTitle("已关注", forState: UIControlState.Normal)
+            }
+            if self.focusModel?.data.heIsFocus == true && self.focusModel?.data.meIsFocus == true {
+                self.bottomView?.setTitle("发送消息", forState: UIControlState.Normal)
+            }
         }
     }
 }

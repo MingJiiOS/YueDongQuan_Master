@@ -227,13 +227,9 @@ class DataSource: NSObject {
         return model!
     }
     //MARK:解析附近的场地信息数据
-    func getsitesData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getsitesData(datasource:NSDictionary) -> FieldModel {
+        let model = FieldModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析场地签到排行数据
     func getsignrankingData(datasource:NSDictionary) -> MJResponseModel {
