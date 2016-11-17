@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailsVC: MainViewController {
+class DetailsVC: MainViewController,ChatKeyBoardDelegate,ChatKeyBoardDataSource {
 
     private var  table : UITableView?
     
@@ -19,6 +19,10 @@ class DetailsVC: MainViewController {
     var ZeroCommentAry = [myFoundCommentComment]()
     //找出评论不是 0 的数组 这是回复数组
     var NoZeroCommentAry = [myFoundCommentComment]()
+    
+   
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         table = UITableView(frame: CGRectZero, style: UITableViewStyle.Grouped)
@@ -28,6 +32,10 @@ class DetailsVC: MainViewController {
         table?.delegate = self
         table?.dataSource = self
         table?.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
+        
+        self.view .addSubview(self.keyboard)
+        self.view.bringSubviewToFront(self.keyboard)
+        
         let zeroarray = NSMutableArray()
         let nozeroarray = NSMutableArray()
         for model in self.detailCommentArray {
@@ -61,7 +69,37 @@ class DetailsVC: MainViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
     }
+    
+    lazy var keyboard:ChatKeyBoard = {
+       var keyboard = ChatKeyBoard(navgationBarTranslucent: true)
+        keyboard.delegate = self
+        keyboard.dataSource = self
+        keyboard.keyBoardStyle = KeyBoardStyle.Comment
+        keyboard.allowVoice = false
+        keyboard.allowMore = false
+        keyboard.allowSwitchBar = false
+        keyboard.placeHolder = "评论"
+        return keyboard
+        
+        
+    }()
+    internal func chatKeyBoardToolbarItems() -> [ChatToolBarItem]! {
+        let item1 = ChatToolBarItem(kind: BarItemKind.Face, normal: "face", high: "face_HL", select: "keyboard")
+        return [item1]
+    }
+    internal func chatKeyBoardFacePanelSubjectItems() -> [FaceThemeModel]! {
+        let model = FaceSourceManager.loadFaceSource() as! [FaceThemeModel]
+        return model
+    }
+    internal func chatKeyBoardMorePanelItems() -> [MoreItem]! {
+        let item1 = MoreItem(picName: "pinc", highLightPicName: "More_HL", itemName: "more")
+        return [item1]
+    }
 }
+
+
+
+
 extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
@@ -83,8 +121,11 @@ extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
             
             
             detailscommentCell?.configPingLunCell(self.ZeroCommentAry[indexPath.section - 1],subModel:self.NoZeroCommentAry,
-                                                      indexpath: 0)
-            
+                                                      indexpath: indexPath)
+            detailscommentCell?.commentBtnBlock({ (btn, indexpath) in
+                
+                self.keyboard.keyboardUpforComment()
+            })
             
             return detailscommentCell!
         }
@@ -118,7 +159,7 @@ extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
                                                               config: { (sourceCell:UITableViewCell!) in
                 let cell = sourceCell as! DetailsSayCell
                 cell.configPingLunCell(self.ZeroCommentAry[indexPath.section - 1],subModel:self.NoZeroCommentAry,
-                                    indexpath: indexPath.row)
+                                    indexpath: indexPath)
                 }, cache: { () -> [NSObject : AnyObject]! in
                 
                 return [kHYBCacheUniqueKey : (self.sayArray?.id.description)!,
@@ -135,4 +176,20 @@ extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.0001
     }
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.keyboard.keyboardDownForComment()
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

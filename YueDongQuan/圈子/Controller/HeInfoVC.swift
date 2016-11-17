@@ -238,17 +238,19 @@ extension HeInfoVC {
             
             if self.heinfoModel?.data.heIsFocus == true && self.heinfoModel?.data.meIsFocus == true {
                 self.bottomView?.setTitle("发送消息", forState: UIControlState.Normal)
+            }else{
+                if self.heinfoModel?.data.meIsFocus != true{
+                    if self.heinfoModel?.data.sex != "男" {
+                        self.bottomView?.setTitle("关注她", forState: UIControlState.Normal)
+                    }else{
+                        self.bottomView?.setTitle("关注他", forState: UIControlState.Normal)
+                    }
+                }else{
+                    self.bottomView?.setTitle("已关注", forState: UIControlState.Normal)
+                } 
             }
             
-            if self.heinfoModel?.data.meIsFocus != true{
-                if self.heinfoModel?.data.sex != "男" {
-                    self.bottomView?.setTitle("关注她", forState: UIControlState.Normal)
-                }else{
-                    self.bottomView?.setTitle("关注他", forState: UIControlState.Normal)
-                }
-            }else{
-                self.bottomView?.setTitle("已关注", forState: UIControlState.Normal)
-            }
+            
         }
     }
     
