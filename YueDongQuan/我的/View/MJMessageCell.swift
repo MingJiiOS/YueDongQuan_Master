@@ -8,8 +8,9 @@
 
 import UIKit
 protocol MJMessageCellDelegate {
+    
     func reloadCellHeightForModel(model:myFoundModel,indexPath:NSIndexPath)
-    func passCellHeightWithMessageModel(model:myFoundModel,commentModel:CommentModel,indexPath:NSIndexPath,cellHeight:CGFloat,commentCell:MJCommentCell,messageCell:MJMessageCell)
+    func passCellHeightWithMessageModel(model:myFoundModel,commentModel:myFoundCommentComment,indexPath:NSIndexPath,cellHeight:CGFloat,commentCell:MJCommentCell,messageCell:MJMessageCell)
     func deleteSayContentFromMySayContent(index:NSIndexPath)
     
 }
@@ -33,7 +34,7 @@ class MJMessageCell: UITableViewCell {
     var hefoundCommentModel = [HeFoundComment]()
     
     
-    typealias CommentBtnClickBlock = (commentBtn:UIButton,indexPath:NSIndexPath)->Void
+    typealias CommentBtnClickBlock = (commentBtn:UIButton,indexPath:NSIndexPath,pingluntype:PingLunType)->Void
     var commentBlock : CommentBtnClickBlock?
     func CommentBtnClick(block:CommentBtnClickBlock)  {
         commentBlock = block
@@ -274,7 +275,7 @@ class MJMessageCell: UITableViewCell {
     }
     func commentAction(sender:UIButton)  {
         if ((self.commentBlock) != nil) {
-            self.commentBlock!(commentBtn: sender,indexPath: self.indexPath);
+            self.commentBlock!(commentBtn: sender,indexPath: self.indexPath,pingluntype:.pinglun);
         }
     }
     
@@ -345,7 +346,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         }else{
           self.commentBtn?.setTitle("0", forState: UIControlState.Normal)
         }
-        self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: ""))
+        self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
         self.myfoundModel = model
 
         let attrString = NSMutableAttributedString(string:  model.data.array[indexpath.row].content)
@@ -566,7 +567,8 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
     }
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! MJCommentCell
-//        self.delegate?.passCellHeightWithMessageModel(self.myfoundModel!, commentModel: self.commentModel[indexPath.row], indexPath: indexPath, cellHeight: cell_height, commentCell: cell, messageCell: self)
+        
+        self.delegate?.passCellHeightWithMessageModel(self.myfoundModel!, commentModel: self.commentModel[indexPath.row], indexPath: indexPath, cellHeight: cell_height, commentCell: cell, messageCell: self)
     }
     func cellHeightByData1(imageNum:Int)->CGFloat{
         let totalWidth = self.bounds.size.width
@@ -613,7 +615,7 @@ extension MJMessageCell{
         }else{
             self.commentBtn?.setTitle("0", forState: UIControlState.Normal)
         }
-        self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: ""))
+        self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
         
         
         let attrString = NSMutableAttributedString(string:  model.data.array[indexpath.row].content)

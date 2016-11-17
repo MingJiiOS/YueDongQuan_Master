@@ -132,7 +132,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                     make.bottom.equalTo(-5)
                     make.width.equalTo(50)
                  })
-                 cell.imageView?.sd_setImageWithURL(NSURL(string: thumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: ""))
+                 cell.imageView?.sd_setImageWithURL(NSURL(string: thumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: "热动篮球LOGO"))
             
                 
                 
@@ -158,7 +158,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                     cell.textLabel?.text = joinNameAry[indexPath.row] as? String
                 
                 
-                 cell.imageView?.sd_setImageWithURL(NSURL(string: jointhumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: ""))
+                 cell.imageView?.sd_setImageWithURL(NSURL(string: jointhumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: "热动篮球LOGO"))
                  
                     return cell
                 

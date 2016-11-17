@@ -45,9 +45,14 @@ class CircleDataView: UIView, UITableViewDelegate,UITableViewDataSource{
         
         if indexPath.section == 0 {
             cell?.textLabel?.text = "圈子logo"
+            if circleLogo != nil {
+                cell?.imageView?.sd_setImageWithURL(NSURL(string: circleLogo!),
+                                                    placeholderImage: UIImage(named: "热动篮球LOGO"))
+            }else{
+                cell?.imageView?.sd_setImageWithURL(NSURL(string: ""),
+                                                    placeholderImage: UIImage(named: "热动篮球LOGO"))
+            }
             
-            cell?.imageView?.sd_setImageWithURL(NSURL(string: circleLogo!),
-                                                placeholderImage: nil)
             
             return cell!
         }

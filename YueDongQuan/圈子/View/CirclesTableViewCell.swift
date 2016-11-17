@@ -54,7 +54,7 @@ class CirclesTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     func config(circlesModel:CirclesModel,indexPath:NSIndexPath)  {
-        self.imageView?.sd_setImageWithURL(NSURL(string: circlesModel.data.array[indexPath.row].thumbnailSrc), placeholderImage: nil)
+        self.imageView?.sd_setImageWithURL(NSURL(string: circlesModel.data.array[indexPath.row].thumbnailSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
         
         self.textLabel?.text = circlesModel.data.array[indexPath.row].name
         self.detailTextLabel?.text = NSString(format: "%d 人在热论", circlesModel.data.array[indexPath.row].number) as String

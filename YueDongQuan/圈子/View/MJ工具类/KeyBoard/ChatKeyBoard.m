@@ -57,6 +57,8 @@ CGFloat getDifferenceH(CGRect frame)
 + (instancetype)keyBoard
 {
     return [self keyBoardWithNavgationBarTranslucent:YES];
+    
+ 
 }
 
 + (instancetype)keyBoardWithNavgationBarTranslucent:(BOOL)translucent

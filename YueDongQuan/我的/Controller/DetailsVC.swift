@@ -33,7 +33,7 @@ class DetailsVC: MainViewController,ChatKeyBoardDelegate,ChatKeyBoardDataSource 
         table?.dataSource = self
         table?.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
         
-        self.view .addSubview(self.keyboard)
+        self.view.addSubview(self.keyboard)
         self.view.bringSubviewToFront(self.keyboard)
         
         let zeroarray = NSMutableArray()
@@ -122,7 +122,7 @@ extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
             
             detailscommentCell?.configPingLunCell(self.ZeroCommentAry[indexPath.section - 1],subModel:self.NoZeroCommentAry,
                                                       indexpath: indexPath)
-            detailscommentCell?.commentBtnBlock({ (btn, indexpath) in
+            detailscommentCell?.commentBtnBlock({ (btn, indexpath,pingluntype) in
                 
                 self.keyboard.keyboardUpforComment()
             })

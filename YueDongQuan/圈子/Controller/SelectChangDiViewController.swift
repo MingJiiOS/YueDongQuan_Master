@@ -87,7 +87,7 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
         tableView.allowsSelection = false
         cell = stytemCell(style:.Subtitle, reuseIdentifier: "cell")
         if self.fieldModel != nil {
-            cell?.imageView?.sd_setImageWithURL(NSURL(string: (self.fieldModel?.data.array[indexPath.row].thumbnailSrc)!), placeholderImage: nil)
+            cell?.imageView?.sd_setImageWithURL(NSURL(string: (self.fieldModel?.data.array[indexPath.row].thumbnailSrc)!), placeholderImage: UIImage(named: "热动篮球LOGO"))
             cell?.textLabel?.text = String(format: (self.fieldModel?.data.array[indexPath.row].name)!)
             
             cell?.detailTextLabel?.text = String(format: "离你 %0.1fm", (self.fieldModel?.data.array[indexPath.row].distance)!)

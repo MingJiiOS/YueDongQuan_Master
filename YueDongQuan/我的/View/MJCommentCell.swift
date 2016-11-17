@@ -10,7 +10,7 @@ import UIKit
 
 class MJCommentCell: UITableViewCell {
 
-    private var contentLabel : UILabel?
+     var contentLabel : UILabel?
     var subIndex : NSIndexPath?
     
     

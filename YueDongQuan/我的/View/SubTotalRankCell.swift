@@ -95,7 +95,7 @@ class SubTotalRankCell: UITableViewCell {
         
         self.toModel = model
       
-        head.sd_setImageWithURL(NSURL(string: toModel[indexPath.row].originalSrc), placeholderImage: nil)
+        head.sd_setImageWithURL(NSURL(string: toModel[indexPath.row].originalSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
         dongdouBtn.setImage(UIImage(named: "ic_doudong"), forState: UIControlState.Normal)
         dongdouBtn.setTitle(toModel[indexPath.row].dongdou, forState: UIControlState.Normal)
         nickName.text = toModel[indexPath.row].name
