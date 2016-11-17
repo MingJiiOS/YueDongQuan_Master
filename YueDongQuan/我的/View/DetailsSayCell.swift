@@ -21,6 +21,14 @@ class DetailsSayCell: UITableViewCell {
     private var subCommentAry = [myFoundCommentComment]()
     //子评论行数
     private var subCommentCount = 0
+    private var indexpath : NSIndexPath?
+    typealias clickReplyBtnClourse = (btn:UIButton,indexpath:NSIndexPath)->Void
+    var clickReplyBlock : clickReplyBtnClourse?
+    func commentBtnBlock(block:clickReplyBtnClourse?)  {
+        clickReplyBlock = block
+    }
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -85,6 +93,7 @@ class DetailsSayCell: UITableViewCell {
         replyBtn?.layer.cornerRadius = 10
         replyBtn?.layer.masksToBounds = true
         replyBtn?.backgroundColor = kBlueColor
+        replyBtn?.addTarget(self, action: #selector(replySomeOne), forControlEvents: UIControlEvents.TouchUpInside)
         
         // MARK:分钟数
         self.timeAgo = UILabel()
@@ -137,8 +146,8 @@ class DetailsSayCell: UITableViewCell {
         NSNotificationCenter.defaultCenter().postNotificationName("subModel", object: model, userInfo: nil)
     }
    
-    func configPingLunCell(model:myFoundCommentComment,subModel:[myFoundCommentComment],indexpath:Int)  {
-        
+    func configPingLunCell(model:myFoundCommentComment,subModel:[myFoundCommentComment],indexpath:NSIndexPath)  {
+        self.indexpath = indexpath
         self.userName?.text = model.netName
         let time = TimeStampToDate().getTimeString(model.time)
         self.timeAgo?.text = time
@@ -197,6 +206,11 @@ class DetailsSayCell: UITableViewCell {
         
         
         
+    }
+    func replySomeOne(sender:UIButton)  {
+        if clickReplyBlock != nil {
+            self.clickReplyBlock!(btn:sender,indexpath:self.indexpath!)
+        }
     }
 }
 extension DetailsSayCell : UITableViewDelegate,UITableViewDataSource{
@@ -358,11 +372,12 @@ class DetailsHeaderCell: UITableViewCell {
         //MARK:九宫格
         //照片或视频展示
         self.contentView.addSubview(self.displayView)
-        self.displayView.backgroundColor = UIColor.blackColor()
+        displayView.scrollEnabled = false
         displayView.photoWidth = (ScreenWidth - 30)/3
         displayView.photoHeight = (ScreenWidth - 30)/3
         self.displayView.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(10)
+            make.right.equalTo(-10)
             make.top.equalTo((self.contentLabel?.snp_bottom)!).offset(10)
         })
         

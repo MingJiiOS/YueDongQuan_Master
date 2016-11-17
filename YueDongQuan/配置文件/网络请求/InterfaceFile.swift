@@ -2,7 +2,7 @@
 import Foundation
 //MARK:接口地址
 
-let kURL = "http://192.168.3.20:8080/redong"
+let kURL = "http://ctyundong.com:8088/redong"
 
 
 let testUrl = "http://ctyundong.com:8088/redong"//"http://192.168.3.22:8080/redong"//
@@ -37,7 +37,7 @@ let oldpw = "oldpw"
 //MARK:接口名 修改密码
 let newpw = "newpw"
 //MARK:接口名 短信验证手机号码
-
+let sendphone = "sendphone"
 //MARK:接口名 说说点赞
 let praise = "praise"
 //MARK:接口名 说说举报
