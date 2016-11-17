@@ -75,6 +75,13 @@ class SearchController: UIViewController,UISearchBarDelegate,UIScrollViewDelegat
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.hidesBottomBarWhenPushed = true
+    }
+    override func viewWillDisappear(animated: Bool) {
+        self.tabBarController?.hidesBottomBarWhenPushed = false
+    }
+    
     
     
     func segementIndexValueChange(segement:UISegmentedControl){
@@ -179,12 +186,32 @@ extension SearchController:UITableViewDelegate,UITableViewDataSource,UIAlertView
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        
+        
         switch tableView.tag {
         case 100:
             print("点击了圈子")
+            let circleIdTemp = self.quanziData[indexPath.row].id
+            let thumbanailSrcTemp = self.quanziData[indexPath.row].originalSrc
+            let circleTitle = self.quanziData[indexPath.row].name
+            let noticeVC = QuanZiSettingViewController()
+            noticeVC.circleId = String(circleIdTemp)
+            noticeVC.Circletitle = circleTitle
+            noticeVC.thumbnailSrc = thumbanailSrcTemp
             
-            let alert = UIAlertView(title: "提示", message: "是否加入xxx圈子", delegate: self, cancelButtonTitle: "确定", otherButtonTitles: "取消")
-            alert.show()
+            let v = NSObject.getEncodeString("20160901")
+            let circleid = String(circleIdTemp)
+            let dict = ["v":v,"circleId":circleid]
+            MJNetWorkHelper().circlemember(circlemember,
+                                           circlememberModel: dict,
+                                           success: { (responseDic, success) in
+                                            let model = DataSource().getcirclememberData(responseDic)
+                                            noticeVC.memberModel = model
+                                            self.navigationController?.pushViewController(noticeVC, animated: true)
+            }) { (error) in
+                
+            }
             
         case 200:
             print("点击了场地")
@@ -194,9 +221,7 @@ extension SearchController:UITableViewDelegate,UITableViewDataSource,UIAlertView
     }
     
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        
-    }
+    
     
 }
 

@@ -63,7 +63,7 @@
 //#import "SegmentViewController.h"
 //#import "UIView+frame.h"
 //#import "WMPlayer.h"//视频播放
-
+#import "NSObject+Emoji_String.h"//评论中有表情需进行编码，展示时需要解码
 
 #import "LiuXSegmentView.h"
 //高德地图

@@ -105,6 +105,7 @@
 		5C7D291B1DD30609000D26E7 /* zoomout1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C7D290D1DD30609000D26E7 /* zoomout1.png */; };
 		5C7D291C1DD30609000D26E7 /* zoomout2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C7D290E1DD30609000D26E7 /* zoomout2.png */; };
 		5C7D291D1DD30609000D26E7 /* zoomout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C7D290F1DD30609000D26E7 /* zoomout@2x.png */; };
+		5C87D6031DDD84600085CE83 /* NSObject+Emoji_String.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C87D6021DDD84600085CE83 /* NSObject+Emoji_String.m */; };
 		5C8886B51DC750EB001BC7A8 /* DiscorveryDataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8886B41DC750EB001BC7A8 /* DiscorveryDataAPI.swift */; };
 		5C8886B71DC75112001BC7A8 /* DiscorveryHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8886B61DC75112001BC7A8 /* DiscorveryHTTPClient.swift */; };
 		5C8886B91DC7512C001BC7A8 /* DiscoveryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8886B81DC7512C001BC7A8 /* DiscoveryManager.swift */; };
@@ -865,6 +866,8 @@
 		5C7D290D1DD30609000D26E7 /* zoomout1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoomout1.png; sourceTree = "<group>"; };
 		5C7D290E1DD30609000D26E7 /* zoomout2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoomout2.png; sourceTree = "<group>"; };
 		5C7D290F1DD30609000D26E7 /* zoomout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoomout@2x.png"; sourceTree = "<group>"; };
+		5C87D6011DDD84600085CE83 /* NSObject+Emoji_String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Emoji_String.h"; sourceTree = "<group>"; };
+		5C87D6021DDD84600085CE83 /* NSObject+Emoji_String.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Emoji_String.m"; sourceTree = "<group>"; };
 		5C8886B41DC750EB001BC7A8 /* DiscorveryDataAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscorveryDataAPI.swift; sourceTree = "<group>"; };
 		5C8886B61DC75112001BC7A8 /* DiscorveryHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscorveryHTTPClient.swift; sourceTree = "<group>"; };
 		5C8886B81DC7512C001BC7A8 /* DiscoveryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryManager.swift; sourceTree = "<group>"; };
@@ -3751,6 +3754,8 @@
 			children = (
 				BFE1F6401DDC8C020050F5C6 /* UIControl+Custom.h */,
 				BFE1F6411DDC8C020050F5C6 /* UIControl+Custom.m */,
+				5C87D6011DDD84600085CE83 /* NSObject+Emoji_String.h */,
+				5C87D6021DDD84600085CE83 /* NSObject+Emoji_String.m */,
 				5C7D28E71DD2D3AF000D26E7 /* RTMP */,
 				BFBABCB91DC1DE98009F068E /* RCAnimatedImagesView */,
 				5C27BAFE1DB761F2005A2F8D /* DACircularProgress */,
@@ -4456,6 +4461,7 @@
 				BF071F351D9A0D68000551F7 /* HeaderView.swift in Sources */,
 				BFB44F651DC9731B0066D49F /* OfficialAccountToolbar.m in Sources */,
 				BFAD63241D9E13BE006234E1 /* MJLoginOpreationHelper.swift in Sources */,
+				5C87D6031DDD84600085CE83 /* NSObject+Emoji_String.m in Sources */,
 				BFA6D1091DD56B1D008819BC /* TotalRankArray.swift in Sources */,
 				5C90F1381D8FCFA0005E16AF /* UIImage+YJImage.m in Sources */,
 				BFDB2A9A1DA6000600A65DAD /* YDQLoginRegisterViewController.swift in Sources */,
