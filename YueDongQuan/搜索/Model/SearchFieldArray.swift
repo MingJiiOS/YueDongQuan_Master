@@ -13,7 +13,9 @@ class SearchFieldArray{
 	var name : String!
 	var number : Int!
 	var thumbnailSrc : String!
-
+    var longitude : Float!
+    var latitude : Float!
+    
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
@@ -23,6 +25,8 @@ class SearchFieldArray{
 		name = dictionary["name"] as? String
 		number = dictionary["number"] as? Int
 		thumbnailSrc = dictionary["thumbnailSrc"] as? String
+        longitude = dictionary["longitude"] as? Float
+        latitude = dictionary["latitude"] as? Float
 	}
 
 }

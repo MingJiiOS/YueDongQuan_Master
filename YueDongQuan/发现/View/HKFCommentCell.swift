@@ -48,7 +48,8 @@ class HKFCommentCell: UITableViewCell {
             }
         }
         model.reply = reply
-        let str = String(format: "%@回复%@：%@",model.netName,model.reply!,model.content)
+        let contentTemp = NSObject.stringToContentEmoji(model.content)
+        let str = String(format: "%@回复%@：%@",model.netName,model.reply!,contentTemp)
         
         let text = NSMutableAttributedString(string: str)
         
