@@ -803,9 +803,9 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     
     
     func clickCellHeaderImageForToHeInfo(index: NSIndexPath, uid: String) {
-        
+        let he_Uid = uid
         let heInfoVC = HeInfoVC()
-        heInfoVC.userid = "1"
+        heInfoVC.userid = he_Uid
         self.navigationController?.pushViewController(heInfoVC, animated: true)
     }
     

@@ -64,7 +64,7 @@ class SearchController: UIViewController,UISearchBarDelegate,UIScrollViewDelegat
         circleTableView.registerClass(SearchResultCell.self, forCellReuseIdentifier: "SearchResultCell")
         fieldTableView.delegate = self
         fieldTableView.dataSource = self
-        fieldTableView.registerClass(SearchResultCell.self, forCellReuseIdentifier: "SearchResultCell")
+        fieldTableView.registerClass(SearchFieldCell.self, forCellReuseIdentifier: "SearchFieldCell")
         searchContentView.addSubview(circleTableView)
         searchContentView.addSubview(fieldTableView)
         
@@ -105,6 +105,10 @@ class SearchController: UIViewController,UISearchBarDelegate,UIScrollViewDelegat
             requestFieldData("2", content: searchBar.text!)
         
         }
+        
+        if searchBar.isFirstResponder() {
+            searchBar.resignFirstResponder()
+        }
     }
     
     
@@ -113,7 +117,7 @@ class SearchController: UIViewController,UISearchBarDelegate,UIScrollViewDelegat
 
 
 
-extension SearchController:UITableViewDelegate,UITableViewDataSource{
+extension SearchController:UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate{
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch tableView.tag {
@@ -127,19 +131,39 @@ extension SearchController:UITableViewDelegate,UITableViewDataSource{
         return 0
     }
     
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch tableView.tag {
+        case 100:
+            return "圈子搜索"
+        case 200:
+            return "场地搜索"
+        default:
+            break
+        }
+        return ""
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         switch tableView.tag {
         case 100:
             let cell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell") as? SearchResultCell
-            cell!.fieldImage.sd_setImageWithURL(NSURL(string: self.quanziData[indexPath.row].originalSrc))
+            cell!.fieldImage.sd_setImageWithURL(NSURL(string: self.quanziData[indexPath.row].originalSrc),placeholderImage: UIImage(named: "热动篮球LOGO"))
+            
             cell?.fieldName.text = self.quanziData[indexPath.row].name
+//            cell?.fieldPerson.text = String(format: "%@",self.quanziData[indexPath.row].)
             return cell!
 
         case 200:
-            let cell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell") as? SearchResultCell
-            cell!.fieldImage.sd_setImageWithURL(NSURL(string: self.fieldData[indexPath.row].thumbnailSrc))
-            cell?.fieldName.text = self.fieldData[indexPath.row].name
+            let cell = tableView.dequeueReusableCellWithIdentifier("SearchFieldCell") as? SearchFieldCell
+            cell?.configWithModel(self.fieldData[indexPath.row])
             return cell!
         default:
             break
@@ -151,6 +175,27 @@ extension SearchController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60
+    }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch tableView.tag {
+        case 100:
+            print("点击了圈子")
+            
+            let alert = UIAlertView(title: "提示", message: "是否加入xxx圈子", delegate: self, cancelButtonTitle: "确定", otherButtonTitles: "取消")
+            alert.show()
+            
+        case 200:
+            print("点击了场地")
+        default:
+            break
+        }
+    }
+    
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        
     }
     
 }

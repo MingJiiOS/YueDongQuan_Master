@@ -494,8 +494,9 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     func clickHeader(){
         
+        let uid = self.testModel!.uid
         NSLog("点击了头像")
-        self.delegate?.clickCellHeaderImageForToHeInfo(self.indexPath!, uid: "6")
+        self.delegate?.clickCellHeaderImageForToHeInfo(self.indexPath!, uid: "\(uid)")
     }
     
     
