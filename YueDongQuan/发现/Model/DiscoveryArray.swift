@@ -32,7 +32,9 @@ class DiscoveryArray{
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: NSDictionary){
-        thumbnailSrc = dictionary["thumbnailSrc"] as? String
+        if let thumbnailSrcTemp = dictionary["thumbnailSrc"] as? String{
+            thumbnailSrc = thumbnailSrcTemp
+        }
 		address = dictionary["address"] as? String
 		aname = dictionary["aname"] as? String
         rname = dictionary["rname"] as? String

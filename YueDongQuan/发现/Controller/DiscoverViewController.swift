@@ -191,7 +191,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
             controlArray[i].mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(DiscoverViewController.pullDownRef))
             controlArray[i].mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(DiscoverViewController.pullUpRef))
             controlArray[i].estimatedRowHeight = 100
-            controlArray[i].rowHeight = UITableViewAutomaticDimension
+//            controlArray[i].rowHeight = UITableViewAutomaticDimension
 
             
         }
@@ -663,7 +663,30 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         return 0
     }
     
- 
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch tableView.tag {
+        case 0:
+            let model = self.lastestModelData[indexPath.row]
+        case 1:
+            let model = self.imageModelData[indexPath.row]
+        case 2:
+            let model = self.videoModelData[indexPath.row]
+        case 3:
+            let model = self.activityModelData[indexPath.row]
+        case 4:
+            let model = self.matchModelData[indexPath.row]
+        case 5:
+            let model = self.joinModelData[indexPath.row]
+        case 6:
+            let model = self.zhaomuModelData[indexPath.row]
+        case 7:
+            let model = self.nearbyModelData[indexPath.row]
+        case 8:
+            let model = self.myNotifyModelData[indexPath.row]
+        default:
+            break
+        }
+    }
     
     
     func clickVideoViewAtIndexPath(cell: HKFTableViewCell, videoId: String) {
@@ -776,6 +799,14 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         default:
             break
         }
+    }
+    
+    
+    func clickCellHeaderImageForToHeInfo(index: NSIndexPath, uid: String) {
+        
+        let heInfoVC = HeInfoVC()
+        heInfoVC.userid = "1"
+        self.navigationController?.pushViewController(heInfoVC, animated: true)
     }
     
     

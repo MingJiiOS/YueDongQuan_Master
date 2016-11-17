@@ -21,6 +21,9 @@ protocol HKFTableViewCellDelegate {
     func clickDianZanBtnAtIndexPath(indexPath:NSIndexPath)
     func clickJuBaoBtnAtIndexPath(foundId:Int,typeId:Int)
     func clickVideoViewAtIndexPath(cell:HKFTableViewCell,videoId:String)
+    
+    func clickCellHeaderImageForToHeInfo(index:NSIndexPath,uid:String)//头像点击事件
+    
 }
 
 
@@ -83,8 +86,9 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.headImageView?.backgroundColor = UIColor.whiteColor()
         self.headImageView?.layer.masksToBounds = true
         self.headImageView?.layer.cornerRadius = 20
-        
-        
+        self.headImageView?.userInteractionEnabled = true
+        let headerTap = UITapGestureRecognizer(target: self, action: #selector(clickHeader))
+        self.headImageView?.addGestureRecognizer(headerTap)
         weak var weakSelf = self
         
         self.headTypeView = UIImageView()
@@ -302,7 +306,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.pinglunBtn.setTitle("0", forState: UIControlState.Normal)
             self.liulanCount.text = "\(subModel.isPraise)"
         }
-        NSLog("dianzanCount = \(subModel.isPraise)")
+        
         if subModel.isPraise != 0{
             self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
             self.dianzanBtn.setTitle("\(subModel.isPraise)", forState: UIControlState.Normal)
@@ -357,7 +361,12 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
         self.descLabel?.attributedText = html
         self.locationLabel.text = subModel.address
-//        self.headImageView?.sd_setImageWithURL(NSURL(string: subModel.thumbnailSrc))
+        if subModel.thumbnailSrc != nil {
+            self.headImageView?.sd_setImageWithURL(NSURL(string: subModel.thumbnailSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
+        }else{
+            self.headImageView?.sd_setImageWithURL(NSURL(string: ""), placeholderImage: UIImage(named: "热动篮球LOGO"))
+        }
+        
         self.testModel = subModel
         
         self.timeStatus?.text = getTimeString(subModel.time)
@@ -482,6 +491,14 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
     }
     
+    
+    func clickHeader(){
+        
+        NSLog("点击了头像")
+        self.delegate?.clickCellHeaderImageForToHeInfo(self.indexPath!, uid: "6")
+    }
+    
+    
     func clickPingLun(){
         let id = self.testModel?.id
         self.delegate?.createPingLunView(self.indexPath!,sayId: id!, type: PingLunType.pinglun)
@@ -489,10 +506,6 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     func clickDianZanBtn(sender:UIButton){
         
-//        if sender.selected {
-//            self.delegate?.clickDianZanBtnAtIndexPath(self.indexPath!)
-//            self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
-//        }
         self.delegate?.clickDianZanBtnAtIndexPath(self.indexPath!)
         self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
     }
