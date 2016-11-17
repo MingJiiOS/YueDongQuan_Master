@@ -19,7 +19,7 @@ import SVProgressHUD
 
 
 @objc(DiscoverViewController)
-class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationManagerDelegate,UIScrollViewDelegate{
+class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationManagerDelegate,UIScrollViewDelegate,ChatKeyBoardDelegate,ChatKeyBoardDataSource{
     let titleArray = ["最新", "图片", "视频","活动", "约战", "求加入", "招募","附近","我的关注"]
     var manger = AMapLocationManager()
     var lastContentOffset:CGFloat?
@@ -34,8 +34,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     
     private var selectTableView = UITableView()
-    private var critiqueView : UIView!
-    private var textField : UITextField!
+    
+    
     private var commentSayIndex : NSIndexPath?
     private var typeStatus : PingLunType?
     private var commentSayId:Int?
@@ -91,6 +91,22 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     private let http = DiscorveryDataAPI.shareInstance
     
+    
+    
+    lazy var keyboard:ChatKeyBoard = {
+        var keyboard = ChatKeyBoard(navgationBarTranslucent: true)
+        keyboard.delegate = self
+        keyboard.dataSource = self
+        keyboard.keyBoardStyle = KeyBoardStyle.Comment
+        keyboard.allowVoice = false
+        keyboard.allowMore = false
+        keyboard.allowSwitchBar = false
+        keyboard.placeHolder = "评论"
+        return keyboard
+        
+        
+    }()
+    
     private var currentShowTableViewIndex = 0 {
         didSet{
             
@@ -104,16 +120,12 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     override func viewDidLoad() {
         super.viewDidLoad()
         manger.delegate = self
-//        manger.startUpdatingLocation()
+        
         self.edgesForExtendedLayout = .None
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiscoverViewController.notifyChangeModel), name: "LastestOrderDataChanged", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DiscoverViewController.NoDataNotifyProcess), name: "SenderNoDataNotify", object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear), name: UIKeyboardWillShowNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear), name:UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIKeyboardWillChangeFrameNotification, object: nil)
+    
         
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
@@ -150,6 +162,10 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         
         pullDownRef()
         
+        
+        self.view.addSubview(self.keyboard)
+        self.view.bringSubviewToFront(self.keyboard)
+
 //        let fpsLabel = YYFPSLabel(frame: CGRect(x: 200, y: 200, width: 50, height: 30))
 //        fpsLabel.sizeToFit()
 //        self.navigationItem.titleView!.addSubview(fpsLabel)
@@ -191,7 +207,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
             controlArray[i].mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(DiscoverViewController.pullDownRef))
             controlArray[i].mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(DiscoverViewController.pullUpRef))
             controlArray[i].estimatedRowHeight = 100
-            controlArray[i].rowHeight = UITableViewAutomaticDimension
+//            controlArray[i].rowHeight = UITableViewAutomaticDimension
 
             
         }
@@ -388,9 +404,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillChangeFrameNotification, object: nil)
+        
     }
     
     
@@ -401,11 +415,7 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-//        let page = Int(scrollView.contentOffset.x / ScreenWidth)
-//        
-//        NSLog("page123456=\(page)")
-//        self.currentShowTableViewIndex = page
-//        segmentVC.defaultIndex = page + 1
+
         
     }
     
@@ -413,7 +423,40 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         
     }
     
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.keyboard.keyboardDownForComment()
+    }
+    
+    internal func chatKeyBoardToolbarItems() -> [ChatToolBarItem]! {
+        let item1 = ChatToolBarItem(kind: BarItemKind.Face, normal: "face", high: "face_HL", select: "keyboard")
+        return [item1]
+    }
+    internal func chatKeyBoardFacePanelSubjectItems() -> [FaceThemeModel]! {
+        let model = FaceSourceManager.loadFaceSource() as! [FaceThemeModel]
+        return model
+    }
+    internal func chatKeyBoardMorePanelItems() -> [MoreItem]! {
+        let item1 = MoreItem(picName: "pinc", highLightPicName: "More_HL", itemName: "more")
+        return [item1]
+    }
+    
+    func chatKeyBoardSendText(text: String!) {
+        
+        let str  = NSObject.emojiToString(text)
+        print(str)
+//        let goodstr = NSObject.stringToContentEmoji(str)
+//        print(goodstr)
+        
+        sendMsg(str)
+        
+        self.keyboard.keyboardDownForComment()
+    }
+    
+    
 }
+
+
+
 
 
 
@@ -663,7 +706,30 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         return 0
     }
     
- 
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch tableView.tag {
+        case 0:
+            let model = self.lastestModelData[indexPath.row]
+        case 1:
+            let model = self.imageModelData[indexPath.row]
+        case 2:
+            let model = self.videoModelData[indexPath.row]
+        case 3:
+            let model = self.activityModelData[indexPath.row]
+        case 4:
+            let model = self.matchModelData[indexPath.row]
+        case 5:
+            let model = self.joinModelData[indexPath.row]
+        case 6:
+            let model = self.zhaomuModelData[indexPath.row]
+        case 7:
+            let model = self.nearbyModelData[indexPath.row]
+        case 8:
+            let model = self.myNotifyModelData[indexPath.row]
+        default:
+            break
+        }
+    }
     
     
     func clickVideoViewAtIndexPath(cell: HKFTableViewCell, videoId: String) {
@@ -779,6 +845,14 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     }
     
     
+    func clickCellHeaderImageForToHeInfo(index: NSIndexPath, uid: String) {
+        let he_Uid = uid
+        let heInfoVC = HeInfoVC()
+        heInfoVC.userid = he_Uid
+        self.navigationController?.pushViewController(heInfoVC, animated: true)
+    }
+    
+    
 }
 
 
@@ -804,101 +878,17 @@ extension DiscoverViewController  {
 
 
 
-extension DiscoverViewController:UITextFieldDelegate {
+extension DiscoverViewController {
     
     func createTextView(){
-        self.critiqueView = UIView(frame: CGRect(x: 0, y: ScreenHeight - 89, width: ScreenWidth, height: 40))
-        self.critiqueView.backgroundColor = UIColor.whiteColor()
-        self.view.addSubview(self.critiqueView)
         
-        self.textField = UITextField(frame: CGRect(x: 10, y: 5, width: ScreenWidth - 70, height: 30))
-        self.textField.borderStyle = .RoundedRect
-        self.textField.backgroundColor = UIColor.whiteColor()
-        self.textField.placeholder = "输入评论...."
-        self.textField.font = UIFont.systemFontOfSize(13)
-        self.textField.clearButtonMode = .Always
-        self.textField.returnKeyType = .Done
-        self.textField.delegate = self
-        self.critiqueView.addSubview(self.textField)
-        
-        let btn = UIButton(type: UIButtonType.Custom)
-        btn.frame = CGRect(x: ScreenWidth - 50, y: 5, width: 40, height: 30)
-        btn.setTitle("发送", forState: UIControlState.Normal)
-        btn.setTitleColor(UIColor(red: 254/255, green: 124/255, blue: 148/255, alpha: 1.0), forState: UIControlState.Normal)
-        self.critiqueView.addSubview(btn)
-        btn.titleLabel?.font = UIFont.systemFontOfSize(14)
-        btn.addTarget(self, action: #selector(sendMsg), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        
+        self.keyboard.keyboardUpforComment()
     }
     
     
-    func keyboardWillAppear(notification: NSNotification) {
-        
-        if let userInfo = notification.userInfo {
-            
-            if let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
-                keyboardHeight = keyboardSize.size.height
-                
-                
-                UIView.animateWithDuration(0.333) {
-                    
-                }
-                
-                
-            }}
-        
-    }
     
-    func keyboardWillDisappear(notification:NSNotification){
+    func sendMsg(text:String){
         
-        if let userInfo = notification.userInfo {
-            if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-                keyboardHeight = keyboardSize.height
-            }}
-        
-    }
-    
-    func keyboardWillChangeFrame(notifycation: NSNotification){
-        if let userinfo = notifycation.userInfo{
-            
-            let duration = (userinfo[UIKeyboardAnimationDurationUserInfoKey])?.doubleValue
-            
-            
-            if let keyboardSize = (userinfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
-                UIView.animateWithDuration(duration!, animations: {
-                    if (keyboardSize.origin.y > self.view.height){
-                        self.critiqueView.y = self.view.height - self.critiqueView.height
-                    }else{
-                        self.critiqueView.y = keyboardSize.origin.y - self.critiqueView.height
-                    }
-                })
-            }
-        }
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        UIView.animateWithDuration(0.2) {
-            self.critiqueView.frame = CGRect(x: 0, y: ScreenHeight - 294, width: ScreenWidth, height: 40)
-        }
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        return true
-    }
-    
-    func sendMsg(){
-        
-        
-        UIView.animateWithDuration(0.2) {
-            self.critiqueView.frame = CGRect(x: 0, y: ScreenHeight - 89, width: ScreenWidth, height: 40)
-        }
-        
-        if self.textField.isFirstResponder() {
-            self.textField.resignFirstResponder()
-        }
-        
-
         
         switch typeStatus! {
         case .pinglun:
@@ -907,7 +897,7 @@ extension DiscoverViewController:UITextFieldDelegate {
             let model = DiscoveryCommentModel()
             model.netName = userInfo.name
             model.commentId = 0
-            model.content = self.textField.text!
+            model.content = text
             model.foundId = self.commentSayId
             model.id = (self.commentSayIndex?.row)! + 1
             model.reply = ""
@@ -957,13 +947,13 @@ extension DiscoverViewController:UITextFieldDelegate {
             
             
             
-            requestCommentSay("", content: self.textField.text!, foundId: self.commentSayId!)
+            requestCommentSay("", content: text, foundId: self.commentSayId!)
             
         case .selectCell :
             let model = DiscoveryCommentModel()
             model.netName = userInfo.name
             model.commentId = self.commentModel?.uid
-            model.content = self.textField.text!
+            model.content = text
             model.foundId = self.commentSayId
             model.id = (self.commentModel?.id)! + 1
             model.reply = self.commentModel?.netName
@@ -1013,7 +1003,7 @@ extension DiscoverViewController:UITextFieldDelegate {
             
             
             
-            requestCommentSay((self.commentModel?.uid.description)!, content: self.textField.text!, foundId: self.commentSayId!)
+            requestCommentSay((self.commentModel?.uid.description)!, content: text, foundId: self.commentSayId!)
             
         }
         
