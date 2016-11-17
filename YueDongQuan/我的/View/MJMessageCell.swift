@@ -166,11 +166,13 @@ class MJMessageCell: UITableViewCell {
     //MARK:九宫格
     //照片或视频展示
     self.contentView.addSubview(self.displayView)
-    self.displayView.backgroundColor = UIColor.blackColor()
+    
     displayView.photoWidth = (ScreenWidth - 30)/3
     displayView.photoHeight = (ScreenWidth - 30)/3
+    displayView.scrollEnabled = false
     self.displayView.snp_makeConstraints(closure: { (make) in
         make.left.equalTo(10)
+        make.right.equalTo(-10)
         make.top.equalTo((self.contentLabel?.snp_bottom)!).offset(10)
     })
     

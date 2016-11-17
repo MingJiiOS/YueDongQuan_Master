@@ -20,12 +20,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YueDongQuan/&#x6211;&#x7684;/View/DetailsSayCell.swift"
-            timestampString = "500804889.937971"
+            timestampString = "501046610.377141"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
+            landmarkName = "tableView(tableView:numberOfRowsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

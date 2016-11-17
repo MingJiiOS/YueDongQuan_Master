@@ -7,6 +7,7 @@
 #import "UIControl+Custom.h"
 #import "HMSegmentedControl.h"
 //黄方果导入的
+#import "ChatKeyBoard.h"
 #import "MHRadioButton.h"
 #import "validateUtils.h"
 #import "WJPopoverViewController.h"
