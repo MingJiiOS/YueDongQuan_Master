@@ -147,7 +147,7 @@ extension SignRankingCOntroller : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        NSLog("didselect =\(indexPath.section)--\(indexPath.row)行")
+//        NSLog("didselect =\(indexPath.section)--\(indexPath.row)行")
     }
     
     
@@ -179,7 +179,7 @@ extension SignRankingCOntroller {
                         if item.uid == userInfo.uid {
                             
                             self.mySignRankingModel.append(item)
-                            NSLog("mySignRankingModel = \(self.mySignRankingModel.first?.name)")
+//                            NSLog("mySignRankingModel = \(self.mySignRankingModel.first?.name)")
                             self.signTableView.reloadData()
                             break
                         }

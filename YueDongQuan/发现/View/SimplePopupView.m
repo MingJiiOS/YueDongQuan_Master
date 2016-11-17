@@ -194,7 +194,7 @@ static NSString *reuseCell = @"popViewCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"click：%ld",indexPath.row);
+//    NSLog(@"click：%ld",indexPath.row);
     if (self.delegate&&[self.delegate respondsToSelector:@selector(simplePopupView:clickAtIndexPath:)]) {
         [self.delegate simplePopupView:self clickAtIndexPath:indexPath];
     }

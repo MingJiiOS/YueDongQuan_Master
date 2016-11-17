@@ -54,6 +54,14 @@
     button.selected = YES;
     _selectedButton = button;
     
+    for (UIButton *btn in _buttons) {
+        if (btn == button) {
+            break;
+        }
+        btn.selected = NO;
+        
+    }
+    
     // 通知tabBarVc切换控制器，
     if ([_delegate respondsToSelector:@selector(tabBar:didClickButton:)]) {
         [_delegate tabBar:self didClickButton:button.tag];

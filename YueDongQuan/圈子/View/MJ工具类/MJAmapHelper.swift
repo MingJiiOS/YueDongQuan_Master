@@ -56,7 +56,7 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
         
         completionBlock = { [weak self] (location: CLLocation?, regeocode: AMapLocationReGeocode?, error: NSError?) in
             if let error = error {
-                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
+//                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
                 
                 if error.code == AMapLocationErrorCode.LocateFailed.rawValue {
                     return;
@@ -94,7 +94,7 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
 //        locationManager.requestLocationWithReGeocode(true, completionBlock: completionBlock)
         locationManager.requestLocationWithReGeocode(true) { (location:CLLocation!, regecode:AMapLocationReGeocode!, error:NSError!) in
             if let error = error {
-                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
+//                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
                 
                 if error.code == AMapLocationErrorCode.LocateFailed.rawValue {
                     return;
@@ -113,7 +113,7 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
               _ = regecode.formattedAddress
 
                     let address = regecode.formattedAddress
-                    NSLog("address = \(address)")
+//                    NSLog("address = \(address)")
 
                     
                 }
@@ -129,7 +129,7 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
         var address = ""
         locationManager.requestLocationWithReGeocode(true) { (location:CLLocation!, regecode:AMapLocationReGeocode!, error:NSError!) in
             if let error = error {
-                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
+//                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
                 
                 if error.code == AMapLocationErrorCode.LocateFailed.rawValue {
                     return;
@@ -140,10 +140,10 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
                 
                 if let regecode = regecode {
                     
-                    NSLog("regecode = \(regecode.province)")
+//                    NSLog("regecode = \(regecode.province)")
                     //地址信息
                     address = regecode.formattedAddress
-                    NSLog("address = \(address)")
+//                    NSLog("address = \(address)")
                     self.addressBlock!(address:address)
                     
                 }

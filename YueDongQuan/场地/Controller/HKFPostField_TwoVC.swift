@@ -37,7 +37,7 @@ class HKFPostField_TwoVC: UIViewController {
         setNav()
         setUI()
         
-        NSLog("addressTemp = \(addressTemp),userLocationTemp = \(userLocationTemp.coordinate.latitude)")
+//        NSLog("addressTemp = \(addressTemp),userLocationTemp = \(userLocationTemp.coordinate.latitude)")
         
         
         
@@ -63,7 +63,7 @@ class HKFPostField_TwoVC: UIViewController {
     }
     
     func clickSelectImage(){
-        NSLog("点击选择照片")
+//        NSLog("点击选择照片")
         
         let actionSheetController: UIAlertController = UIAlertController(title: "请选择", message:nil, preferredStyle: .ActionSheet)
         
@@ -345,7 +345,7 @@ class HKFPostField_TwoVC: UIViewController {
     }
     
     internal func clickSaveFieldInfoBtn(){
-        NSLog("点击了保存信息")
+//        NSLog("点击了保存信息")
         
         
         if self.imageData.length == 0{

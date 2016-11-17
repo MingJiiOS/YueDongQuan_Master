@@ -221,10 +221,10 @@ class HeaderView: UIView {
     }
     
     func configmyInfoContent(model:myInfoModel,isBigV:Bool)  {
-        guanZhuLabel.text = model.data.bsum.description
-        changDiLabel.text = model.data.msum.description
-        huoZanLabel.text = model.data.asum.description
-        quanZiLabel.text = model.data.psum.description
+        guanZhuLabel.text = model.data.asum.description
+        changDiLabel.text = model.data.bsum.description
+        huoZanLabel.text = model.data.psum.description
+        quanZiLabel.text = model.data.msum.description
         singleBtn.setTitle(userInfo.age, forState: UIControlState.Normal)
         headImage.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc))
         if isBigV != true {

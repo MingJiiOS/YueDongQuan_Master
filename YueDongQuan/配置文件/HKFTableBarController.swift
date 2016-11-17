@@ -89,7 +89,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     }
     
     func tabBarDidClickPlusButton(tabBar: YJTabBar!) {
-        NSLog("zhongjiananiu")
+//        NSLog("zhongjiananiu")
         let customSheet = YXCustomActionSheet()
         let contentArray = [["name": "图片", "icon": "ic_picture"], ["name": "视频", "icon": "ic_shiping"], ["name": "招募", "icon": "ic_zhaomu"], ["name": "约战", "icon": "ic_yuezhan"], ["name": "求加入", "icon": "ic_qiujiaru"], ["name": "活动", "icon": "ic_huodong"]]
         customSheet.backgroundColor = UIColor.whiteColor()
@@ -105,7 +105,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         
         if index == 1 {
             if dataInfo.flag {
-                NSLog("xxxxxxx")
+//                NSLog("xxxxxxx")
                 let notify = ["siteId":dataInfo.siteId,"startTime":dataInfo.startTime,"distance":dataInfo.distance,"nowTime":dataInfo.nowTime]
                 let notice = NSNotification(name: "CheckSignInfoProcess", object: notify)
                 NSNotificationCenter.defaultCenter().postNotification(notice)
@@ -134,7 +134,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         
         switch btn.tag {
         case 0:
-            NSLog("第\(0)个按钮被点击了")
+//            NSLog("第\(0)个按钮被点击了")
             let postImageVC = HKFPostPictureSayVC()
             let nav = CustomNavigationBar(rootViewController: postImageVC)
             self.presentViewController(nav, animated: false, completion: {
@@ -146,35 +146,35 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
             
             
         case 1:
-            NSLog("第\(1)个按钮被点击了")
+//            NSLog("第\(1)个按钮被点击了")
             let postVideo = HKFPostVideoSayVC()
             let nav = CustomNavigationBar(rootViewController: postVideo)
             self.presentViewController(nav, animated: false, completion: {
                 
             })
         case 2:
-            NSLog("第\(2)个按钮被点击了")
+//            NSLog("第\(2)个按钮被点击了")
             let postZhaoMu = HKFPostRecruitmentVC()
             let nav = CustomNavigationBar(rootViewController: postZhaoMu)
             self.presentViewController(nav, animated: false, completion: {
                 
             })
         case 3:
-            NSLog("第\(3)个按钮被点击了")
+//            NSLog("第\(3)个按钮被点击了")
             let postJoin = HKFPostMatchVC()
             let nav = CustomNavigationBar(rootViewController: postJoin)
             self.presentViewController(nav, animated: false, completion: {
                 
             })
         case 4:
-            NSLog("第\(4)个按钮被点击了")
+//            NSLog("第\(4)个按钮被点击了")
             let postJoinTeam = HKFPostJoinTeamVC()
             let nav = CustomNavigationBar(rootViewController: postJoinTeam)
             self.presentViewController(nav, animated: false, completion: {
                 
             })
         case 5:
-            NSLog("第\(5)个按钮被点击了")
+//            NSLog("第\(5)个按钮被点击了")
             let postActivity = HKFPostActivityVC()
             let nav = CustomNavigationBar(rootViewController: postActivity)
             self.presentViewController(nav, animated: false, completion: {
@@ -199,7 +199,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
             case .Success:
                 let json = JSON(data: response.data!)
                 
-                NSLog("checkJson=\(json)")
+//                NSLog("checkJson=\(json)")
                 let dict = (json.object) as! NSDictionary
                 
                 

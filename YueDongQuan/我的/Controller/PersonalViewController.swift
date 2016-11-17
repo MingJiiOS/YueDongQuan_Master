@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import MJRefresh
+@objc(PersonalViewController)
 class PersonalViewController: MainViewController{
 
     var headerBgView = UIView()

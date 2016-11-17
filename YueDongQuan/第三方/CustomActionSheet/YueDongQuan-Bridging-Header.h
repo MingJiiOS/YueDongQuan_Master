@@ -4,12 +4,8 @@
 
 #import "YXActionSheetButton.h"
 #import "YXCustomActionSheet.h"
-//#import "UIControl+Custom.h"
+#import "UIControl+Custom.h"
 #import "HMSegmentedControl.h"
-
-
-
-
 //黄方果导入的
 #import "MHRadioButton.h"
 #import "validateUtils.h"
@@ -65,7 +61,7 @@
 //重写发现
 //#import "SegmentViewController.h"
 //#import "UIView+frame.h"
-
+//#import "WMPlayer.h"//视频播放
 
 
 #import "LiuXSegmentView.h"
