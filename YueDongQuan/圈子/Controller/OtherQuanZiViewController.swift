@@ -11,9 +11,9 @@ import Alamofire
 import SwiftyJSON
 class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableViewDataSource,MAMapViewDelegate,AMapLocationManagerDelegate{
     
-    
-    
-    
+    //搜索场地传过来的数据模型
+    var fieldData = [SearchFieldArray]()
+
     var  otherView : MJOtherQuanZiView!
     
     var isHaveData : Bool = false
@@ -54,67 +54,68 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = "附近的圈子"
-        whiteView.frame = CGRectMake(0, ScreenHeight, ScreenWidth ,ScreenHeight/3 )
-        self.view.addSubview(whiteView)
-        whiteView .addSubview(label)
-        label.snp_makeConstraints { (make) in
-            make.top.equalTo(whiteView.snp_top).offset(10)
-            make.left.equalTo(whiteView.snp_left).offset(10)
-            make.height.equalTo(15)
-            
+        if self.fieldData.count != 0 {
+            self.title = "场地位置信息"
+            self.creatViewWithIsResult(true)
+        }else{
+            self.title = "附近的圈子"
+            self.creatViewWithIsResult(false)
+            changeFrameAnimate(0.5)
         }
-        label.text = "附近活跃圈子"
-        label.textColor = UIColor.grayColor()
-        whiteView .addSubview(tableView)
-        tableView.snp_makeConstraints { (make) in
-            make.left.right.equalTo(0)
-            make.top.equalTo(label.snp_bottom).offset(5)
-            make.bottom.equalTo(0)
-            
-        }
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .None
-        tableView.registerClass(CirclesTableViewCell.self, forCellReuseIdentifier: "useridentfier")
-        
-        
-        mapView.tag = 10
-        
-        self.view.addSubview(mapView)
-        mapView.snp_makeConstraints { (make) in
-            make.left.equalTo(ScreenWidth)
-            make.right.equalTo(ScreenWidth)
-            make.top.equalTo(0)
-            make.bottom.equalTo(whiteView.snp_top)
-        }
-        mapView.delegate = self
-        mapView.showsUserLocation = true
         //MARK:自定义经纬度
         annotations = NSMutableArray()
-        
-        
         initCompleteBlock()
         
         configLocationManager()
-        
-        
         //逆地理编码
         reGeocodeAction()
-        
-        changeFrameAnimate(0.5)
-        
-        
-        
-        
-        
-        
+
     }
+    func creatViewWithIsResult(isresult:Bool)  {
+        if isresult != true {
+            whiteView.frame = CGRectMake(0, ScreenHeight, ScreenWidth ,ScreenHeight/3 )
+            self.view.addSubview(whiteView)
+            whiteView .addSubview(label)
+            label.snp_makeConstraints { (make) in
+                make.top.equalTo(whiteView.snp_top).offset(10)
+                make.left.equalTo(whiteView.snp_left).offset(10)
+                make.height.equalTo(15)
+                
+            }
+            label.text = "附近活跃圈子"
+            label.textColor = UIColor.grayColor()
+            whiteView .addSubview(tableView)
+            tableView.snp_makeConstraints { (make) in
+                make.left.right.equalTo(0)
+                make.top.equalTo(label.snp_bottom).offset(5)
+                make.bottom.equalTo(0)
+                
+            }
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.separatorStyle = .None
+            tableView.registerClass(CirclesTableViewCell.self, forCellReuseIdentifier: "useridentfier")
+            mapView.tag = 10
+            self.view.addSubview(mapView)
+            mapView.snp_makeConstraints { (make) in
+                make.left.equalTo(ScreenWidth)
+                make.right.equalTo(ScreenWidth)
+                make.top.equalTo(0)
+                make.bottom.equalTo(whiteView.snp_top)
+            }
+            mapView.delegate = self
+            mapView.showsUserLocation = true
+
+        }else{
+            mapView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
+            self.view.addSubview(mapView)
+             mapView.tag = 10
+            mapView.delegate = self
+            mapView.showsUserLocation = true
+        }
+}
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-      
-       
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -124,10 +125,6 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     }
     override func viewDidAppear(animated: Bool) {
         self.locationManager.startUpdatingLocation()
-        
-        
-        
-        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -139,9 +136,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
 //        tableView.reloadData()
        
        
-    }
-
-    
+    } 
     func changeFrameAnimate(duration:NSTimeInterval)  {
         //动画
         
@@ -199,33 +194,36 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
                 annotation.coordinate = location.coordinate
                 self?.longitude = location.coordinate.longitude
                 self?.latitude = location.coordinate.latitude
-                //获取到经纬度后加载数据
-                self?.loadData()
+                //获取到经纬度后加载数据 判断是否是搜索场地信息push过来的
+                if self?.fieldData.count != 0 {
+                    self!.initAnnotionWithSearchResult()
+                }else{
+                  self?.loadData()
+                }
                 if let regeocode = regeocode {
                     annotation.title = regeocode.formattedAddress
                     annotation.subtitle = "\(regeocode.citycode)-\(regeocode.adcode)-\(location.horizontalAccuracy)m"
                 }
                 else {
-                    annotation.title = String(format: "lat:%.6f;lon:%.6f;", arguments: [location.coordinate.latitude, location.coordinate.longitude])
+                    annotation.title = String(format: "lat:%.6f;lon:%.6f;",
+                                              arguments: [location.coordinate.latitude, location.coordinate.longitude])
                     annotation.subtitle = "accuracy:\(location.horizontalAccuracy)m"
                 }
                 
                 self?.addAnnotationsToMapView(annotation)
-               
             }
             
         }
     }
-    //添加大头针
+    //添加大头针 (不是搜索push过来)
     func addAnnotationsToMapView(annotation: MAAnnotation) {
-        mapView .addAnnotations(annotations as [AnyObject])
         mapView.addAnnotation(annotation)
-        mapView.showAnnotations(annotations as [AnyObject], animated: true)
         mapView.selectAnnotation(annotation, animated: true)
         mapView.setZoomLevel(15.1, animated: false)
         mapView.setCenterCoordinate(annotation.coordinate, animated: true)
         
     }
+  
 
     //MARK:表格代理
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -237,7 +235,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         cell = CirclesTableViewCell(style: .Subtitle, reuseIdentifier: "useridentfier") as CirclesTableViewCell
         if self.circlesModel != nil {
               cell.config(self.circlesModel, indexPath: indexPath)
-              cell.delegate = self
+            
               cell.model = self.circlesModel
               cell.index = indexPath
         }
@@ -351,6 +349,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         self.presentViewController(sheet, animated: true, completion: nil)
         
     }
+    //MARK:打开百度地图
     func openBaiduMap()  {
         let urlStr = "baidumap://map/geocoder?address=北京市海淀区上地信息路9号奎科科技大厦"
         let encodeUrlString = urlStr.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
@@ -364,7 +363,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         }
 
     }
-  
+    //MARK:打开系统自带的地图
     func openStytemMap()  {
         let cur = CLLocation(latitude: 29.589202, longitude: 106.496634)
         let to = CLLocation(latitude: 29.58550212134, longitude: 106.49637401276)
@@ -411,82 +410,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
 
 }
 
-extension OtherQuanZiViewController: CirclesTableViewCellDelegate{
-    //MARK:加入圈子
-    func clickJoinBtn(circlesModel: CirclesModel, indexPath: NSIndexPath) {
-       if circlesModel.data.array[indexPath.row].typeId == 2{
-        //输入密码
-        let textFeild = ConfirmOldPw(title: "密码", message: "私密圈子需要密码", cancelButtonTitle: "取消", sureButtonTitle: "确定")
-        textFeild.show()
-        textFeild.clickIndexClosure({ (index,password) in
-            
-            
-            if index == 2{
-             
-                let dict = ["v":v,"uid":userInfo.uid.description,"pw":password,"circleId":circlesModel.data.array[indexPath.row].id,"name":circlesModel.data.array[indexPath.row].name,"typeId":"2"]
-                NSLog("加入圈子参数：%@", dict)
-                MJNetWorkHelper().joinmember(joinmember,
-                    joinmemberModel: dict,
-                    success: { (responseDic, success) in
-                        if success {
-                            let model = DataSource().getupdatenameData(responseDic)
-                            if model.code == "501"{
-                                self.showMJProgressHUD("密码错误",
-                                                       isAnimate: true,
-                                                       startY: ScreenHeight-40-40-40)
-                        }else if model.code == "303"{
-                                self.showMJProgressHUD("加入失败",
-                                                        isAnimate: true,
-                                                        startY: ScreenHeight-40-40-40)
-                            }else{
-                                self.showMJProgressHUD("加入成功",
-                                                       isAnimate: true,
-                                                       startY: ScreenHeight-40-40-40)
-                            }
-                        }
-                }) { (error) in
-                    self.showMJProgressHUD(error.description,
-                                           isAnimate: false,
-                                           startY: ScreenHeight-40-40-40)
-                }
-            }
-        })
-       }else{
-        let dict = ["v":v,
-                    "uid":userInfo.uid.description,
-                    "circleId":circlesModel.data.array[indexPath.row].id,
-                    "name":circlesModel.data.array[indexPath.row].name,
-                    "typeId":"1"]
-        
-        MJNetWorkHelper().joinmember(joinmember,
-                                     joinmemberModel: dict,
-                                     success: { (responseDic, success) in
-                                        if success {
-                                            let model = DataSource().getupdatenameData(responseDic)
-                                            if model.code == "501"{
-                                                self.showMJProgressHUD("密码错误",
-                                                    isAnimate: true,
-                                                    startY: ScreenHeight-40-40-40)
-                                            }else if model.code == "303"{
-                                                self.showMJProgressHUD("加入失败",
-                                                    isAnimate: true,
-                                                    startY: ScreenHeight-40-40-40)
-                                            }else{
-                                                self.showMJProgressHUD("加入成功",
-                                                    isAnimate: true,
-                                                    startY: ScreenHeight-40-40-40)
-                                            }
-                                        }
-        }) { (error) in
-            self.showMJProgressHUD(error.description,
-                                   isAnimate: false,
-                                   startY: ScreenHeight-40-40-40)
-        }
-        }
-        
-    }
-    
-}
+
 
 extension OtherQuanZiViewController {
     func loadData()  {
@@ -513,11 +437,11 @@ extension OtherQuanZiViewController {
                         let model = CirclesModel(fromDictionary: str as! NSDictionary)
                         self.circlesModel = model
                         self.tableView.reloadData()
-                        self.initAnnotions()
+                        self.initAnnotions(model)
                         
                     case .Failure(let error):
                         
-                        self.showMJProgressHUD(error.description, isAnimate: false,startY: ScreenHeight-40-45)
+                        self.showMJProgressHUD(error.description, isAnimate: false,startY: ScreenHeight-40-40-40-20)
                         print(error)
                     }
                     
@@ -527,10 +451,10 @@ extension OtherQuanZiViewController {
         }
         
     }
-    //MARK: - 拿到数据后根据经纬度加大头针
-    func initAnnotions() {
-        if self.circlesModel != nil {
-            for circleModel in self.circlesModel.data.array {
+    //MARK: - 拿到数据后根据经纬度加大头针 (这个方法不是搜索push过来加大头针的方法)
+    func initAnnotions(model:CirclesModel) {
+       
+            for circleModel in model.data.array {
                 //私密圈子
                 if circleModel.typeId == 1 {
                     let green = MJGreenAnnotation()
@@ -544,9 +468,10 @@ extension OtherQuanZiViewController {
 //                        let subcity = ary![0].subLocality
 //                        let street = ary![0].thoroughfare
 //                        let substreet = ary![0].subThoroughfare
-                        green.title = String(format: "大头针")
+                        green.title = String(circleModel.name)
                                                                 
                 })
+                    
             }
                 if circleModel.typeId == 2 {
                     let green = MJRedAnnotation()
@@ -560,27 +485,45 @@ extension OtherQuanZiViewController {
 //                            let subcity = ary![0].subLocality
 //                            let street = ary![0].thoroughfare
 //                            let substreet = ary![0].subThoroughfare
-                            green.title = String(format: "大头针")
+                            green.title = String(circleModel.name)
                             
                     })
  
                 }
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
+                mapView.addAnnotations(annotations as [AnyObject])
+                mapView.showAnnotations(annotations as [AnyObject], animated: true)
         }
-    }
-    
+        
     func updateUI()  {
         tableView.reloadData()
     }
     
 }
+    //MARK: - 搜索完成后取到数据push过来在地图上加大头针的方法
+    func initAnnotionWithSearchResult()  {
+        let green = MJGreenAnnotation()
+        
+        if self.fieldData.count != 0 {
+            green.coordinate = CLLocationCoordinate2D(latitude: Double(self.fieldData[0].latitude),
+                                                      longitude: Double(self.fieldData[0].longitude))
+            annotations .addObject(green)
+            let coder = CLGeocoder()
+            coder.reverseGeocodeLocation(CLLocation(latitude: Double(self.fieldData[0].latitude),
+                longitude: Double(self.fieldData[0].longitude)), completionHandler: { (ary:[CLPlacemark]?, error:NSError?) in
+                    //                        let city = ary![0].locality
+                    //                        let subcity = ary![0].subLocality
+                    //                        let street = ary![0].thoroughfare
+                    //                        let substreet = ary![0].subThoroughfare
+                    green.title = String(self.fieldData[0].name)
+                    
+            })
+            mapView.addAnnotation(green)
+            mapView.selectAnnotation(green, animated: true)
+            mapView.setZoomLevel(15.1, animated: false)
+            
+        }
+        
+        
+    }
 }

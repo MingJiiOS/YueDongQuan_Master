@@ -31,7 +31,7 @@ class MJCommentCell: UITableViewCell {
         self.contentLabel?.backgroundColor = UIColor.clearColor()
         self.contentLabel?.preferredMaxLayoutWidth = ScreenWidth - 10 - 40 - 20
         self.contentLabel?.numberOfLines = 0
-        self.contentLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+        self.contentLabel?.sizeToFit()
         self.contentLabel?.snp_makeConstraints(closure: { (make) in
             make.left.right.equalTo(0)
             make.top.equalTo(0).offset(3)

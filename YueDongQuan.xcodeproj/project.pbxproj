@@ -704,6 +704,8 @@
 		BFDBE2C21DD2B9900035B621 /* DetailsCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2C11DD2B9900035B621 /* DetailsCommentCell.swift */; };
 		BFDBE2C41DD2C0480035B621 /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2C31DD2C0480035B621 /* DetailsVC.swift */; };
 		BFE1F6421DDC8C020050F5C6 /* UIControl+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE1F6411DDC8C020050F5C6 /* UIControl+Custom.m */; };
+		BFF7C7A41DDEA9EE0065375B /* FileUploadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF7C7A21DDEA9EE0065375B /* FileUploadData.swift */; };
+		BFF7C7A51DDEA9EE0065375B /* FileUploadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF7C7A31DDEA9EE0065375B /* FileUploadModel.swift */; };
 		BFFCE0281DBEF0820045087A /* TotalRankVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFCE0271DBEF0820045087A /* TotalRankVC.swift */; };
 		BFFCE0521DBF28840045087A /* TotalRankHeadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFCE0511DBF28840045087A /* TotalRankHeadCell.swift */; };
 		BFFCE0541DBF471A0045087A /* SubTotalRankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFCE0531DBF471A0045087A /* SubTotalRankCell.swift */; };
@@ -1526,6 +1528,8 @@
 		BFDBE2C31DD2C0480035B621 /* DetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
 		BFE1F6401DDC8C020050F5C6 /* UIControl+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+Custom.h"; sourceTree = "<group>"; };
 		BFE1F6411DDC8C020050F5C6 /* UIControl+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Custom.m"; sourceTree = "<group>"; };
+		BFF7C7A21DDEA9EE0065375B /* FileUploadData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUploadData.swift; sourceTree = "<group>"; };
+		BFF7C7A31DDEA9EE0065375B /* FileUploadModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUploadModel.swift; sourceTree = "<group>"; };
 		BFFCE0271DBEF0820045087A /* TotalRankVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankVC.swift; sourceTree = "<group>"; };
 		BFFCE0511DBF28840045087A /* TotalRankHeadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankHeadCell.swift; sourceTree = "<group>"; };
 		BFFCE0531DBF471A0045087A /* SubTotalRankCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubTotalRankCell.swift; sourceTree = "<group>"; };
@@ -1987,6 +1991,8 @@
 		BF071F151D9A0D68000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BFF7C7A21DDEA9EE0065375B /* FileUploadData.swift */,
+				BFF7C7A31DDEA9EE0065375B /* FileUploadModel.swift */,
 				BF5E56211DDB2EBD00FC4312 /* SendPhoneData.swift */,
 				BF5E56221DDB2EBD00FC4312 /* SendPhoneModel.swift */,
 				BFA6D1061DD56B1D008819BC /* TotalRankArray.swift */,
@@ -4448,6 +4454,7 @@
 				BFB44F621DC9731B0066D49F /* PanelBottomView.m in Sources */,
 				5C7D28FF1DD30038000D26E7 /* JZVideoPlayerView.m in Sources */,
 				5C5CD06B1DBF0F1500D4C1FA /* SimplePopupView.m in Sources */,
+				BFF7C7A51DDEA9EE0065375B /* FileUploadModel.swift in Sources */,
 				BF071EFF1D9A0D5F000551F7 /* SubContentViewController.swift in Sources */,
 				5C27BAFA1DB761D9005A2F8D /* PYPhotoBrowseView.m in Sources */,
 				BFD41FDD1DC05F67005A22E6 /* SGGenerateQRCodeVC.m in Sources */,
@@ -4554,6 +4561,7 @@
 				BFD41FC71DC05061005A22E6 /* CustomTable.swift in Sources */,
 				BF5B75501DDB0D7C0035FF17 /* TempDataBase.swift in Sources */,
 				5C24BB6B1D9A48A200A6D25F /* HKFPostImageVC.m in Sources */,
+				BFF7C7A41DDEA9EE0065375B /* FileUploadData.swift in Sources */,
 				BFD41FB91DC03D9F005A22E6 /* TodayDongdouArray.swift in Sources */,
 				BF071F051D9A0D5F000551F7 /* MHRadioButton.m in Sources */,
 				5C3B9A031D9D17A900AF7CFE /* SearchResultCell.swift in Sources */,

@@ -13,16 +13,14 @@ class DataSource: NSObject {
     //MARK:解析用户登录信息
     func getUserInfo(datasource:NSDictionary) -> LoginModel {
           let temp = LoginModel.init(fromDictionary: datasource)
-        
-        
             if temp.code == "200"{
+                
                 userInfo.isLogin = true
                 userInfo.uid = temp.data.uid
                 userInfo.name = temp.data.name
                 userInfo.thumbnailSrc = temp.data.thumbnailSrc
                 userInfo.sex = temp.data.sex
                 let age = TimeStampToDate().TimestampToAge(temp.data.birthday)
-                
                 userInfo.age = age
                 
             }else{
@@ -65,13 +63,9 @@ class DataSource: NSObject {
         return model
     }
     //MARK:解析更新头像数据
-    func getupdateheadData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getupdateheadData(datasource:NSDictionary) -> updateNameModel {
+       let model = updateNameModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析更新姓名数据
     func getupdatenameData(datasource:NSDictionary) -> updateNameModel {

@@ -86,78 +86,51 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     @objc func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             if self.myclrclemodel != nil {
-                
-                return count1
-                
-                
-            }
+                if count1 != 0 && count2 == 0 {
+                    return count1
+                }else if count1 == 0 && count2 != 0{
+                    return count2
+                }else if count1 != 0 && count2 != 0{
+                    return count1
+                }
+               }
         }
         else{
-            
             if self.myclrclemodel != nil {
-                
                 return count2
-                
-                
             }
         }
         return 0
-        
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = stytemCell(style: .Default, reuseIdentifier: "cell")
         if self.myclrclemodel != nil {
-            
-            
             if indexPath.section == 0 {
                 //MARK:权限为圈主的数据
-                var index: Int
                  let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cell")
-                
-//                    cell.detailTextLabel?.text = self.myclrclemodel?.data.array[indexPath.row].number.description
-                    cell.detailTextLabel?.textColor = UIColor.grayColor()
-                    cell.detailTextLabel?.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
-                
-                for index = 0; index < self.myclrclemodel?.data.array.count; index += 1 {
-                    if self.myclrclemodel?.data.array[index].permissions == 1 {
-                       ownNameAry .addObject((self.myclrclemodel?.data.array[index].name)!)
-                        ownClrcleIDAry .addObject((self.myclrclemodel?.data.array[index].circleId.description)!)
-                        thumbnailSrcAry .addObject((self.myclrclemodel?.data.array[index].thumbnailSrc)!)
-                    } 
+                cell.detailTextLabel?.textColor = UIColor.grayColor()
+                cell.detailTextLabel?.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
+                if count1 != 0 && count2 == 0 {//只有自己的圈子，没有加入的
+                    cell.textLabel?.text = ownNameAry[indexPath.row] as? String
+                    cell.imageView?.sd_setImageWithURL(NSURL(string: thumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: "热动篮球LOGO"))
+                }else if count1 == 0 && count2 != 0{//只有加入的 没有自己的
+                    cell.textLabel?.text = joinNameAry[indexPath.row] as? String
+                    cell.imageView?.sd_setImageWithURL(NSURL(string: jointhumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: "热动篮球LOGO"))
+                }else if count1 != 0 && count2 != 0{//两者都有的情况
+                    cell.textLabel?.text = ownNameAry[indexPath.row] as? String
+                    
+                    cell.imageView?.sd_setImageWithURL(NSURL(string: thumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: "热动篮球LOGO"))
                 }
-                 cell.textLabel?.text = ownNameAry[indexPath.row] as? String
-                 cell.imageView?.snp_makeConstraints(closure: { (make) in
-                    make.left.equalTo(10)
-                    make.top.equalTo(5)
-                    make.bottom.equalTo(-5)
-                    make.width.equalTo(50)
-                 })
-                 cell.imageView?.sd_setImageWithURL(NSURL(string: thumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: "热动篮球LOGO"))
-            
-                
-                
-                
                  return cell
             }else{
-                var index: Int
-                let  cell = stytemCell(style: .Subtitle, reuseIdentifier: "cell")
                 
+                let  cell = stytemCell(style: .Subtitle, reuseIdentifier: "cell")
                     cell.textLabel?.text = self.myclrclemodel?.data.array[indexPath.row].name
-                    //                cell.detailTextLabel?.text = self.myclrclemodel?.data.array[indexPath.row].number.description
+
                     cell.detailTextLabel?.textColor = UIColor.grayColor()
                     cell.detailTextLabel?.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
-                    
-                    for index = 0; index < self.myclrclemodel?.data.array.count; index += 1 {
-                        if self.myclrclemodel?.data.array[index].permissions == 2 {
-                            
-                            joinNameAry .addObject((self.myclrclemodel?.data.array[index].name)!)
-                            joinClrcleIDAry.addObject((self.myclrclemodel?.data.array[index].circleId.description)!)
-                            jointhumbnailSrcAry .addObject((self.myclrclemodel?.data.array[index].thumbnailSrc)!)
-                        }
-                    }
+
                     cell.textLabel?.text = joinNameAry[indexPath.row] as? String
-                
-                
                  cell.imageView?.sd_setImageWithURL(NSURL(string: jointhumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: "热动篮球LOGO"))
                  
                     return cell
@@ -169,7 +142,6 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     //MARK：表格代理
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if self.myclrclemodel != nil {
-            
             if self.myclrclemodel?.code != "405"{
                 var index: Int
                 if self.myclrclemodel?.data != nil {
@@ -213,23 +185,45 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
         return 60
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let v = UIView()
+        if count1 != 0 && count2 == 0 {
+            if section == 0 {
+                let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
+                headLabel.text = "我管理的圈子"
+                headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+                headLabel.textAlignment = .Center
+                headLabel.textColor = UIColor.grayColor()
+                return headLabel
+            }
+        }else if count1 == 0 && count2 != 0{
+            if section == 0 {
+                let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
+                headLabel.text = "我加入的圈子"
+                headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+                headLabel.textAlignment = .Center
+                headLabel.textColor = UIColor.grayColor()
+                return headLabel
+            }
+        }else{
+            if section == 0 {
+                let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
+                headLabel.text = "我管理的圈子"
+                headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+                headLabel.textAlignment = .Center
+                headLabel.textColor = UIColor.grayColor()
+                return headLabel
+            }
+            else{
+                let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
+                headLabel.text = "我加入的圈子"
+                headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+                headLabel.textAlignment = .Center
+                headLabel.textColor = UIColor.grayColor()
+                return headLabel
+            }
+        }
         
-        if section == 0 {
-            let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
-            headLabel.text = "我管理的圈子"
-            headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
-            headLabel.textAlignment = .Center
-            headLabel.textColor = UIColor.grayColor()
-            return headLabel
-        }
-        else{
-            let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
-            headLabel.text = "我加入的圈子"
-            headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
-            headLabel.textAlignment = .Center
-            headLabel.textColor = UIColor.grayColor()
-            return headLabel
-        }
+        return v
     }
     //选中某个圈子发起聊天
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -250,42 +244,43 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                 
                 self.navigationController?.popViewControllerAnimated(true)
             }else{
-                chatVC.targetId = ownClrcleIDAry[indexPath.row] as! String
-                
-                chatVC.userName = userInfo.name
-                chatVC.title = ownNameAry[indexPath.row] as? String
-                chatVC.conversationType = .ConversationType_GROUP
-                chatVC.circleid = ownClrcleIDAry[indexPath.row] as? String
-                chatVC.thumbnailSrc = thumbnailSrcAry[indexPath.row] as? String
-//                self.loadCircleMemberInfoWithCircleId((ownClrcleIDAry[indexPath.row] as? String)!)
+                if count1 != 0 && count2 == 0 {
+                    chatVC.targetId = ownClrcleIDAry[indexPath.row] as! String
+                    chatVC.userName = userInfo.name
+                    chatVC.title = ownNameAry[indexPath.row] as? String
+                    chatVC.conversationType = .ConversationType_GROUP
+                    chatVC.circleid = ownClrcleIDAry[indexPath.row] as? String
+                    chatVC.thumbnailSrc = thumbnailSrcAry[indexPath.row] as? String
+                }else if count1 == 0 && count2 != 0{
+                    chatVC.targetId = joinClrcleIDAry[indexPath.row] as! String
+                    chatVC.userName = userInfo.name
+                    chatVC.title = joinNameAry[indexPath.row] as? String
+                    chatVC.conversationType = .ConversationType_GROUP
+                    chatVC.circleid = joinClrcleIDAry[indexPath.row] as? String
+                    chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
+                }else if count1 == 0 && count2 == 0{
+                    chatVC.targetId = ownClrcleIDAry[indexPath.row] as! String
+                    chatVC.userName = userInfo.name
+                    chatVC.title = ownNameAry[indexPath.row] as? String
+                    chatVC.conversationType = .ConversationType_GROUP
+                    chatVC.circleid = ownClrcleIDAry[indexPath.row] as? String
+                    chatVC.thumbnailSrc = thumbnailSrcAry[indexPath.row] as? String
+                }
                 self.push(chatVC)
-              
-                
-               
             }
-            
-            
+
         }else{
 
-            
             if (self.pushFlag){
-                
             }else{
-            
                 chatVC.targetId = joinClrcleIDAry[indexPath.row] as! String
                 chatVC.userName = userInfo.name
                 chatVC.title = joinNameAry[indexPath.row] as? String
                 chatVC.conversationType = .ConversationType_GROUP
                 chatVC.circleid = joinClrcleIDAry[indexPath.row] as? String
                 chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
-                
-//                self.loadCircleMemberInfoWithCircleId((joinClrcleIDAry[indexPath.row] as? String)!)
-                
-                  self.push(chatVC)
-              
-              
 
-                
+                  self.push(chatVC)
             }
 
         }
@@ -304,7 +299,21 @@ extension MyQuanZiViewController {
             let model = DataSource().getmycircleData(responseDic)
             self.myclrclemodel = model
             if model.code != "405"{
-                
+                if self.myclrclemodel != nil{
+                    for index in 0...self.myclrclemodel!.data.array.count - 1 {
+                        if self.myclrclemodel?.data.array[index].permissions == 1 {
+                            
+                            self.ownNameAry .addObject((self.myclrclemodel?.data.array[index].name)!)
+                            self.ownClrcleIDAry .addObject((self.myclrclemodel?.data.array[index].circleId.description)!)
+                            self.thumbnailSrcAry .addObject((self.myclrclemodel?.data.array[index].thumbnailSrc)!)
+                        }
+                        if self.myclrclemodel?.data.array[index].permissions == 2 {
+                            self.joinNameAry .addObject((self.myclrclemodel?.data.array[index].name)!)
+                            self.joinClrcleIDAry.addObject((self.myclrclemodel?.data.array[index].circleId.description)!)
+                            self.jointhumbnailSrcAry .addObject((self.myclrclemodel?.data.array[index].thumbnailSrc)!)
+                        }
+                    }
+                }
                  self.tableView.reloadData()
             }else{
                 self.tableView.removeFromSuperview()

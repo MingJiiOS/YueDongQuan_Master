@@ -249,7 +249,8 @@ class MJMessageCell: UITableViewCell {
     self.contentView .addSubview(self.tableView!)
     self.tableView?.snp_makeConstraints(closure: { (make) in
         make.left.equalTo(self.displayView)
-        make.top.equalTo((self.commentBtn?.snp_bottom)!).offset(5)
+        make.top.equalTo((self.commentBtn?.snp_bottom)!)
+        
         make.trailing.equalTo(-10)
     })
     self.tableView?.separatorStyle = .None
@@ -354,7 +355,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         
         
         if model.data.array[indexpath.row].images.count != 0 {
-                       let h1 = cellHeightByData1(model.data.array[indexpath.row].images.count)
+           let h1 = cellHeightByData1(model.data.array[indexpath.row].images.count)
             
             self.displayView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(h1)
@@ -371,10 +372,10 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
             var thImageStr = [String]()
             var oringIMage = [String]()
             
-            for imageModel in model.data.array[indexpath.row].images {
-                thImageStr.append(imageModel.thumbnailSrc)
-                oringIMage.append(imageModel.originalSrc)
-            }
+        for imageModel in model.data.array[indexpath.row].images {
+            thImageStr.append(imageModel.thumbnailSrc)
+            oringIMage.append(imageModel.originalSrc)
+        }
             self.displayView.thumbnailUrls = thImageStr
             self.displayView.originalUrls = oringIMage
 
@@ -405,7 +406,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
                         kHYBCacheStateKey :"",
                         kHYBRecalculateForStateKey:1]
             })
-           tableViewHeight += cellheight;
+               tableViewHeight += cellheight
         }
        
         
@@ -525,7 +526,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
                              kHYBRecalculateForStateKey:0]
                 return cache as [NSObject : AnyObject]
             }
-            return cell_height
+            return cell_height 
            }
            
            else
@@ -571,18 +572,19 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         self.delegate?.passCellHeightWithMessageModel(self.myfoundModel!, commentModel: self.commentModel[indexPath.row], indexPath: indexPath, cellHeight: cell_height, commentCell: cell, messageCell: self)
     }
     func cellHeightByData1(imageNum:Int)->CGFloat{
-        let totalWidth = self.bounds.size.width
+        
+        
         //        let lines:CGFloat = (CGFloat(imageNum))/3
         var picHeight:CGFloat = 0
         switch imageNum{
         case 1...3:
-            picHeight = totalWidth/3
+            picHeight = (ScreenWidth - 30)/3
             break
         case 4...6:
-            picHeight = totalWidth*(2/3)
+            picHeight = (ScreenWidth - 30)/3*2
             break
         case 7...9:
-            picHeight = totalWidth
+            picHeight = (ScreenWidth - 30)/3*3
             break
         default:
             picHeight = 0

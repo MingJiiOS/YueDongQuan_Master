@@ -67,7 +67,7 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
             biVcell!.accessoryType = .DisclosureIndicator
             biVcell?.textLabel?.text = "个人头像"
             biVcell?.headImage.backgroundColor = UIColor.greenColor()
-            biVcell?.headImage.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc))
+            biVcell?.headImage.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: "默认头像.jpg"))
             return biVcell!
         case 1:
             let array = ["姓名","性别","年龄"]
@@ -81,7 +81,7 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
                 cell?.detailTextLabel?.text = userInfo.sex
             }
             if indexPath.row == 2 {
-                cell?.detailTextLabel?.text = userInfo.age
+                cell?.detailTextLabel?.text = String(format: "%@岁", userInfo.age)
             }
             cell?.accessoryType = .DisclosureIndicator
             return cell!
@@ -179,11 +179,11 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
             let imageName = String(NSDate()) + ".png"
             multipartFormData.appendBodyPart(data: data!, name: "file",fileName: imageName,mimeType: "image/png")
             
-            let para = ["v":v,"uid":userInfo.uid,"file":""]
+            let para = ["v":v,"uid":userInfo.uid.description,"file":""]
             
             
             for (key,value) in para {
-                multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key as! String )
+                multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key )
             }
             
             
@@ -193,12 +193,13 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
                 upload.responseString(completionHandler: { (response) in
                     let json = JSON(data: response.data!)
                     let str = json.object
-                    
-                    print(str)
-                    
+                    let dic = str as! NSDictionary
+                    let model = FileUploadModel(fromDictionary: dic)
+                    userInfo.thumbnailSrc = model.data.url
+                    self.updateHeadImage(model.data.id.description)
                 })
             case .Failure(let error):
-                print(error)
+                self.showMJProgressHUD("⚠️\(error)", isAnimate: true, startY: ScreenHeight-40-40-40-20)
             }
         }
         
@@ -221,18 +222,21 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
             alert.show()
         }
     }
-    func updateHeadImage() {
+    func updateHeadImage(headId:String) {
         let updateheadModel = MyInfoModel()
         updateheadModel.uid = userInfo.uid
-        updateheadModel.headId = "1"
+        updateheadModel.headId = headId
         let v = NSObject.getEncodeString("20160901")
         let dic = ["v":v,
                    "uid":updateheadModel.uid,
                    "headId":updateheadModel.headId]
         MJNetWorkHelper().updateHeadImage(updatehead, updateHeadImageModel: dic, success: { (responseDic, success) in
-            
+          let model =  DataSource().getupdateheadData(responseDic)
+            if model.code != "200" {
+                self.showMJProgressHUD("失败", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+            }
             }) { (error) in
-                
+              self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40-20)
         }
     }
     //MARK:更改性别

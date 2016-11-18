@@ -227,6 +227,7 @@ class HeaderView: UIView {
         quanZiLabel.text = model.data.msum.description
         singleBtn.setTitle(userInfo.age, forState: UIControlState.Normal)
         headImage.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc))
+        headImage.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: "默认头像.jpg"))
         if isBigV != true {
             renZheng.hidden = true
         }else{

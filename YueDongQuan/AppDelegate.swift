@@ -12,7 +12,7 @@ import Alamofire
 import RealmSwift
 import Realm
 let AMAPAPIKEY = "cc7ada21dae93efe53c70dc7d6a46598"
-let RONGCLOUDAPPKEY = "ik1qhw0911hep"
+let RONGCLOUDAPPKEY = "uwd1c0sxug581"
 @UIApplicationMain
 class AppDelegate: UIResponder,
 UIApplicationDelegate,
@@ -67,17 +67,17 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
             
            
             let userData =  getUserInfoDataBaseFromRealm()
-            if userData.count != 0 {
+             let result = userData.first
+            if result?.password != ""  && result?.phone != ""{
                 //调用数据库
 
-                let result = userData.first
+               
                 let describe = UIDevice.currentDevice().systemName
                 dic = ["v":v,
                        "phone":(result?.phone)!,
                        "pw":(result?.password)!,
                        "describe":describe]
-                
-                
+
                 MJNetWorkHelper().loginWithUserInfo(login, userModel: dic, success: { (responseDic, success) in
                     let loginmodel = DataSource().getUserInfo(responseDic)
                     //MARK:融云资料
