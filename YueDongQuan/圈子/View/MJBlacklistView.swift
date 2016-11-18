@@ -39,7 +39,7 @@ var dataSouce = NSMutableArray()
             cell?.accessoryType = .DisclosureIndicator
         }
         
-        cell?.imageView?.sd_setImageWithURL(NSURL(string: model.parterHeadImage), placeholderImage: nil)
+        cell?.imageView?.sd_setImageWithURL(NSURL(string: model.parterHeadImage), placeholderImage: UIImage(named: "热动篮球LOGO"))
         cell?.textLabel?.text = model.parterName
         cell?.detailTextLabel?.text = "移除黑名单"
 //        let outBlackListBtn = UIButton(type: .Custom)

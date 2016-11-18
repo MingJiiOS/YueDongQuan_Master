@@ -158,13 +158,13 @@ extension HeInfoVC {
                 if model.flag != "0"{
                    self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.heinfoModel, waitUntilDone: true)
                 }else{
-                    self.showMJProgressHUD("服务器异常", isAnimate: true, startY: ScreenHeight-40-40-10)
+                    self.showMJProgressHUD("服务器异常", isAnimate: true, startY: ScreenHeight-40-40-20)
                 }
                 
             }
             
             }) { (error) in
-           self.showMJProgressHUD("请求发生错误", isAnimate: false, startY: ScreenHeight-80)
+           self.showMJProgressHUD("请求发生错误", isAnimate: false, startY: ScreenHeight-40-40-40-20)
         }
     }
     
@@ -184,7 +184,7 @@ extension HeInfoVC {
             self.hefoundModel = DataSource().gethefoundData(responseDic)
             self.performSelectorOnMainThread(#selector(self.updateHeFoundUI), withObject: self.hefoundModel, waitUntilDone: true)
             }) { (error) in
-            self.showMJProgressHUD("请求发生错误", isAnimate: false, startY: ScreenHeight-80)
+            self.showMJProgressHUD("请求发生错误", isAnimate: false, startY: ScreenHeight-40-40-40-20)
         }
         
     }
@@ -223,7 +223,7 @@ extension HeInfoVC {
                 }) { (error) in
                     self.showMJProgressHUD(error.description,
                                            isAnimate: false,
-                                           startY: ScreenHeight-40-40-10)
+                                           startY: ScreenHeight-40-40-40-20)
                 }
             }
         }

@@ -90,7 +90,7 @@ extension publishNoticeViewController {
                 self.navigationController?.popViewControllerAnimated(true)
             }) { (error) in
                 
-                self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～", isAnimate: true,startY: ScreenHeight-40-45)
+                self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～", isAnimate: true,startY: ScreenHeight-40-40-40-20)
             }
         }else{
            self.navigationItem.rightBarButtonItem?.enabled = false

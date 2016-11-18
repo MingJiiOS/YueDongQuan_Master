@@ -214,7 +214,12 @@ extension SearchController:UITableViewDelegate,UITableViewDataSource,UIAlertView
             }
             
         case 200:
-            print("点击了场地")
+            if self.fieldData.count != 0 {
+                let other  = OtherQuanZiViewController()
+                other.fieldData = self.fieldData
+                self.navigationController?.pushViewController(other, animated: true)
+                
+            }
         default:
             break
         }
@@ -227,6 +232,7 @@ extension SearchController:UITableViewDelegate,UITableViewDataSource,UIAlertView
 
 
 extension SearchController {
+    //MARK:搜索圈子数据
     internal func requestCircleData(typeId:String,content:String){
         //17 请求发现页面最新的默认数据
             let vcode = NSObject.getEncodeString("20160901")
@@ -259,7 +265,7 @@ extension SearchController {
             
         
     }
-    
+    //MARK:搜索场地数据
     internal func requestFieldData(typeId:String,content:String){
         let vcode = NSObject.getEncodeString("20160901")
         

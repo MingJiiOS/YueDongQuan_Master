@@ -28,7 +28,7 @@ class SettingCell: UITableViewCell {
         self.contentView .addSubview(userAge)
         
         headImage.snp_makeConstraints { (make) in
-            make.top.equalTo(kGAP/5)
+            make.top.equalTo(kGAP/2)
             make.left.equalTo(kGAP*2)
             make.width.height.equalTo(50)
             

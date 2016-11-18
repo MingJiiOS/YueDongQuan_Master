@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import MJRefresh
 @objc(PersonalViewController)
-class PersonalViewController: MainViewController{
+class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoardDataSource{
 
     var headerBgView = UIView()
     lazy var userHeadView = UIImageView()
@@ -24,10 +24,9 @@ class PersonalViewController: MainViewController{
     var myfoundmodel : myFoundModel?
     var replayTheSeletedCellModel : CommentModel?
     var seletedCellHeight : CGFloat?
-    var history_Y_offset : CGFloat?
-    var chatKeyBoard : ChatKeyBoard?
-    var currentIndexPath : NSIndexPath?
+    var history_Y_offset : CGFloat? = 0.0
     
+    var currentIndexPath : NSIndexPath?
     //条数
     var pagesize = 0
     
@@ -35,28 +34,104 @@ class PersonalViewController: MainViewController{
     //单词请求条数
     let singleRqusetNum = 3
     
+    private let kChatToolBarHeight:CGFloat = 49
+    
+    private var needUpdateOffset:Bool = false
     
     override func loadView() {
         super.loadView()
         self.needRefresh = true;
+       
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         self .creatViewWithSnapKit()
+        self.view.addSubview(self.keyboard)
+        self.view.bringSubviewToFront(self.keyboard)
         self.creatViewWithSnapKit("ic_lanqiu", secondBtnImageString: "ic_search",
                                                thirdBtnImageString: "ic_shezhi")
         
-      
+        
     }
-    
+    lazy var keyboard:ChatKeyBoard = {
+        var keyboard = ChatKeyBoard(navgationBarTranslucent: false)
+        keyboard.delegate = self
+        keyboard.dataSource = self
+        keyboard.keyBoardStyle = KeyBoardStyle.Comment
+        keyboard.allowVoice = false
+        keyboard.allowMore = false
+        keyboard.allowSwitchBar = false
+        keyboard.placeHolder = "评论"
+        return keyboard
+        
+        
+    }()
+    //MARK:会话键盘 ChatKeyBoardDataSource
+    internal func chatKeyBoardToolbarItems() -> [ChatToolBarItem]! {
+        let item1 = ChatToolBarItem(kind: BarItemKind.Face, normal: "face", high: "face_HL", select: "keyboard")
+        return [item1]
+    }
+    internal func chatKeyBoardFacePanelSubjectItems() -> [FaceThemeModel]! {
+        let model = FaceSourceManager.loadFaceSource() as! [FaceThemeModel]
+        return model
+    }
+    internal func chatKeyBoardMorePanelItems() -> [MoreItem]! {
+        let item1 = MoreItem(picName: "pinc", highLightPicName: "More_HL", itemName: "more")
+        return [item1]
+    }
+    //MARK: 会话键盘 ChatKeyBoardDelegate
+    func chatKeyBoardSendText(text: String!) {
+        
+    }
+    //MARK:键盘通知 willShow
+    func keyboardWillshow(notification:NSNotification) {
+        
+        let userfo:NSDictionary = notification.userInfo!
+        let aValue =  userfo.objectForKey(UIKeyboardFrameEndUserInfoKey)
+        let keyboardHeight:CGFloat = aValue!.CGRectValue.size.height
+        if keyboardHeight == 0 {
+            return
+        }
+        var keyboardRect:CGRect = aValue!.CGRectValue
+        keyboardRect = self.view.convertRect(keyboardRect, fromView: nil)
+        let keyboardTop:CGFloat = keyboardRect.origin.y
+        var newTextViewFrame:CGRect = self.view.bounds
+        newTextViewFrame.size.height = keyboardTop - self.view.bounds.origin.y
+        let  animationDurationValue = userfo.objectForKey(UIKeyboardAnimationDurationUserInfoKey) as! NSValue
+        var animationDuration = NSTimeInterval()
+        animationDurationValue .getValue(&animationDuration)
+        var delta:CGFloat = 0.0
+        if (self.seletedCellHeight != 0) {
+            delta = self.history_Y_offset! - ((UIApplication.sharedApplication().keyWindow?.bounds.size.height)! - keyboardHeight - self.seletedCellHeight! - kChatToolBarHeight )
+        }else{
+           delta = self.history_Y_offset! - ((UIApplication.sharedApplication().keyWindow?.bounds.size.height)! - keyboardHeight - kChatToolBarHeight*1.5 )
+        }
+      
+        var offset = self.MainBgTableView.contentOffset
+        offset.y += delta
+        if offset.y < 0 {
+            offset.y = 0
+        }
+        if self.needUpdateOffset {
+           self.MainBgTableView.setContentOffset(offset, animated: true)
+        }
+        
+    }
+    //MARK:键盘通知 willHide
+    func keyboardWillHide(notification:NSNotification) {
+        self.needUpdateOffset = false
+    }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.hidden = false
-       
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(keyboardWillshow),
+                                                         name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
         MainBgTableView.reloadData()
         let titleLabel = UILabel(frame: CGRect(x: 0,
             y: 0,
@@ -93,16 +168,19 @@ class PersonalViewController: MainViewController{
       
         
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+
     }
-    /*搭建界面*/
     
+    /*搭建界面*/
     func creatViewWithSnapKit()  {
         self.clickButtonTagClosure { (ButtonTag) in
             if ButtonTag == 3{
                 let set = SettingViewController ()
+                self.keyboard.keyboardDownForComment()
                 self.push(set)
             }
             if ButtonTag == 1{
@@ -196,45 +274,40 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                 self.performSelectorOnMainThread(#selector(self.updateUI), withObject: nil, waitUntilDone: true)
             }
             }) { (error) in
-            self.showMJProgressHUD("失败！ \(error.description)", isAnimate: true, startY: ScreenHeight-40-55-64)
+            self.showMJProgressHUD("失败！ \(error.description)", isAnimate: true, startY: ScreenHeight-40-40-40-20)
         }
     }
     func reloadCellHeightForModel(model: myFoundModel, indexPath: NSIndexPath) {
-        
+        self.MainBgTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }
-    func passCellHeightWithMessageModel(model: myFoundModel, commentModel: CommentModel, indexPath: NSIndexPath, cellHeight: CGFloat, commentCell: MJCommentCell, messageCell: MJMessageCell) {
-        
+    func passCellHeightWithMessageModel(model: myFoundModel,
+                                        commentModel: myFoundCommentComment,
+                                        indexPath: NSIndexPath,
+                                        cellHeight: CGFloat,
+                                        commentCell: MJCommentCell,
+                                        messageCell: MJMessageCell) {
+        self.needUpdateOffset = true
+        let wind = UIApplication.sharedApplication().keyWindow
+        self.keyboard.placeHolder = String(format: "回复%@", userInfo.name)
+        self.history_Y_offset = commentCell.contentLabel?.convertRect(commentCell.contentLabel!.bounds, toView: wind).origin.y
+        self.seletedCellHeight = cellHeight
+        self.keyboard.keyboardUpforComment()
     }
-    
-    //1.1默认返回一组
-    
+    //1.1默认返回3组
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
-        return 3;
-        
+        return 3
     }
-    
-    
-    
     // 1.2 返回行数
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if(section == 0){
-            
             return 0;
-            
         }else if (section == 1){
-            
             return 1;
-            
         }else{
             if self.myfoundmodel != nil {
                 if self.myfoundmodel?.code != "200" {
                     return 0
                 }else if self.myfoundmodel?.code == "405"{
-                    
-                    
                     return 1
                 }else{
                     print("我的说说条数",(self.myfoundmodel?.data.array.count)!)
@@ -387,6 +460,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     messageCell = MJMessageCell(style: .Default, reuseIdentifier: identifier)
                     messageCell?.indexPath = indexPath
                     messageCell?.type = .local
+                   messageCell?.delegate = self
                 //点击删除按钮
                 messageCell?.sendDeleteEvent({ (isDelete) in
                     if isDelete {
@@ -403,39 +477,33 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                         messageCell?.configCellWithModel(self.myfoundmodel!,indexpath: indexPath)
                     }
                     
-                    messageCell?.CommentBtnClick({ (commentBtn, indexPath) in
+                    messageCell?.CommentBtnClick({ (commentBtn, indexPath,pingluntype) in
                         self.replayTheSeletedCellModel = nil
-                        weakSelf.seletedCellHeight = 0
-                        weakSelf.chatKeyBoard?.placeHolder = String(format: "评论%@",(weakSelf.myfoundmodel?.data.array[indexPath.row].aname)!)
-                        weakSelf.history_Y_offset = commentBtn.convertRect(commentBtn.bounds, toView: weakWindow).origin.y
+                        self.seletedCellHeight = 0
+                        weakSelf.needUpdateOffset = true
+                        weakSelf.keyboard.placeHolder = String(format: "评论 %@",userInfo.name)
+                        self.history_Y_offset = commentBtn.convertRect(commentBtn.bounds, toView: weakWindow).origin.y
                         weakSelf.currentIndexPath = indexPath
-                        weakSelf.chatKeyBoard?.keyboardUpforComment()
+                        weakSelf.keyboard.keyboardUpforComment()
                     })
                     messageCell?.TapOnImage({ (index, dataSource, indexPath) in
-                        weakSelf.chatKeyBoard?.keyboardDownForComment()
+                        weakSelf.keyboard.keyboardDownForComment()
                     })
                     messageCell?.tapOnDesLabel({ (desLabel) in
                         
                     })
                     messageCell?.MoreBtnClick({ (zanBtn, indexPath) in
-                        weakSelf.chatKeyBoard?.keyboardDownForComment()
-                        weakSelf.chatKeyBoard?.placeHolder = nil
-                        self.myfoundmodel?.isExpand = !(self.myfoundmodel?.isExpand)!
+                        weakSelf.keyboard.keyboardDownForComment()
+                        weakSelf.keyboard.placeHolder = nil
+                        self.myfoundmodel!.isExpand = !(self.myfoundmodel?.isExpand)!
                         weakTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                     })
                     return messageCell!
-
-                
             }
-            
-            
             return cell!
-            
-            
     }
     
     //1.7 表格点击事件
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         //取消选中的样式
@@ -456,6 +524,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
             if self.myfoundmodel != nil {
                 details.sayArray = self.myfoundmodel?.data.array[indexPath.row]
                 details.detailCommentArray = (details.sayArray?.comment)!
+                self.keyboard.keyboardDownForComment()
                 self.push(details)
             }
            
@@ -463,7 +532,9 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         
         
     }
-    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.keyboard.keyboardDownForComment()
+    }
     func getDetailsSayData(idex:NSIndexPath) {
         
     }
