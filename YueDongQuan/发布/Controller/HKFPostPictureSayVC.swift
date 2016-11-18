@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 import TZImagePickerController
-
+import SVProgressHUD
 import Alamofire
 import SwiftyJSON
 
@@ -144,7 +144,12 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         
         
         if self.selectedImages.count != 0 {
+            
+            SVProgressHUD.showWithStatus("发布中....")
+            
             for item in self.selectedImages {
+                
+                
                 
                 requestUpfile(item)
             }
@@ -279,7 +284,14 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
                 let str = (json.object) as! NSDictionary
             
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
+                    
+                    SVProgressHUD.showSuccessWithStatus("发布成功")
+                    SVProgressHUD.dismissWithDelay(1)
+                    sleep(1)
                     self.dismissViewControllerAnimated(true, completion: nil)
+                }else{
+                    SVProgressHUD.showErrorWithStatus("发布失败")
+                    SVProgressHUD.dismiss()
                 }
                 
                 

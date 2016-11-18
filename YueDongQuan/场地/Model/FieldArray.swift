@@ -9,7 +9,7 @@ import Foundation
 
 class FieldArray{
 
-	var cost : Float!
+	var cost : String!
 	var distance : Float!
 	var id : Int!
 	var latitude : Float!

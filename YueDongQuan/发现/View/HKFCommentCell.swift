@@ -48,13 +48,16 @@ class HKFCommentCell: UITableViewCell {
             }
         }
         model.reply = reply
-        let contentTemp = NSObject.stringToContentEmoji(model.content)
-        let str = String(format: "%@回复%@：%@",model.netName,model.reply!,contentTemp)
         
+//        let context = NSObject.stringToContentEmoji()
+        let str = String(format: "%@回复%@：%@",model.netName,model.reply!,model.content)
+//        let temp = NSObject.stringToContentEmoji(str)
         let text = NSMutableAttributedString(string: str)
         
         text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))
         text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, model.reply!.characters.count))
+        
+        
         self.contentLabel!.attributedText = text
         
     }

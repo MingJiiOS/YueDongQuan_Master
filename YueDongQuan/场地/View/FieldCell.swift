@@ -154,10 +154,13 @@ class FieldCell: UITableViewCell {
     }
     
     func configWithModel(model:FieldArray){
+        
+        
         self.name.text = model.name
         self.distanceLabel.text = String(format: "%0.2fm",model.distance)
-        self.priceLabel.text = String(format: "%0.2f元/时",model.cost)
+        self.priceLabel.text = String(format: "%@元/时",model.cost)
         self.imgView.sd_setImageWithURL(NSURL(string: model.thumbnailSrc),placeholderImage: UIImage(named: "热动篮球LOGO"))
+        
 //        self.imgView.sd_setImageWithURL(NSURL(string:model.thumbnailSrc))
     }
     

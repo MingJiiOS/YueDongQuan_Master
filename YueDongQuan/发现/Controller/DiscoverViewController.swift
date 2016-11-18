@@ -444,8 +444,6 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         
         let str  = NSObject.emojiToString(text)
         print(str)
-//        let goodstr = NSObject.stringToContentEmoji(str)
-//        print(goodstr)
         
         sendMsg(str)
         
@@ -1051,7 +1049,7 @@ extension DiscoverViewController {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                _ = json.object
+                let dict = json.object
 
             case .Failure(let error):
                 print(error)
@@ -1069,7 +1067,12 @@ extension DiscoverViewController {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                _ = json.object
+                let dict = (json.object) as! NSDictionary
+                
+                if ((dict["code"] as! String) == "200" && (dict["flag"] as! String) == "1") {
+                    SVProgressHUD.showSuccessWithStatus("举报成功")
+                    SVProgressHUD.dismissWithDelay(2)
+                }
                 
 //               NSLog("举报=\(json)")
             case .Failure(let error):
