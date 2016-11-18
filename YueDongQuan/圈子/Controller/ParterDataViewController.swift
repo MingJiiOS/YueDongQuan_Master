@@ -23,7 +23,7 @@ class ParterDataViewController: MainViewController {
         self.view.addSubview(parterView!)
         parterView?.sendSuccessOrFailValueBack({ (isSuccess, descriptionError) in
             if isSuccess != true{
-                self.showMJProgressHUD(descriptionError, isAnimate: false,startY: ScreenHeight-40-45)
+                self.showMJProgressHUD(descriptionError, isAnimate: false,startY: ScreenHeight-40-40-40-20)
             }else{
                 return
             }

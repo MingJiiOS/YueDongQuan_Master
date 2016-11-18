@@ -35,7 +35,7 @@ class SendPhoneViewController: MainViewController {
                 }
             }
         }) { (error) in
-            self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40)
+            self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40-20)
         }
         
         

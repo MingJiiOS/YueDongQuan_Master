@@ -55,9 +55,9 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
             make.centerX.equalTo(self.view.snp_centerX)
         }
         quanZiImage.backgroundColor = UIColor.grayColor()
-        //        if self.uploadimgaemodel != nil {
-        quanZiImage.sd_setImageWithURL(NSURL(string: "http://feizhuliu.vipyl.com/attached/image/20130306/20130306165523102310.jpg"))
-        //        }
+                if self.uploadimgaemodel != nil {
+        quanZiImage.sd_setImageWithURL(NSURL(string: "http://feizhuliu.vipyl.com/attached/image/20130306/20130306165523102310.jpg"), placeholderImage: UIImage(named: "默认圈子.jpg"))
+                }
         quanZiBtn.snp_makeConstraints { (make) in
             make.bottom.equalTo(quanZiImage.snp_bottom)
             make.width.equalTo(quanZiImage.snp_width)
@@ -302,22 +302,21 @@ extension NewQuanZiViewController{
         let uid = userInfo.uid
         let logoId = self.uploadimgaemodel?.data.id
         let Pw = circlePw
-//        if self.uploadimgaemodel?.data.id != nil{
-//            if circleName != nil {
-//                if NSString(string:circleName).length == 0 {
-//                    
-//                    self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: false)
-//                    if circlePw != nil {
-//                        if NSString(string:circlePw).length == 0 {
-//                            
-//                            self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: false)
-//                        }else if  NSString(string:circlePw).length < 6 {
-//                            
-//                            self.showMJProgressHUD("密码不能少于6位！！", isAnimate: false)
-//                        }else if NSString(string:circlePw).length > 16 {
-//                            
-//                            self.showMJProgressHUD("密码不能大于16位！！", isAnimate: false)
-//                        }else{
+        if self.uploadimgaemodel?.data.id != nil{
+            if circleName != nil {
+                if NSString(string:circleName).length == 0 {
+                    self.showMJProgressHUD("圈子名字不能为空！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                    if circlePw != nil {
+                        if NSString(string:circlePw).length == 0 {
+                            self.showMJProgressHUD("密码不能少于6位！！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                        }else if  NSString(string:circlePw).length < 6 {
+                            
+                           
+                            self.showMJProgressHUD("密码不能少于6位！！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                        }else if NSString(string:circlePw).length > 16 {
+                            self.showMJProgressHUD("密码不能大于16位！！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                            
+                        }else{
                             let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
                                                            "name":circleName,
                                                            "uid":uid,
@@ -335,23 +334,23 @@ extension NewQuanZiViewController{
                                                             }
                             }) { (error) in
                                 
-                                self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: false,startY: ScreenHeight-40-45)
+                                self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: false,startY: ScreenHeight-40-40-40-20)
                             }
-//                        }
-//                    }else{
-//                        
-//                        self.showMJProgressHUD("圈子密码不能为空！！", isAnimate: false)
-//                    }
-//                    
-//                }
-//            }else{
-//                
-//                self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: false)
-//            }
-//        }else{
-//           
-//           self.showMJProgressHUD("圈子logo不能为空！！", isAnimate: false)
-//        }
+                        }
+                    }else{
+                        
+                        self.showMJProgressHUD("圈子密码不能为空", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                    }
+                    
+                }
+            }else{
+                self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                
+            }
+        }else{
+           self.showMJProgressHUD("圈子logo不能为空！！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+           
+        }
 
     }
         

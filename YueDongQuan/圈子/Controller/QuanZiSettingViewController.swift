@@ -24,6 +24,9 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     //圈子头像
     var thumbnailSrc : String?
     
+    var overQuanzi : UIButton?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,12 +36,13 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                                                                 action: #selector(pop))
        
         self.creatView()
+        loadData()
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
         loadCircleMemberInfoWithCircleId(self.circleId!)
-        loadData()
+        
         print(self.circleId)
     }
     override func viewWillDisappear(animated: Bool) {
@@ -48,18 +52,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     deinit{
         print("deinit")
     }
-    func addDatas()  {
-        for i in 0 ..< 20 {
-            let model = MJNoticeModel()
-            model.uId = i + 1
-            model.noticeTitle = "自动行高"
-            model.content = "作者博客名称：标哥的技术博客，网址：http://www.henishuo.com，欢迎大家关注。这里有很多的专题，包括动画、自动布局、swift、runtime、socket、开源库、面试等文章，都是精品哦。大家可以关注微信公众号：iOSDevShares，加入有问必答QQ群：324400294，群快满了，若加不上，对不起，您来晚了"
-            dataSource.append(model)
-            
-            model.isExpand = true
-            
-        }
-    }
+
     
     func creatView()  {
         self.view .addSubview(tableView)
@@ -72,6 +65,20 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0)
         tableView.tableHeaderView?.removeFromSuperview()
         
+        overQuanzi = UIButton(type: .Custom)
+        self.view.addSubview(overQuanzi!)
+        overQuanzi!.snp_makeConstraints { (make) in
+            make.left.equalTo(ScreenWidth/8)
+            make.right.equalTo(-ScreenWidth/8)
+            make.height.equalTo(kAutoStaticCellHeight)
+            make.bottom.equalTo(-100)
+           
+        }
+        overQuanzi!.backgroundColor = UIColor(red: 254/255, green: 21/255, blue: 61/255, alpha: 1)
+        overQuanzi!.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        overQuanzi?.addTarget(self, action: #selector(overQuanziAction), forControlEvents: UIControlEvents.TouchUpInside)
+        overQuanzi!.layer.cornerRadius = 5
+        overQuanzi!.layer.masksToBounds = true
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -147,7 +154,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                 }
                 
                 if indexPath.row >= self.dataSource.count - 1 {
-                    //                self.addDatas()
+                    
                 }
                 
             }
@@ -202,37 +209,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
             }
             cell.accessoryType = .DisclosureIndicator
             return cell
-        case 4:
-            let cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
-            let overQuanzi = UIButton(type: .Custom)
-            cell.contentView .addSubview(overQuanzi)
-            overQuanzi.snp_makeConstraints { (make) in
-                make.left.equalTo(ScreenWidth/8)
-                make.right.equalTo(-ScreenWidth/8)
-                make.bottom.equalTo(0)
-                make.top.equalTo(10)
-            }
-            if self.circleinfoModel != nil{
-                
-                if self.circleinfoModel?.data.permissions != nil {
-                    if self.circleinfoModel?.data.permissions != 2 {
-                        if self.circleinfoModel?.data.permissions == 1{
-                            overQuanzi.setTitle("解散圈子", forState: UIControlState.Normal)
-                        }
-                    }else{
-                        overQuanzi.setTitle("退出圈子", forState: UIControlState.Normal)
-                    }
-                }else{
-                   overQuanzi.setTitle("加入圈子", forState: UIControlState.Normal)
-                }
-    
-            }
-            overQuanzi.backgroundColor = UIColor(red: 254/255, green: 21/255, blue: 61/255, alpha: 1)
-            overQuanzi.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-           
-            overQuanzi.layer.cornerRadius = 5
-            overQuanzi.layer.masksToBounds = true
-            return cell
+       
         default:
             break
         }
@@ -241,14 +218,15 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 5
+        return 4
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 3
     }
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 3
+    func tableView(tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+        return 1
     }
+   
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.section == 2 {
@@ -256,18 +234,6 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                 let all = AllNoticeViewController()
                 all.circleid = self.circleId
                 self.push(all)
-            }
-        }else if indexPath.section == 4{
-            
-            if self.circleinfoModel != nil{
-                if self.circleinfoModel?.data.typeId == 2 {
-                    if self.circleinfoModel?.data.cmNum == 1{
-                        disluCircle()
-                    }
-                }else{
-                    //退出圈子
-                    outCircle()
-                }
             }
         }else if indexPath.section == 3{
             if indexPath.row == 0 {
@@ -323,10 +289,25 @@ extension QuanZiSettingViewController {
                 if model.flag != "0"{
                      self.circleinfoModel = model
                     self.tableView.reloadData()
+                   
+                        
+                        if model.data.permissions != nil {
+                            if model.data.permissions != 2 {
+                                if model.data.permissions == 1{
+                                   self.overQuanzi!.setTitle("解散圈子", forState: UIControlState.Normal)
+                                }
+                            }else{
+                                self.overQuanzi!.setTitle("退出圈子", forState: UIControlState.Normal)
+                            }
+                        }else{
+                            self.overQuanzi!.setTitle("加入圈子", forState: UIControlState.Normal)
+                        }
+                        
+                    
                 }else{
                     self.showMJProgressHUD("服务器异常",
                         isAnimate: false,
-                        startY: ScreenHeight-40-40-40)
+                        startY: ScreenHeight-40-40-40-20)
                 }
                
                 
@@ -334,13 +315,27 @@ extension QuanZiSettingViewController {
             }) { (error) in
                self.showMJProgressHUD(error.description,
                                       isAnimate: false,
-                                      startY: ScreenHeight-40-40-40)
+                                      startY: ScreenHeight-40-40-40-20)
             }
         }
         
         
     }
-    //退出圈子
+    
+    func overQuanziAction(sender:UIButton)  {
+        if sender.currentTitle == "退出圈子" {
+            //退出圈子
+            outCircle()
+        }
+        if sender.currentTitle == "加入圈子" {
+            clickJoinBtn()
+        }
+        if sender.currentTitle == "解散圈子" {
+           disluCircle()
+        }
+    }
+    
+    //MARK:退出圈子
     func outCircle()  {
         let dict = ["v":v,"uid":userInfo.uid.description,"circleId":self.circleId]
         MJNetWorkHelper().kickingcircle(kickingcircle, kickingcircleModel: dict, success: { (responseDic, success) in
@@ -351,7 +346,7 @@ extension QuanZiSettingViewController {
                 
         }
     }
-    //解散圈子
+    //MARK:解散圈子
     func disluCircle()  {
         let dict = ["v":v,
                     "uid":userInfo.uid.description,
@@ -365,8 +360,85 @@ extension QuanZiSettingViewController {
                 
              self.showMJProgressHUD(error.description,
                                     isAnimate: false,
-                                    startY: ScreenHeight-40-40-40)
+                                    startY: ScreenHeight-40-40-40-20)
         }
+    }
+    //MARK:加入圈子
+    func clickJoinBtn() {
+        if self.circleinfoModel != nil {
+            if self.circleinfoModel?.data.typeId == 2{
+                //输入密码
+                let textFeild = ConfirmOldPw(title: "密码", message: "私密圈子需要密码", cancelButtonTitle: "取消", sureButtonTitle: "确定")
+                textFeild.show()
+                textFeild.clickIndexClosure({ (index,password) in
+                    if index == 2{
+                        
+                        let dict:[String:AnyObject] = ["v":v,
+                                                       "uid":userInfo.uid.description,
+                                                        "pw":password,
+                                                  "circleId":(self.circleinfoModel?.data.id.description)!,
+                                                      "name":(self.circleinfoModel?.data.name)!,
+                                                    "typeId":"2"]
+                        
+                        MJNetWorkHelper().joinmember(joinmember,
+                            joinmemberModel: dict,
+                            success: { (responseDic, success) in
+                                if success {
+                                    let model = DataSource().getupdatenameData(responseDic)
+                                    if model.code == "501"{
+                                        self.showMJProgressHUD("密码错误",
+                                            isAnimate: true,
+                                            startY: ScreenHeight-40-40-40-20)
+                                    }else if model.code == "303"{
+                                        self.showMJProgressHUD("加入失败",
+                                            isAnimate: true,
+                                            startY: ScreenHeight-40-40-40-20)
+                                    }else{
+                                        self.showMJProgressHUD("加入成功",
+                                            isAnimate: true,
+                                            startY: ScreenHeight-40-40-40-20)
+                                    }
+                                }
+                        }) { (error) in
+                            self.showMJProgressHUD(error.description,
+                                isAnimate: false,
+                                startY: ScreenHeight-40-40-40-20)
+                        }
+                    }
+                })
+            }else{
+                let dict = ["v":v,
+                            "uid":userInfo.uid.description,
+                            "circleId":self.circleinfoModel?.data.id.description,
+                            "name":self.circleinfoModel?.data.name,
+                            "typeId":"1"]
+                
+                MJNetWorkHelper().joinmember(joinmember,
+                                             joinmemberModel: dict,
+                                             success: { (responseDic, success) in
+                                if success {
+                                    let model = DataSource().getupdatenameData(responseDic)
+                                   if model.code == "303"{
+                                        self.showMJProgressHUD("加入失败",
+                                            isAnimate: true,
+                                            startY: ScreenHeight-40-40-40-20)
+                                    }else{
+                                        self.showMJProgressHUD("加入成功",
+                                            isAnimate: true,
+                                            startY: ScreenHeight-40-40-40-20)
+                                    }
+                                                }
+                }) { (error) in
+                    self.showMJProgressHUD(error.description,
+                                           isAnimate: false,
+                                           startY: ScreenHeight-40-40-40-20)
+                }
+            }
+        }else{
+            
+        }
+        
+        
     }
     func getErrorStringWithClearIM(errorCode:Int)->String{
         switch errorCode {

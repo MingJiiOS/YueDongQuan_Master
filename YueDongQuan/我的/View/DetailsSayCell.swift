@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class DetailsSayCell: UITableViewCell {
     
     private var headImage : UIImageView?
@@ -22,12 +24,13 @@ class DetailsSayCell: UITableViewCell {
     //子评论行数
     private var subCommentCount = 0
     private var indexpath : NSIndexPath?
-    typealias clickReplyBtnClourse = (btn:UIButton,indexpath:NSIndexPath)->Void
+    typealias clickReplyBtnClourse = (btn:UIButton,indexpath:NSIndexPath,pingluntype:PingLunType)->Void
     var clickReplyBlock : clickReplyBtnClourse?
     func commentBtnBlock(block:clickReplyBtnClourse?)  {
         clickReplyBlock = block
     }
     
+    var pinglunType : PingLunType?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -209,7 +212,7 @@ class DetailsSayCell: UITableViewCell {
     }
     func replySomeOne(sender:UIButton)  {
         if clickReplyBlock != nil {
-            self.clickReplyBlock!(btn:sender,indexpath:self.indexpath!)
+            self.clickReplyBlock!(btn:sender,indexpath:self.indexpath!,pingluntype:.selectCell)
         }
     }
 }
@@ -535,7 +538,7 @@ extension DetailsHeaderCell {
         }else{
             self.commentBtn?.setTitle("0", forState: UIControlState.Normal)
         }
-        self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: ""))
+        self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
         
         
         let attrString = NSMutableAttributedString(string:  model.content)

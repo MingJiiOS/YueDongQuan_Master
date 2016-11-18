@@ -23,7 +23,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
     let topView = RCAnimatedImagesView()
     var _inputBackground : UIView?
     
-    let loginBtn = UIButton(type: .Custom)
+    let loginActBtn = UIButton(type: .Custom)
     var bgScrollView = UIScrollView(frame: CGRectZero)
     //手机号码占位符
     var acountPlace : placerholderLabel!
@@ -116,7 +116,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
                 MJNetWorkHelper().loginWithUserInfo(login, userModel: pramiters, success: { (responseDic, success) in
                   let loginmodel = DataSource().getUserInfo(responseDic)
                     if loginmodel.code != "200"{
-//                        self.showMJProgressHUD("密码错误", isAnimate: false,startY: ScreenHeight-40-45)
+                        self.showMJProgressHUD("账号或者密码有误", isAnimate: false,startY: ScreenHeight-40-40-40-20)
                     }else{
                         /*MARK:数据库起始线***********************************************************/
                         
@@ -203,9 +203,9 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
                     self.registModel = model
                     if self.registModel.isRegistSuccess != true{
                         
-                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
+                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-40-40-20)
                     }else{
-                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
+                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-40-40-20)
                         
                     }
                     }, fail: { (error) in
@@ -247,7 +247,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
         headImage.layer.borderWidth = 1
         headImage.backgroundColor = kBlueColor
         headImage.layer.borderColor = UIColor.whiteColor().CGColor
-        headImage.sd_setImageWithURL(NSURL(string: "http://img.hb.aicdn.com/bcbc67dcae4b539f7c9afb30db12dcd0efebe5f0ca55-OT8oGG_fw658"), placeholderImage: nil)
+        headImage.sd_setImageWithURL(NSURL(string: "http://img.hb.aicdn.com/bcbc67dcae4b539f7c9afb30db12dcd0efebe5f0ca55-OT8oGG_fw658"), placeholderImage: UIImage(named: "热动篮球LOGO"))
         
 
         
@@ -303,8 +303,8 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
                                                                attributes: [NSForegroundColorAttributeName:color])
         pwTextfeild.text = result?.password
         dataBasePw = pwTextfeild.text
-        //登录
-        let loginActBtn = UIButton(type: .Custom)
+        //MARK:登录按钮
+       
         
         _inputBackground! .addSubview(loginActBtn)
         loginActBtn.snp_makeConstraints { (make) in
@@ -366,13 +366,16 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
             dataBasePhone = ""
             
             if NSString(string: textfield.text!).length != 11 {
+                self.loginActBtn.enabled = false
                 return
             }else if NSString(string: textfield.text!).length == 11{
                 //判断电话是否存在
                 if validateUtils.validatePhoneNumber(textfield.text) != true {
                     self.showMJProgressHUD("电话号码有误", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                    self.loginActBtn.enabled = false
                 }else{
-                    //MARK:登录时判断电话是否已经注册
+                    //MARK:输入时判断电话是否已经注册
+                    self.loginActBtn.enabled = true
                     let phoneModel = MJRequestModel()
                     phoneModel.v = NSObject.getEncodeString("20160901")
                     phoneModel.phone = textfield.text!
@@ -414,8 +417,26 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
             if loginOrrigsterClosure != nil{
                 loginOrrigsterClosure!(pramiters:dic,type:1)
             }
-        }else{
+        }else if dataBasePhone != ""{
+            dic = ["v":v,
+                   "phone":dataBasePhone!,
+                   "pw":userModel.pw,
+                   "describe":userModel.describe]
+            if loginOrrigsterClosure != nil{
+                loginOrrigsterClosure!(pramiters:dic,type:1)
+            }
+        }else if dataBasePw != ""{
+            dic = ["v":v,
+                   "phone":userModel.phone,
+                   "pw":dataBasePw!,
+                   "describe":userModel.describe]
+            if loginOrrigsterClosure != nil{
+                loginOrrigsterClosure!(pramiters:dic,type:1)
+            }
+        }
+        else{
                 if NSString(string: userModel.phone).length != 11 || NSString(string:userModel.pw).length == 0{
+                    
                     return
                 }else if NSString(string: userModel.phone).length == 11 && NSString(string:userModel.pw).length == 0{
                     return

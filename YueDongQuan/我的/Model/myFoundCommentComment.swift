@@ -18,6 +18,6 @@ class myFoundCommentComment {
 	var time : Int!
 	var uid : Int!
 
-
+   
 	
 }

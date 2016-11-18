@@ -97,9 +97,9 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCAnimatedImagesViewDeleg
                     self.registModel = model
                     if self.registModel.isRegistSuccess != true{
                         
-                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-45)
+                        self.showMJProgressHUD("该电话号码已经注册过了哦，(づ￣3￣)づ╭❤～", isAnimate: false,startY: ScreenHeight-40-40-40-20)
                     }else{
-                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-45)
+                        self.showMJProgressHUD("注册成功了哦！(づ￣3￣)づ╭❤～ 去登录吧",isAnimate: false,startY: ScreenHeight-40-40-40-20)
                         
                     }
                     }, fail: { (error) in
@@ -140,7 +140,7 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCAnimatedImagesViewDeleg
         headImage.layer.borderWidth = 1
         headImage.backgroundColor = kBlueColor
         headImage.layer.borderColor = UIColor.whiteColor().CGColor
-        headImage.sd_setImageWithURL(NSURL(string: "http://img.hb.aicdn.com/bcbc67dcae4b539f7c9afb30db12dcd0efebe5f0ca55-OT8oGG_fw658"), placeholderImage: nil)
+        headImage.sd_setImageWithURL(NSURL(string: "http://img.hb.aicdn.com/bcbc67dcae4b539f7c9afb30db12dcd0efebe5f0ca55-OT8oGG_fw658"), placeholderImage: UIImage(named: "热动篮球LOGO"))
         
 
         
@@ -321,12 +321,12 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCAnimatedImagesViewDeleg
                         print("返回结果",responseDic)
                         let model = updateNameModel(fromDictionary: responseDic)
                         if model.code == "201"{
-                            self.showMJProgressHUD("此号码已经注册,请检查", isAnimate: false,startY: ScreenHeight-40-45)
+                            self.showMJProgressHUD("此号码已经注册,请检查", isAnimate: false,startY: ScreenHeight-40-40-40-20)
                         }else{
                          self.sendMaskCode.enabled = true
                         }
                         }, fail: { (error) in
-                           self.showMJProgressHUD(error.description, isAnimate: false,startY: ScreenHeight-40-45)
+                           self.showMJProgressHUD(error.description, isAnimate: false,startY: ScreenHeight-40-40-40-20)
                     })
                 }
                 
@@ -349,7 +349,7 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCAnimatedImagesViewDeleg
         
         if self.sendphoneModel != nil {
             if self.maskCodeString != self.sendphoneModel?.data.code{
-                self.showMJProgressHUD("验证码不正确", isAnimate: false, startY: ScreenHeight-40-40-40)
+                self.showMJProgressHUD("验证码不正确", isAnimate: false, startY: ScreenHeight-40-40-40-20)
             }else{
                 let vCode = NSObject.getEncodeString("20160901")
                 
@@ -364,7 +364,7 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCAnimatedImagesViewDeleg
             }
             
         }else{
-            self.showMJProgressHUD("需要验证码", isAnimate: false, startY: ScreenHeight-40-40-40)
+            self.showMJProgressHUD("需要验证码", isAnimate: false, startY: ScreenHeight-40-40-40-20)
         }
 }
         
@@ -397,7 +397,7 @@ extension RegistVC {
             self.sendphoneModel = DataSource().getSendPhoneData(responseDic)
             
             }) { (error) in
-            self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40)
+            self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40-20)
         }
         
     }

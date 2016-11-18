@@ -36,6 +36,11 @@ class ChangeNameViewController: MainViewController,UITextFieldDelegate {
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
     }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+    }
+    
    
     
     //MARK:更改名字
@@ -96,6 +101,7 @@ class ChangeNameViewController: MainViewController,UITextFieldDelegate {
     override func viewWillDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
     }
 
 }

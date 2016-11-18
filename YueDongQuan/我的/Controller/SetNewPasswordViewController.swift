@@ -92,6 +92,15 @@ class SetNewPasswordViewController: MainViewController {
         super.didReceiveMemoryWarning()
         
     }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
+    }
+    
     //MARK:输入框输入改变
     func TextDidChange(fication:NSNotification)  {
             }
@@ -109,12 +118,12 @@ class SetNewPasswordViewController: MainViewController {
                     
                 }else{
                     
-                    self.showMJProgressHUD("两次输入的秘密不一致哦,(づ￣3￣)づ╭❤～", isAnimate: true,startY: ScreenHeight-40-45)
+                    self.showMJProgressHUD("两次输入的秘密不一致哦,(づ￣3￣)づ╭❤～", isAnimate: true,startY: ScreenHeight-40-40-40-20)
                 }
             }else{
                 //请设置新密码
                 
-                self.showMJProgressHUD("请设置新密码,(づ￣3￣)づ╭❤～", isAnimate: true,startY: ScreenHeight-40-45)
+                self.showMJProgressHUD("请设置新密码,(づ￣3￣)づ╭❤～", isAnimate: true,startY: ScreenHeight-40-40-40-20)
             }
         }
 
@@ -130,7 +139,7 @@ class SetNewPasswordViewController: MainViewController {
             if success != false{
                 let model = DataSource().getnewpwData(responseDic)
                 if model.code != "200"{
-                    self.showMJProgressHUD("修改失败,出现未知错误", isAnimate: true,startY: ScreenHeight-40-45)
+                    self.showMJProgressHUD("修改失败,出现未知错误", isAnimate: true,startY: ScreenHeight-40-40-40-20)
                     
                      sleep(UInt32(1.5))
                     self.navigationController?.popViewControllerAnimated(true)
@@ -140,7 +149,7 @@ class SetNewPasswordViewController: MainViewController {
             }
             }) { (error) in
               
-                self.showMJProgressHUD("网络出现错误！", isAnimate: true,startY: ScreenHeight-40-45)
+                self.showMJProgressHUD("网络出现错误！", isAnimate: true,startY: ScreenHeight-40-40-40-20)
         }
        
     }

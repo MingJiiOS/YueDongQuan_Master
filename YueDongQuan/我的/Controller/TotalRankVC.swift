@@ -132,7 +132,7 @@ extension TotalRankVC {
             }) { (error) in
           self.showMJProgressHUD(error.description,
                                  isAnimate: false,
-                                 startY: ScreenHeight-40-40-40)
+                                 startY: ScreenHeight-40-40-40-20)
         }
         
     }
