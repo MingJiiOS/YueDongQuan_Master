@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SVProgressHUD
 
 class HKFPostJoinTeamVC: UIViewController,AMapLocationManagerDelegate,UITextViewDelegate {
     
@@ -70,21 +71,12 @@ class HKFPostJoinTeamVC: UIViewController,AMapLocationManagerDelegate,UITextView
     }
     
     func selectQuanZiClick(){
-//        NSLog("点击了选择显示位置")
+
         helper.getGeocodeAction()
     }
     
     func setNav(){
         
-//        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-//        let imgView = UIImageView(frame:leftView.frame)
-//        imgView.image = UIImage(named: "")
-//        imgView.contentMode = .Center
-//        leftView.addSubview(imgView)
-//        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissVC))
-//        
-//        leftView.addGestureRecognizer(tap)
         self.title = "发布求加入说说"
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(dismissVC))
@@ -108,6 +100,20 @@ class HKFPostJoinTeamVC: UIViewController,AMapLocationManagerDelegate,UITextView
     
     
     internal func send(){
+        
+        if self.joinSay == "" {
+            let alert = UIAlertView(title: "提示", message: "说说内容不能为空", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        if self.joinAddress == "" {
+            let alert = UIAlertView(title: "提示", message: "地址信息不能为空", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        SVProgressHUD.showWithStatus("发布中")
         requestToPostJoinSay(self.joinSay, latitude: self.userLatitude, longitude: self.userLongitude, address: self.joinAddress)
     }
 
@@ -144,12 +150,18 @@ extension HKFPostJoinTeamVC {
                 
                 let str = (json.object) as! NSDictionary
                 
-//                NSLog("json = \(json)")
                 
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                    
+                    SVProgressHUD.showSuccessWithStatus("发布成功")
+                    SVProgressHUD.dismissWithDelay(1)
+                    sleep(1)
+                    
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }else{
+                    SVProgressHUD.showErrorWithStatus("发布失败")
+                    SVProgressHUD.dismiss()
                 }
-                
                 
             case .Failure(let error):
                 print(error)

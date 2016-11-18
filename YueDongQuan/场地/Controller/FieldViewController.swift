@@ -340,8 +340,14 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
 extension FieldViewController : FieldCellDelegate {
     func clickConfirmFieldBtn(indexPath: NSIndexPath) {
 //        NSLog("点击了预定")
-        let telNumber = (self.fieldModel?.data.array[indexPath.section].telephone)!
         
+        
+        if (self.fieldModel?.data.array[indexPath.section].telephone) == nil {
+            let alertView = UIAlertView(title: "提示", message: "暂无订场联系电话", delegate: nil, cancelButtonTitle: "确定")
+            alertView.show()
+            return
+        }
+        let telNumber = (self.fieldModel?.data.array[indexPath.section].telephone)!
         
         let alertView = YoYoAlertView(title: "我要订场", message: telNumber, cancelButtonTitle: "取消", sureButtonTitle: "确定")
         
@@ -414,16 +420,10 @@ extension FieldViewController {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-//                NSLog("fieldJson = \(json)")
-                let str = json.object
-                self.fieldModel = FieldModel.init(fromDictionary: str as! NSDictionary)
+                let dict = (json.object) as! NSDictionary
                 
-                print(self.fieldModel?.code)
-                print(self.fieldModel?.flag)
-                
-                
-                
-                if ((self.fieldModel?.code)! == "200" && self.fieldModel?.flag == "1" ){
+                if ((dict["code"] as! String) == "200" && (dict["flag"] as! String) == "1" ){
+                    self.fieldModel = FieldModel.init(fromDictionary: dict )
                     self.fieldTable.reloadData()
                 }
                 

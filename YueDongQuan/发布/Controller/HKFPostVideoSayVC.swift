@@ -9,9 +9,10 @@
 import UIKit
 import SnapKit
 import TZImagePickerController
-import XLProgressHUD
+import SVProgressHUD
 import Alamofire
 import SwiftyJSON
+
 
 class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate {
 
@@ -129,17 +130,14 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
     }
     
     func send(){
-//        if self.selectedImages.count != 0 {
-//            for item in self.selectedImages {
-//                
-//                requestUpfile(item)
-//            }
-//        }else{
-//            
-//        }
+
         
-        if self.videoData.length != 0 {
+        if self.videoData.length != 0 && (self.videoData.length/(1024*1024) <= 20) {
+            SVProgressHUD.showWithStatus("视频发布中")
             requestUpfile(self.videoData)
+        }else if (self.videoData.length/(1024*1024) > 20){
+            SVProgressHUD.showErrorWithStatus("视频超过20M")
+            SVProgressHUD.dismissWithDelay(2)
         }else{
             
         }
@@ -227,7 +225,7 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
         self.selectedImages = [coverImage]
         self.publishPhotosView.reloadDataWithImages(NSMutableArray(array: [coverImage]))
         let msg = "视频压缩中..."
-        self.view.showLoadingTilteActivity(msg, position: "center")
+        SVProgressHUD.showWithStatus(msg)
         TZImageManager().getVideoOutputPathWithAsset(asset) { (outputPath : String!) in
 //            NSLog("视频导出到本地完成,沙盒路径为:%@",outputPath)
             let data = NSData(contentsOfFile: outputPath)
@@ -237,8 +235,8 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
             if fileSize >= 1024 {
             
             }
-            self.view.showLoadingTilteActivity("压缩完成", position: "center")
-            self.view.hideActivity()
+            SVProgressHUD.showSuccessWithStatus("压缩完成")
+            SVProgressHUD.dismissWithDelay(2)
         }
         
         
@@ -300,7 +298,14 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
                 
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
 //                    NSLog("发布完成完成")
+                    SVProgressHUD.showSuccessWithStatus("视频发布成功")
+                    SVProgressHUD.dismissWithDelay(1)
+                    sleep(1)
+                    
                     self.dismissViewControllerAnimated(true, completion: nil)
+                }else{
+                    SVProgressHUD.showErrorWithStatus("发布失败")
+                    SVProgressHUD.dismiss()
                 }
                 
                 

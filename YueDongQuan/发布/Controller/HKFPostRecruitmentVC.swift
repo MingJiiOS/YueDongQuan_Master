@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Alamofire
 import SwiftyJSON
+import SVProgressHUD
 
 
 class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextViewDelegate{
@@ -106,16 +107,7 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     
     func setNav(){
         
-//        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-//        let imgView = UIImageView(frame:leftView.frame)
-//        imgView.image = UIImage(named: "")
-//        imgView.contentMode = .Center
-//        leftView.addSubview(imgView)
-//        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissVC))
-//        
-//        leftView.addGestureRecognizer(tap)
-//        
+     
         self.title = "发布招募说说"
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(dismissVC))
@@ -134,7 +126,7 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     
     
     func selectQuanZiClick(){
-//        NSLog("点击了选择圈子")
+
         let cicrleVC = MyQuanZiViewController()
         cicrleVC.getCicleIDClosure = getMyCicleIdAndNameClosure
         cicrleVC.pushFlag = true
@@ -143,13 +135,13 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     }
     
     func showLocationClick(){
-//        NSLog("点击了显示位置")
+
         helper.getGeocodeAction()
         
     }
     
     func getMyCicleIdAndNameClosure(cicleId: String,cicleName:String) ->Void {
-//        NSLog("cicleName = \(cicleName),cicleId = \(cicleId)")
+
         self.circleIdTemp = cicleId
         selectQzLabel.text = cicleName
     }
@@ -159,10 +151,25 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
         if self.circleIdTemp == "" {
             let alert = UIAlertView(title: "提示", message: "没有选择圈子不能发布招募信息", delegate: nil, cancelButtonTitle: "确定")
             alert.show()
+            return
             
-        }else{
-            requestToPostZhaoMuSay(self.sayString, latitude: self.userLatitude, longitude: self.userLongitude, circleId: self.circleIdTemp, address: self.address)
         }
+        
+        if self.sayString == ""{
+            let alert = UIAlertView(title: "提示", message: "招募信息不能为空", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        if self.address == "" {
+            let alert = UIAlertView(title: "提示", message: "没有地址是不能发布的哦😯", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        SVProgressHUD.showWithStatus("招募信息发布中")
+        requestToPostZhaoMuSay(self.sayString, latitude: self.userLatitude, longitude: self.userLongitude, circleId: self.circleIdTemp, address: self.address)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -183,9 +190,8 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     
     
     func textViewDidChange(textView: UITextView) {
-//        NSLog("textView.Change = \(textView.text)")
-        let str = textView.text
-//        NSLog("str = \(str)")
+
+//        let str = textView.text
     }
     
     
@@ -219,7 +225,14 @@ extension HKFPostRecruitmentVC {
                 let str = (json.object) as! NSDictionary
                 
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
+                    
+                    SVProgressHUD.showSuccessWithStatus("发布成功")
+                    SVProgressHUD.dismissWithDelay(1)
+                    sleep(1)
                     self.dismissViewControllerAnimated(true, completion: nil)
+                }else{
+                    SVProgressHUD.showErrorWithStatus("发布失败")
+                    SVProgressHUD.dismiss()
                 }
                 
                 

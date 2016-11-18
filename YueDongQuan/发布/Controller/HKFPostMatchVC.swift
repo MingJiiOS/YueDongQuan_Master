@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SVProgressHUD
 
 class HKFPostMatchVC: UIViewController,AMapLocationManagerDelegate,UITextViewDelegate {
 
@@ -79,21 +80,12 @@ class HKFPostMatchVC: UIViewController,AMapLocationManagerDelegate,UITextViewDel
         self.userLatitude = latTemp as! Double
         self.userLongitude = lngTemp as! Double
         
-        selectQzLabel.text = addTemp as! String
-//        NSLog("result == \(addTemp)--\(latTemp)--\(lngTemp)")
+        selectQzLabel.text = addTemp as? String
     }
     
     func setNav(){
         
-//        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-//        let imgView = UIImageView(frame:leftView.frame)
-//        imgView.image = UIImage(named: "")
-//        imgView.contentMode = .Center
-//        leftView.addSubview(imgView)
-//        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissVC))
-//        
-//        leftView.addGestureRecognizer(tap)
+
         self.title = "发布约战说说"
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(dismissVC))
@@ -109,6 +101,21 @@ class HKFPostMatchVC: UIViewController,AMapLocationManagerDelegate,UITextViewDel
     }
     
     internal func send() {
+        
+        if self.MatchSay == "" {
+            let alert = UIAlertView(title: "提示", message: "约战信息不能为空", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        if self.matchAddress == "" {
+            let alert = UIAlertView(title: "提示", message: "地址信息不能为空", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
+        
+        SVProgressHUD.showWithStatus("发布中")
+        
         requestToPostMatchSay(self.MatchSay, latitude: self.userLatitude, longitude: self.userLongitude, address: self.matchAddress)
     }
 
@@ -158,7 +165,15 @@ extension HKFPostMatchVC {
                 let str = (json.object) as! NSDictionary
                 
                 if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                    
+                    SVProgressHUD.showSuccessWithStatus("发布成功")
+                    SVProgressHUD.dismissWithDelay(1)
+                    sleep(1)
+                    
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }else{
+                    SVProgressHUD.showErrorWithStatus("发布失败")
+                    SVProgressHUD.dismiss()
                 }
                 
                 
