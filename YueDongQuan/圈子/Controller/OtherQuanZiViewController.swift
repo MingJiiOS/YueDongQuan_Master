@@ -491,10 +491,10 @@ extension OtherQuanZiViewController {
  
                 }
             
-                mapView.addAnnotations(annotations as [AnyObject])
-                mapView.showAnnotations(annotations as [AnyObject], animated: true)
+                
         }
-        
+        mapView.addAnnotations(annotations as [AnyObject])
+        mapView.showAnnotations(annotations as [AnyObject], animated: true)
     func updateUI()  {
         tableView.reloadData()
     }

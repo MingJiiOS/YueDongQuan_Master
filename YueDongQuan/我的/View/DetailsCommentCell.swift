@@ -13,9 +13,9 @@ class DetailsCommentCell: UITableViewCell {
     private var contentLabel : UILabel?
     var subIndex : NSIndexPath?
     
-    var allCommentAry : [myFoundCommentComment]?
+    var allCommentAry : [myFoundComment]?
     
-    typealias allcommentClourse = (md:[myFoundCommentComment])->Void
+    typealias allcommentClourse = (md:[myFoundComment])->Void
     var allcommentBlock : allcommentClourse?
     func allComment(block:allcommentClourse?) {
         allcommentBlock = block
@@ -52,10 +52,10 @@ class DetailsCommentCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func getAllCommentData(model:[myFoundCommentComment])  {
+    func getAllCommentData(model:[myFoundComment])  {
         self.allCommentAry = model
     }
-    func configSubCommentCellWithModel(model:myFoundCommentComment)  {
+    func configSubCommentCellWithModel(model:myFoundComment)  {
      
 //           self.allComment { (md) in
 //        if self.allCommentAry != nil {
@@ -63,14 +63,14 @@ class DetailsCommentCell: UITableViewCell {
             
                 
                         
-                        let attributeString = NSMutableAttributedString(string: String(format: "%@回复:%@", model.netName,model.content))
+                        let attributeString = NSMutableAttributedString(string: String(format: "%@回复:  %@", model.netName,model.content))
                         //从文本0开始6个字符字体HelveticaNeue-Bold,16号
                         
                         //设置字体颜色
                         attributeString.addAttribute(NSForegroundColorAttributeName,
                                                      value: kBlueColor,
                                                      range: NSMakeRange(0,
-                                                        NSString(string:model.netName).length+2))
+                                                        NSString(string:model.netName).length))
                         
                         
                         self.contentLabel?.attributedText = attributeString

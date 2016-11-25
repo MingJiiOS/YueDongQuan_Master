@@ -28,7 +28,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     let changDi = FieldViewController()
     
     let quanZi = QuanZiViewController()
-    let personal = PersonalViewController()
+    let personal = MineVC()
     
     var checkModel : CheckModel!
     var dataInfo = CheckDataInfo()
@@ -65,10 +65,12 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     }
     
     func setUpTabBar(){
-        customTabBar = YJTabBar(frame: self.tabBar.frame)
+        customTabBar = YJTabBar.shareYJTabBar()
+        customTabBar.frame = self.tabBar.frame
         customTabBar.backgroundColor = UIColor.whiteColor()
         customTabBar.delegate = self
         customTabBar.items = self.items as [AnyObject]
+        
         self.view.addSubview(customTabBar)
         self.tabBar.removeFromSuperview()
         
@@ -200,7 +202,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
                 let json = JSON(data: response.data!)
                 
 //                NSLog("checkJson=\(json)")
-                let dict = (json.object) as! NSDictionary
+                _ = (json.object) as! NSDictionary
                 
                 
 //                if (dict["code"]! as! String == "200" && dict["flag"]! as! String == "1"){

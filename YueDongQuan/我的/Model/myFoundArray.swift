@@ -1,7 +1,7 @@
 //
 //	myFoundArray.swift
 //
-//	Create by 方果 黄 on 2/11/2016
+//	Create by 方果 黄 on 24/11/2016
 //	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
@@ -10,54 +10,37 @@ import Foundation
 
 class myFoundArray : NSObject, NSCoding{
 
-	var aname : String!
-	var circleId : Int!
-	var comment : [myFoundCommentComment]!
+	var address : String!
+	var comment : [myFoundComment]!
 	var content : String!
 	var csum : Int!
 	var id : Int!
 	var imageId : String!
 	var images : [myFoundImage]!
-	var rname : String!
+	var latitude : Float!
+	var longitude : Float!
+	var num : Int!
 	var time : Int!
-    var compressUrl : String!
-    
 	var typeId : Int!
-    /*
-     
-     */
+
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
-    
-    
 	init(fromDictionary dictionary: NSDictionary){
-		aname = dictionary["aname"] as? String
-		circleId = dictionary["circleId"] as? Int
-//		comment = dictionary["comment"] as? [myFoundCommentComment]
-        comment = [myFoundCommentComment]()
-        if let arrayArray = dictionary["comment"] as? [NSDictionary]{
-            for dic in arrayArray{
-                //                let value = DiscoveryCommentModel(fromDictionary: dic)
-                //                comment.append(value)
-                let model = myFoundCommentComment()
-                model.commentId = dic["commentId"] as? Int
-                model.content = dic["content"] as? String
-                model.foundId = dic["foundId"] as? Int
-                model.id = dic["id"] as? Int
-                model.netName = dic["netName"] as? String
-                model.time = dic["time"] as? Int
-                model.uid = dic["uid"] as? Int
-//                if let replys = dic["reply"] as? String{
-//                    model.reply = replys
-//                }else{
-//                    model.reply = ""
-//                }
-                comment.append(model)
-            }
-        }
-        
+		address = dictionary["address"] as? String
+		comment = [myFoundComment]()
+		if let commentArray = dictionary["comment"] as? [NSDictionary]{
+			for dic in commentArray{
+				let value = myFoundComment(fromDictionary: dic)
+                if let replys = dic["reply"] as? String{
+                    value.reply = replys
+                }else{
+                    value.reply = ""
+                }
+				comment.append(value)
+			}
+		}
 		content = dictionary["content"] as? String
 		csum = dictionary["csum"] as? Int
 		id = dictionary["id"] as? Int
@@ -66,12 +49,14 @@ class myFoundArray : NSObject, NSCoding{
 		if let imagesArray = dictionary["images"] as? [NSDictionary]{
 			for dic in imagesArray{
 				let value = myFoundImage(fromDictionary: dic)
+                
 				images.append(value)
 			}
 		}
-		rname = dictionary["rname"] as? String
+		latitude = dictionary["latitude"] as? Float
+		longitude = dictionary["longitude"] as? Float
+		num = dictionary["num"] as? Int
 		time = dictionary["time"] as? Int
-        compressUrl = dictionary["compressUrl"] as? String
 		typeId = dictionary["typeId"] as? Int
 	}
 
@@ -81,14 +66,15 @@ class myFoundArray : NSObject, NSCoding{
 	func toDictionary() -> NSDictionary
 	{
 		var dictionary = NSMutableDictionary()
-		if aname != nil{
-			dictionary["aname"] = aname
-		}
-		if circleId != nil{
-			dictionary["circleId"] = circleId
+		if address != nil{
+			dictionary["address"] = address
 		}
 		if comment != nil{
-			dictionary["comment"] = comment
+			var dictionaryElements = [NSDictionary]()
+			for commentElement in comment {
+				dictionaryElements.append(commentElement.toDictionary())
+			}
+			dictionary["comment"] = dictionaryElements
 		}
 		if content != nil{
 			dictionary["content"] = content
@@ -109,15 +95,18 @@ class myFoundArray : NSObject, NSCoding{
 			}
 			dictionary["images"] = dictionaryElements
 		}
-		if rname != nil{
-			dictionary["rname"] = rname
+		if latitude != nil{
+			dictionary["latitude"] = latitude
+		}
+		if longitude != nil{
+			dictionary["longitude"] = longitude
+		}
+		if num != nil{
+			dictionary["num"] = num
 		}
 		if time != nil{
 			dictionary["time"] = time
 		}
-        if compressUrl != nil {
-            dictionary["compressUrl"] = compressUrl
-        }
 		if typeId != nil{
 			dictionary["typeId"] = typeId
 		}
@@ -130,17 +119,17 @@ class myFoundArray : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         aname = aDecoder.decodeObjectForKey("aname") as? String
-         circleId = aDecoder.decodeObjectForKey("circleId") as? Int
-         comment = aDecoder.decodeObjectForKey("comment") as? [myFoundCommentComment]
+         address = aDecoder.decodeObjectForKey("address") as? String
+         comment = aDecoder.decodeObjectForKey("comment") as? [myFoundComment]
          content = aDecoder.decodeObjectForKey("content") as? String
          csum = aDecoder.decodeObjectForKey("csum") as? Int
          id = aDecoder.decodeObjectForKey("id") as? Int
          imageId = aDecoder.decodeObjectForKey("imageId") as? String
          images = aDecoder.decodeObjectForKey("images") as? [myFoundImage]
-         rname = aDecoder.decodeObjectForKey("rname") as? String
+         latitude = aDecoder.decodeObjectForKey("latitude") as? Float
+         longitude = aDecoder.decodeObjectForKey("longitude") as? Float
+         num = aDecoder.decodeObjectForKey("num") as? Int
          time = aDecoder.decodeObjectForKey("time") as? Int
-         compressUrl = aDecoder.decodeObjectForKey("compressUrl") as? String
          typeId = aDecoder.decodeObjectForKey("typeId") as? Int
 
 	}
@@ -151,11 +140,8 @@ class myFoundArray : NSObject, NSCoding{
     */
     @objc func encodeWithCoder(aCoder: NSCoder)
 	{
-		if aname != nil{
-			aCoder.encodeObject(aname, forKey: "aname")
-		}
-		if circleId != nil{
-			aCoder.encodeObject(circleId, forKey: "circleId")
+		if address != nil{
+			aCoder.encodeObject(address, forKey: "address")
 		}
 		if comment != nil{
 			aCoder.encodeObject(comment, forKey: "comment")
@@ -175,15 +161,18 @@ class myFoundArray : NSObject, NSCoding{
 		if images != nil{
 			aCoder.encodeObject(images, forKey: "images")
 		}
-		if rname != nil{
-			aCoder.encodeObject(rname, forKey: "rname")
+		if latitude != nil{
+			aCoder.encodeObject(latitude, forKey: "latitude")
+		}
+		if longitude != nil{
+			aCoder.encodeObject(longitude, forKey: "longitude")
+		}
+		if num != nil{
+			aCoder.encodeObject(num, forKey: "num")
 		}
 		if time != nil{
 			aCoder.encodeObject(time, forKey: "time")
 		}
-        if compressUrl != nil {
-            aCoder.encodeObject(compressUrl, forKey: "compressUrl")
-        }
 		if typeId != nil{
 			aCoder.encodeObject(typeId, forKey: "typeId")
 		}

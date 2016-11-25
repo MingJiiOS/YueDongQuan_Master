@@ -276,7 +276,14 @@ class MJNetWorkHelper: NSObject {
     func dissolution(interfaceName:NSString,dissolutionModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {
         post(interfaceName, requestModel: dissolutionModel, success: success, fail: fail)
     }
-    
+    //MARK:获取用户融云名字头像
+    func getryinfo(interfaceName:NSString,getryinfoModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {
+        post(interfaceName, requestModel: getryinfoModel, success: success, fail: fail)
+    }
+    //MARK:融云获取圈子logo和名字
+    func getrycircle(interfaceName:NSString,getrycircleModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock) {
+        post(interfaceName, requestModel: getrycircleModel, success: success, fail: fail)
+    }
 }
 
 

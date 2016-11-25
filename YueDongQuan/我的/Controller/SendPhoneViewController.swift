@@ -8,35 +8,38 @@
 
 import UIKit
 import SnapKit
-import RealmSwift
+//import RealmSwift
 class SendPhoneViewController: MainViewController {
  var SendNumberview = SendPhoneNumberView()
     var phoneNumber : String?
     var sendphoneModel : SendPhoneModel?
+    var isSendPhone:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
        SendNumberview .frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight)
-        let realm = try! Realm()
-        let result = realm.objects(RLUserInfo)
-        let item = result.first
-      SendNumberview.phoneNumber.text = item?.phone
-        self.view .addSubview(SendNumberview)
-        let dict = ["v":v,
-                    "phone":item?.phone]
-        MJNetWorkHelper().sendphone("sendphone", sendphoneModel: dict, success: { (responseDic, success) in
-            self.sendphoneModel = DataSource().getSendPhoneData(responseDic)
-            self.SendNumberview.sendMaskCodeback { (maskcode) in
-                if maskcode != self.sendphoneModel?.data.code{
-                    self.showMJProgressHUD(maskcode, isAnimate: true, startY: ScreenHeight-40-40-60)
-                }else{
-                    self.push(SetNewPasswordViewController())
-                }
-            }
-        }) { (error) in
-            self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40-20)
-        }
+//        let realm = try! Realm()
+//        let result = realm.objects(RLUserInfo)
+//        let item = result.first
+//      SendNumberview.phoneNumber.text = item?.phone
+//        self.view .addSubview(SendNumberview)
+//        let dict = ["v":v,
+//                    "phone":item?.phone]
+//        MJNetWorkHelper().sendphone("sendphone", sendphoneModel: dict, success: { (responseDic, success) in
+//            self.sendphoneModel = DataSource().getSendPhoneData(responseDic)
+//            self.SendNumberview.sendMaskCodeback { (maskcode) in
+//                if maskcode != self.sendphoneModel?.data.code{
+//                    self.showMJProgressHUD(maskcode, isAnimate: true, startY: ScreenHeight-40-40-60)
+//                }else{
+//                    let set = SetNewPasswordViewController()
+//                    set.isSendPhone = true
+//                    self.push(set)
+//                }
+//            }
+//        }) { (error) in
+//            self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40-20)
+//        }
         
         
     }

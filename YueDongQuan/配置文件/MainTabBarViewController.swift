@@ -14,7 +14,7 @@ class MainTabBarViewController: UITabBarController {
     let changDi = FieldViewController()
     let mid = MiddleViewController()
     let quanZi = QuanZiViewController()
-    let personal = PersonalViewController()
+    let personal = MineVC()
     
     override func viewDidLoad() {
         super.viewDidLoad()

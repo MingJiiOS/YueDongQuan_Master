@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+//import RealmSwift
 class SetNewPasswordViewController: MainViewController {
 
     lazy var newPassWordLabel = UIButton(type: UIButtonType.Custom)
@@ -16,7 +16,7 @@ class SetNewPasswordViewController: MainViewController {
      var sureNewPassWordField = MJTextFeild()
     var newPassword = NSString()
     var sureNewPassword = NSString()
-    
+    var isSendPhone:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -131,6 +131,7 @@ class SetNewPasswordViewController: MainViewController {
     //MARK:保存新密码
     func saveNewpw()  {
         let newpwModel = MyInfoModel()
+        let manager = FLFMDBManager.shareManager()
         newpwModel.newpw = newPassword as String
         let dic = ["v":NSObject.getEncodeString("20160901"),
                    "pw":newpwModel.newpw,
@@ -142,9 +143,29 @@ class SetNewPasswordViewController: MainViewController {
                     self.showMJProgressHUD("修改失败,出现未知错误", isAnimate: true,startY: ScreenHeight-40-40-40-20)
                     
                      sleep(UInt32(1.5))
-                    self.navigationController?.popViewControllerAnimated(true)
+                    
                 }else{
-                  self.navigationController?.popViewControllerAnimated(true)
+                    
+                    let items = manager.fl_searchModelArr(UserDataInfoModel) as NSArray
+                    
+                    if items.count > 0 {
+                        
+                       let model = items.firstObject! as! UserDataInfoModel
+                        model.pw = self.newPassword as String
+                        manager.fl_insertModel(model)
+                    }
+                if self.isSendPhone == true{
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }else{
+                        for vc:UIViewController in (self.navigationController?.viewControllers)!{
+                            if vc.isKindOfClass(MineVC){
+                                self.navigationController?.popToViewController(vc, animated: true)
+                            }
+                        }
+ 
+                    }
+                    
+                    
                 }
             }
             }) { (error) in

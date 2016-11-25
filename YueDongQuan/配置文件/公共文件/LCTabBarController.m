@@ -69,7 +69,7 @@
     FieldViewController *fieldVC = [[FieldViewController alloc] init];
     MiddleViewController *middleVC = [[MiddleViewController alloc] init];
     QuanZiViewController *quanziVC = [[QuanZiViewController alloc] init];
-    PersonalViewController *personVC = [[PersonalViewController alloc] init];
+    MineVC *personVC = [[MineVC alloc] init];
     
     self.viewControllers = @[discoveryVC,fieldVC,middleVC,quanziVC,personVC];
      }

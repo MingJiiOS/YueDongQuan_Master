@@ -31,6 +31,8 @@ class MJLayerContentCell: UITableViewCell {
         addBtn.setBackgroundImage(UIImage(named: "addMember"), forState: UIControlState.Normal)
         self.selectionStyle = .None
         let image = UIImageView()
+        let modeldata = model.data
+        
         for index in 1...model.data.count {
             let circleLayer = CAShapeLayer()
             circleLayer.bounds = CGRect(x: 0, y: 0, width: 44, height: 44)
@@ -50,7 +52,7 @@ class MJLayerContentCell: UITableViewCell {
             layerShadow.borderWidth = 2
             self.contentView.layer .addSublayer(layerShadow)
 
-            image.sd_setImageWithURL(NSURL(string:("http://4493bz.1985t.com/uploads/allimg/150127/4-15012G52133.jpg")))
+            image.sd_setImageWithURL(NSURL(string:modeldata[index-1].thumbnailSrc), placeholderImage: UIImage(named: "默认头像"))
             circleLayer.contents = image.image?.CGImage
             addTransfromAnimate(circleLayer)
             addTransfromAnimate(layerShadow)

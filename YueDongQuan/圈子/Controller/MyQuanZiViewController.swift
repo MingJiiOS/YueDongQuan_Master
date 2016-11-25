@@ -27,10 +27,12 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
     var ownNameAry = NSMutableArray()
     var ownClrcleIDAry = NSMutableArray()
     var thumbnailSrcAry = NSMutableArray()
+    var ownPermissionsAry = NSMutableArray()
+    
     var joinNameAry = NSMutableArray()
     var joinClrcleIDAry = NSMutableArray()
     var jointhumbnailSrcAry = NSMutableArray()
-    
+    var joinPermissionsAry = NSMutableArray()
     //数据库资料
     
     
@@ -107,7 +109,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
         if self.myclrclemodel != nil {
             if indexPath.section == 0 {
                 //MARK:权限为圈主的数据
-                 let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cell")
+                 let cell = stytemCell(style: .Subtitle, reuseIdentifier: "cell")
                 cell.detailTextLabel?.textColor = UIColor.grayColor()
                 cell.detailTextLabel?.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
                 if count1 != 0 && count2 == 0 {//只有自己的圈子，没有加入的
@@ -251,6 +253,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                     chatVC.conversationType = .ConversationType_GROUP
                     chatVC.circleid = ownClrcleIDAry[indexPath.row] as? String
                     chatVC.thumbnailSrc = thumbnailSrcAry[indexPath.row] as? String
+                    chatVC.permissions = ownPermissionsAry[indexPath.row] as? NSInteger
                 }else if count1 == 0 && count2 != 0{
                     chatVC.targetId = joinClrcleIDAry[indexPath.row] as! String
                     chatVC.userName = userInfo.name
@@ -258,6 +261,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                     chatVC.conversationType = .ConversationType_GROUP
                     chatVC.circleid = joinClrcleIDAry[indexPath.row] as? String
                     chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
+                    chatVC.permissions = joinPermissionsAry[indexPath.row] as? NSInteger
                 }else if count1 == 0 && count2 == 0{
                     chatVC.targetId = ownClrcleIDAry[indexPath.row] as! String
                     chatVC.userName = userInfo.name
@@ -279,7 +283,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                 chatVC.conversationType = .ConversationType_GROUP
                 chatVC.circleid = joinClrcleIDAry[indexPath.row] as? String
                 chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
-
+                chatVC.permissions = joinPermissionsAry[indexPath.row] as? NSInteger
                   self.push(chatVC)
             }
 
@@ -306,11 +310,13 @@ extension MyQuanZiViewController {
                             self.ownNameAry .addObject((self.myclrclemodel?.data.array[index].name)!)
                             self.ownClrcleIDAry .addObject((self.myclrclemodel?.data.array[index].circleId.description)!)
                             self.thumbnailSrcAry .addObject((self.myclrclemodel?.data.array[index].thumbnailSrc)!)
+                            self.ownPermissionsAry .addObject((self.myclrclemodel?.data.array[index].permissions)!)
                         }
                         if self.myclrclemodel?.data.array[index].permissions == 2 {
                             self.joinNameAry .addObject((self.myclrclemodel?.data.array[index].name)!)
                             self.joinClrcleIDAry.addObject((self.myclrclemodel?.data.array[index].circleId.description)!)
                             self.jointhumbnailSrcAry .addObject((self.myclrclemodel?.data.array[index].thumbnailSrc)!)
+                            self.joinPermissionsAry .addObject((self.myclrclemodel?.data.array[index].permissions)!)
                         }
                     }
                 }

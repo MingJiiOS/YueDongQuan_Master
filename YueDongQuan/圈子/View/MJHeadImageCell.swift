@@ -23,9 +23,10 @@ class MJHeadImageCell: UITableViewCell {
     }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        headImage = MJHeadimageWithSubimageView(frame: CGRectMake(0, 2, self.contentView.frame.size.height-4, self.contentView.frame.size.height-4))
+        headImage = MJHeadimageWithSubimageView(frame: CGRectMake(5, 5, self.contentView.frame.size.height-10, self.contentView.frame.size.height-10))
         self.contentView .addSubview(headImage!)
         self.contentView .addSubview(nameLabel)
+        headImage?.subImage.hidden = true
         nameLabel.snp_makeConstraints { (make) in
             make.left.equalTo((headImage?.snp_right)!).offset(10)
             make.right.equalTo(-10)

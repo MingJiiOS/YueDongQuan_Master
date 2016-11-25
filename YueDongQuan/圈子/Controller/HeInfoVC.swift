@@ -79,12 +79,12 @@ extension HeInfoVC:UITableViewDelegate,UITableViewDataSource{
         //点击删除按钮
         messageCell?.deleteBtn!.hidden = true
         let window = UIApplication.sharedApplication().keyWindow
-        let weakSelf = self
-        let weakWindow = window
-        let weakTable = tableView
+        _ = self
+        _ = window
+        _ = tableView
         
         if self.hefoundModel != nil {
-            messageCell?.configHeFoundCellData(self.hefoundModel!, indexpath: indexPath)
+            messageCell?.configHeFoundCellData(self.hefoundModel!,heinfoModel:self.heinfoModel!, indexpath: indexPath)
         }
         
 //        messageCell?.CommentBtnClick({ (commentBtn, indexPath) in
@@ -136,7 +136,7 @@ extension HeInfoVC:UITableViewDelegate,UITableViewDataSource{
         let h = MJMessageCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
             let cell = sourceCell as! MJMessageCell
             if self.hefoundModel != nil{
-               cell.configHeFoundCellData(self.hefoundModel!, indexpath: indexPath) 
+                cell.configHeFoundCellData(self.hefoundModel!,heinfoModel:self.heinfoModel!, indexpath: indexPath)
             }
             
             }, cache: { () -> [NSObject : AnyObject]! in
@@ -198,7 +198,7 @@ extension HeInfoVC {
         if self.heinfoModel != nil {
             //发送单聊消息
             if self.heinfoModel?.data.heIsFocus == true && self.heinfoModel?.data.meIsFocus == true {
-                let singleChat = RCConversationViewController()
+                let singleChat = MJConversationViewController()
 
                 singleChat.conversationType = .ConversationType_PRIVATE
                 singleChat.targetId = self.userid

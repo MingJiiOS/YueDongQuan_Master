@@ -17,6 +17,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
     
     //数据模型
     var todayModel : TodayDongdouModel?
+    var histroyModel : HistoryDongdouModel?
     
     
     
@@ -25,7 +26,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
         override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.creatView()
+        
         
     }
 
@@ -33,11 +34,13 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
         
         //头部红色背景图
        
-        headBgView = MyDongdouView(frame: CGRectMake(0, -64, ScreenWidth, ScreenHeight/2.5), numberStr: self.myDongdou!)
+        headBgView = MyDongdouView(frame: CGRectMake(0, -64, ScreenWidth, ScreenHeight/2.5), numberStr: self.myDongdou!,rankStr:(self.histroyModel?.data.rak.description)!)
        
         headBgView!.backgroundColor = UIColor.redColor()
         animates()
         self.view .addSubview(headBgView!)
+        
+        
         
 //        ref = MJContextRef(frame:CGRectMake(0,headBgView!.frame.size.height-64-13,ScreenWidth,13))
         
@@ -74,9 +77,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
         todayDongdouTableView.tag = 1
         todayDongdouTableView.delegate = self
         todayDongdouTableView.dataSource = self
-        let label = UILabel()
-        label.text = "每日上限：登录 5，发布动态 100，场地签到 60"
-        todayDongdouTableView.tableFooterView = label
+        
         
 //        todayDongdouTableView.scrollEnabled = false
         
@@ -163,29 +164,41 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView.tag == 1 {
-//            if self.todayModel != nil {
-//                return (self.todayModel?.data.array.count)!
-//            }
-            return 5
+            if self.todayModel != nil {
+                return (self.todayModel?.data.array.count)!
+            }
+            
         }else{
-            return 6
+            if self.histroyModel != nil {
+                return (self.histroyModel?.data.array.count)!
+            }
+
         }
-        
+     return 0
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "dell")
         if  tableView.tag == 1 {
-            let array = ["每日登录","发布动态","场地签到","上传场地","其他"]
+            
             let cell:TotalDongdouCell = TotalDongdouCell(style: .Default, reuseIdentifier: "dell")
-            cell.rightLabel.text = "+120"
-            cell.textLabel?.text = array[indexPath.row]
+            if self.todayModel != nil {
+                let number = self.todayModel?.data.array[indexPath.row].count
+                cell.rightLabel.text = number?.description
+                cell.textLabel?.text = self.todayModel?.data.array[indexPath.row].reason
+            }
+            
             return cell
         }
         if  tableView.tag == 2 {
-           let array = ["注册","每日登录","发布动态","场地签到","上传场地","其他"]
+          
             let cell:TotalDongdouCell = TotalDongdouCell(style: .Default, reuseIdentifier: "dell")
-            cell.rightLabel.text = "+120"
-            cell.textLabel?.text = array[indexPath.row]
+            if  self.histroyModel != nil {
+                let number = self.histroyModel?.data.array[indexPath.row].count
+                cell.rightLabel.text = String(format: "+%@", (number?.description)!)
+                 cell.textLabel?.text = self.histroyModel?.data.array[indexPath.row].reason
+            }
+            
+           
             return cell
         }
         
@@ -194,13 +207,21 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+        return kAutoStaticCellHeight
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView .deselectRowAtIndexPath(indexPath, animated: true)
     }
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 50
+    }
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+            let label = UILabel(frame: CGRect(x: 10, y: 10, width: ScreenWidth, height: 40))
+            label.text = "每日上限:登录 5,发布动态 100, 场地签到 60"
+            label.textColor = UIColor.grayColor()
+            return label
+        
     }
 }
 extension MyDongDouViewController {
@@ -221,7 +242,10 @@ extension MyDongDouViewController {
                    "uid":userInfo.uid,
                    "timeType":"histroy"]
         MJNetWorkHelper().mydongdou(mydongdou, mydongdouModel: dic, success: { (responseDic, success) in
-            
+            let model = DataSource().gethistroydongdouData(responseDic)
+            self.histroyModel = model
+            self.creatView()
+            self.histroyDongdouTableView.reloadData()
         }) { (error) in
             
         }

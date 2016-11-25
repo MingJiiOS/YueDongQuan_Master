@@ -12,22 +12,6 @@ class TempLeftViewController: MainViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let model = MJRequestModel()
-        _ = 123
-        let phone = "1234765526"
-        let pw = "dkjhdkf"
-        let describe = "苹果手机"
-       
-        model.phone = phone
-        model.pw = pw
-        model.describe = describe
-        //登录操作
-//        MJNetWorkHelper().loginWithUserInfo(login, userModel: model, success: { (responseDic, success) in
-//            
-//            }) { (error) in
-//                
-//        }
-        
       
     }
     override func viewWillAppear(animated: Bool) {
@@ -45,9 +29,9 @@ class TempLeftViewController: MainViewController {
     }
   
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let nn = VerionUpdateView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-60))
-        nn.show()
-        self.view .addSubview(nn)
+        _ = VerionUpdateView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-60))
+       
+//        self.view .addSubview(nn)
     }
     /*
     // MARK: - Navigation

@@ -27,7 +27,7 @@ class HeFoundImage : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if originalSrc != nil{
 			dictionary["originalSrc"] = originalSrc
 		}

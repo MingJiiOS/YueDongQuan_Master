@@ -25,7 +25,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     var thumbnailSrc : String?
     
     var overQuanzi : UIButton?
-    
+    var permissions : NSInteger?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +67,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
         
         overQuanzi = UIButton(type: .Custom)
         self.view.addSubview(overQuanzi!)
+        overQuanzi?.custom_acceptEventInterval = 5
         overQuanzi!.snp_makeConstraints { (make) in
             make.left.equalTo(ScreenWidth/8)
             make.right.equalTo(-ScreenWidth/8)
@@ -233,6 +234,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
             if indexPath.row == 0{
                 let all = AllNoticeViewController()
                 all.circleid = self.circleId
+                all.permissions = self.permissions
                 self.push(all)
             }
         }else if indexPath.section == 3{
@@ -394,6 +396,7 @@ extension QuanZiSettingViewController {
                                             isAnimate: true,
                                             startY: ScreenHeight-40-40-40-20)
                                     }else{
+                                        self.overQuanzi?.enabled = false
                                         self.showMJProgressHUD("加入成功",
                                             isAnimate: true,
                                             startY: ScreenHeight-40-40-40-20)

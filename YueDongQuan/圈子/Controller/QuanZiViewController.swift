@@ -11,8 +11,8 @@ import UIKit
 class QuanZiViewController: RCConversationListViewController
 {
     var topTableView = UITableView(frame: CGRectZero, style: .Plain)
-    
-    typealias clickButton = (ButtonTag: Int,event:UIEvent) -> Void //声明闭包，点击按钮传值
+    //声明闭包，点击按钮传值
+    typealias clickButton = (ButtonTag: Int,event:UIEvent) -> Void
     //把申明的闭包设置成属性
     var clickClosure: clickButton?
     //为闭包设置调用函数
@@ -20,8 +20,7 @@ class QuanZiViewController: RCConversationListViewController
         //将函数指针赋值给myClosure闭包
         clickClosure = closure
     }
-    typealias GetDataCompletion = (data:NSData)->Void
-    var localLastModified = NSString()
+    private var index : NSInteger?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +28,39 @@ class QuanZiViewController: RCConversationListViewController
          self.edgesForExtendedLayout = .None
         self.creatView()
         self.creatViewWithSnapKit("ic_lanqiu", secondBtnImageString: "ic_search", thirdBtnImageString: "ic_add")
-        /* [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),@(ConversationType_DISCUSSION)]];*/
+        
+        
+        
+        
+        self.showConnectingStatusOnNavigatorBar = true
+        //定位未读会话
+        self.index = 0
+        //接收定位到未读会话的通知
+        NSNotificationCenter.defaultCenter().addObserver(self,
+         selector: #selector(GotoNextCoversation),
+         name: "GotoNextCoversation",
+         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+         selector: #selector(updateForSharedMessageInsertSuccess),
+         name: "RCDSharedMessageInsertSuccess",
+         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateBadgeValueForTabBarItem), name: RCKitDispatchReadReceiptNotification, object: nil)
         self.setDisplayConversationTypes([1,2,3,4,5] as [AnyObject]!)
         self.conversationListTableView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-120)
         self.conversationListTableView.tableFooterView = UIView()
     }
     override func viewWillAppear(animated: Bool) {
-
+        self.refreshConversationTableViewIfNeeded()
+        self.conversationListTableView.reloadData()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(receiveNeedRefreshNotification), name: "kRCNeedReloadDiscussionListNotification", object: nil)
+        let groupNotify = RCUserInfo(userId: "__system__", name: "群组通知", portrait: nil)
+        RCIM.sharedRCIM().refreshUserInfoCache(groupNotify, withUserId: "__system__")
     }
     
-    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "kRCNeedReloadDiscussionListNotification", object: nil)
+    }
     func creatViewWithSnapKit(leftBarButtonImageString:NSString,secondBtnImageString:String,thirdBtnImageString:String)  {
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
@@ -170,33 +192,67 @@ extension QuanZiViewController {
     override func onSelectedTableRow(conversationModelType: RCConversationModelType, conversationModel model: RCConversationModel!, atIndexPath indexPath: NSIndexPath!) {
         
         let conversationVC = MJConversationViewController()
-        conversationVC.conversationType = .ConversationType_GROUP
+        conversationVC.conversationType = model.conversationType
         conversationVC.userName = userInfo.name
         conversationVC.title = model.conversationTitle
         conversationVC.targetId = model.targetId
-       
+        conversationVC.circleid = model.targetId
+      
+            if ((self.navigationController?.topViewController?.isKindOfClass(QuanZiViewController)) != false){
+                self.navigationController?.pushViewController(conversationVC, animated: true)
+            }
         
-        let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
-                                       "uid":userInfo.uid,
-                                       "circleId":model.targetId]
-        MJNetWorkHelper().circleinfo(circleinfo, circleinfoModel: dict, success: { (responseDic, success) in
-            let model = DataSource().getcircleinfoData(responseDic)
-            for indexs in 0 ..< model.data.array.count {
-                if model.data.array[indexs].permissions == 1 {
-                    
-                    conversationVC.permissions = 1
-                       self.navigationController?.pushViewController(conversationVC, animated: true)
-                }
-                if model.data.array[indexs].permissions == 2 {
-                   
-                    conversationVC.permissions = 2
-                       self.navigationController?.pushViewController(conversationVC, animated: true)
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.5)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            self.refreshConversationTableViewIfNeeded()
+        }
+    }
+    
+}
+extension QuanZiViewController{
+    
+    func updateForSharedMessageInsertSuccess()  {
+        self.refreshConversationTableViewIfNeeded()
+    }
+    func updateBadgeValueForTabBarItem()  {
+        dispatch_async(dispatch_get_main_queue()) { 
+            let count = RCIMClient.sharedRCIMClient().getUnreadCount(self.displayConversationTypeArray)
+            if count > 0{
+                self.tabBarController?.tabBar.showBadgeOnItemIndex(3, badgeValue: count)
+            }else{
+                self.tabBarController?.tabBar.hideBadgeOnItemIndex(0)
+            }
+        }
+    }
+    func GotoNextCoversation()  {
+        self.conversationListTableView.contentInset =  UIEdgeInsetsMake(0, 0, self.conversationListTableView.frame.size.height, 0)
+        let i = index! + 1
+        for i in i...self.conversationListDataSource.count {
+            let model:RCConversationModel = self.conversationListDataSource[i] as! RCConversationModel
+            if model.unreadMessageCount > 0{
+                let scrollIndexPath:NSIndexPath = NSIndexPath(forRow: i, inSection: 0)
+                self.index = i
+                self.conversationListTableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .Top, animated: true)
+                break
+            }
+        }
+        if i >= self.conversationListDataSource.count {
+            for i in i...self.conversationListDataSource.count {
+                let model:RCConversationModel = self.conversationListDataSource[i] as! RCConversationModel
+                if model.unreadMessageCount > 0{
+                    let scrollIndexPath:NSIndexPath = NSIndexPath(forRow: i, inSection: 0)
+                    self.index = i
+                    self.conversationListTableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .Top, animated: true)
+                    break
                 }
             }
-            
-        }) { (error) in
-            
         }
-     
+    }
+    func receiveNeedRefreshNotification(status:NSNotification)  {
+        dispatch_async(dispatch_get_main_queue()) { 
+            if self.displayConversationTypeArray.count == 1 {
+                self.refreshConversationTableViewIfNeeded()
+            }
+        }
     }
 }

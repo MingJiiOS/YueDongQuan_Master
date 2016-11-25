@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class DetailsSayCell: UITableViewCell {
+class DetailsSayCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource {
     
     private var headImage : UIImageView?
     private var userName : UILabel?
@@ -18,20 +18,23 @@ class DetailsSayCell: UITableViewCell {
     private var replyBtn : UIButton?
     private var contentlabel : UILabel?
     private var tableView : UITableView?
-    var commentModel = myFoundCommentComment()
+    var commentModel : myFoundComment?
     //子评论数组
-    private var subCommentAry = [myFoundCommentComment]()
+    private var NoZeroCommentAry = [myFoundComment]()
     //子评论行数
     private var subCommentCount = 0
     private var indexpath : NSIndexPath?
     typealias clickReplyBtnClourse = (btn:UIButton,indexpath:NSIndexPath,pingluntype:PingLunType)->Void
     var clickReplyBlock : clickReplyBtnClourse?
+    
+    private var smallModel : myFoundComment?
+    
     func commentBtnBlock(block:clickReplyBtnClourse?)  {
         clickReplyBlock = block
     }
     
     var pinglunType : PingLunType?
-    
+    private let ary = NSMutableArray()
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -42,7 +45,9 @@ class DetailsSayCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    
+    
+     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = .None
@@ -133,32 +138,35 @@ class DetailsSayCell: UITableViewCell {
         self.tableView?.separatorStyle = .None
         self.hyb_lastViewInCell = self.tableView
         self.hyb_bottomOffsetToCell = 0
-                
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func getAllCommentData(model:[myFoundCommentComment]){
-//    self.commentModel = model
-    }
-    func getCommentModel(model:[myFoundCommentComment]){
+    func getAllCommentData(model:myFoundComment){
+      }
+    func getCommentModel(model:[myFoundComment]){
         
-        
-        
-        NSNotificationCenter.defaultCenter().postNotificationName("subModel", object: model, userInfo: nil)
+//      self.NoZeroCommentAry = model
     }
    
-    func configPingLunCell(model:myFoundCommentComment,subModel:[myFoundCommentComment],indexpath:NSIndexPath)  {
+    func configPingLunCell(model:[myFoundComment],subModel:[myFoundComment],indexpath:NSIndexPath)  {
+        self.NoZeroCommentAry = subModel
+        self.commentModel = model[indexpath.section - 1]
         self.indexpath = indexpath
-        self.userName?.text = model.netName
-        let time = TimeStampToDate().getTimeString(model.time)
+        self.userName?.text = model[indexpath.section - 1].netName
+        let time = TimeStampToDate().getTimeString(model[indexpath.section - 1].time)
         self.timeAgo?.text = time
         self.replyBtn?.setTitle("回复", forState: UIControlState.Normal)
         self.replyBtn?.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        self.contentlabel?.text = model.content
+        self.contentlabel?.text = model[indexpath.section - 1].content
         //孙子级评论
         var tableViewHeight = CGFloat()
+        self.tableView?.delegate = self
+        self.tableView?.dataSource = self
+        self.tableView?.registerClass(DetailsCommentCell.self,
+                                      forCellReuseIdentifier: "identtifier")
         if subModel.count != 0 {
             if subModel.count == 1 {
                 let cellheight = DetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
@@ -174,13 +182,12 @@ class DetailsSayCell: UITableViewCell {
                 self.tableView?.snp_updateConstraints(closure: { (make) in
                     make.height.equalTo(tableViewHeight)
                 })
-                self.tableView?.delegate = self
-                self.tableView?.dataSource = self
+           
                 self.tableView?.reloadData()
-                self.tableView?.registerClass(DetailsCommentCell.self,
-                                              forCellReuseIdentifier: "identtifier")
+               
             }else{
-                for id in 0...subModel.count {
+                for id in 1...subModel.count {
+
                     let cellheight = DetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
                         
                         let cell = sourceCell as! DetailsCommentCell
@@ -195,19 +202,17 @@ class DetailsSayCell: UITableViewCell {
                 self.tableView?.snp_updateConstraints(closure: { (make) in
                     make.height.equalTo(tableViewHeight)
                 })
-                self.tableView?.delegate = self
-                self.tableView?.dataSource = self
                 self.tableView?.reloadData()
-                self.tableView?.registerClass(DetailsCommentCell.self,
-                                              forCellReuseIdentifier: "identtifier")
             }
             
         }
-      
         
-        
-        
-        
+        for id in self.NoZeroCommentAry{
+            if id.commentId == self.commentModel!.uid {
+                
+                 ary.addObject(id)
+            }
+        }
         
     }
     func replySomeOne(sender:UIButton)  {
@@ -215,32 +220,29 @@ class DetailsSayCell: UITableViewCell {
             self.clickReplyBlock!(btn:sender,indexpath:self.indexpath!,pingluntype:.selectCell)
         }
     }
-}
-extension DetailsSayCell : UITableViewDelegate,UITableViewDataSource{
     //数据源
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell = tableView.dequeueReusableCellWithIdentifier("identtifier") as! DetailsCommentCell
         cell = DetailsCommentCell(style: .Default, reuseIdentifier: "identtifier")
-        if self.subCommentAry.count != 0 {
-            if self.subCommentAry[indexPath.row].commentId == self.commentModel.uid {
-                self.subCommentCount += 1
-                cell.configSubCommentCellWithModel(self.subCommentAry[indexPath.row])
-            }
-        }
-       return cell
+//        if indexPath.row <= self.ary.count {
+          cell.configSubCommentCellWithModel(ary[indexPath.row] as! myFoundComment)
+//        }
+        
+        return cell
     }
     //确定行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.subCommentCount
+        return self.ary.count
+        
     }
     //计算高度
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        if self.subCommentCount != 0 {
+        if self.ary.count != 0 {
             let cell_height = DetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
                 let cell = cell as! DetailsCommentCell
-                cell.configSubCommentCellWithModel(self.subCommentAry[indexPath.row])
+                cell.configSubCommentCellWithModel(self.ary[indexPath.row] as! myFoundComment)
             }) { () -> [NSObject : AnyObject]! in
                 let cache = [kHYBCacheUniqueKey:userInfo.uid,
                              kHYBCacheStateKey:"",
@@ -251,15 +253,15 @@ extension DetailsSayCell : UITableViewDelegate,UITableViewDataSource{
         }else{
             return 0
         }
-    
+        
     }
     //取消选中样式
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath,
                                          animated: true)
     }
-
 }
+
 //MARK:头部显示说说详情内容
 class DetailsHeaderCell: UITableViewCell {
     private var displayView = PYPhotosView()
@@ -273,7 +275,7 @@ class DetailsHeaderCell: UITableViewCell {
     var deleteBtn : UIButton?
     private var contentLabel : UILabel?
     private var indexPath = NSIndexPath()
-    private  var commentModel = [myFoundCommentComment]()
+    private  var commentModel = [myFoundComment]()
 
     typealias CommentBtnClickBlock = (commentBtn:UIButton,indexPath:NSIndexPath)->Void
     var commentBlock : CommentBtnClickBlock?

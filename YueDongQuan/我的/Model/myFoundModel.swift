@@ -1,7 +1,7 @@
 //
 //	myFoundModel.swift
 //
-//	Create by 方果 黄 on 2/11/2016
+//	Create by 方果 黄 on 24/11/2016
 //	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
@@ -32,7 +32,7 @@ class myFoundModel : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if code != nil{
 			dictionary["code"] = code
 		}

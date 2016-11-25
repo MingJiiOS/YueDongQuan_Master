@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+
 class SubContentViewController: MainViewController,UITableViewDelegate,UITableViewDataSource {
     //前一个页面点击的行数
     var   indexSection : NSInteger? = nil
@@ -22,18 +22,15 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
     var circletitle : String?
     //圈子头像
     var thumbnailSrc :String?
+    //圈主uid
+    var permissions1Uid : Int?
     
 //    var consumeItems:Results<RLCircleMemberInfo>?
     
     override func viewDidLoad() {
-        
-        
-        
+ 
         super.viewDidLoad()
-        
-        
-       
-        
+
         self.createViewWithIndexSection(indexSection!, Row: indexRow!)
         
         
@@ -67,7 +64,7 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
     func createViewWithIndexSection(sectionNumber:NSInteger,Row:NSInteger)  {
         if sectionNumber == 0 {
             if Row == 0 {
-                
+                self.title = "圈子资料"
                 let circleData = CircleDataView(frame: CGRectMake(0, 0, ScreenWidth, ScreenHeight))
                 circleData.circleLogo = self.thumbnailSrc
                 circleData.circleName = self.circletitle
@@ -75,6 +72,7 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
             }
         }
         if sectionNumber == 3 {
+            self.title = "黑名单"
             if Row == 1 {
                 let blackList = MJBlacklistView(frame: self.view.frame)
                 self.view .addSubview(blackList)
@@ -82,7 +80,7 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
         }
         if sectionNumber == 1 {
           if  Row == 0 {
-            
+            self.title = "所有成员"
             self.view.addSubview(tableView)
             tableView.snp_makeConstraints { (make) in
                 make.left.right.equalTo(0)
@@ -101,11 +99,13 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
                 let parter = ParterDataViewController()
                 parter.circleid = circleID
                 parter.uid = uid
+                parter.permissions1 = self.permissions1Uid
                 self.push(parter)
             }
             
             }
             if Row == 1 {
+                self.title = "二维码"
                 let qrcodeStr = NSData.AES256EncryptWithPlainText(
                     self.circleId! + "/" + self.circletitle!)
                 print("qrcodestr",qrcodeStr)
@@ -119,7 +119,12 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let   cell = MJHeadImageCell(style: .Default, reuseIdentifier: "cell")
         if self.memberModel != nil {
-            cell.headImage?.bgImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+            if self.memberModel?.data[indexPath.row].permissions == 1 {
+                //获取到圈主的uid
+                self.permissions1Uid = self.memberModel?.data[indexPath.row].uid
+            }
+            cell.headImage?.bgImage.sd_setImageWithURL(NSURL(string: self.memberModel!.data[indexPath.row].thumbnailSrc),
+                                                       placeholderImage: UIImage(named: "默认头像"))
             cell.headImage?.subImage.backgroundColor = UIColor.brownColor()
             cell.nameLabel.text = self.memberModel?.data[indexPath.row].name
         }
@@ -132,16 +137,16 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
         }
         return 0
     }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return kAutoStaticCellHeight
+    }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView .deselectRowAtIndexPath(indexPath, animated: true)
         if self.memberModel != nil {
             if let block = self.clickRowClourse{
                 block(index: indexPath.row,circleID: self.circleId!,uid:(self.memberModel?.data[indexPath.row].uid.description)!)
             }
-        }
-        
-    
-        
+        }   
     }
 }
 extension SubContentViewController {

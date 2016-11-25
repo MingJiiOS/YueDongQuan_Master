@@ -8,6 +8,7 @@
 
 #import "YJTabBar.h"
 #import "YJTabBarButton.h"
+#import "UIButton+Badge.h"
 //#import "UIControl+Custom.h"
 @interface YJTabBar()
 
@@ -18,8 +19,16 @@
 @property (nonatomic, weak) UIButton *selectedButton;
 
 @end
-
+static YJTabBar *_instance = nil;
 @implementation YJTabBar
+
++ (instancetype) shareYJTabBar{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[YJTabBar alloc]init];
+    });
+    return _instance;
+}
 
 - (NSMutableArray *)buttons{
     if (_buttons == nil) {
@@ -41,8 +50,9 @@
         
         if (btn.tag == 0) {
             [self btnClick:btn];
+             
         }
-        
+
         [self addSubview:btn];
         [self.buttons addObject:btn];
     }
@@ -76,7 +86,7 @@
         [btn setImage:[UIImage imageNamed:@"ic_fabu_0088ff"] forState:UIControlStateHighlighted];
         [btn setBackgroundImage:[UIImage imageNamed:@"ic_fabu_0088ff"] forState:UIControlStateNormal];
         [btn setBackgroundImage:[UIImage imageNamed:@"ic_fabu_0088ff"] forState:UIControlStateHighlighted];
-        
+     
         [btn sizeToFit];
         
         // 监听按钮的点击
@@ -110,8 +120,6 @@
     CGFloat btnY = 0;
     CGFloat btnW = w / (self.items.count + 1);
     CGFloat btnH = self.bounds.size.height;
-    
-    
     int i = 0;
     // 设置tabBarButton的frame
     for (UIView *tabBarButton in self.buttons) {
@@ -122,10 +130,23 @@
         tabBarButton.frame = CGRectMake(btnX, btnY, btnW, btnH);
         i++;
     }
-    
-    
     // 设置添加按钮的位置
-    self.plusButton.center = CGPointMake(w * 0.5, h * 0.5 - 5);
+    self.plusButton.center = CGPointMake(w * 0.5, h * 0.5 -5);
+    self.plusButton.clipsToBounds = YES;
+    self.plusButton.layer.cornerRadius = self.plusButton.frame.size.width/2;
+    self.plusButton.layer.masksToBounds = YES;
+    self.plusButton.layer.borderWidth = 5;
+    self.plusButton.layer.borderColor = [UIColor whiteColor].CGColor;
+
+    CAShapeLayer *shape = [[CAShapeLayer alloc]init];
+    UIBezierPath *path=[UIBezierPath bezierPath];
+    [path addArcWithCenter:CGPointMake(w * 0.5, h * 0.5 - 5) radius:self.plusButton.frame.size.width/2 startAngle:0 endAngle:2*M_PI clockwise:YES];
+    shape.path = path.CGPath;
+    shape.fillColor = [UIColor clearColor].CGColor;
+    shape.strokeColor = [UIColor whiteColor].CGColor;
+
+    [self.layer addSublayer:shape];
+    
     
 }
 

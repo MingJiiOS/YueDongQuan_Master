@@ -31,7 +31,7 @@ class TotalRankData : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if array != nil{
 			var dictionaryElements = [NSDictionary]()
 			for arrayElement in array {

@@ -27,5 +27,5 @@
 @property (nonatomic, strong) NSArray * items;
 
 @property (nonatomic, weak) id<YJTabBarDelegate> delegate;
-
++ (instancetype) shareYJTabBar;
 @end

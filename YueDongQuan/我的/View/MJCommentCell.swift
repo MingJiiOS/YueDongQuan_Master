@@ -44,14 +44,14 @@ class MJCommentCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configCellWithModel(model:myFoundCommentComment)  {
+    func configCellWithModel(model:myFoundComment)  {
      let comId = model.commentId
         if comId != 0 {
             if model.uid == model.commentId{
-                let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:%@", model.netName,model.netName,model.content))
-                attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
-                                             range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:model.netName).length+1))
-                attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+                let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:  %@", model.netName,model.netName,model.content))
+                attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
+                                             range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:model.netName).length))
+                attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
                                              range: NSMakeRange(0, NSString(string:model.netName).length))
                 
                 self.contentLabel?.attributedText = attributeString
@@ -63,13 +63,13 @@ class MJCommentCell: UITableViewCell {
                 MJNetWorkHelper().checkHeInfo(heinfo, HeInfoModel: dict, success: { (responseDic, success) in
                     if success {
                      let ohterName = responseDic["data"]!["name"] as! String
-                        let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:%@", model.netName,ohterName,model.content))
+                        let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:  %@", model.netName,ohterName,model.content))
                         //从文本0开始6个字符字体HelveticaNeue-Bold,16号
                        
                         //设置字体颜色
-                        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
-                            range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:ohterName).length+1))
-                        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
+                            range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:ohterName).length))
+                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
                             range: NSMakeRange(0, NSString(string:model.netName).length))
                         
                         self.contentLabel?.attributedText = attributeString
@@ -80,12 +80,12 @@ class MJCommentCell: UITableViewCell {
                 
             }
         }else{
-            let attributeString = NSMutableAttributedString(string: String(format: "%@:%@", model.netName,model.content))
+            let attributeString = NSMutableAttributedString(string: String(format: "%@:  %@", model.netName,model.content))
             //从文本0开始6个字符字体HelveticaNeue-Bold,16号
 //            attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "Helvetica", size: 14)!,
 //                                         range: NSMakeRange(0, NSString(string:model.netName).length))
             //设置字体颜色
-            attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+            attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
                                          range: NSMakeRange(0, NSString(string:model.netName).length+1))
 
             self.contentLabel?.attributedText = attributeString
@@ -101,9 +101,9 @@ class MJCommentCell: UITableViewCell {
         if comId != 0 {
             if model.uid == model.commentId{
                 let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:%@", model.netName,model.netName,model.content))
-                attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+                attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
                                              range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:model.netName).length+1))
-                attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+                attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
                                              range: NSMakeRange(0, NSString(string:model.netName).length))
                 
                 self.contentLabel?.attributedText = attributeString
@@ -119,9 +119,9 @@ class MJCommentCell: UITableViewCell {
                         //从文本0开始6个字符字体HelveticaNeue-Bold,16号
                         
                         //设置字体颜色
-                        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
                             range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:ohterName).length+1))
-                        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
                             range: NSMakeRange(0, NSString(string:model.netName).length))
                         
                         self.contentLabel?.attributedText = attributeString
@@ -137,7 +137,7 @@ class MJCommentCell: UITableViewCell {
             //            attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "Helvetica", size: 14)!,
             //                                         range: NSMakeRange(0, NSString(string:model.netName).length))
             //设置字体颜色
-            attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(),
+            attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
                                          range: NSMakeRange(0, NSString(string:model.netName).length+1))
             
             self.contentLabel?.attributedText = attributeString

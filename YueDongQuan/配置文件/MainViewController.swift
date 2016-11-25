@@ -35,18 +35,11 @@ class MainViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0 / 255, green: 107 / 255, blue: 186 / 255, alpha: 1)
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: leftBarButtonImageString as String), style: .Plain, target: self, action: #selector(clickBtnAction(_:)))
-        self.navigationItem.leftBarButtonItem?.tag = 1
+       
         let bgView = UIView(frame:CGRectMake(0, 0, 98, 44) )
-        let searchBtn = UIButton(type:.Custom);
-        
-        searchBtn.frame = CGRectMake(25, 5, 44, 44)
-        searchBtn.tag = 2
-        searchBtn.setImage(UIImage(named:secondBtnImageString), forState: UIControlState.Normal)
-//        searchBtn.custom_acceptEventInterval = 0.5
-        searchBtn .addTarget(self, action: #selector(clickBtnAction(_:)), forControlEvents: .TouchUpInside)
+
         let settingBtn = UIButton(type: .Custom)
-        searchBtn.sizeToFit()
+        
         
         
         settingBtn.setImage(UIImage(named: thirdBtnImageString), forState: UIControlState.Normal)
@@ -56,7 +49,7 @@ class MainViewController: UIViewController {
         settingBtn .addTarget(self, action: #selector(clickBtnAction(_:)), forControlEvents: .TouchUpInside)
         settingBtn.sizeToFit()
         
-        bgView.addSubview(searchBtn)
+        
         bgView.addSubview(settingBtn)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bgView)

@@ -5,8 +5,10 @@ import UIKit
 class TotalRankVC: MainViewController {
 
   private  var totalRankModel : TotalRankModel?
+  private var totalRankArray :[TotalRankArray]?
   private  let totalTableView = UITableView(frame: CGRectZero,
                                      style: .Grouped)
+    private var thumbnailSrc : String?
     //我的热豆
     var mydongdou : String?
     
@@ -48,7 +50,6 @@ class TotalRankVC: MainViewController {
 extension TotalRankVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-        
         if indexPath.section == 0 {
         
         let  cell:TotalRankHeadCell = TotalRankHeadCell(style: .Default, reuseIdentifier: "cell")
@@ -57,25 +58,32 @@ extension TotalRankVC : UITableViewDelegate,UITableViewDataSource {
                     self.navigationController?.popViewControllerAnimated(true)
                 }
             })
-            //头部填充数据
-       cell.config(self.mydongdou!,
+            //MARK:头部填充数据
+            if self.totalRankModel != nil{
+              cell.config(self.mydongdou!,
                     name:userInfo.name,
-                    headUrl:userInfo.thumbnailSrc)
+                    headUrl:userInfo.thumbnailSrc,
+                    No1Url: (self.totalRankArray?.first?.originalSrc)!)
+            }
+       
             
             return cell
         }else{
             let cell:SubTotalRankCell = SubTotalRankCell(style: .Default, reuseIdentifier: "cell")
             if self.totalRankModel != nil {
-                //填充排行榜数据
-                 cell.config((self.totalRankModel?.data.array)!,indexPath: indexPath)
+                //MARK:填充排行榜数据
+                 cell.config((self.totalRankArray)!,indexPath: indexPath)
             }
             //前 1 2 3 名设置特别标示
             if indexPath.row == 0 {
                 cell.numberImageLayer.setImage(UIImage(named: "1"), forState: UIControlState.Normal)
+                cell.nickName.textColor = UIColor.redColor()
             }else if indexPath.row == 1 {
                 cell.numberImageLayer.setImage(UIImage(named: "2"), forState: UIControlState.Normal)
+                cell.nickName.textColor = UIColor.redColor()
             }else if indexPath.row == 2 {
                 cell.numberImageLayer.setImage(UIImage(named: "3"), forState: UIControlState.Normal)
+                cell.nickName.textColor = UIColor.redColor()
             }else{
                  cell.numberImageLayer.setTitle((indexPath.row+1).description, forState: UIControlState.Normal)
             }
@@ -89,7 +97,7 @@ extension TotalRankVC : UITableViewDelegate,UITableViewDataSource {
             return 1
         }else{
             if self.totalRankModel != nil {
-                return (self.totalRankModel?.data.array.count)!
+                return (self.totalRankArray!.count)
             }
            
         }
@@ -126,9 +134,19 @@ extension TotalRankVC {
                                          dongdourankingModel: dict,
                                          success: { (responseDic, success) in
                                             if success {
-                                                self.totalRankModel = DataSource().getdongdourankingData(responseDic)
-                                                self.totalTableView.reloadData()
-                                            }
+                                                self.totalRankModel = DataSource().getdongdourankingData(responseDic)/*
+                                                 self.ZeroCommentAry.sortInPlace { (num1:myFoundCommentComment,
+                                                 num2:myFoundCommentComment) -> Bool in
+                                                 return num1.time > num2.time
+                                                 }
+                                                 */
+                self.totalRankArray = self.totalRankModel?.data.array
+                self.totalRankArray!.sortInPlace({ (num1:TotalRankArray, num2:TotalRankArray) -> Bool in
+                return Int(num1.dongdou) > Int(num2.dongdou)
+            })
+                                                
+             self.totalTableView.reloadData()
+      }
             }) { (error) in
           self.showMJProgressHUD(error.description,
                                  isAnimate: false,

@@ -28,6 +28,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     var circleName : String!
     //圈子密码
     var circlePw : String!
+    var circleImage = UIImageView()
     
     //上传头像
     var uploadimgaemodel : uploadImageModel?
@@ -40,7 +41,11 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "新建圈子"
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: ScreenWidth/3, height: 20))
+        label.textAlignment = .Center
+        label.text = "新建圈子"
+        self.navigationItem.titleView = label
         self.navigationController?.navigationBar.barTintColor = kBlueColor
        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜返回", style: .Plain, target: self, action: #selector(back))
@@ -55,9 +60,8 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
             make.centerX.equalTo(self.view.snp_centerX)
         }
         quanZiImage.backgroundColor = UIColor.grayColor()
-                if self.uploadimgaemodel != nil {
-        quanZiImage.sd_setImageWithURL(NSURL(string: "http://feizhuliu.vipyl.com/attached/image/20130306/20130306165523102310.jpg"), placeholderImage: UIImage(named: "默认圈子.jpg"))
-                }
+        quanZiImage.image = UIImage(named: "默认圈子")
+        
         quanZiBtn.snp_makeConstraints { (make) in
             make.bottom.equalTo(quanZiImage.snp_bottom)
             make.width.equalTo(quanZiImage.snp_width)
@@ -68,7 +72,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         quanZiBtn.backgroundColor = UIColor.blackColor()
         quanZiBtn.alpha = 0.4
         quanZiBtn.setImage(UIImage(named: "ic_bianji-0"), forState: UIControlState.Normal)
-        quanZiBtn.setTitle("圈子图片", forState: UIControlState.Normal)
+        quanZiBtn.setTitle("圈子logo", forState: UIControlState.Normal)
         quanZiBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0)
         quanZiBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         quanZiBtn.titleLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
@@ -86,6 +90,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(circleNameSaved), name: UITextFieldTextDidChangeNotification, object: nil)
         quanZiNameField.placeholder = "请填写圈子名"
         quanZiNameField.leftView = label1
+        quanZiNameField.keyboardType = .NamePhonePad
         quanZiNameField.leftViewMode = .Always
         quanZiNameField.tag = 10
         self.view .addSubview(zhuChangName)
@@ -113,6 +118,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         label3.text = "密码"
         label3.textColor = UIColor.blackColor()
         circlePasswordFeild.placeholder = "此圈子为私密圈子,需要密码"
+        circlePasswordFeild.secureTextEntry = true
         circlePasswordFeild.delegate = self
         circlePasswordFeild.leftView = label3
         circlePasswordFeild.leftViewMode = .Always
@@ -176,6 +182,9 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     }
     override func viewWillAppear(animated: Bool) {
         self.view.endEditing(true)
+        if self.uploadimgaemodel != nil {
+            quanZiImage.sd_setImageWithURL(NSURL(string: (self.uploadimgaemodel?.data.url)!), placeholderImage: UIImage(named: "默认圈子"))
+        }
          self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
     //MARK:创建新的圈子

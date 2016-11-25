@@ -1,5 +1,8 @@
 //
 //	HistoryDongdouData.swift
+//
+//	Create by 方果 黄 on 25/11/2016
+//	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
@@ -7,8 +10,8 @@ import Foundation
 
 class HistoryDongdouData : NSObject, NSCoding{
 
-	var aesDecryptudongdouredong123 : String!
 	var array : [HistoryDongdouArray]!
+	var dongdou : String!
 	var rak : Int!
 	var uid : Int!
 
@@ -17,7 +20,6 @@ class HistoryDongdouData : NSObject, NSCoding{
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: NSDictionary){
-		aesDecryptudongdouredong123 = dictionary["aes_decrypt(u.dongdou,'redong123')"] as? String
 		array = [HistoryDongdouArray]()
 		if let arrayArray = dictionary["array"] as? [NSDictionary]{
 			for dic in arrayArray{
@@ -25,6 +27,7 @@ class HistoryDongdouData : NSObject, NSCoding{
 				array.append(value)
 			}
 		}
+		dongdou = dictionary["dongdou"] as? String
 		rak = dictionary["rak"] as? Int
 		uid = dictionary["uid"] as? Int
 	}
@@ -35,15 +38,15 @@ class HistoryDongdouData : NSObject, NSCoding{
 	func toDictionary() -> NSDictionary
 	{
 		let dictionary = NSMutableDictionary()
-		if aesDecryptudongdouredong123 != nil{
-			dictionary["aes_decrypt(u.dongdou,'redong123')"] = aesDecryptudongdouredong123
-		}
 		if array != nil{
 			var dictionaryElements = [NSDictionary]()
 			for arrayElement in array {
 				dictionaryElements.append(arrayElement.toDictionary())
 			}
 			dictionary["array"] = dictionaryElements
+		}
+		if dongdou != nil{
+			dictionary["dongdou"] = dongdou
 		}
 		if rak != nil{
 			dictionary["rak"] = rak
@@ -60,8 +63,8 @@ class HistoryDongdouData : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         aesDecryptudongdouredong123 = aDecoder.decodeObjectForKey("aes_decrypt(u.dongdou,'redong123')") as? String
          array = aDecoder.decodeObjectForKey("array") as? [HistoryDongdouArray]
+         dongdou = aDecoder.decodeObjectForKey("dongdou") as? String
          rak = aDecoder.decodeObjectForKey("rak") as? Int
          uid = aDecoder.decodeObjectForKey("uid") as? Int
 
@@ -73,11 +76,11 @@ class HistoryDongdouData : NSObject, NSCoding{
     */
     @objc func encodeWithCoder(aCoder: NSCoder)
 	{
-		if aesDecryptudongdouredong123 != nil{
-			aCoder.encodeObject(aesDecryptudongdouredong123, forKey: "aes_decrypt(u.dongdou,'redong123')")
-		}
 		if array != nil{
 			aCoder.encodeObject(array, forKey: "array")
+		}
+		if dongdou != nil{
+			aCoder.encodeObject(dongdou, forKey: "dongdou")
 		}
 		if rak != nil{
 			aCoder.encodeObject(rak, forKey: "rak")

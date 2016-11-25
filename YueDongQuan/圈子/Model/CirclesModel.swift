@@ -28,7 +28,7 @@ class CirclesModel : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if code != nil{
 			dictionary["code"] = code
 		}

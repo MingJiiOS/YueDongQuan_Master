@@ -122,4 +122,7 @@ let getDongDou = "getDongDou"
 let search = "search"
 //MARK:接口名 解散圈子
 let dissolution = "dissolution"
-
+//MARK:接口名 获取融云名字 头像
+let getryinfo = "getryinfo"
+//MARK:接口名 融云获取圈子logo和名字
+let getrycircle = "getrycircle"

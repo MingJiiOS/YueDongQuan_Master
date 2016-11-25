@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+//import RealmSwift
 class SendPhoneNumberView: UIView {
 
    private  let kGAP = 10

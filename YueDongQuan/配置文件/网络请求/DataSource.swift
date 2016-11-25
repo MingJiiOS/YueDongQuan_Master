@@ -139,13 +139,9 @@ class DataSource: NSObject {
         return model!
     }
     //MARK:解析评论说说数据
-    func getcommentfoundData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func getcommentfoundData(datasource:NSDictionary) -> updateNameModel {
+        let model = updateNameModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析发布图片说说数据
     func getimagefoundData(datasource:NSDictionary) -> MJResponseModel {
@@ -318,13 +314,9 @@ class DataSource: NSObject {
         return model!
     }
     //MARK:解析转让圈主数据
-    func gettransfercircleData(datasource:NSDictionary) -> MJResponseModel {
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
-            
-            //解析返回来的数据并赋给返回值model
-            
-        }
-        return model!
+    func gettransfercircleData(datasource:NSDictionary) -> updateNameModel {
+        let model = updateNameModel(fromDictionary: datasource)
+        return model
     }
     //MARK:解析移除圈子数据 kickingcircle
     func getkickingcircleData(datasource:NSDictionary) -> MJResponseModel {
@@ -397,8 +389,8 @@ class DataSource: NSObject {
         return model
     }
     //MARK:解析查询我的动豆（历史动豆）数据
-    func gethistroydongdouData(datasource:NSDictionary) -> TodayDongdouModel {
-        let model = TodayDongdouModel(fromDictionary: datasource)
+    func gethistroydongdouData(datasource:NSDictionary) -> HistoryDongdouModel {
+        let model = HistoryDongdouModel(fromDictionary: datasource)
         return model
     }
     //MARK:解析动豆总排行数据
@@ -433,10 +425,22 @@ class DataSource: NSObject {
         }
         return model!
     }
+    //MARK:解析发送验证码数据
     func getSendPhoneData(datasource:NSDictionary) -> SendPhoneModel {
         let model = SendPhoneModel(fromDictionary: datasource)
         return model
         
+    }
+    //MARK:解析用户融云名字头像
+    func getgetryinfoData(datasource:NSDictionary) -> RCloudNameAndHeadModel{
+        let model = RCloudNameAndHeadModel(fromDictionary: datasource)
+        return model
+    }
+    //MARK:解析圈子logo和名字
+    func getgetrycircleData(datasource:NSDictionary) -> RCloudNameAndHeadModel {
+        let model = RCloudNameAndHeadModel(fromDictionary: datasource)
+        return model
+
     }
     
 }

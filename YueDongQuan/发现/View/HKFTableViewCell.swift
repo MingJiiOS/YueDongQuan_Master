@@ -11,7 +11,7 @@ import Masonry
 import SnapKit
 import HYBMasonryAutoCellHeight
 import AVKit
-import YYKit
+
 
 
 protocol HKFTableViewCellDelegate {
@@ -391,7 +391,8 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
                 make.height.equalTo(ScreenHeight/4)
             })
             self.videoImage.hidden = false
-            self.videoImage.setImageWithURL(NSURL(string: model.compressUrl), placeholder: nil, options: YYWebImageOptions.AllowBackgroundTask, completion: nil)
+
+            self.videoImage.sd_setImageWithURL(NSURL(string: model.compressUrl), placeholderImage: nil)
             
         }else{
             self.videoImage.snp_updateConstraints(closure: { (make) in

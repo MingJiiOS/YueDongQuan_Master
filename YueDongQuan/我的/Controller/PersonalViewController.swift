@@ -37,7 +37,11 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
     private let kChatToolBarHeight:CGFloat = 49
     
     private var needUpdateOffset:Bool = false
-    
+    private var typeStatus : PingLunType?
+    private var commentSayId : Int?
+    private var commentSayIndex : NSIndexPath?
+    private var lastestModelData = [myFoundArray]()
+    private var commentModel : myFoundComment?
     override func loadView() {
         super.loadView()
         self.needRefresh = true;
@@ -53,7 +57,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         self.view.addSubview(self.keyboard)
         self.view.bringSubviewToFront(self.keyboard)
         self.creatViewWithSnapKit("ic_lanqiu", secondBtnImageString: "ic_search",
-                                               thirdBtnImageString: "ic_shezhi")
+                                               thirdBtnImageString: "ic_search")
         
         
     }
@@ -85,6 +89,61 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
     }
     //MARK: 会话键盘 ChatKeyBoardDelegate
     func chatKeyBoardSendText(text: String!) {
+       
+        sendMsg(text)
+        self.keyboard.keyboardDownForComment()
+    }
+    
+    func sendMsg(text:String){
+        switch typeStatus! {
+        case .pinglun:
+
+            let model = [myFoundComment]()
+            model[0].netName = userInfo.name
+            model[0].commentId = 0
+            model[0].content = text
+            model[0].foundId = self.commentSayId
+            model[0].id = (self.commentSayIndex?.row)! + 1
+            model[0].reply = ""
+            model[0].time = Int(NSDate().timeIntervalSince1970)
+            model[0].uid = userInfo.uid
+            
+            
+                self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!].comment.append(model[0])
+                let lastestModel  =  self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!]
+                reloadCellHeightForModelAndAtIndexPath(lastestModel!, indexPath: self.commentSayIndex!)
+                
+            
+            
+            requestCommentSay("", content: text, foundId: self.commentSayId!)
+            
+        case .selectCell :
+            let model = [myFoundComment]()
+            model[0].netName = userInfo.name
+            model[0].commentId = self.commentModel?.uid
+            model[0].content = text
+            model[0].foundId = self.commentSayId
+            model[0].id = (self.commentModel?.id)! + 1
+            model[0].reply = self.commentModel?.netName
+            model[0].time = Int(NSDate().timeIntervalSince1970)
+            model[0].uid = userInfo.uid
+            
+          
+                self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!].comment.append(model[0])
+                let lastestModel  =  self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!]
+                reloadCellHeightForModelAndAtIndexPath(lastestModel!, indexPath: self.commentSayIndex!)
+            
+//            self.reloadCellHeightForModel(self.myfoundmodel!, indexpath: (self.commentSayIndex)!)
+            requestCommentSay((self.commentModel?.uid.description)!, content: text, foundId: self.commentSayId!)
+            
+        }
+        
+        
+    }
+    func reloadCellHeightForModelAndAtIndexPath(model: myFoundArray, indexPath: NSIndexPath) {
+      
+//            self.MainBgTableView.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
+         self.MainBgTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         
     }
     //MARK:键盘通知 willShow
@@ -128,6 +187,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.hidden = false
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(keyboardWillshow),
                                                          name: UIKeyboardWillShowNotification, object: nil)
@@ -144,12 +204,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         titleLabel.textAlignment = .Center
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
-     
-        if userInfo.isLogin != true{
-            let login = YDQLoginRegisterViewController()
-            let nv = CustomNavigationBar(rootViewController: login)
-            self.navigationController?.presentViewController(nv, animated: true, completion: nil)
-        }else{
+
            downloadData()
 //            if self.myfoundmodel != nil {
 //                if self.myfoundmodel?.code != "405" {
@@ -164,12 +219,13 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
 //                
 //            }
             
-        }
+        
       
         
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
 
@@ -179,12 +235,10 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
     func creatViewWithSnapKit()  {
         self.clickButtonTagClosure { (ButtonTag) in
             if ButtonTag == 3{
-                let set = SettingViewController ()
-                self.keyboard.keyboardDownForComment()
-                self.push(set)
+                
             }
             if ButtonTag == 1{
-               self.push(TempLeftViewController())
+               self.push(MineVC())
                
             }
             if ButtonTag == 2{
@@ -199,6 +253,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         
         MainBgTableView.delegate = self
         MainBgTableView.dataSource = self
+        MainBgTableView.separatorStyle = .None
         MainBgTableView.custom_CellAcceptEventInterval = 2
         MainBgTableView.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
         
@@ -222,26 +277,13 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         
         let pageSize =  pagesize
         //参数
-        let dic = ["v":v,
-                   "uid":uid,
-                   ]
+        
         let foundDic = ["v":v,
                         "uid":uid,
                         "pageNo":pageNo,
                         "pageSize":pageSize]
                 if(self.needRefresh){
-                    MJNetWorkHelper().checkMyInfo(myinfo,
-                                                  myInfoModel: dic,
-                                                  success: { (responseDic, success) in
-                                                    
-                      let model =  DataSource().getmyinfoData(responseDic)
-                        self.myinfoModel = model
-                        self.performSelectorOnMainThread(#selector(self.updateUI),
-                                                          withObject: self.myinfoModel,
-                                                          waitUntilDone: true)
-                        }, fail: { (error) in
-                            
-                    })
+                   
                     MJNetWorkHelper().checkMyFound(myfound, myfoundModel: foundDic, success: { (responseDic, success) in
                       let model =  DataSource().getmyfound(responseDic)
                         self.myfoundmodel = model
@@ -277,21 +319,34 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
             self.showMJProgressHUD("失败！ \(error.description)", isAnimate: true, startY: ScreenHeight-40-40-40-20)
         }
     }
-    func reloadCellHeightForModel(model: myFoundModel, indexPath: NSIndexPath) {
-        self.MainBgTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    
+    func reloadCellHeightForModel(model: myFoundModel,
+                                  indexpath: NSIndexPath) {
+        self.MainBgTableView.reloadRowsAtIndexPaths([indexpath], withRowAnimation: .Fade)
     }
+    
     func passCellHeightWithMessageModel(model: myFoundModel,
-                                        commentModel: myFoundCommentComment,
-                                        indexPath: NSIndexPath,
+                                        commentModel: myFoundComment,
+                                        indexP: NSIndexPath,
                                         cellHeight: CGFloat,
                                         commentCell: MJCommentCell,
-                                        messageCell: MJMessageCell) {
+                                        messageCell: MJMessageCell,statustype:PingLunType) {
+        self.commentSayIndex = indexP
+        self.typeStatus = statustype
+        self.commentSayId = commentModel.foundId
+        self.commentModel = commentModel
         self.needUpdateOffset = true
         let wind = UIApplication.sharedApplication().keyWindow
-        self.keyboard.placeHolder = String(format: "回复%@", userInfo.name)
+        if commentModel.netName == userInfo.name {
+            return
+        }else{
+           self.keyboard.placeHolder = String(format: "回复%@", commentModel.netName)
+            self.keyboard.keyboardUpforComment()
+        }
+        
         self.history_Y_offset = commentCell.contentLabel?.convertRect(commentCell.contentLabel!.bounds, toView: wind).origin.y
         self.seletedCellHeight = cellHeight
-        self.keyboard.keyboardUpforComment()
+        
     }
     //1.1默认返回3组
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -332,7 +387,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
             
         }else if (indexPath.section == 1){
             
-            return kAutoStaticCellHeight
+            return 1
             
         }else{
             if self.myfoundmodel != nil {
@@ -359,9 +414,9 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         let view = UIView()
         
         if (section == 0) {
-            if self.myinfoModel != nil {
+            
                 let bgView = HeaderView()
-                bgView.configmyInfoContent(self.myinfoModel!, isBigV: false)
+                bgView.configmyInfoContent(userInfo.thumbnailSrc, isBigV: false)
                 bgView.bringBtnTagBack({ (btnTag) in
                     switch btnTag {
                     case 10:
@@ -373,7 +428,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     }
                 })
                 return bgView
-            }
+            
             
             
             
@@ -382,18 +437,19 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         }else{
             return view
         }
-        return view
+        
     }
     
     //1.4每组的头部高度
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         if (section == 0) {
-            return  ScreenHeight/3
+            return  ScreenHeight/4
         }else if (section == 1){
-            return 5
+            return 0.001
         }else{
-            return 10
+            return 0.001
+            
         }
         
     }
@@ -405,7 +461,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
     func tableView(tableView: UITableView, heightForFooterInSection
         section: Int) -> CGFloat {
         
-        return 3;
+        return 0.001
         
     }
     
@@ -425,37 +481,11 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                 
                 
             }else if (indexPath.section == 1){
-                var cell = MyDongdouTableViewCell?()
-                
-                cell=tableView.dequeueReusableCellWithIdentifier(identifier) as? MyDongdouTableViewCell
-                if (cell == nil) {
-                    cell = MyDongdouTableViewCell(style: UITableViewCellStyle.Value1,
-                                                  reuseIdentifier: identifier);
-                }
-                
-                cell!.imageView?.image = UIImage(named: "ic_doudong")
-                
-                cell!.textLabel?.text = "我的动豆"
-                cell!.textLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
-                cell!.textLabel?.textColor = UIColor(red: 244 / 255,
-                                                     green: 158 / 255,
-                                                     blue: 23 / 255,
-                                                     alpha: 1)
-                cell?.textLabel?.font = UIFont(name: "Times New Roman", size: 18.0)
-                cell!.accessoryType = .DisclosureIndicator
-                cell!.accessoryType=UITableViewCellAccessoryType.DisclosureIndicator;
-                if self.myinfoModel != nil {
-                    cell?.number.text = self.myinfoModel?.data.dongdou
-                }
-                return cell!
+               
             }
             else if(indexPath.section == 2){
                
                     var messageCell = tableView.dequeueReusableCellWithIdentifier(identifier) as? MJMessageCell
-                
-//                    if self.myfoundmodel != nil {
-//                      messageCell!.dataCode = self.myfoundmodel?.code
-//                    }
                     
                     messageCell = MJMessageCell(style: .Default, reuseIdentifier: identifier)
                     messageCell?.indexPath = indexPath
@@ -477,14 +507,17 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                         messageCell?.configCellWithModel(self.myfoundmodel!,indexpath: indexPath)
                     }
                     
-                    messageCell?.CommentBtnClick({ (commentBtn, indexPath,pingluntype) in
+                    messageCell?.CommentBtnClick({ (commentBtn, indexPath,pingluntype,foundId) in
+                        self.typeStatus = pingluntype
+                        self.commentSayIndex = indexPath
+                        self.commentSayId = foundId
                         self.replayTheSeletedCellModel = nil
                         self.seletedCellHeight = 0
                         weakSelf.needUpdateOffset = true
                         weakSelf.keyboard.placeHolder = String(format: "评论 %@",userInfo.name)
                         self.history_Y_offset = commentBtn.convertRect(commentBtn.bounds, toView: weakWindow).origin.y
                         weakSelf.currentIndexPath = indexPath
-                        weakSelf.keyboard.keyboardUpforComment()
+//                        weakSelf.keyboard.keyboardUpforComment()
                     })
                     messageCell?.TapOnImage({ (index, dataSource, indexPath) in
                         weakSelf.keyboard.keyboardDownForComment()
@@ -559,7 +592,26 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
     }
 
 }
-
+extension PersonalViewController {
+    //MARK:评论说说
+    //评论说说
+    func requestCommentSay(commentId: String,content:String,foundId:Int){
+        let v = NSObject.getEncodeString("20160901")
+        let para = ["v":v,
+                    "uid":userInfo.uid.description,
+                    "commentId":commentId,
+                    "content":content,
+                    "foundId":foundId]
+        MJNetWorkHelper().commentfound(commentfound, commentfoundModel: para, success: { (responseDic, success) in
+          let model =  DataSource().getcommentfoundData(responseDic)
+            if model.code != "200"{
+                self.showMJProgressHUD("评论失败", isAnimate: false, startY: ScreenHeight-40-40-40-20)
+            }
+            }) { (error) in
+             self.showMJProgressHUD("❎ 网络错误", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+        }
+    }
+}
 
 
 

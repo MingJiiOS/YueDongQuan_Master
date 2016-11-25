@@ -14,6 +14,7 @@ class MJParterDataView: UIView,UITableViewDelegate,UITableViewDataSource {
     var memberinfoModel : memberInfoModel?
     var circleid : String?
     var uId : String?
+    var permissions :String?
     
     typealias sendSuccessOrFailValue = (isSuccess:Bool,descriptionError:String)->Void
     
@@ -25,10 +26,11 @@ class MJParterDataView: UIView,UITableViewDelegate,UITableViewDataSource {
     
     
     
-     init(frame: CGRect,circleID:String,uid:String) {
+    init(frame: CGRect,circleID:String,uid:String,permissions1:String) {
         super.init(frame: frame)
         circleid = circleID
         uId = uid
+        permissions = permissions1
         self .addSubview(tableView)
         tableView.snp_makeConstraints { (make) in
             make.top.bottom.equalTo(0)
@@ -65,6 +67,7 @@ class MJParterDataView: UIView,UITableViewDelegate,UITableViewDataSource {
             let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
             cell.textLabel?.text = "加入黑名单"
             let swich = UISwitch()
+            swich.tag = 10
             swich .addTarget(self, action: #selector(ValueChanged), forControlEvents: UIControlEvents.ValueChanged)
             cell.accessoryView = swich
             return cell
@@ -72,6 +75,7 @@ class MJParterDataView: UIView,UITableViewDelegate,UITableViewDataSource {
             let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
             cell.textLabel?.text = "转让圈主"
             let swich = UISwitch()
+            swich.tag = 20
             cell.accessoryView = swich
             return cell
         default:
@@ -84,10 +88,15 @@ class MJParterDataView: UIView,UITableViewDelegate,UITableViewDataSource {
         return 1;
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        if permissions != uId && permissions! == "1" {
+          return 4
+        }else{
+            return 2
+        }
+        
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+        return kAutoStaticCellHeight
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView .deselectRowAtIndexPath(indexPath, animated: true)
@@ -106,29 +115,61 @@ extension MJParterDataView {
     }
     
     func ValueChanged(swich:UISwitch)  {
-        
-        if swich.on != true {
-            
-        }else{
-           
-            let dict = ["v":v,
-                        "uid":userInfo.uid.description,
-                        "circleId":self.circleid,
-                        "blacklistId":self.uId]
-            MJNetWorkHelper().joinblacklist(joinblacklist,
-                                            joinblacklistModel:dict,
-                                            success: { (responseDic, success) in
-                     swich.enabled = false
-                    if self.valueBlock != nil{
-                        self.valueBlock!(isSuccess:true,
-                            descriptionError: "成功")
-                    }
+        if swich.tag == 10 {
+            if swich.on != true {
+                
+            }else{//MARK:拉入黑名单操作
+                
+                let dict = ["v":v,
+                            "uid":userInfo.uid.description,
+                            "circleId":self.circleid,
+                            "blacklistId":self.uId]
+                MJNetWorkHelper().joinblacklist(joinblacklist,
+                                                joinblacklistModel:dict,
+                                                success: { (responseDic, success) in
+                                                    swich.enabled = false
+                                                    if self.valueBlock != nil{
+                                                        self.valueBlock!(isSuccess:true,
+                                                            descriptionError: "成功")
+                                                    }
+                    }, fail: { (error) in
+                        if self.valueBlock != nil{
+                            self.valueBlock!(isSuccess:false,
+                                descriptionError:error.description)
+                        }
+                })
+            }
+        }else{//MARK:转让圈主操作
+            /*
+             v	接口验证参数
+             uid	用户ID
+             circleId	圈子ID
+             operateId	操作者ID
+             transfercircle
+             */
+          let dict = ["v":v,
+                      "uid":self.uId,
+                      "circleId":self.circleid,
+                      "operateId":userInfo.uid.description]
+            MJNetWorkHelper().transfercircle(transfercircle,
+                                             transfercircleModel: dict,
+                                             success: { (responseDic, success) in
+                
+                    let model = DataSource().gettransfercircleData(responseDic)
+                            if model.code != "200"{
+                                if self.valueBlock != nil{
+                                    self.valueBlock!(isSuccess:true,
+                                        descriptionError:"⚠️操作失败")
+                                }
+                              }
+                                                
                 }, fail: { (error) in
                     if self.valueBlock != nil{
                         self.valueBlock!(isSuccess:false,
-                            descriptionError:error.description)
+                            descriptionError:"⚠️\(error.description)")
                     }
             })
         }
+        
     }
 }
