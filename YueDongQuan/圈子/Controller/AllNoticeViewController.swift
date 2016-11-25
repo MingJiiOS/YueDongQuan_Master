@@ -15,6 +15,12 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
     
     var circleid : String?
     var allnoticeModel : AllNoticeModel?
+    
+    //权限
+     var permissions : NSInteger?
+    
+    
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         //隐藏菜单栏
@@ -27,56 +33,70 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.addDatas()
+        
         loadAllNoticeData(self.circleid!)
-        self.creatView()
+        self.title = "全部公告"
+        
+       
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
     }
-    func addDatas()  {
-        
-        for i in 0 ..< 20 {
-            let model = MJNoticeModel()
-            model.uId = i + 1
-            model.userName = "姚明"
-            model.putTime = "10-5 17:56"
-//            model.headImage = "http://www.henishuo.com"
-            model.content = "作者博客名称：标哥的技术博客，网址：http://www.henishuo.com，欢迎大家关注。这里有很多的专题，包括动画、自动布局、swift、runtime、socket、开源库、面试等文章，都是精品哦。大家可以关注微信公众号：iOSDevShares，加入有问必答QQ群：324400294，群快满了，若加不上，对不起，您来晚了"
-            dataSource.append(model)
-            
-            model.isExpand = true
-            
-        }
-        noticeTableView.reloadData()
-    }
+    
     deinit{
         print("deinit")
     }
     func creatView()  {
-        self.view .addSubview(noticeTableView)
-        noticeTableView.snp_makeConstraints { (make) in
-            make.left.right.top.bottom.equalTo(0)
-        }
-        noticeTableView.delegate = self
-        noticeTableView.dataSource = self
-        noticeTableView.tableHeaderView?.removeFromSuperview()
-        noticeTableView.separatorStyle = .None
         
-        let sendNewNotice = UIButton(type: .Custom)
-        self.view .addSubview(sendNewNotice)
-        sendNewNotice.snp_makeConstraints { (make) in
-            make.left.right.equalTo(0)
-            make.height.equalTo(44)
-            make.bottom.equalTo(0)
-        }
-        sendNewNotice.backgroundColor = UIColor(red: 0 / 255, green: 125 / 255, blue: 255 / 25, alpha: 1)
-        sendNewNotice.setTitle("发布新公告", forState: UIControlState.Normal)
-        sendNewNotice.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         
+            if self.allnoticeModel?.code != "405" {
+                self.view .addSubview(noticeTableView)
+                noticeTableView.snp_makeConstraints { (make) in
+                    make.left.right.top.bottom.equalTo(0)
+                }
+                noticeTableView.delegate = self
+                noticeTableView.dataSource = self
+                noticeTableView.tableHeaderView?.removeFromSuperview()
+                noticeTableView.separatorStyle = .None
+                
+                
+
+            }else{
+                let nonedataView = UIImageView()
+                nonedataView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenWidth)
+                nonedataView.center = self.view.center
+                nonedataView.backgroundColor = UIColor.blackColor()
+                nonedataView.image = UIImage(named: "noneData")
+                
+                self.view.addSubview(nonedataView)
+
+            }
+        if self.permissions != 1 {
+            return
+        }else{
+            let sendNewNotice = UIButton(type: .Custom)
+            self.view .addSubview(sendNewNotice)
+            sendNewNotice.snp_makeConstraints { (make) in
+                make.left.right.equalTo(0)
+                make.height.equalTo(44)
+                make.bottom.equalTo(0)
+            }
+            sendNewNotice.backgroundColor = UIColor(red: 0 / 255, green: 125 / 255, blue: 255 / 25, alpha: 1)
+            sendNewNotice.setTitle("发布新公告", forState: UIControlState.Normal)
+            sendNewNotice.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            sendNewNotice.addTarget(self, action: #selector(toPushNewNotice), forControlEvents: UIControlEvents.TouchUpInside)
+        }
+   
     }
+    
+    func toPushNewNotice()  {
+        let push = publishNoticeViewController()
+        push.circleId = self.circleid
+        self.push(push)
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("行数",self.dataSource.count)
         if self.allnoticeModel != nil {
@@ -109,7 +129,7 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
         }
         
         if indexPath.row >= self.dataSource.count - 1 {
-            self.addDatas()
+            
         }
         //删除按钮事件
         cell?.delegate = self
@@ -124,11 +144,11 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if  indexPath.section == 0 {
-            let model = self.dataSource[indexPath.row]
+            let model = self.allnoticeModel
             
             var stateKey = ""
             
-            if model.isExpand {
+            if model!.isExpand {
                 stateKey = "expand"
             }else{
                 stateKey = "unExpand"
@@ -139,7 +159,7 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
                      itemCell.config(noticeModel: self.allnoticeModel!, indexPath: indexPath)
                 }
                 }, updateCacheIfNeeded: { () -> (key: String, stateKey: String, shouldUpdate: Bool) in
-                    return (String(model.uId), stateKey, true)
+                    return (String(model?.code), stateKey, true)
             })
             print(height)
             return height
@@ -191,6 +211,7 @@ extension AllNoticeViewController:MJNoticeCellDelegate{
         MJNetWorkHelper().announcement(announcement, announcementModel: dict, success: { (responseDic, success) in
             let model = DataSource().getannouncementData(responseDic)
             self.allnoticeModel = model
+            self.creatView()
             self.noticeTableView.reloadData()
             }) { (error) in
                 

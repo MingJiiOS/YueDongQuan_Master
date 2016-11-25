@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 class SettingViewController: MainViewController,UITableViewDelegate,UITableViewDataSource,YXCustomActionSheetDelegate{
       var settingTableView = UITableView(frame: CGRectZero, style: .Grouped)
     override func viewDidLoad() {
@@ -187,11 +188,17 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
                 
             }
         }
+        //MARK:清理缓存
         if indexPath.section == 3 {
-          let cached =  MJClearCache()
-            presentViewController(cached.alert, animated: true, completion: { 
-                
-            })
+        SDImageCache.sharedImageCache().clearDiskOnCompletion({ 
+            print("clear完成")
+        })
+            SDImageCache.sharedImageCache().clearMemory()
+            
+//          let cached =  MJClearCache()
+//            presentViewController(cached.alert, animated: true, completion: { 
+//                
+//            })
         }
         //退出登录操作
         if indexPath.section == 5 {

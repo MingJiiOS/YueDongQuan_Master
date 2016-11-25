@@ -13,7 +13,7 @@ import Alamofire
 import SDWebImage
 import AVKit
 import MJRefresh
-import YYKit
+
 import SVProgressHUD
 
 
@@ -707,23 +707,23 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch tableView.tag {
         case 0:
-            let model = self.lastestModelData[indexPath.row]
+            _ = self.lastestModelData[indexPath.row]
         case 1:
-            let model = self.imageModelData[indexPath.row]
+            _ = self.imageModelData[indexPath.row]
         case 2:
-            let model = self.videoModelData[indexPath.row]
+            _ = self.videoModelData[indexPath.row]
         case 3:
-            let model = self.activityModelData[indexPath.row]
+            _ = self.activityModelData[indexPath.row]
         case 4:
-            let model = self.matchModelData[indexPath.row]
+            _ = self.matchModelData[indexPath.row]
         case 5:
-            let model = self.joinModelData[indexPath.row]
+            _ = self.joinModelData[indexPath.row]
         case 6:
-            let model = self.zhaomuModelData[indexPath.row]
+            _ = self.zhaomuModelData[indexPath.row]
         case 7:
-            let model = self.nearbyModelData[indexPath.row]
+            _ = self.nearbyModelData[indexPath.row]
         case 8:
-            let model = self.myNotifyModelData[indexPath.row]
+            _ = self.myNotifyModelData[indexPath.row]
         default:
             break
         }
@@ -795,23 +795,24 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
     func reloadCellHeightForModelAndAtIndexPath(model: DiscoveryArray, indexPath: NSIndexPath) {
         switch currentShowTableViewIndex {
         case 0:
-            tableViewForLastest.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
+            tableViewForLastest.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+//            tableViewForLastest.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
         case 1:
-            tableiewForImage.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
+            tableiewForImage.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         case 2:
-            tableiewForVideo.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
+            tableiewForVideo.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         case 3:
-            tableiewForActivity.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
+            tableiewForActivity.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         case 4:
-            tableiewForMatch.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
+            tableiewForMatch.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         case 5:
-            tableiewForJoinTeam.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
+            tableiewForJoinTeam.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         case 6:
-            tableiewForZhaoMu.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
+            tableiewForZhaoMu.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         case 7:
-            tableiewForNearBy.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
+            tableiewForNearBy.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         case 8:
-            tableiewForMyNotify.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
+            tableiewForMyNotify.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         default:
             break
         }
@@ -1049,7 +1050,7 @@ extension DiscoverViewController {
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
-                let dict = json.object
+                _ = json.object
 
             case .Failure(let error):
                 print(error)

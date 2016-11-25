@@ -30,10 +30,10 @@ class SettingCell: UITableViewCell {
         headImage.snp_makeConstraints { (make) in
             make.top.equalTo(kGAP/2)
             make.left.equalTo(kGAP*2)
-            make.width.height.equalTo(50)
+            make.width.height.equalTo(kAutoStaticCellHeight - CGFloat(kGAP))
             
         }
-        headImage.layer.cornerRadius = 25
+        headImage.layer.cornerRadius = (kAutoStaticCellHeight - CGFloat(kGAP))/2
         headImage.layer.masksToBounds = true
         bigV.snp_makeConstraints { (make) in
             make.width.height.equalTo(kGAP*2)
@@ -49,24 +49,24 @@ class SettingCell: UITableViewCell {
             make.left.equalTo(headImage.snp_right).offset(kGAP*2)
             make.top.equalTo(0)
             make.width.equalTo(200)
-            make.height.equalTo(30)
+            make.height.equalTo(kAutoStaticCellHeight/2)
         }
         userName.textAlignment = .Left
         
         userSex.snp_makeConstraints { (make) in
-            make.top.equalTo(userName.snp_bottom).offset(kGAP)
-            make.bottom.equalTo(self.contentView.snp_bottom).offset(-kGAP)
+            make.top.equalTo(userName.snp_bottom)
+            make.bottom.equalTo(self.contentView.snp_bottom)
             make.left.equalTo(headImage.snp_right).offset(kGAP*2)
-            make.width.equalTo(30)
+            make.width.equalTo(kAutoStaticCellHeight/2)
         }
         userSex.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
         userSex.textAlignment = .Left
         
         userAge.snp_makeConstraints { (make) in
             make.left.equalTo(userSex.snp_right)
-            make.top.equalTo(userName.snp_bottom).offset(kGAP)
-            make.bottom.equalTo(self.contentView.snp_bottom).offset(-kGAP)
-            make.width.equalTo(30)
+            make.top.equalTo(userName.snp_bottom)
+            make.bottom.equalTo(self.contentView.snp_bottom)
+            make.width.equalTo(kAutoStaticCellHeight/2)
         }
         userAge.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
         userSex.textAlignment = .Left
@@ -80,7 +80,8 @@ class SettingCell: UITableViewCell {
     func config(model:memberInfoModel)  {
         
         bigV.backgroundColor = kBlueColor
-        headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+        bigV.hidden = true
+        headImage.sd_setImageWithURL(NSURL(string: model.data.thumbnailSrc))
         userName.text = model.data.name
         userSex.text = model.data.sex
         

@@ -30,6 +30,9 @@ class MJConversationViewController: RCConversationViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.conversationMessageCollectionView.reloadData()
+        self.permissions = 2
+        loadMemberData()
         
         self.clickButtonTagClosure { (ButtonTag) in
             if ButtonTag == 3{
@@ -37,7 +40,7 @@ class MJConversationViewController: RCConversationViewController {
                 notice.circleId = self.circleid
                 notice.Circletitle = self.title
                 notice.thumbnailSrc = self.thumbnailSrc
-                
+                notice.permissions = self.permissions
                     let v = NSObject.getEncodeString("20160901")
                     let circleid = self.circleid
                     let dict = ["v":v,"circleId":circleid]
@@ -63,7 +66,7 @@ class MJConversationViewController: RCConversationViewController {
                 self.push(push)
             }
             
-            //            print("userinfo = ",self.userinfo)
+            
         }
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
@@ -82,6 +85,41 @@ class MJConversationViewController: RCConversationViewController {
         
         if self.permissions == 2 {
              searchBtn.enabled = false
+        }
+        
+        
+        
+    }
+    
+    func loadMemberData()  {
+        var dict:[String:AnyObject] = NSDictionary() as! [String : AnyObject]
+        if self.circleid != nil {
+            dict =
+                ["v":NSObject.getEncodeString("20160901"),
+                 "uid":userInfo.uid,
+                 "circleId":self.circleid!]
+            MJNetWorkHelper().circleinfo(circleinfo, circleinfoModel: dict, success: { (responseDic, success) in
+                let model = DataSource().getcircleinfoData(responseDic)
+                if model.flag != "0"{
+                    for indexs in 0 ..< model.data.array.count {
+                        if model.data.array[indexs].permissions == 1 {
+                            
+                            self.permissions = 1
+                            
+                        }
+                        if model.data.array[indexs].permissions == 2 {
+                            
+                            self.permissions = 2
+                            
+                        }
+                    }
+                }
+                
+                
+            }) { (error) in
+                
+            }
+
         }
         
         
@@ -120,7 +158,7 @@ class MJConversationViewController: RCConversationViewController {
     }
     override func didTapCellPortrait(userId: String!) {
         if userId == userInfo.uid.description {
-            let personal = PersonalViewController()
+            _ = PersonalViewController()
 //            self.navigationController?.pushViewController(personal, animated: true)
             
         }else{

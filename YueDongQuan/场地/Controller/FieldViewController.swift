@@ -226,7 +226,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
                 }
             }
             
-            if let location = location {
+            if location != nil {
                 if let geocode = geoCode {
                     
 //                    NSLog("regecode = \(geocode.neighborhood)")

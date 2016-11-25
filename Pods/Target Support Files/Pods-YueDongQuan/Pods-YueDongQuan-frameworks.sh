@@ -85,6 +85,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/FMDB/FMDB.framework"
   install_framework "$BUILT_PRODUCTS_DIR/HYBMasonryAutoCellHeight/HYBMasonryAutoCellHeight.framework"
   install_framework "$BUILT_PRODUCTS_DIR/HYBSnapkitAutoCellHeight/HYBSnapkitAutoCellHeight.framework"
   install_framework "$BUILT_PRODUCTS_DIR/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework"
@@ -97,10 +98,10 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/TZImagePickerController/TZImagePickerController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/XHImageViewer/XHImageViewer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/XLProgressHUD/XLProgressHUD.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/YYKit/YYKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/FMDB/FMDB.framework"
   install_framework "$BUILT_PRODUCTS_DIR/HYBMasonryAutoCellHeight/HYBMasonryAutoCellHeight.framework"
   install_framework "$BUILT_PRODUCTS_DIR/HYBSnapkitAutoCellHeight/HYBSnapkitAutoCellHeight.framework"
   install_framework "$BUILT_PRODUCTS_DIR/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework"
@@ -113,5 +114,4 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/TZImagePickerController/TZImagePickerController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/XHImageViewer/XHImageViewer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/XLProgressHUD/XLProgressHUD.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/YYKit/YYKit.framework"
 fi

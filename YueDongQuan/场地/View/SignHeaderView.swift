@@ -115,7 +115,7 @@ class SignHeaderView: UIView {
             make.height.equalTo(20)
             make.width.equalTo(ScreenWidth/4)
         }
-        toDay.text = "今日动豆"
+        toDay.text = "今日热豆"
         toDay.textColor = UIColor ( red: 0.7451, green: 0.9725, blue: 0.5059, alpha: 1.0 )
         toDay.textAlignment = .Center
         toDay.font = UIFont.systemFontOfSize(10)

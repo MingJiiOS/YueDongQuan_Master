@@ -40,7 +40,7 @@ class MyDongdouView: UIView {
     var lastSelectedTag = 0
     
     
-     init(frame: CGRect,numberStr:NSString) {
+    init(frame: CGRect,numberStr:NSString,rankStr:NSString) {
         super.init(frame: frame)
         
         self.addSubview(backBar)
@@ -60,7 +60,7 @@ class MyDongdouView: UIView {
         }
         backbtn.contentHorizontalAlignment = .Left
 //        backbtn.custom_acceptEventInterval = 0.5
-        backbtn.setTitle("←|我的动豆", forState: UIControlState.Normal)
+        backbtn.setTitle("←|我的热豆", forState: UIControlState.Normal)
         backbtn.sizeToFit()
         backbtn .addTarget(self, action: #selector(back), forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -98,7 +98,7 @@ class MyDongdouView: UIView {
             make.width.equalTo(ScreenWidth/2)
         }
         
-        curetRank.text = "当前排名 380 ↑"
+        curetRank.text = String("当前排名 \(rankStr) ↑")
         curetRank.textAlignment = .Right
         curetRank.textColor = UIColor.yellowColor()
         //动豆总数
@@ -112,7 +112,7 @@ class MyDongdouView: UIView {
 //        myDongDou.backgroundColor = UIColor.whiteColor()
         //富文本设置
         
-        let attributeString = NSMutableAttributedString(string: "\(numberStr)动豆")
+        let attributeString = NSMutableAttributedString(string: "\(numberStr)热豆")
         //从文本0开始6个字符字体HelveticaNeue-Bold,16号
         attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "HiraKaKuProN-W3", size: 30)!,
                                      range: NSMakeRange(0, numberStr.length))
@@ -154,7 +154,7 @@ class MyDongdouView: UIView {
             make.bottom.equalTo(self.snp_bottom)
         }
         todaTongDou.tag = 1
-        todaTongDou.setTitle("今日动豆", forState: UIControlState.Normal)
+        todaTongDou.setTitle("今日热豆", forState: UIControlState.Normal)
         todaTongDou.setTitleColor(UIColor.yellowColor(), forState: UIControlState.Normal)
         todaTongDou.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Selected)
         
@@ -171,7 +171,7 @@ class MyDongdouView: UIView {
         }
         histroyDongdou.tag = 2
         histroyDongdou .addTarget(self, action: #selector(clickBtn(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        histroyDongdou.setTitle("历史动豆", forState: UIControlState.Normal)
+        histroyDongdou.setTitle("历史热豆", forState: UIControlState.Normal)
         histroyDongdou.setTitleColor(UIColor.yellowColor(), forState: UIControlState.Normal)
         histroyDongdou.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Selected)
         histroyDongdou.backgroundColor = UIColor.blackColor()

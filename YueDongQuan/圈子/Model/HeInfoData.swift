@@ -45,7 +45,7 @@ class HeInfoData : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if heIsFocus != nil{
 			dictionary["HeIsFocus"] = heIsFocus
 		}

@@ -8,9 +8,9 @@
 
 import UIKit
 protocol MJMessageCellDelegate {
-    
-    func reloadCellHeightForModel(model:myFoundModel,indexPath:NSIndexPath)
-    func passCellHeightWithMessageModel(model:myFoundModel,commentModel:myFoundCommentComment,indexPath:NSIndexPath,cellHeight:CGFloat,commentCell:MJCommentCell,messageCell:MJMessageCell)
+    /*- (void)reloadCellHeightForModel:(MessageModel *)model atIndexPath:(NSIndexPath *)indexPath;*/
+    func reloadCellHeightForModel(model:myFoundModel,indexpath:NSIndexPath)
+    func passCellHeightWithMessageModel(model:myFoundModel,commentModel:myFoundComment,indexP:NSIndexPath,cellHeight:CGFloat,commentCell:MJCommentCell,messageCell:MJMessageCell,statustype:PingLunType)
     func deleteSayContentFromMySayContent(index:NSIndexPath)
     
 }
@@ -29,12 +29,13 @@ class MJMessageCell: UITableViewCell {
     var displayView = PYPhotosView()
     var videoView = PYPhotosView()
     
-    var commentModel = [myFoundCommentComment]()
+    var commentModel = [myFoundComment]()
     
     var hefoundCommentModel = [HeFoundComment]()
     
+    var myfoundArray : myFoundArray?
     
-    typealias CommentBtnClickBlock = (commentBtn:UIButton,indexPath:NSIndexPath,pingluntype:PingLunType)->Void
+    typealias CommentBtnClickBlock = (commentBtn:UIButton,indexPath:NSIndexPath,pingluntype:PingLunType,foundId:Int)->Void
     var commentBlock : CommentBtnClickBlock?
     func CommentBtnClick(block:CommentBtnClickBlock)  {
         commentBlock = block
@@ -65,18 +66,31 @@ class MJMessageCell: UITableViewCell {
     
     
     var delegate : MJMessageCellDelegate?
+    //昵称
     private  var nameLabel : UILabel?
+    //说说类型
     private var say_type : UIImageView?
+    //时间
     private var descLabel : UILabel?
+    //头像
     private var headImageView : UIImageView?
+    //评论表
     private var tableView : UITableView?
+    //浏览
     private var seeBtn : UIButton?
+    //赞
     private var zanBtn : UIButton?
+    //评论
     private var commentBtn : UIButton?
+    //删除
     var deleteBtn : UIButton?
     private var moreBtn : UIButton?
+    //文字内容
     private var contentLabel : UILabel?
-    
+    //定位
+    private var location : UIButton?
+    //评论框
+    private var commentField : UITextField?
     var myfoundModel : myFoundModel?
     var indexPath = NSIndexPath()
     var dataCode : String?
@@ -87,7 +101,7 @@ class MJMessageCell: UITableViewCell {
    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     self.selectionStyle = .None
-    
+    self.backgroundColor = UIColor.groupTableViewBackgroundColor()
 //    if dataCode == "405" {
 //        let nonedataImage = UIImageView ()
 //        nonedataImage.snp_makeConstraints(closure: { (make) in
@@ -167,7 +181,6 @@ class MJMessageCell: UITableViewCell {
     //MARK:九宫格
     //照片或视频展示
     self.contentView.addSubview(self.displayView)
-    
     displayView.photoWidth = (ScreenWidth - 30)/3
     displayView.photoHeight = (ScreenWidth - 30)/3
     displayView.scrollEnabled = false
@@ -176,12 +189,28 @@ class MJMessageCell: UITableViewCell {
         make.right.equalTo(-10)
         make.top.equalTo((self.contentLabel?.snp_bottom)!).offset(10)
     })
+    //定位
+    self.location = UIButton(type: .Custom)
+    self.contentView .addSubview(location!)
+    location?.snp_makeConstraints(closure: { (make) in
+      make.left.equalTo((contentLabel?.snp_left)!)
+        make.top.equalTo(displayView.snp_bottom).offset(20)
+        make.width.equalTo(ScreenWidth)
+        make.height.equalTo(21)
+    })
+    location?.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, ScreenWidth/2+20)
+    location?.contentHorizontalAlignment = .Left
+    location?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
     
+    //浏览
     self.seeBtn = UIButton(type: .Custom)
-    seeBtn?.titleLabel?.font = UIFont(name: "Arial", size: kMidScaleOfFont)
-    seeBtn?.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
-    seeBtn?.setImage(UIImage(named: "ic_liulan"), forState: UIControlState.Normal)
-//    seeBtn?.sizeToFit()
+    seeBtn?.titleLabel?.font = UIFont(name: "Arial",
+                                      size: kMidScaleOfFont)
+    seeBtn?.setTitleColor(UIColor.grayColor(),
+                          forState: UIControlState.Normal)
+    seeBtn?.setImage(UIImage(named: "ic_liulan"),
+                     forState: UIControlState.Normal)
+
     seeBtn?.imageEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0)
     seeBtn?.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0)
     seeBtn?.contentHorizontalAlignment = .Left
@@ -190,11 +219,10 @@ class MJMessageCell: UITableViewCell {
         make.left.equalTo(5)
         make.height.equalTo(24)
         make.width.equalTo(ScreenWidth/2/3)
-        make.top.equalTo((self.displayView.snp_bottom)).offset(10)
+        make.top.equalTo((self.location!.snp_bottom)).offset(10)
     })
+    //赞
     self.zanBtn = UIButton(type: .Custom)
-    
-    
     zanBtn?.titleLabel?.font = UIFont(name: "Arial", size: kMidScaleOfFont)
     zanBtn?.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
     zanBtn?.setImage(UIImage(named: "ic_zan_a6a6a6"), forState: UIControlState.Normal)
@@ -208,33 +236,31 @@ class MJMessageCell: UITableViewCell {
         make.left.equalTo((self.seeBtn?.snp_right)!).offset(0)
         make.height.equalTo(24)
         make.width.equalTo(ScreenWidth/2/3)
-        make.top.equalTo((self.displayView.snp_bottom)).offset(10)
+        make.top.equalTo((self.location!.snp_bottom)).offset(10)
     })
+    //评论按钮
     self.commentBtn = UIButton(type: .Custom)
-    
-    
     commentBtn?.titleLabel?.font = UIFont(name: "Arial", size: kMidScaleOfFont)
     commentBtn?.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
     commentBtn?.setImage(UIImage(named: "ic_pinglun"), forState: UIControlState.Normal)
     commentBtn?.contentHorizontalAlignment = .Left
     commentBtn?.imageEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0)
     commentBtn?.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0)
-//    commentBtn?.sizeToFit()
     commentBtn?.addTarget(self, action: #selector(commentAction), forControlEvents: UIControlEvents.TouchUpInside)
     self.contentView .addSubview(self.commentBtn!)
     self.commentBtn?.snp_makeConstraints(closure: { (make) in
         make.left.equalTo((self.zanBtn?.snp_right)!).offset(0)
         make.height.equalTo(24)
         make.width.equalTo(ScreenWidth/2/3)
-        make.top.equalTo((self.displayView.snp_bottom)).offset(10)
+        make.top.equalTo((self.location!.snp_bottom)).offset(10)
     })
-    
+    //删除
     deleteBtn = UIButton(type: .Custom)
     self.contentView .addSubview(deleteBtn!)
     deleteBtn?.snp_makeConstraints(closure: { (make) in
         make.right.equalTo(-10)
         make.width.equalTo(40)
-        make.top.equalTo(self.displayView.snp_bottom).offset(10)
+        make.top.equalTo(self.location!.snp_bottom).offset(10)
         make.height.equalTo(24)
     })
     deleteBtn!.sizeToFit()
@@ -254,7 +280,28 @@ class MJMessageCell: UITableViewCell {
         make.trailing.equalTo(-10)
     })
     self.tableView?.separatorStyle = .None
-    self.hyb_lastViewInCell = self.tableView
+    
+    moreBtn = UIButton(type: .Custom)
+    self.contentView .addSubview(moreBtn!)
+    moreBtn?.snp_makeConstraints(closure: { (make) in
+        make.left.equalTo((seeBtn?.snp_left)!)
+        make.top.equalTo((self.tableView?.snp_bottom)!).offset(20)
+        make.height.equalTo(21)
+    })
+    moreBtn?.contentHorizontalAlignment = .Left
+    moreBtn?.setTitle("查看更多评论>", forState: UIControlState.Normal)
+    moreBtn?.setTitleColor(kBlueColor, forState: UIControlState.Normal)
+    commentField = UITextField()
+    self.contentView.addSubview(commentField!)
+    commentField?.snp_makeConstraints(closure: { (make) in
+        make.left.equalTo((seeBtn?.snp_left)!)
+        make.right.equalTo((deleteBtn?.snp_right)!)
+        make.top.equalTo((moreBtn?.snp_bottom)!).offset(20)
+        make.height.equalTo(30)
+    })
+    commentField?.borderStyle = .RoundedRect
+    commentField?.placeholder = "说点什么吧..."
+    self.hyb_lastViewInCell = self.commentField
     self.hyb_bottomOffsetToCell = 0
 //    }
     }
@@ -276,7 +323,7 @@ class MJMessageCell: UITableViewCell {
     }
     func commentAction(sender:UIButton)  {
         if ((self.commentBlock) != nil) {
-            self.commentBlock!(commentBtn: sender,indexPath: self.indexPath,pingluntype:.pinglun);
+            self.commentBlock!(commentBtn: sender,indexPath: self.indexPath,pingluntype:.pinglun,foundId:(self.myfoundArray?.id)!);
         }
     }
     
@@ -327,10 +374,13 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
     func configCellWithModel(model:myFoundModel,indexpath:NSIndexPath)  {
         
         self.commentModel = model.data.array[indexpath.row].comment
-        
+        self.myfoundArray = model.data.array[indexpath.row]
         self.nameLabel?.text = userInfo.name
         self.distinguishSayTypeWithTypeId(model, index: indexpath)
+        self.location?.setTitle(model.data.array[indexpath.row].address, forState: UIControlState.Normal)
+        self.location?.titleLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
         
+        self.location?.setImage(UIImage(named: "location"), forState: UIControlState.Normal)
         let timeStr = TimeStampToDate().getTimeString(model.data.array[indexpath.row].time)
         self.descLabel?.text = timeStr
         if model.data.array[indexpath.row].csum != nil {
@@ -353,7 +403,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         let attrString = NSMutableAttributedString(string:  model.data.array[indexpath.row].content)
         self.contentLabel?.attributedText = attrString
         
-        
+        //没有图片的情况
         if model.data.array[indexpath.row].images.count != 0 {
            let h1 = cellHeightByData1(model.data.array[indexpath.row].images.count)
             
@@ -362,7 +412,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
             })
             self.displayView.hidden = false
   
-        }else{
+        }else{//有图片的情况
             self.displayView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(0)
             })
@@ -568,8 +618,8 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
     }
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! MJCommentCell
-        
-        self.delegate?.passCellHeightWithMessageModel(self.myfoundModel!, commentModel: self.commentModel[indexPath.row], indexPath: indexPath, cellHeight: cell_height, commentCell: cell, messageCell: self)
+       
+        self.delegate?.passCellHeightWithMessageModel(self.myfoundModel!, commentModel: self.commentModel[indexPath.row], indexP: indexPath, cellHeight: cell_height, commentCell: cell, messageCell: self,statustype: .selectCell)
     }
     func cellHeightByData1(imageNum:Int)->CGFloat{
         
@@ -595,10 +645,10 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
 }
 //MARK:填充查看他的说说数据
 extension MJMessageCell{
-    func configHeFoundCellData(model:HeFoundModel,indexpath:NSIndexPath)  {
+    func configHeFoundCellData(model:HeFoundModel,heinfoModel:HeInfoModel,indexpath:NSIndexPath)  {
         self.hefoundCommentModel = model.data.array[indexpath.row].comment
         
-        self.nameLabel?.text = userInfo.name
+        self.nameLabel?.text = heinfoModel.data.name
         self.distinguishSayTypeWithTypeId(model, index: indexpath)
         
         let timeStr = TimeStampToDate().getTimeString(model.data.array[indexpath.row].time)
@@ -617,7 +667,7 @@ extension MJMessageCell{
         }else{
             self.commentBtn?.setTitle("0", forState: UIControlState.Normal)
         }
-        self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
+        self.headImageView?.sd_setImageWithURL(NSURL(string: heinfoModel.data.thumbnailSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
         
         
         let attrString = NSMutableAttributedString(string:  model.data.array[indexpath.row].content)

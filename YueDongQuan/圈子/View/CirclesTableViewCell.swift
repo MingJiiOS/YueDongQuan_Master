@@ -54,15 +54,15 @@ class CirclesTableViewCell: UITableViewCell {
         self.textLabel?.text = circlesModel.data.array[indexPath.row].name
         self.detailTextLabel?.text = NSString(format: "%d 人在热论", circlesModel.data.array[indexPath.row].number) as String
         self.detailTextLabel?.textColor = UIColor.grayColor()
-        let btn = UIButton(type: .Custom)
-        btn.frame = CGRectMake(0, 0,50, 20)
-        btn.setTitle("加入", forState: .Normal)
-        btn.titleLabel?.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
-        btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        btn.backgroundColor = UIColor(red: 0, green: 125 / 255, blue: 255 / 255, alpha: 1)
-        btn.layer.cornerRadius = 10
-        btn.layer.masksToBounds = true
-        self.accessoryView = btn
+//        let btn = UIButton(type: .Custom)
+//        btn.frame = CGRectMake(0, 0,50, 20)
+//        btn.setTitle("加入", forState: .Normal)
+//        btn.titleLabel?.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
+//        btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+//        btn.backgroundColor = UIColor(red: 0, green: 125 / 255, blue: 255 / 255, alpha: 1)
+//        btn.layer.cornerRadius = 10
+//        btn.layer.masksToBounds = true
+//        self.accessoryView = btn
        
     }
     

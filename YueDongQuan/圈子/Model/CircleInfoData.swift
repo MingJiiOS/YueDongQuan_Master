@@ -55,7 +55,7 @@ class CircleInfoData : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if announcement != nil{
 			dictionary["announcement"] = announcement
 		}

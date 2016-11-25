@@ -7,7 +7,10 @@
 #import "UIControl+Custom.h"
 #import "HMSegmentedControl.h"
 //黄方果导入的
-#import "ChatKeyBoard.h"
+#import "FLFMDBManager.h"
+#import "UserDataInfoModel.h"
+#import "UIButton+Badge.h"
+#import "LeafNotification.h"
 #import "MHRadioButton.h"
 #import "validateUtils.h"
 #import "WJPopoverViewController.h"
@@ -17,9 +20,8 @@
 #import "SGAlertView.h"
 #import "RCAnimatedImagesView.h"
 #import "UITableView+ClickTime.h"
-
-
-
+#import "UITabBar+badge.h"
+#import "UIColor+RCColor.h"
 #import "CommentModel.h"
 #import "UITableViewCell+HYBMasonryAutoCellHeight.h"
 #import "ChatKeyBoard.h"
@@ -55,7 +57,6 @@
 #import "UIView+SimplePopupView.h"
 #import "UIView+SetRect.h"
 #import "SimplePopupView.h"
-#import "YYFPSLabel.h"
 #import "JZVideoPlayerView.h"
 #import "VedioDetailViewController.h"
 

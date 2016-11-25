@@ -37,7 +37,7 @@ class HeFoundComment : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+		let dictionary = NSMutableDictionary()
 		if commentId != nil{
 			dictionary["commentId"] = commentId
 		}

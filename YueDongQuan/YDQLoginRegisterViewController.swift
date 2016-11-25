@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+//import RealmSwift
 class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegate{
     
     var registModel : RegistModel!
@@ -49,7 +49,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
     
     var rotationLayer = CAShapeLayer()
     
-    var consumeItems:Results<RLUserInfo>?
+//    var consumeItems:Results<RLUserInfo>?
     //数据库电话号码
     var dataBasePhone : String?
     //数据库保存的密码
@@ -60,10 +60,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
     override func viewDidLoad() {
         super.viewDidLoad()
       self.view.backgroundColor = UIColor.whiteColor()
-        
-        
-        getUserInfoDataBaseFromRealm()
-        
+ 
        createTopView()
       loginOrRigsterAction()
         
@@ -71,11 +68,12 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
         
     }
     
-    func getUserInfoDataBaseFromRealm()  {
-        //使用默认的数据库
-        let realm = try! Realm();
-        //查询所有的记录
-        consumeItems = realm.objects(RLUserInfo);
+    func getUserInfoDataBaseFromFMDB() ->NSArray {
+        if FLFMDBManager.shareManager().fl_isExitTable(UserDataInfoModel) {
+             let modelAll = FLFMDBManager.shareManager().fl_searchModelArr(UserDataInfoModel)
+            return modelAll!
+        }
+       return []
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -119,32 +117,22 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
                         self.showMJProgressHUD("账号或者密码有误", isAnimate: false,startY: ScreenHeight-40-40-40-20)
                     }else{
                         /*MARK:数据库起始线***********************************************************/
-                        
-                        let realm = try! Realm()
-                        let items = realm.objects(RLUserInfo)
-                        if items.count > 0 {
-                            try! realm.write({
-                                realm.deleteAll()
-                            })
+
+                        let manager = FLFMDBManager.shareManager()
+                        if manager.fl_isExitTable(UserDataInfoModel){
+                            manager.fl_dropTable(UserDataInfoModel)
                         }
-                        
+                        let model = UserDataInfoModel()
                         if self.dataBasePhone != "" && self.dataBasePw != ""{
-                            let item = RLUserInfo(value: [self.dataBasePhone!,
-                                self.dataBasePw!,loginmodel.data.uid.description
-                                ])
-                            try! realm.write({
-                                realm.add(item)
-                            })
+                            
+                            model.phone = self.dataBasePhone
+                            model.pw = self.dataBasePw
+                            
                         }else{
-                           let item = RLUserInfo(value: [self.userModel.phone,
-                                self.userModel.pw,loginmodel.data.uid.description
-                                ])
-                            try! realm.write({
-                                realm.add(item)
-                            })
+                            model.phone = self.userModel.phone
+                            model.pw = self.userModel.pw
                         }
-                        
-                        
+                        manager.fl_insertModel(model)
                         
                         /*MARK:数据库结束线***********************************************************/
                         //MARK:融云资料
@@ -271,9 +259,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
         acountTextField.attributedPlaceholder = NSAttributedString(string: "手机号码",
                                                                    attributes:
                                                                    [NSForegroundColorAttributeName:color])
-        let result = consumeItems?.first
-        acountTextField.text = result?.phone
-        dataBasePhone = acountTextField.text
+        
 //        acountTextField.addTarget(self, action: #selector(textFieldDidChange(_:)),
 //                                        forControlEvents:UIControlEvents.AllEditingEvents)
         
@@ -301,8 +287,17 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
 
         pwTextfeild.attributedPlaceholder = NSAttributedString(string: "密码",
                                                                attributes: [NSForegroundColorAttributeName:color])
-        pwTextfeild.text = result?.password
-        dataBasePw = pwTextfeild.text
+        let consumeItems =  getUserInfoDataBaseFromFMDB()
+        if consumeItems == [] {
+            
+        }else{
+            let result = consumeItems.firstObject as! UserDataInfoModel
+            acountTextField.text = result.phone
+            dataBasePhone = acountTextField.text
+            pwTextfeild.text = result.pw
+            dataBasePw = pwTextfeild.text
+        }
+
         //MARK:登录按钮
        
         
@@ -526,18 +521,18 @@ extension YDQLoginRegisterViewController {
                 let textFeild = ConfirmOldPw(title: "忘记密码", message: "请填写注册时的手机号", cancelButtonTitle: "取消", sureButtonTitle: "确定")
                 textFeild.show()
                 textFeild.clickIndexClosure({ (index,password) in
-                    
-                   
+
                     if index == 2{
                         let send = SendPhoneViewController()
                         if password.length != 11 {
-//                            self.showMJProgressHUD("电话号码有误", isAnimate: false,startY: ScreenHeight-40-45)
+                            self.showMJProgressHUD("电话号码有误", isAnimate: false,startY: ScreenHeight-40-40-40-20)
                         }else if password.length == 11{
                             //判断电话是否存在
                             if validateUtils.validatePhoneNumber(password as String) != true {
-//                                self.showMJProgressHUD("电话号码有误", isAnimate: false,startY: ScreenHeight-40-45)
+                                self.showMJProgressHUD("电话号码有误", isAnimate: false,startY: ScreenHeight-40-40-40-20)
                             }else{
                                 send.phoneNumber = password as String
+                                send.isSendPhone = true
                                  self.navigationController?.pushViewController(send, animated: true)
                                 return
                             }

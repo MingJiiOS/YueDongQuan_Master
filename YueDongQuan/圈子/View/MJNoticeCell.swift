@@ -53,9 +53,9 @@ class MJNoticeCell: UITableViewCell {
         
         //头像
         headImage.snp_makeConstraints { (make) in
-            make.top.equalTo(10)
+            make.top.equalTo(30)
             make.left.equalTo(10)
-            make.height.width.equalTo(30)
+            make.height.width.equalTo(kAutoStaticCellHeight/1.5)
         }
 //        headImage.layer.cornerRadius = 22
 //        headImage.layer.masksToBounds = true
@@ -63,7 +63,7 @@ class MJNoticeCell: UITableViewCell {
         //昵称 + 时间
         userName.snp_makeConstraints { (make) in
             make.left.equalTo(headImage.snp_right).offset(10)
-            make.top.equalTo(10)
+            make.top.equalTo(30 + 10)
             make.width.equalTo(200)
             make.height.equalTo(15)
         }
@@ -71,9 +71,9 @@ class MJNoticeCell: UITableViewCell {
         
         // 内容
         contentLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(headImage.snp_right).offset(5)
-            make.top.equalTo(userName.snp_bottom).offset(10)
-            make.right.equalTo(-15)
+            make.left.equalTo(20).offset(5)
+            make.top.equalTo(headImage.snp_bottom).offset(kAutoStaticCellHeight/2)
+            make.right.equalTo(-20)
         }
         contentLabel.numberOfLines = 0
         contentLabel.textColor = UIColor.grayColor()
@@ -125,12 +125,12 @@ class MJNoticeCell: UITableViewCell {
         putTimeStr = TimeStampToDate().TimestampToDate(model.data.array[indexPath.row].time)
         let attributeString = NSMutableAttributedString(string: "\(userNameStr) \(putTimeStr)")
         //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-        attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Bold", size: 15)!,
+        attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Bold", size: kTopScaleOfFont)!,
                                      range: NSMakeRange(0, userNameStr.length))
         //设置字体颜色
         attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(),
                                      range: NSMakeRange(0, userNameStr.length+1))
-        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIFont(name: "HelveticaNeue-Bold", size: 12)!, range: NSMakeRange(userNameStr.length+1, putTimeStr.length))
+        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIFont(name: "HelveticaNeue-Bold", size: kMidScaleOfFont)!, range: NSMakeRange(userNameStr.length+1, putTimeStr.length))
         attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(),
                                      range: NSMakeRange(userNameStr.length+1, putTimeStr.length))
         //        //设置文字背景颜色
@@ -150,9 +150,9 @@ class MJNoticeCell: UITableViewCell {
             })
         }else{
             contentLabel.snp_remakeConstraints(closure: { (make) in
-                make.left.equalTo(headImage.snp_right).offset(5)
-                make.top.equalTo(userName.snp_bottom).offset(10)
-                make.right.equalTo(-15)
+                make.left.equalTo(20).offset(5)
+                make.top.equalTo(headImage.snp_bottom).offset(kAutoStaticCellHeight/2)
+                make.right.equalTo(-20)
             })
         } 
     }

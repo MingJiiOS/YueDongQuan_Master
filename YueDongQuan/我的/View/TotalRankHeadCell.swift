@@ -71,7 +71,7 @@ class TotalRankHeadCell: UITableViewCell {
         headImage.layer.borderColor = UIColor.yellowColor().CGColor
         headImage.center = CGPoint(x: ScreenWidth/2, y: ScreenHeight/2/2)
         self.contentView .addSubview(headImage)
-        headImage.sd_setImageWithURL(NSURL(string:"http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+        
 //        headImage.contents = rrimage.image?.CGImage
         let kingborde = CALayer()
         kingborde.bounds = CGRect(x: 0, y: 0, width: ScreenWidth/5+45, height: ScreenWidth/5+20)
@@ -166,11 +166,12 @@ class TotalRankHeadCell: UITableViewCell {
     
     
     //填充cell内容
-    func config(dongDouNunmber:String,name:String,headUrl:String)  {
+    func config(dongDouNunmber:String,name:String,headUrl:String,No1Url:String)  {
         
-        
+        renzheng.hidden = true
         head.sd_setImageWithURL(NSURL(string: headUrl))
         rankLabel.text = "380"
+        headImage.sd_setImageWithURL(NSURL(string: No1Url), placeholderImage: UIImage(named: "默认头像"))
         nickName.text = name
         explainLabel.text = "距离前一名还差50"
         dongdouBtn.setImage(UIImage(named: "ic_doudong"), forState: UIControlState.Normal)

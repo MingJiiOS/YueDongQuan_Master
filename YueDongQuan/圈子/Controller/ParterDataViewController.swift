@@ -10,6 +10,8 @@ import UIKit
 
 class ParterDataViewController: MainViewController {
     var parterView : MJParterDataView?
+    var permissions1 : Int?
+    
     
     var circleid : String?
     var uid : String?
@@ -19,7 +21,8 @@ class ParterDataViewController: MainViewController {
 
         parterView = MJParterDataView(frame: self.view.frame,
                                       circleID: self.circleid!,
-                                      uid:self.uid!)
+                                      uid:self.uid!,
+                                      permissions1:(self.permissions1?.description)!)
         self.view.addSubview(parterView!)
         parterView?.sendSuccessOrFailValueBack({ (isSuccess, descriptionError) in
             if isSuccess != true{
@@ -33,7 +36,12 @@ class ParterDataViewController: MainViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         parterView!.loadParterData(self.circleid!,parterUid:self.uid!)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
         
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

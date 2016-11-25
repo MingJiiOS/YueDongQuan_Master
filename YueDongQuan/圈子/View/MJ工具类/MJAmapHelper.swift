@@ -112,7 +112,7 @@ class MJAmapHelper: NSObject,AMapLocationManagerDelegate {
                     //地址信息
               _ = regecode.formattedAddress
 
-                    let address = regecode.formattedAddress
+                    _ = regecode.formattedAddress
 //                    NSLog("address = \(address)")
 
                     

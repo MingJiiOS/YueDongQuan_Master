@@ -172,18 +172,24 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
         //图片存入相册
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         self.dismissViewControllerAnimated(true, completion: nil)
-        //MARK:更换头像
+        //MARK:上传头像图片
         Alamofire.upload(.POST, NSURL(string: kURL + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
             
             let data = UIImageJPEGRepresentation(image, 0.5)
             let imageName = String(NSDate()) + ".png"
-            multipartFormData.appendBodyPart(data: data!, name: "file",fileName: imageName,mimeType: "image/png")
+            multipartFormData.appendBodyPart(data: data!,
+                                            name: "file",
+                                            fileName: imageName,
+                                            mimeType: "image/png")
             
-            let para = ["v":v,"uid":userInfo.uid.description,"file":""]
+            let para = ["v":v,
+                        "uid":userInfo.uid.description,
+                        "file":""]
             
             
             for (key,value) in para {
-                multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key )
+                multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!,
+                    name: key )
             }
             
             

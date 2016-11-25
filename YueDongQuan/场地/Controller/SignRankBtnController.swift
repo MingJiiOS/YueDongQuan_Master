@@ -367,7 +367,7 @@ extension SignRankBtnController {
                 let json = JSON(data: response.data!)
                 
 //                NSLog("json2=\(json)")
-                let dict = (json.object) as! NSDictionary
+                _ = (json.object) as! NSDictionary
                 
                 
                 //                if (str["code"]! as! String == "200" && str["flag"]! as! String == "1"){

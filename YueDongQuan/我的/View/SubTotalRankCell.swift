@@ -99,7 +99,7 @@ class SubTotalRankCell: UITableViewCell {
         dongdouBtn.setImage(UIImage(named: "ic_doudong"), forState: UIControlState.Normal)
         dongdouBtn.setTitle(toModel[indexPath.row].dongdou, forState: UIControlState.Normal)
         nickName.text = toModel[indexPath.row].name
-        
+        qiyeRenzheng.hidden = true
         
         numberImageLayer.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
     }

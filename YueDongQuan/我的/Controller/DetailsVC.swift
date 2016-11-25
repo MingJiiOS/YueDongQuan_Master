@@ -14,11 +14,11 @@ class DetailsVC: MainViewController,ChatKeyBoardDelegate,ChatKeyBoardDataSource 
     
     var sayArray : myFoundArray?
     
-    var detailCommentArray = [myFoundCommentComment]()
+    var detailCommentArray = [myFoundComment]()
     //找出评论id是 0 的数组 这是评论条数
-    var ZeroCommentAry = [myFoundCommentComment]()
+    var ZeroCommentAry = [myFoundComment]()
     //找出评论不是 0 的数组 这是回复数组
-    var NoZeroCommentAry = [myFoundCommentComment]()
+    var NoZeroCommentAry = [myFoundComment]()
     
    
     
@@ -45,11 +45,11 @@ class DetailsVC: MainViewController,ChatKeyBoardDelegate,ChatKeyBoardDataSource 
               nozeroarray.addObject(model)
             }
         }
-        self.ZeroCommentAry = zeroarray.copy() as! [myFoundCommentComment]
-        self.NoZeroCommentAry = nozeroarray.copy() as! [myFoundCommentComment]
+        self.ZeroCommentAry = zeroarray.copy() as! [myFoundComment]
+        self.NoZeroCommentAry = nozeroarray.copy() as! [myFoundComment]
         //MARK:评论数组倒序
-        self.ZeroCommentAry.sortInPlace { (num1:myFoundCommentComment,
-                                    num2:myFoundCommentComment) -> Bool in
+        self.ZeroCommentAry.sortInPlace { (num1:myFoundComment,
+                                    num2:myFoundComment) -> Bool in
                                       return num1.time > num2.time
         }
         
@@ -112,16 +112,17 @@ extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
             return detailsHeaderCell!
         
         }else{
+          
+            
             var detailscommentCell = tableView.dequeueReusableCellWithIdentifier("cell") as? DetailsSayCell
-             detailscommentCell = DetailsSayCell(style: .Default,
-                                                 reuseIdentifier: "cell")
-             detailscommentCell!.getAllCommentData(self.ZeroCommentAry)
-             detailscommentCell!.getCommentModel(self.NoZeroCommentAry)
+            if detailscommentCell == nil{
+               detailscommentCell = DetailsSayCell(style: .Default, reuseIdentifier: "cell")
+                detailscommentCell?.commentModel = self.ZeroCommentAry[indexPath.row]
+
+            }
+
+            detailscommentCell?.configPingLunCell(self.ZeroCommentAry,subModel:self.NoZeroCommentAry, indexpath: indexPath)
             
-            
-            
-            detailscommentCell?.configPingLunCell(self.ZeroCommentAry[indexPath.section - 1],subModel:self.NoZeroCommentAry,
-                                                      indexpath: indexPath)
             detailscommentCell?.commentBtnBlock({ (btn, indexpath,pingluntype) in
                 
                 self.keyboard.keyboardUpforComment()
@@ -158,7 +159,7 @@ extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
                 let h = DetailsSayCell.hyb_heightForTableView(tableView,
                                                               config: { (sourceCell:UITableViewCell!) in
                 let cell = sourceCell as! DetailsSayCell
-                cell.configPingLunCell(self.ZeroCommentAry[indexPath.section - 1],subModel:self.NoZeroCommentAry,
+                cell.configPingLunCell(self.ZeroCommentAry,subModel:self.NoZeroCommentAry,
                                     indexpath: indexPath)
                 }, cache: { () -> [NSObject : AnyObject]! in
                 
