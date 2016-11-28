@@ -70,8 +70,8 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
     
     func getUserInfoDataBaseFromFMDB() ->NSArray {
         if FLFMDBManager.shareManager().fl_isExitTable(UserDataInfoModel) {
-             let modelAll = FLFMDBManager.shareManager().fl_searchModelArr(UserDataInfoModel)
-            return modelAll!
+             let modelAll = FLFMDBManager.shareManager().fl_searchModelArr(UserDataInfoModel) as! NSArray
+            return modelAll
         }
        return []
     }

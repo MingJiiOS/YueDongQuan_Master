@@ -214,6 +214,11 @@
 		BF3CAC471DB22E15008A5C51 /* myCircleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC441DB22E15008A5C51 /* myCircleData.swift */; };
 		BF3CAC481DB22E15008A5C51 /* myCircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */; };
 		BF44EA431DC319E600AD7B3D /* RegistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF44EA421DC319E600AD7B3D /* RegistVC.swift */; };
+		BF4E82711DE970E70039690D /* MyFoundDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E82701DE970E70039690D /* MyFoundDataBase.m */; };
+		BF4E82741DE989450039690D /* MyFoundImagesDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E82731DE989450039690D /* MyFoundImagesDataBase.m */; };
+		BF4E82761DE991950039690D /* MJFMDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4E82751DE991950039690D /* MJFMDBManager.swift */; };
+		BF4E827A1DE991C00039690D /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4E82781DE991C00039690D /* FMDatabaseAdditionsVariadic.swift */; };
+		BF4E827B1DE991C00039690D /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4E82791DE991C00039690D /* FMDatabaseVariadic.swift */; };
 		BF5738831DBB10690023B7DE /* myInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738811DBB10690023B7DE /* myInfoData.swift */; };
 		BF5738841DBB10690023B7DE /* myInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738821DBB10690023B7DE /* myInfoModel.swift */; };
 		BF5738861DBB74930023B7DE /* CircleHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738851DBB74930023B7DE /* CircleHeadView.swift */; };
@@ -238,7 +243,6 @@
 		BF9739D11D9F81ED00E1B3EB /* TempLeftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9739D01D9F81ED00E1B3EB /* TempLeftViewController.swift */; };
 		BF9739D31D9F89CF00E1B3EB /* InterfaceFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9739D21D9F89CF00E1B3EB /* InterfaceFile.swift */; };
 		BF9AEAA91DE83852009D9020 /* FLFMDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9AEAA81DE83852009D9020 /* FLFMDBManager.m */; };
-		BF9AEAAC1DE83A99009D9020 /* HaoQiuReDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9AEAAB1DE83A99009D9020 /* HaoQiuReDataBase.m */; };
 		BF9AEAAF1DE83AC5009D9020 /* UserDataInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9AEAAE1DE83AC5009D9020 /* UserDataInfoModel.m */; };
 		BF9C6B271DE3F28C00DE6885 /* MineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9C6B251DE3F28C00DE6885 /* MineVC.swift */; };
 		BF9C6B2E1DE3F47900DE6885 /* Mine.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9C6B2D1DE3F47900DE6885 /* Mine.xib */; };
@@ -906,6 +910,13 @@
 		BF3CAC441DB22E15008A5C51 /* myCircleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleData.swift; sourceTree = "<group>"; };
 		BF3CAC451DB22E15008A5C51 /* myCircleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myCircleModel.swift; sourceTree = "<group>"; };
 		BF44EA421DC319E600AD7B3D /* RegistVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistVC.swift; sourceTree = "<group>"; };
+		BF4E826F1DE970E70039690D /* MyFoundDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFoundDataBase.h; sourceTree = "<group>"; };
+		BF4E82701DE970E70039690D /* MyFoundDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFoundDataBase.m; sourceTree = "<group>"; };
+		BF4E82721DE989450039690D /* MyFoundImagesDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFoundImagesDataBase.h; sourceTree = "<group>"; };
+		BF4E82731DE989450039690D /* MyFoundImagesDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFoundImagesDataBase.m; sourceTree = "<group>"; };
+		BF4E82751DE991950039690D /* MJFMDBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJFMDBManager.swift; sourceTree = "<group>"; };
+		BF4E82781DE991C00039690D /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
+		BF4E82791DE991C00039690D /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
 		BF5738811DBB10690023B7DE /* myInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoData.swift; sourceTree = "<group>"; };
 		BF5738821DBB10690023B7DE /* myInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoModel.swift; sourceTree = "<group>"; };
 		BF5738851DBB74930023B7DE /* CircleHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHeadView.swift; sourceTree = "<group>"; };
@@ -931,10 +942,8 @@
 		BF9739D21D9F89CF00E1B3EB /* InterfaceFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceFile.swift; sourceTree = "<group>"; };
 		BF9AEAA71DE83852009D9020 /* FLFMDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFMDBManager.h; sourceTree = "<group>"; };
 		BF9AEAA81DE83852009D9020 /* FLFMDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFMDBManager.m; sourceTree = "<group>"; };
-		BF9AEAAA1DE83A99009D9020 /* HaoQiuReDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HaoQiuReDataBase.h; sourceTree = "<group>"; };
-		BF9AEAAB1DE83A99009D9020 /* HaoQiuReDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HaoQiuReDataBase.m; sourceTree = "<group>"; };
-		BF9AEAAD1DE83AC5009D9020 /* UserDataInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDataInfoModel.h; sourceTree = "<group>"; };
-		BF9AEAAE1DE83AC5009D9020 /* UserDataInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDataInfoModel.m; sourceTree = "<group>"; };
+		BF9AEAAD1DE83AC5009D9020 /* UserDataInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDataInfoModel.h; path = ../UserDataInfoModel.h; sourceTree = "<group>"; };
+		BF9AEAAE1DE83AC5009D9020 /* UserDataInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDataInfoModel.m; path = ../UserDataInfoModel.m; sourceTree = "<group>"; };
 		BF9C6B251DE3F28C00DE6885 /* MineVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineVC.swift; sourceTree = "<group>"; };
 		BF9C6B2D1DE3F47900DE6885 /* Mine.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Mine.xib; sourceTree = "<group>"; };
 		BF9C6B551DE4138E00DE6885 /* MineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineCell.swift; sourceTree = "<group>"; };
@@ -1933,6 +1942,28 @@
 			path = "公共文件";
 			sourceTree = "<group>";
 		};
+		BF4E82661DE969AE0039690D /* 数据库表 */ = {
+			isa = PBXGroup;
+			children = (
+				BF9AEAAD1DE83AC5009D9020 /* UserDataInfoModel.h */,
+				BF9AEAAE1DE83AC5009D9020 /* UserDataInfoModel.m */,
+				BF4E826F1DE970E70039690D /* MyFoundDataBase.h */,
+				BF4E82701DE970E70039690D /* MyFoundDataBase.m */,
+				BF4E82721DE989450039690D /* MyFoundImagesDataBase.h */,
+				BF4E82731DE989450039690D /* MyFoundImagesDataBase.m */,
+			);
+			path = "数据库表";
+			sourceTree = "<group>";
+		};
+		BF4E82771DE991C00039690D /* Swift extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BF4E82781DE991C00039690D /* FMDatabaseAdditionsVariadic.swift */,
+				BF4E82791DE991C00039690D /* FMDatabaseVariadic.swift */,
+			);
+			path = "Swift extensions";
+			sourceTree = "<group>";
+		};
 		BF9739CD1D9F717E00E1B3EB /* 网络请求 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1946,12 +1977,11 @@
 		BFA6D1481DD600AC008819BC /* FMDB数据库 */ = {
 			isa = PBXGroup;
 			children = (
+				BF4E82771DE991C00039690D /* Swift extensions */,
+				BF4E82661DE969AE0039690D /* 数据库表 */,
 				BF9AEAA71DE83852009D9020 /* FLFMDBManager.h */,
 				BF9AEAA81DE83852009D9020 /* FLFMDBManager.m */,
-				BF9AEAAA1DE83A99009D9020 /* HaoQiuReDataBase.h */,
-				BF9AEAAB1DE83A99009D9020 /* HaoQiuReDataBase.m */,
-				BF9AEAAD1DE83AC5009D9020 /* UserDataInfoModel.h */,
-				BF9AEAAE1DE83AC5009D9020 /* UserDataInfoModel.m */,
+				BF4E82751DE991950039690D /* MJFMDBManager.swift */,
 			);
 			name = "FMDB数据库";
 			path = "Realm数据库";
@@ -4133,6 +4163,7 @@
 				BF3CAC481DB22E15008A5C51 /* myCircleModel.swift in Sources */,
 				BF071EFC1D9A0D5F000551F7 /* QuanZiSettingViewController.swift in Sources */,
 				BF071EFB1D9A0D5F000551F7 /* ParterDataViewController.swift in Sources */,
+				BF4E827A1DE991C00039690D /* FMDatabaseAdditionsVariadic.swift in Sources */,
 				5CC5F9421DAF8A550088A61E /* HKFCommentCell.swift in Sources */,
 				BF071F341D9A0D68000551F7 /* ConfirmOldPw.swift in Sources */,
 				5C7C3A151DB6069800EA598B /* FieldImageModel.swift in Sources */,
@@ -4150,10 +4181,12 @@
 				5CA874FC1DD9C8A8009A57DE /* SearchCircleData.swift in Sources */,
 				BFB44F641DC9731B0066D49F /* ChatToolBar.m in Sources */,
 				BFD7191F1DE7C74C0020880D /* HistoryDongdouModel.swift in Sources */,
+				BF4E82761DE991950039690D /* MJFMDBManager.swift in Sources */,
 				BF071F451D9A110B000551F7 /* PersonalViewController.swift in Sources */,
 				BF6631231DD1D23B00263F67 /* HeFoundComment.swift in Sources */,
 				5C27BAF11DB761D9005A2F8D /* UIView+PYExtension.m in Sources */,
 				BF44EA431DC319E600AD7B3D /* RegistVC.swift in Sources */,
+				BF4E82711DE970E70039690D /* MyFoundDataBase.m in Sources */,
 				BF071EF61D9A0D5F000551F7 /* AllNoticeViewController.swift in Sources */,
 				5C5DB9EF1DBB609700BF89EE /* DiscoveryImage.swift in Sources */,
 				BF9CA1811DC87EFD0043F535 /* CommentModel.m in Sources */,
@@ -4172,12 +4205,14 @@
 				5C7C3A051DB5CE3F00EA598B /* DiscoveryData.swift in Sources */,
 				5C90F1371D8FCFA0005E16AF /* UIBarButtonItem+YJItem.m in Sources */,
 				BFC65D5A1D86A1AF004E7E99 /* YXCustomActionSheet.m in Sources */,
+				BF4E827B1DE991C00039690D /* FMDatabaseVariadic.swift in Sources */,
 				5C24BB721D9A5C9C00A6D25F /* HKFPostVideoVC.m in Sources */,
 				BFFF74DB1DBDB443005295D4 /* LoginData.swift in Sources */,
 				5C8C3C671D92771600D756FF /* SignPersonCell.swift in Sources */,
 				BF1CCB181DD6A4C8004B3739 /* FocusModel.swift in Sources */,
 				BF9739CA1D9F6AD800E1B3EB /* MJClearCache.swift in Sources */,
 				BFB44E581DC9731A0066D49F /* NSString+Emoji.m in Sources */,
+				BF4E82741DE989450039690D /* MyFoundImagesDataBase.m in Sources */,
 				BFAF23CA1DB8600800294988 /* uploadImageModel.swift in Sources */,
 				BFFCE0281DBEF0820045087A /* TotalRankVC.swift in Sources */,
 				BF071F411D9A0D68000551F7 /* TotalDongdouCell.swift in Sources */,
@@ -4287,7 +4322,6 @@
 				5C7C3A141DB6069800EA598B /* FieldImageData.swift in Sources */,
 				BF9CA16F1DC86FAA0043F535 /* MJMessageCell.swift in Sources */,
 				BF071F0E1D9A0D5F000551F7 /* QRCodeView.swift in Sources */,
-				BF9AEAAC1DE83A99009D9020 /* HaoQiuReDataBase.m in Sources */,
 				BF071F041D9A0D5F000551F7 /* CircleDataView.swift in Sources */,
 				5C24BB6F1D9A4BEB00A6D25F /* CustomTextField.m in Sources */,
 				5C26FBB11DD451B7005A6ABD /* CheckData.swift in Sources */,

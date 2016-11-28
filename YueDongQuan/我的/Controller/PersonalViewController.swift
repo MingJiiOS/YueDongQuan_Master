@@ -42,11 +42,14 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
     private var commentSayIndex : NSIndexPath?
     private var lastestModelData = [myFoundArray]()
     private var commentModel : myFoundComment?
-    override func loadView() {
+    //判断是否存在本地数据 有则从数据库返回 没有则请求
+    private var isExistMyFoundData : Bool = false
+        override func loadView() {
         super.loadView()
         self.needRefresh = true;
        
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,7 +62,20 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         self.creatViewWithSnapKit("ic_lanqiu", secondBtnImageString: "ic_search",
                                                thirdBtnImageString: "ic_search")
         
-        
+        if FLFMDBManager.shareManager().fl_isExitTable(MyFoundDataBase) {
+          let arr =  FLFMDBManager.shareManager().fl_searchModelArr(MyFoundDataBase) 
+           self.modelArrM.removeAllObjects()
+            self.modelArrM .addObject(arr)
+        }else{
+            downloadData()
+
+            let refresh = MJRefreshAutoNormalFooter(refreshingTarget: self,
+                                                    refreshingAction: #selector(refreshDownloadData))
+            
+            MainBgTableView.mj_footer = refresh
+
+        }
+
     }
     lazy var keyboard:ChatKeyBoard = {
         var keyboard = ChatKeyBoard(navgationBarTranslucent: false)
@@ -74,6 +90,13 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         
         
     }()
+    //MARK:数据源 不管是从数据库来 还是网络请求来 都用这一个
+      private  lazy var modelArrM:NSMutableArray = {
+        var modelArrM = NSMutableArray()
+        return modelArrM
+
+    }()
+   
     //MARK:会话键盘 ChatKeyBoardDataSource
     internal func chatKeyBoardToolbarItems() -> [ChatToolBarItem]! {
         let item1 = ChatToolBarItem(kind: BarItemKind.Face, normal: "face", high: "face_HL", select: "keyboard")
@@ -191,7 +214,9 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(keyboardWillshow),
                                                          name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(keyboardWillHide),
+                                                         name: UIKeyboardWillHideNotification, object: nil)
         MainBgTableView.reloadData()
         let titleLabel = UILabel(frame: CGRect(x: 0,
             y: 0,
@@ -204,20 +229,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         titleLabel.textAlignment = .Center
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
-
-           downloadData()
-//            if self.myfoundmodel != nil {
-//                if self.myfoundmodel?.code != "405" {
-                    let refresh = MJRefreshAutoNormalFooter(refreshingTarget: self,
-                                                            refreshingAction: #selector(refreshDownloadData))
-                    
-                    MainBgTableView.mj_footer = refresh
-//
-//                }else{
-//                    MainBgTableView.mj_footer.removeFromSuperview()
-//                }
-//                
-//            }
+        
             
         
       
@@ -226,8 +238,12 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self,
+                                                            name: UIKeyboardWillShowNotification,
+                                                            object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self,
+                                                            name: UIKeyboardWillHideNotification,
+                                                            object: nil)
 
     }
     
@@ -276,17 +292,21 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         
         
         let pageSize =  pagesize
-        //参数
-        
+       
+        //查询我的说说
         let foundDic = ["v":v,
                         "uid":uid,
                         "pageNo":pageNo,
                         "pageSize":pageSize]
                 if(self.needRefresh){
-                   
                     MJNetWorkHelper().checkMyFound(myfound, myfoundModel: foundDic, success: { (responseDic, success) in
                       let model =  DataSource().getmyfound(responseDic)
                         self.myfoundmodel = model
+                        self.modelArrM.removeAllObjects()
+                        for id in model.data.array{
+                            self.saveMyfoundDataWithFMDB(id,FLDBID: id.description)
+                            self.modelArrM.addObject(id)
+                        }
                         self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.myfoundmodel, waitUntilDone: true)
                         }, fail: { (error) in
                             
@@ -325,12 +345,13 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         self.MainBgTableView.reloadRowsAtIndexPaths([indexpath], withRowAnimation: .Fade)
     }
     
-    func passCellHeightWithMessageModel(model: myFoundModel,
+    func passCellHeightWithMessageModel(model: MyFoundDataBase,
                                         commentModel: myFoundComment,
                                         indexP: NSIndexPath,
                                         cellHeight: CGFloat,
                                         commentCell: MJCommentCell,
-                                        messageCell: MJMessageCell,statustype:PingLunType) {
+                                        messageCell: MJMessageCell,
+                                        statustype:PingLunType) {
         self.commentSayIndex = indexP
         self.typeStatus = statustype
         self.commentSayId = commentModel.foundId
@@ -359,21 +380,16 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         }else if (section == 1){
             return 1;
         }else{
-            if self.myfoundmodel != nil {
-                if self.myfoundmodel?.code != "200" {
-                    return 0
-                }else if self.myfoundmodel?.code == "405"{
-                    return 1
-                }else{
-                    print("我的说说条数",(self.myfoundmodel?.data.array.count)!)
-                    judgeSayNumber = (self.myfoundmodel?.data.array.count)!
-                    return (self.myfoundmodel?.data.array.count)!
-                }
-            }
+            
+            
+            
+                    judgeSayNumber = self.modelArrM.count
+                    return self.modelArrM.count
+            
             
             
         }
-        return 0
+        
     }
     
     
@@ -390,24 +406,24 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
             return 1
             
         }else{
-            if self.myfoundmodel != nil {
-                if self.myfoundmodel?.code == "405" {
+            
+                if self.modelArrM.count == 0 {
                     return ScreenWidth
                 }else{
                     let h = MJMessageCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
                         let cell = sourceCell as! MJMessageCell
-                        cell.configCellWithModel(self.myfoundmodel!, indexpath: indexPath)
+                        cell.configCellWithModel(self.modelArrM[indexPath.row] as! MyFoundDataBase ,indexpath: indexPath)
                         }, cache: { () -> [NSObject : AnyObject]! in
                             
-                            return [kHYBCacheUniqueKey : (self.myfoundmodel?.data.array[indexPath.row].id.description)!,
+                            return [kHYBCacheUniqueKey : self.modelArrM.count.description,
                                 kHYBCacheStateKey:"",
                                 kHYBRecalculateForStateKey:1]
                     })
                     return h+10
                 }
-            }
+            
         }
-   return 0
+   
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -428,12 +444,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     }
                 })
                 return bgView
-            
-            
-            
-            
-            
-            
+
         }else{
             return view
         }
@@ -490,7 +501,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     messageCell = MJMessageCell(style: .Default, reuseIdentifier: identifier)
                     messageCell?.indexPath = indexPath
                     messageCell?.type = .local
-                   messageCell?.delegate = self
+                    messageCell?.delegate = self
                 //点击删除按钮
                 messageCell?.sendDeleteEvent({ (isDelete) in
                     if isDelete {
@@ -504,7 +515,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     let weakTable = tableView
                    
                     if self.myfoundmodel != nil {
-                        messageCell?.configCellWithModel(self.myfoundmodel!,indexpath: indexPath)
+                        messageCell?.configCellWithModel(self.modelArrM[indexPath.row] as! MyFoundDataBase ,indexpath: indexPath)
                     }
                     
                     messageCell?.CommentBtnClick({ (commentBtn, indexPath,pingluntype,foundId) in
@@ -556,7 +567,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
             let details = DetailsVC()
             if self.myfoundmodel != nil {
                 details.sayArray = self.myfoundmodel?.data.array[indexPath.row]
-                details.detailCommentArray = (details.sayArray?.comment)!
+                details.detailCommentArray = (details.sayArray!.comment)! as! [myFoundComment]
                 self.keyboard.keyboardDownForComment()
                 self.push(details)
             }
@@ -612,6 +623,51 @@ extension PersonalViewController {
         }
     }
 }
-
+//MARK:数据持久化
+extension PersonalViewController{
+ 
+    func saveMyfoundDataWithFMDB(model:myFoundArray,FLDBID:String) {
+        let manager = FLFMDBManager.shareManager()
+        if manager.fl_isExitTable(MyFoundDataBase) {
+            manager.fl_dropTable(MyFoundDataBase)
+            //如果存在表 就插入
+            let myfoundarraymodel = MyFoundDataBase()
+            myfoundarraymodel.address = model.address
+            myfoundarraymodel.aname = model.aname
+            myfoundarraymodel.comment = model.comment
+            myfoundarraymodel.content = model.content
+            myfoundarraymodel.csum = model.csum
+            myfoundarraymodel.idx = model.id
+            myfoundarraymodel.imageId = model.imageId
+            myfoundarraymodel.images = model.images
+            myfoundarraymodel.latitude = model.latitude
+            myfoundarraymodel.longitude = model.longitude
+            myfoundarraymodel.num = model.num
+            myfoundarraymodel.typeId = model.typeId
+            myfoundarraymodel.FLDBID = FLDBID
+             manager.fl_insertModel(myfoundarraymodel)
+        }else{
+            //如果不存在 就直接插入 插入操作api会自动帮我们 创建表
+            let myfoundarraymodel = MyFoundDataBase()
+            myfoundarraymodel.address = model.address
+            myfoundarraymodel.aname = model.aname
+            myfoundarraymodel.comment = model.comment
+            myfoundarraymodel.content = model.content
+            myfoundarraymodel.csum = model.csum
+            myfoundarraymodel.idx = model.id
+            myfoundarraymodel.imageId = model.imageId
+            myfoundarraymodel.images = model.images
+            myfoundarraymodel.latitude = model.latitude
+            myfoundarraymodel.longitude = model.longitude
+            myfoundarraymodel.num = model.num
+            myfoundarraymodel.typeId = model.typeId
+            myfoundarraymodel.FLDBID = FLDBID
+            manager.fl_insertModel(myfoundarraymodel)
+        }
+        
+    }
+    
+    
+}
 
 

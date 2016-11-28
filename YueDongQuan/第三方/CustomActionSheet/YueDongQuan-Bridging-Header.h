@@ -8,7 +8,11 @@
 #import "HMSegmentedControl.h"
 //黄方果导入的
 #import "FLFMDBManager.h"
+
 #import "UserDataInfoModel.h"
+#import "MyFoundDataBase.h"
+
+
 #import "UIButton+Badge.h"
 #import "LeafNotification.h"
 #import "MHRadioButton.h"
