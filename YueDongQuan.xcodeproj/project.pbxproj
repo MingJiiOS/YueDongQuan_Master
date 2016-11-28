@@ -216,7 +216,6 @@
 		BF44EA431DC319E600AD7B3D /* RegistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF44EA421DC319E600AD7B3D /* RegistVC.swift */; };
 		BF4E82711DE970E70039690D /* MyFoundDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E82701DE970E70039690D /* MyFoundDataBase.m */; };
 		BF4E82741DE989450039690D /* MyFoundImagesDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E82731DE989450039690D /* MyFoundImagesDataBase.m */; };
-		BF4E82761DE991950039690D /* MJFMDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4E82751DE991950039690D /* MJFMDBManager.swift */; };
 		BF4E827A1DE991C00039690D /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4E82781DE991C00039690D /* FMDatabaseAdditionsVariadic.swift */; };
 		BF4E827B1DE991C00039690D /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4E82791DE991C00039690D /* FMDatabaseVariadic.swift */; };
 		BF5738831DBB10690023B7DE /* myInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5738811DBB10690023B7DE /* myInfoData.swift */; };
@@ -914,7 +913,6 @@
 		BF4E82701DE970E70039690D /* MyFoundDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFoundDataBase.m; sourceTree = "<group>"; };
 		BF4E82721DE989450039690D /* MyFoundImagesDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFoundImagesDataBase.h; sourceTree = "<group>"; };
 		BF4E82731DE989450039690D /* MyFoundImagesDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFoundImagesDataBase.m; sourceTree = "<group>"; };
-		BF4E82751DE991950039690D /* MJFMDBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJFMDBManager.swift; sourceTree = "<group>"; };
 		BF4E82781DE991C00039690D /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
 		BF4E82791DE991C00039690D /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
 		BF5738811DBB10690023B7DE /* myInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myInfoData.swift; sourceTree = "<group>"; };
@@ -1981,7 +1979,6 @@
 				BF4E82661DE969AE0039690D /* 数据库表 */,
 				BF9AEAA71DE83852009D9020 /* FLFMDBManager.h */,
 				BF9AEAA81DE83852009D9020 /* FLFMDBManager.m */,
-				BF4E82751DE991950039690D /* MJFMDBManager.swift */,
 			);
 			name = "FMDB数据库";
 			path = "Realm数据库";
@@ -4181,7 +4178,6 @@
 				5CA874FC1DD9C8A8009A57DE /* SearchCircleData.swift in Sources */,
 				BFB44F641DC9731B0066D49F /* ChatToolBar.m in Sources */,
 				BFD7191F1DE7C74C0020880D /* HistoryDongdouModel.swift in Sources */,
-				BF4E82761DE991950039690D /* MJFMDBManager.swift in Sources */,
 				BF071F451D9A110B000551F7 /* PersonalViewController.swift in Sources */,
 				BF6631231DD1D23B00263F67 /* HeFoundComment.swift in Sources */,
 				5C27BAF11DB761D9005A2F8D /* UIView+PYExtension.m in Sources */,
