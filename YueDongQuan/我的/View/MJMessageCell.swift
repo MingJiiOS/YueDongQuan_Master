@@ -10,7 +10,7 @@ import UIKit
 protocol MJMessageCellDelegate {
     /*- (void)reloadCellHeightForModel:(MessageModel *)model atIndexPath:(NSIndexPath *)indexPath;*/
     func reloadCellHeightForModel(model:myFoundModel,indexpath:NSIndexPath)
-    func passCellHeightWithMessageModel(model:myFoundModel,commentModel:myFoundComment,indexP:NSIndexPath,cellHeight:CGFloat,commentCell:MJCommentCell,messageCell:MJMessageCell,statustype:PingLunType)
+    func passCellHeightWithMessageModel(model:MyFoundDataBase,commentModel:myFoundComment,indexP:NSIndexPath,cellHeight:CGFloat,commentCell:MJCommentCell,messageCell:MJMessageCell,statustype:PingLunType)
     func deleteSayContentFromMySayContent(index:NSIndexPath)
     
 }
@@ -29,11 +29,11 @@ class MJMessageCell: UITableViewCell {
     var displayView = PYPhotosView()
     var videoView = PYPhotosView()
     
-    var commentModel = [myFoundComment]()
+    var commentModel = MyFoundDataBase().comment
     
     var hefoundCommentModel = [HeFoundComment]()
     
-    var myfoundArray : myFoundArray?
+    var myfoundArray = MyFoundDataBase()
     
     typealias CommentBtnClickBlock = (commentBtn:UIButton,indexPath:NSIndexPath,pingluntype:PingLunType,foundId:Int)->Void
     var commentBlock : CommentBtnClickBlock?
@@ -91,7 +91,7 @@ class MJMessageCell: UITableViewCell {
     private var location : UIButton?
     //评论框
     private var commentField : UITextField?
-    var myfoundModel : myFoundModel?
+    var myfoundModel = MyFoundDataBase()
     var indexPath = NSIndexPath()
     var dataCode : String?
     
@@ -323,7 +323,7 @@ class MJMessageCell: UITableViewCell {
     }
     func commentAction(sender:UIButton)  {
         if ((self.commentBlock) != nil) {
-            self.commentBlock!(commentBtn: sender,indexPath: self.indexPath,pingluntype:.pinglun,foundId:(self.myfoundArray?.id)!);
+            self.commentBlock!(commentBtn: sender,indexPath: self.indexPath,pingluntype:.pinglun,foundId:(self.myfoundArray.idx));
         }
     }
     
@@ -371,27 +371,24 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
 
     }
     
-    func configCellWithModel(model:myFoundModel,indexpath:NSIndexPath)  {
+    func configCellWithModel(model:MyFoundDataBase,indexpath:NSIndexPath)  {
         
-        self.commentModel = model.data.array[indexpath.row].comment
-        self.myfoundArray = model.data.array[indexpath.row]
+        self.commentModel = model.comment
+        self.myfoundArray = model
         self.nameLabel?.text = userInfo.name
         self.distinguishSayTypeWithTypeId(model, index: indexpath)
-        self.location?.setTitle(model.data.array[indexpath.row].address, forState: UIControlState.Normal)
+        self.location?.setTitle(model.address, forState: UIControlState.Normal)
         self.location?.titleLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
         
         self.location?.setImage(UIImage(named: "location"), forState: UIControlState.Normal)
-        let timeStr = TimeStampToDate().getTimeString(model.data.array[indexpath.row].time)
+        let timeStr = TimeStampToDate().getTimeString(model.time)
         self.descLabel?.text = timeStr
-        if model.data.array[indexpath.row].csum != nil {
-            self.seeBtn?.setTitle(model.data.array[indexpath.row].csum.description, forState: UIControlState.Normal)
+        
+            self.seeBtn?.setTitle(model.csum.description, forState: UIControlState.Normal)
             
-            self.zanBtn?.setTitle(model.data.array[indexpath.row].csum.description, forState: UIControlState.Normal)
-        }else{
-            self.seeBtn?.setTitle("0", forState: UIControlState.Normal)
-            self.zanBtn?.setTitle("0", forState: UIControlState.Normal)
-        }
-        if model.data.array[indexpath.row].comment.count != 0 {
+            self.zanBtn?.setTitle(model.csum.description, forState: UIControlState.Normal)
+        
+        if model.comment.count != 0 {
             self.commentBtn?.setTitle(self.commentModel.count.description, forState: UIControlState.Normal)
             
         }else{
@@ -400,12 +397,12 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
         self.myfoundModel = model
 
-        let attrString = NSMutableAttributedString(string:  model.data.array[indexpath.row].content)
+        let attrString = NSMutableAttributedString(string:  model.content)
         self.contentLabel?.attributedText = attrString
         
         //没有图片的情况
-        if model.data.array[indexpath.row].images.count != 0 {
-           let h1 = cellHeightByData1(model.data.array[indexpath.row].images.count)
+        if model.images.count != 0 {
+           let h1 = cellHeightByData1(model.images.count)
             
             self.displayView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(h1)
@@ -422,14 +419,15 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
             var thImageStr = [String]()
             var oringIMage = [String]()
             
-        for imageModel in model.data.array[indexpath.row].images {
+        for imageModel in model.images {
+            
             thImageStr.append(imageModel.thumbnailSrc)
             oringIMage.append(imageModel.originalSrc)
         }
             self.displayView.thumbnailUrls = thImageStr
             self.displayView.originalUrls = oringIMage
 
-        if model.data.array[indexpath.row].typeId == 12 {
+        if model.typeId == 12 {
             self.displayView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo((ScreenWidth-30)/3)
             })
@@ -445,10 +443,10 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         
         for model in self.commentModel {
             let cellheight = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
-                if self.myfoundModel != nil{
+                
                     let cell = sourceCell as! MJCommentCell
-                    cell.configCellWithModel(model)
-                }
+                    cell.configCellWithModel(model as! myFoundComment)
+                
                 
                 
                 }, cache: { () -> [NSObject : AnyObject]! in
@@ -474,8 +472,8 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         
         if self.type != nil {
             if self.type! == .local {
-                 let model = md as! myFoundModel
-                let sayArray = model.data.array[index.row]
+                 let model = md as! myFoundArray
+                let sayArray = model
                 
                 switch sayArray.typeId {
                 case 11:
@@ -543,7 +541,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         cell.subIndex = indexPath
         
             if self.type! == .local {
-                cell.configCellWithModel(self.commentModel[indexPath.row])
+                cell.configCellWithModel(self.commentModel[indexPath.row] as! myFoundComment)
             }else{
                 cell.configHeFoundCellWithModel(self.hefoundCommentModel[indexPath.row])
         }
@@ -565,10 +563,10 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         if self.type != nil {
            if self.type! == .local{
             let cell_height = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
-                if (self.myfoundModel != nil) {
+                
                     let cell = cell as! MJCommentCell
-                    cell.configCellWithModel(self.commentModel[indexPath.row])
-                }
+                    cell.configCellWithModel(self.commentModel[indexPath.row] as! myFoundComment)
+                
                 
             }) { () -> [NSObject : AnyObject]! in
                 let cache = [kHYBCacheUniqueKey:userInfo.uid,
@@ -583,10 +581,10 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
            
            {
             let cell_height = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
-                if (self.myfoundModel != nil) {
+                
                     let cell = cell as! MJCommentCell
                     cell.configHeFoundCellWithModel(self.hefoundCommentModel[indexPath.row])
-                }
+                
                 
             }) { () -> [NSObject : AnyObject]! in
                 let cache = [kHYBCacheUniqueKey:userInfo.uid,
@@ -604,10 +602,10 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         
         
         let cell_height = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
-            if (self.myfoundModel != nil) {
+            
                 let cell = cell as! MJCommentCell
-                cell.configCellWithModel(self.commentModel[indexPath.row])
-            }
+                cell.configCellWithModel(self.commentModel[indexPath.row] as! myFoundComment)
+            
            
         }) { () -> [NSObject : AnyObject]! in
             let cache = [kHYBCacheUniqueKey:self.commentModel[indexPath.row].commentId,
@@ -619,7 +617,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! MJCommentCell
        
-        self.delegate?.passCellHeightWithMessageModel(self.myfoundModel!, commentModel: self.commentModel[indexPath.row], indexP: indexPath, cellHeight: cell_height, commentCell: cell, messageCell: self,statustype: .selectCell)
+        self.delegate?.passCellHeightWithMessageModel(self.myfoundModel, commentModel: self.commentModel[indexPath.row] as! myFoundComment, indexP: indexPath, cellHeight: cell_height, commentCell: cell, messageCell: self,statustype: .selectCell)
     }
     func cellHeightByData1(imageNum:Int)->CGFloat{
         
@@ -715,10 +713,10 @@ extension MJMessageCell{
         
         for model in self.commentModel {
             let cellheight = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
-                if self.myfoundModel != nil{
+                
                     let cell = sourceCell as! MJCommentCell
-                    cell.configCellWithModel(model)
-                }
+                    cell.configCellWithModel(model as! myFoundComment)
+                
                 
                 
                 }, cache: { () -> [NSObject : AnyObject]! in

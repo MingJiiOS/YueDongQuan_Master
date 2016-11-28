@@ -146,7 +146,7 @@ class SetNewPasswordViewController: MainViewController {
                     
                 }else{
                     
-                    let items = manager.fl_searchModelArr(UserDataInfoModel) as NSArray
+                    let items = manager.fl_searchModelArr(UserDataInfoModel) as! NSArray
                     
                     if items.count > 0 {
                         
