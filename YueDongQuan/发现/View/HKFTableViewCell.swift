@@ -20,7 +20,6 @@ protocol HKFTableViewCellDelegate {
     func selectCellPinglun(indexPath:NSIndexPath,commentIndexPath:NSIndexPath,sayId: Int,model:DiscoveryCommentModel,type:PingLunType)
     func clickDianZanBtnAtIndexPath(indexPath:NSIndexPath)
     func clickJuBaoBtnAtIndexPath(foundId:Int,typeId:Int)
-    func clickVideoViewAtIndexPath(cell:HKFTableViewCell,videoId:String)
     
     func clickCellHeaderImageForToHeInfo(index:NSIndexPath,uid:String)//头像点击事件
     
@@ -47,7 +46,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     var displayView = PYPhotosView()//照片或者视频显示
     
     var videoImage = UIImageView()//视频展示
-//    var playVideoBtn = UIButton()//播放按钮
+    var playVideoBtn = UIButton()//播放按钮
     
     
     var tableView : UITableView?//评论cell
@@ -129,7 +128,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.height.equalTo(14)
             make.width.equalTo(screenWidth/6)
         })
-//        self.timeStatus?.text = "六分钟前"
+        //        self.timeStatus?.text = "六分钟前"
         self.timeStatus?.backgroundColor = UIColor.whiteColor()
         self.timeStatus?.textAlignment = .Left
         //距离
@@ -142,7 +141,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.height.equalTo(14)
             make.width.equalTo(screenWidth/3)
         })
-//        self.distanceLabel?.text = "离我1000km"
+        //        self.distanceLabel?.text = "离我1000km"
         self.distanceLabel?.backgroundColor = UIColor.whiteColor()
         self.distanceLabel?.textAlignment = .Left
         
@@ -183,15 +182,21 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.contentView.addSubview(self.videoImage)
         self.videoImage.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(10)
-//            make.width.equalTo(ScreenWidth - 20)
+            //            make.width.equalTo(ScreenWidth - 20)
             make.right.equalTo(-10)
             make.top.equalTo((weakSelf?.displayView.snp_bottom)!).offset(2)
         })
         
+        self.videoImage.addSubview(self.playVideoBtn)
+        self.playVideoBtn.snp_makeConstraints { (make) in
+            make.center.equalTo(self.videoImage.snp_center)
+            make.height.width.equalTo(40)
+        }
+        self.playVideoBtn.setImage(UIImage(named: "audionews_index_play@2x.png"), forState: UIControlState.Normal)
+        
         self.videoImage.backgroundColor = UIColor.brownColor()
         self.videoImage.userInteractionEnabled = true
-        let tapVideoView = UITapGestureRecognizer(target: self, action: #selector(clickVideoImageToPlayer))
-        self.videoImage.addGestureRecognizer(tapVideoView)
+        
         
         //定位信息
         self.contentView.addSubview(self.locationView)
@@ -208,7 +213,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         self.locationLabel.frame = CGRect(x: 16, y: 1, width: screenWidth - 36, height: 12)
         self.locationLabel.font = UIFont.systemFontOfSize(10)
-//        self.locationLabel.text = "重庆市渝北区大龙上"
+        //        self.locationLabel.text = "重庆市渝北区大龙上"
         self.locationView.addSubview(self.locationLabel)
         
         //点赞数，浏览次数，评论数，以及举报按钮
@@ -231,8 +236,8 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.operateView.addSubview(self.liulanCount)
         
         self.dianzanBtn.frame = CGRect(x: screenWidth/5, y: 0, width: screenWidth/6, height: 24)
-//        self.dianzanBtn.setImage(UIImage(named: "ic_zan_a6a6a6"), forState: UIControlState.Normal)
-//        self.dianzanBtn.setTitle("0", forState: UIControlState.Normal)
+        //        self.dianzanBtn.setImage(UIImage(named: "ic_zan_a6a6a6"), forState: UIControlState.Normal)
+        //        self.dianzanBtn.setTitle("0", forState: UIControlState.Normal)
         self.dianzanBtn.titleLabel?.font = UIFont.systemFontOfSize(10)
         self.dianzanBtn.setImage(UIImage(named: "ic_zan_a6a6a6"), forState: UIControlState.Normal)
         self.dianzanBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0,  screenWidth/10)
@@ -242,7 +247,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.dianzanBtn.addTarget(self, action: #selector(clickDianZanBtn(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.pinglunBtn.frame = CGRect(x: screenWidth/5*2, y: 0, width: screenWidth/6, height: 24)
-//        self.pinglunBtn.setImage(UIImage(named: "ic_pinglun"), forState: UIControlState.Normal)
+        //        self.pinglunBtn.setImage(UIImage(named: "ic_pinglun"), forState: UIControlState.Normal)
         self.pinglunBtn.setTitle("0", forState: UIControlState.Normal)
         self.pinglunBtn.titleLabel?.font = UIFont.systemFontOfSize(10)
         self.pinglunBtn.setImage(UIImage(named: "ic_pinglun"), forState: UIControlState.Normal)
@@ -297,7 +302,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         let subModel = model
         
         self.distanceLabel?.text = String(format: "%0.2fkm",(model.distance))
-    
+        
         
         if subModel.csum != nil{
             self.pinglunBtn.setTitle("\(subModel.csum)", forState: UIControlState.Normal)
@@ -314,27 +319,27 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         switch subModel.typeId {
         case 11:
-//            print("图片")
+            //            print("图片")
             self.titleLabel?.text =  subModel.name
             self.typeStatusView?.image = UIImage(named: "explain_pic")
         case 12:
-//            print("视频")
+            //            print("视频")
             self.titleLabel?.text =  subModel.name
             self.typeStatusView?.image = UIImage(named: "explain_vedio")
         case 13:
-//            print("活动")
+            //            print("活动")
             self.titleLabel?.text = subModel.aname
             self.typeStatusView?.image = UIImage(named: "explain_recruit")
         case 14:
-//            print("约战")
+            //            print("约战")
             self.titleLabel?.text =  subModel.name
             self.typeStatusView?.image = UIImage(named: "约战")
         case 15:
-//            print("求加入")
+            //            print("求加入")
             self.titleLabel?.text =  subModel.name
             self.typeStatusView?.image = UIImage(named: "explain_enlist")
         case 16:
-//            print("招募")
+            //            print("招募")
             self.titleLabel?.text =  subModel.rname
             
             self.typeStatusView?.image = UIImage(named: "招募")
@@ -352,7 +357,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.locationView.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(14)
             })
-//            self.distanceLabel?.text = subModel.address
+            //            self.distanceLabel?.text = subModel.address
         }
         let tempStr = "<body> " + subModel.content + " </body>"
         let resultStr1 = tempStr.stringByReplacingOccurrencesOfString("\\n", withString: "<br/>", options: NSStringCompareOptions.LiteralSearch, range: nil)
@@ -371,6 +376,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         self.timeStatus?.text = getTimeString(subModel.time)
         
+        
         if subModel.images.count != 0 {
             let h1 = cellHeightByData1(subModel.images.count)
             
@@ -385,14 +391,17 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.displayView.hidden = true
         }
         
-//        NSLog("videoURL = \(model.compressUrl)")
+        //        NSLog("videoURL = \(model.compressUrl)")
         if subModel.compressUrl != "" {
             self.videoImage.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(ScreenHeight/4)
             })
             self.videoImage.hidden = false
-
-            self.videoImage.sd_setImageWithURL(NSURL(string: model.compressUrl), placeholderImage: nil)
+            
+            
+            //            self.videoImage.sd_setImageWithURL(NSURL(string: model.compressUrl), placeholderImage: nil)
+            self.videoImage.sd_setImageWithURL(NSURL(string: subModel.vPreviewThu), placeholderImage: UIImage(named: ""))
+            
             
         }else{
             self.videoImage.snp_updateConstraints(closure: { (make) in
@@ -486,7 +495,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         
         self.delegate?.selectCellPinglun(self.indexPath!, commentIndexPath: indexPath,sayId: id!, model: selectModel!, type: PingLunType.selectCell)
-       
+        
         self.delegate?.reloadCellHeightForModelAndAtIndexPath(self.testModel!, indexPath: self.indexPath!)
         
         
@@ -513,7 +522,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     }
     
     func clickJuBao() {
-//        print("点击了举报")
+        //        print("点击了举报")
         let titleArr = ["举报"]
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(myJubao))
@@ -527,7 +536,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     }
     
     func myJubao(){
-//        print("我要举报\(self.indexPath)行")
+        //        print("我要举报\(self.indexPath)行")
         let foundId = self.testModel?.id
         let typeId = self.testModel?.typeId
         self.delegate?.clickJuBaoBtnAtIndexPath(foundId!, typeId: typeId!)
@@ -536,12 +545,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     
     
-    //点击视频
-    func clickVideoImageToPlayer(){
-        let videoid = self.testModel?.compressUrl
-        
-        self.delegate?.clickVideoViewAtIndexPath(HKFTableViewCell(), videoId: videoid!)
-    }
+    
     
     
     
@@ -566,14 +570,14 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
     }
     
-        private func getTimeString(time:Int) -> String{
+    private func getTimeString(time:Int) -> String{
         
         let timeTemp = NSDate.init(timeIntervalSince1970: Double(time/1000))
         
         let timeInterval = timeTemp.timeIntervalSince1970
         
         let timer = NSDate().timeIntervalSince1970 - timeInterval//currentTime - createTime
-       
+        
         let second = timer
         if second < 60 {
             let result = String(format: "刚刚")
@@ -613,7 +617,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         return result
         
-//        let temp = timer - time
+        //        let temp = timer - time
     }
     
     
@@ -630,7 +634,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     
     
-
+    
     
     
 }

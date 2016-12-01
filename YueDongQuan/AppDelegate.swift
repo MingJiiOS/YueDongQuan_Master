@@ -50,7 +50,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         CLLocationManager().requestWhenInUseAuthorization()
         //融云
         RCIM.sharedRCIM().initWithAppKey(RONGCLOUDAPPKEY)
-
+        RCIMClient.sharedRCIMClient()
         //初始化融云即登录
         let manager = IQKeyboardManager.sharedManager()
         manager.enable = true
@@ -75,49 +75,49 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
                 var dic:[String:AnyObject] = NSDictionary() as! [String : AnyObject]
                 let userData =  getUserInfoDataBaseFromFMDB()
                 let result = userData.firstObject as! UserDataInfoModel
-//                if result.pw != ""  && result.phone != ""{
-//                    //调用数据库
-//                    let describe = UIDevice.currentDevice().systemName
-//                    dic = ["v":v,
-//                           "phone":(result.phone)!,
-//                           "pw":(result.pw)!,
-//                           "describe":describe]
-//                    MJNetWorkHelper().loginWithUserInfo(login,
-//                                                        userModel: dic,
-//                                                        success: { (responseDic, success) in
-//                                                            let loginmodel = DataSource().getUserInfo(responseDic)
-//                                                            //MARK:融云资料
-//                                                            info.name = loginmodel.data.name
-//                                                            info.userId = loginmodel.data.uid.description
-//                                                            //                        info.portraitUri = loginmodel.data.thumbnailSrc
-//                                                            info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
-//                                                            RCIM.sharedRCIM().userInfoDataSource = self
-//                                                            RCIM.sharedRCIM().groupInfoDataSource = self
-//                                                            MJGetToken().requestTokenFromServeris(getToken
-//                                                                , success: { (responseDic, success) in
-//                                                                    let model = TokenModel(fromDictionary: responseDic)
-//                                                                    userInfo.token = model.data.token
-//                                                                    
-//                                                                    let helper = MJLoginOpreationHelper()
-//                                                                    if helper.IMConnectStatus == .ConnectionStatus_Connected{
-//                                                                        return
-//                                                                    }else{
-//                                                                        helper.connectToIM({ (isLogin, userId) in
-//                                                                            MJrcuserInfo.userId = userId as String
-//                                                                            helper.getConnectionStatus()
-//                                                                            
-//                                                                            }, errorBlock: { (isLogin, errorValue) in
-//                                                                                
-//                                                                        })
-//                                                                    }
-//                                                                }, fail: { (error) in
-//                                                                    
-//                                                            })
-//                        }, fail: { (error) in
-//                            print("返回错误信息",error)
-//                    })
-//                }
-            
+                if result.pw != ""  && result.phone != ""{
+                    //调用数据库
+                    let describe = UIDevice.currentDevice().systemName
+                    dic = ["v":v,
+                           "phone":(result.phone)!,
+                           "pw":(result.pw)!,
+                           "describe":describe]
+                    MJNetWorkHelper().loginWithUserInfo(login,
+                                                        userModel: dic,
+                                                        success: { (responseDic, success) in
+                                                            let loginmodel = DataSource().getUserInfo(responseDic)
+                                                            //MARK:融云资料
+                                                            info.name = loginmodel.data.name
+                                                            info.userId = loginmodel.data.uid.description
+                                                            //                        info.portraitUri = loginmodel.data.thumbnailSrc
+                                                            info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
+                                                            RCIM.sharedRCIM().userInfoDataSource = self
+                                                            RCIM.sharedRCIM().groupInfoDataSource = self
+                                                            MJGetToken().requestTokenFromServeris(getToken
+                                                                , success: { (responseDic, success) in
+                                                                    let model = TokenModel(fromDictionary: responseDic)
+                                                                    userInfo.token = model.data.token
+                                                                    
+                                                                    let helper = MJLoginOpreationHelper()
+                                                                    if helper.IMConnectStatus == .ConnectionStatus_Connected{
+                                                                        return
+                                                                    }else{
+                                                                        helper.connectToIM({ (isLogin, userId) in
+                                                                            MJrcuserInfo.userId = userId as String
+                                                                            helper.getConnectionStatus()
+                                                                            
+                                                                            }, errorBlock: { (isLogin, errorValue) in
+                                                                                
+                                                                        })
+                                                                    }
+                                                                }, fail: { (error) in
+                                                                    
+                                                            })
+                        }, fail: { (error) in
+                            print("返回错误信息",error)
+                    })
+                }
+                
             
         }else{
             self.window?.rootViewController?.presentViewController(YDQLoginRegisterViewController(), animated: true, completion: nil)

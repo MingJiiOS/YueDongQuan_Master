@@ -24,7 +24,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     var controllerAry = NSMutableArray()
     var items = NSMutableArray()
     var manger = AMapLocationManager()
-    let discover = DiscoverViewController()
+    let discover = NewDiscoveryVC()
     let changDi = FieldViewController()
     
     let quanZi = QuanZiViewController()

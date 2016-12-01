@@ -35,6 +35,7 @@ target 'YueDongQuan' do
     pod 'SVProgressHUD'
     pod 'FMDB'
     pod 'RealReachability'
+    pod 'SRGMediaPlayer', '~> 1.9.11'
   # Pods for YueDongQuan
 
 

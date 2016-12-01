@@ -8,7 +8,7 @@
 #import "HMSegmentedControl.h"
 //黄方果导入的
 #import "FLFMDBManager.h"
-
+#import "SMCustomSegment.h"
 #import "UserDataInfoModel.h"
 #import "MyFoundDataBase.h"
 #import "XHVersion.h"
@@ -69,7 +69,7 @@
 //#import "SegmentViewController.h"
 //#import "UIView+frame.h"
 //#import "WMPlayer.h"//视频播放
-#import "NSObject+Emoji_String.h"//评论中有表情需进行编码，展示时需要解码
+#import "NSString+Emoji.h"
 
 #import "LiuXSegmentView.h"
 //高德地图

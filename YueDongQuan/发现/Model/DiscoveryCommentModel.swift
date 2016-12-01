@@ -17,7 +17,7 @@ class DiscoveryCommentModel{
     var time : Int!
     var uid : Int!
     var reply : String?
-    
+    var mainId : Int!
     
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values

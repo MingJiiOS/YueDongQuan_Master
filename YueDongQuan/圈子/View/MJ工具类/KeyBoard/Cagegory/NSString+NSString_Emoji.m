@@ -1,15 +1,14 @@
 //
-//  NSString+Emoji.m
-//  KeyboardForChat
+//  NSString+NSString_Emoji.m
+//  YueDongQuan
 //
-//  Created by ruofei on 16/5/16.
-//  Copyright © 2016年 ruofei. All rights reserved.
+//  Created by 黄方果 on 16/12/1.
+//  Copyright © 2016年 黄方果. All rights reserved.
 //
 
-#import "NSString+Emoji.h"
+#import "NSString+NSString_Emoji.h"
 
-@implementation NSString (Emoji)
-
+@implementation NSString (NSString_Emoji)
 - (BOOL)isEmoji{
     const unichar high = [self characterAtIndex:0];
     

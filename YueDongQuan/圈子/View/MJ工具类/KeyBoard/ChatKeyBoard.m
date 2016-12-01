@@ -23,7 +23,7 @@
 #import "OfficialAccountToolbar.h"
 #import "ChatKeyBoardMacroDefine.h"
 
-#import "NSString+Emoji.h"
+#import "NSString+NSString_Emoji.h"
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 CGFloat getSupviewH(CGRect frame)

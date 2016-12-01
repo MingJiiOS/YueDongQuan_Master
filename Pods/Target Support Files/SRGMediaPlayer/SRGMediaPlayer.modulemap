@@ -1,0 +1,6 @@
+framework module SRGMediaPlayer {
+  umbrella header "SRGMediaPlayer-umbrella.h"
+
+  export *
+  module * { export * }
+}

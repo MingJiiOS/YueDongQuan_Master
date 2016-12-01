@@ -54,6 +54,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SRGMediaPlayer-SRGMediaPlayer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SRGMediaPlayer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SVProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -74,6 +84,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TransitionKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>XHImageViewer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -84,10 +99,15 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>libextobjc.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>215FA714BC95D07CD71CCB0945733693</key>
+		<key>0D415C8FF645AFDBD0FE38973A15800A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,7 +117,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>27A0B0B737920F3E93886C72FAB70388</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>29DD99664D189A7CA206368F493B1E0B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>380DE4CB521B1F59A40A936B79D6CFB8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>392CE5D7EBF90DCDC6F888147CFE1C9F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3B753BAB731CB46DB598F12B335B7771</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,7 +147,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>66802EB0D889941DCC77261678DBB2FE</key>
+		<key>6F4B8601B66E2CFD5B65BC19AD41A405</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -132,12 +172,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8EDC7EA94BDC3B414D3F1DE023863C4F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9C233BEA5F6AE619EF2E63B2A4D2500D</key>
+		<key>8B9C76695A1AB2BBACEB7C547B9116E0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,22 +182,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A95C868CAA09CD785692ED5AE919B7CB</key>
+		<key>A950AE5EBDCD1062243F5F701B7C59B0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B23C4F0F6114C87F26EB0639A3CAA4FC</key>
+		<key>CB4AD54E98F20440C880DD1E49522029</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B558D0BD1A676E688A997C09292B49D6</key>
+		<key>E12EBED8DCCE5C4E2FB8F29A2616DD31</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EA8D44FEBBEF5944D777C9E527E1E5BF</key>
+		<key>E94745DBABC298F082EEFCBBF49A83F8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F96011C595C12200D1EFFA635ECB54E8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

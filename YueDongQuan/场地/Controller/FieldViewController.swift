@@ -14,13 +14,13 @@ import SDWebImage
 
 
 @objc(FieldViewController)
-class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationManagerDelegate ,UITableViewDelegate,UITableViewDataSource{
+class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationManagerDelegate ,UITableViewDelegate,UITableViewDataSource,SMCustomSegmentDelegate,NewFieldCellTableViewCellDelegate{
     
     var scroViewContent : UIScrollView!
     var fieldTable = UITableView()
     var weatherView = UIView()
     var weatherLabel = UILabel()
-    
+    private var FieldContentView = UIScrollView()
     
     var _mapView: MAMapView?
     
@@ -30,11 +30,36 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     var fieldModel : FieldModel?
     var weatherModel : WeatherModel?
     
+    private var fieldAnimation = [CLLocation](){
+        didSet{
+            let annotation = MJRedAnnotation()
+            for item in fieldAnimation {
+                annotation.coordinate = item.coordinate
+                
+                _mapView?.addAnnotation(annotation)
+            }
+        }
+    }
+    
+    
+    func customSegmentSelectIndex(selectIndex: Int) {
+        NSLog("selectIndex = \(selectIndex)")
+        FieldContentView.contentOffset = CGPoint(x: ScreenWidth*CGFloat(selectIndex), y: 0)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.edgesForExtendedLayout = .None
         
         
+        FieldContentView = UIScrollView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight - 64 - 49))
+        self.view.addSubview(FieldContentView)
+        FieldContentView.showsVerticalScrollIndicator = false
+        FieldContentView.showsHorizontalScrollIndicator = false
+        FieldContentView.pagingEnabled = true
+        FieldContentView.scrollEnabled = false
+        FieldContentView.contentSize = CGSize(width: ScreenWidth*2, height: ScreenHeight - 64 - 49)
+        FieldContentView.delegate = self
         
         
         
@@ -43,9 +68,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
         
         
-        
-        
-        _mapView = MAMapView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenWidth*2/3))
+        _mapView = MAMapView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight - 64 - 49))
         _mapView?.delegate = self
         _mapView?.showsUserLocation = true
         _mapView?.userTrackingMode = .Follow
@@ -84,11 +107,10 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
         
         
-        fieldTable = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight - 49 - 64), style: UITableViewStyle.Grouped)
-        self.view.addSubview(fieldTable)
-        fieldTable.tableHeaderView = _mapView
+        fieldTable = UITableView(frame: CGRect(x: ScreenWidth, y: 0, width: ScreenWidth, height: ScreenHeight - 49 - 64), style: UITableViewStyle.Grouped)
         
-        fieldTable.registerClass(FieldCell.self, forCellReuseIdentifier: "FieldCell")
+        let cellNib = UINib(nibName: "NewFieldCellTableViewCell", bundle: nil)
+        fieldTable.registerNib(cellNib, forCellReuseIdentifier: "NewFieldCellTableViewCell")
         fieldTable.delegate = self
         fieldTable.dataSource = self
         
@@ -107,6 +129,12 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         shutBtn.setImage(UIImage(named: "photo_delete"), forState: UIControlState.Normal)
         shutBtn.addTarget(self, action: #selector(dismissWeatherView), forControlEvents: UIControlEvents.TouchUpInside)
         weatherView.addSubview(shutBtn)
+        
+        
+        
+        FieldContentView.addSubview(_mapView!)
+        FieldContentView.addSubview(fieldTable)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FieldViewController.CheckSignInfoProcessTemp(_:)), name: "CheckSignInfoProcess", object: nil)
         
     }
@@ -146,7 +174,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     }
     
     func clickLocationBtn(){
-//        NSLog("点击了定位")
+        //        NSLog("点击了定位")
         manger.startUpdatingLocation()
     }
     
@@ -157,7 +185,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 24.0 / 255, green: 90.0 / 255, blue: 172.0 / 255, alpha: 1.0)
         let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 65, height: 32))
         let searchBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
-       
+        
         searchBtn.setImage(UIImage(named: "ic_search"), forState: UIControlState.Normal)
         searchBtn.addTarget(self, action: #selector(clickSearchBtn), forControlEvents: UIControlEvents.TouchUpInside)
         rightView.addSubview(searchBtn)
@@ -167,6 +195,20 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         addBtn.addTarget(self, action: #selector(clickAddBtn), forControlEvents: UIControlEvents.TouchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightView)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        let title = ["地图","列表"]
+        let segement = SMCustomSegment(frame: CGRect(x: 0, y: 0, width: ScreenWidth/3, height: 34), titleArray: title)
+        
+        segement.selectIndex = 0
+        segement.delegate = self;
+        segement.normalBackgroundColor = UIColor.clearColor()
+        segement.selectBackgroundColor = UIColor.whiteColor()
+        segement.titleNormalColor = UIColor.whiteColor()
+        segement.titleSelectColor = UIColor.blueColor()
+        segement.normalTitleFont = 14;
+        segement.selectTitleFont = 16;
+        self.navigationItem.titleView = segement
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -208,7 +250,22 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     /********************************************/
     
     func mapView(mapView: MAMapView!, didLongPressedAtCoordinate coordinate: CLLocationCoordinate2D) {
-//        NSLog("coordinate = \(coordinate.latitude,coordinate.longitude)")
+        //        NSLog("coordinate = \(coordinate.latitude,coordinate.longitude)")
+    }
+    
+    
+    func mapView(mapView: MAMapView!, viewForAnnotation annotation: MAAnnotation!) -> MAAnnotationView! {
+        //红色的大头针
+        if annotation.isKindOfClass(MJRedAnnotation) {
+            let redReuseIndetifier = "red"
+            var redAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(redReuseIndetifier)
+            if redAnnotation == nil {
+                redAnnotation = MJRedAnnotationView(annotation: annotation,reuseIdentifier: redReuseIndetifier)
+            }
+            return redAnnotation
+        }
+        
+        return nil
     }
     
     
@@ -219,7 +276,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
         manager.requestLocationWithReGeocode(true) { (location:CLLocation!, geoCode:AMapLocationReGeocode!, error:NSError!) in
             if let error = error {
-//                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
+                //                NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
                 
                 if error.code == AMapLocationErrorCode.LocateFailed.rawValue {
                     return;
@@ -229,7 +286,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
             if location != nil {
                 if let geocode = geoCode {
                     
-//                    NSLog("regecode = \(geocode.neighborhood)")
+                    //                    NSLog("regecode = \(geocode.neighborhood)")
                     //地址信息
                     let cityName = geocode.province
                     self.requestWeather(cityName)
@@ -246,23 +303,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         _mapView?.setCenterCoordinate(CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude), animated: true)
     }
     
-    func mapView(mapView: MAMapView!, viewForAnnotation annotation: MAAnnotation!) -> MAAnnotationView! {
-        if annotation.isKindOfClass(MAPointAnnotation) {
-            let annotationIdentifier = "invertGeoIdentifier"
-            
-            var poiAnnotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(annotationIdentifier) as? MAPinAnnotationView
-            
-            if poiAnnotationView == nil {
-                poiAnnotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-            }
-            
-            poiAnnotationView!.animatesDrop   = true
-            poiAnnotationView!.canShowCallout = true
-            
-            return poiAnnotationView;
-        }
-        return nil
-    }
+    
     
     func mapView(mapView: MAMapView, rendererForOverlay overlay: MAOverlay) -> MAOverlayRenderer? {
         
@@ -277,29 +318,9 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         
         return nil
     }
-    /********************************************/
-    
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
-        guard self.fieldModel?.data.array.count > 0 else{
-            return 0
-        }
-        
-        return (self.fieldModel?.data.array.count)!
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
-    }
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 243/255, alpha: 1.0)
-        return headerView
-    }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.0001
+        return 1
     }
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView()
@@ -310,104 +331,118 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return 1
+        guard self.fieldModel?.data.array.count > 0 else{
+            return 0
+        }
+        
+        return (self.fieldModel?.data.array.count)!
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 120
+        return 110
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : FieldCell = tableView.dequeueReusableCellWithIdentifier("FieldCell", forIndexPath: indexPath) as! FieldCell
-        cell.selectionStyle = .None
-        cell.index = indexPath
-        cell.delegate = self
-        let model = self.fieldModel?.data.array[indexPath.section]
+        
+        
+        let cell : NewFieldCellTableViewCell = tableView.dequeueReusableCellWithIdentifier("NewFieldCellTableViewCell", forIndexPath: indexPath) as! NewFieldCellTableViewCell
+        cell.indexPathTag = indexPath.row
+        let model = self.fieldModel?.data.array[indexPath.row]
         cell.configWithModel(model!)
         
+        cell.delegate = self
         return cell
         
     }
     
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-    }
-    
-    
-}
-
-
-extension FieldViewController : FieldCellDelegate {
-    func clickConfirmFieldBtn(indexPath: NSIndexPath) {
-//        NSLog("点击了预定")
-        
-        
-        if (self.fieldModel?.data.array[indexPath.section].telephone) == nil {
-            let alertView = UIAlertView(title: "提示", message: "暂无订场联系电话", delegate: nil, cancelButtonTitle: "确定")
-            alertView.show()
-            return
-        }
-        let telNumber = (self.fieldModel?.data.array[indexPath.section].telephone)!
-        
-        let alertView = YoYoAlertView(title: "我要订场", message: telNumber, cancelButtonTitle: "取消", sureButtonTitle: "确定")
-        
-        alertView.show()
-        
-        alertView.clickIndexClosure { (index) in
-            print("点击了第" + "\(index)" + "个按钮")
-            
-            if index == 2 {
-                self.CallTelNumber(telNumber)
-            }
-            
-        }
-        
-    }
-    func clickEditFieldBtn(indexPath: NSIndexPath) {
-//        NSLog("点击了编辑")
-        let vc = EditorFieldViewController()
-        vc.hidesBottomBarWhenPushed = true
-        
-        vc.field_Id = (self.fieldModel?.data.array[indexPath.section].id)!
-        
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let vc = FieldDetailController()
+        let model = self.fieldModel?.data.array[indexPath.row]
+        vc.firstModel = model!
+        vc.fieldSiteID = (model?.id)!
         self.navigationController?.pushViewController(vc, animated: true)
-        vc.hidesBottomBarWhenPushed = false
-        //        let nvc1 : UINavigationController = CustomNavigationBar(rootViewController: vc)
-        //
-        //        self.navigationController?.presentViewController(nvc1, animated: true, completion: {
-        //
-        //        })
-        
     }
-    func clickSiginFieldBtn(indexPath: NSIndexPath) {
-//        NSLog("点击了签到排行榜")
-        let signVC = SignRankingCOntroller()
-        signVC.siteId = (self.fieldModel?.data.array[indexPath.section].id)!
-        signVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(signVC, animated: true)
-        signVC.hidesBottomBarWhenPushed = false
-        
+    //MARK:点击cell中的签到按钮
+    func clickFieldSignBtn(sender: UIButton) {
+        let sitesId = self.fieldModel?.data.array[sender.tag].id
+        requestFieldSignData(sitesId!)
     }
     
-    
-    func clickQianDaoImageTap(indexPath:NSIndexPath){
-        let signvc = SignRankBtnController()
-        signvc.siteId = (self.fieldModel?.data.array[indexPath.section].id)!
-        signvc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(signvc, animated: true)
-        signvc.hidesBottomBarWhenPushed = false
-        
-    }
-    
-    
-    //拨打电话
-    func CallTelNumber(tel:String){
-        UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(tel)")!)
-    }
     
     
 }
 
+/*
+ extension FieldViewController : FieldCellDelegate {
+ func clickConfirmFieldBtn(indexPath: NSIndexPath) {
+ //        NSLog("点击了预定")
+ 
+ 
+ if (self.fieldModel?.data.array[indexPath.section].telephone) == nil {
+ let alertView = UIAlertView(title: "提示", message: "暂无订场联系电话", delegate: nil, cancelButtonTitle: "确定")
+ alertView.show()
+ return
+ }
+ let telNumber = (self.fieldModel?.data.array[indexPath.section].telephone)!
+ 
+ let alertView = YoYoAlertView(title: "我要订场", message: telNumber, cancelButtonTitle: "取消", sureButtonTitle: "确定")
+ 
+ alertView.show()
+ 
+ alertView.clickIndexClosure { (index) in
+ print("点击了第" + "\(index)" + "个按钮")
+ 
+ if index == 2 {
+ self.CallTelNumber(telNumber)
+ }
+ 
+ }
+ 
+ }
+ func clickEditFieldBtn(indexPath: NSIndexPath) {
+ //        NSLog("点击了编辑")
+ let vc = EditorFieldViewController()
+ vc.hidesBottomBarWhenPushed = true
+ 
+ vc.field_Id = (self.fieldModel?.data.array[indexPath.section].id)!
+ 
+ self.navigationController?.pushViewController(vc, animated: true)
+ vc.hidesBottomBarWhenPushed = false
+ //        let nvc1 : UINavigationController = CustomNavigationBar(rootViewController: vc)
+ //
+ //        self.navigationController?.presentViewController(nvc1, animated: true, completion: {
+ //
+ //        })
+ 
+ }
+ func clickSiginFieldBtn(indexPath: NSIndexPath) {
+ //        NSLog("点击了签到排行榜")
+ let signVC = SignRankingCOntroller()
+ signVC.siteId = (self.fieldModel?.data.array[indexPath.section].id)!
+ signVC.hidesBottomBarWhenPushed = true
+ self.navigationController?.pushViewController(signVC, animated: true)
+ signVC.hidesBottomBarWhenPushed = false
+ 
+ }
+ 
+ 
+ func clickQianDaoImageTap(indexPath:NSIndexPath){
+ let signvc = SignRankBtnController()
+ signvc.siteId = (self.fieldModel?.data.array[indexPath.section].id)!
+ signvc.hidesBottomBarWhenPushed = true
+ self.navigationController?.pushViewController(signvc, animated: true)
+ signvc.hidesBottomBarWhenPushed = false
+ 
+ }
+ 
+ 
+ //拨打电话
+ func CallTelNumber(tel:String){
+ UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(tel)")!)
+ }
+ 
+ 
+ }
+ */
 
 extension FieldViewController {
     func request(latitude:Double,longitude:Double){
@@ -424,6 +459,15 @@ extension FieldViewController {
                 
                 if ((dict["code"] as! String) == "200" && (dict["flag"] as! String) == "1" ){
                     self.fieldModel = FieldModel.init(fromDictionary: dict )
+                    
+                    let temp = self.fieldModel?.data.array
+                    
+                    for item in temp! {
+                        let loctionTemp = CLLocation(latitude: CLLocationDegrees(item.latitude), longitude: CLLocationDegrees(item.longitude))
+                        self.fieldAnimation.append(loctionTemp)
+                    }
+                    
+                    
                     self.fieldTable.reloadData()
                 }
                 
@@ -458,6 +502,33 @@ extension FieldViewController {
             }
         }
     }
+    
+    //MARK:点击进行签到，还差详情页里面的签到
+    internal func requestFieldSignData(siteId:Int){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":userInfo.uid,"siteId":siteId]
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/sitesign")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                //                NSLog("json1=\(json)")
+                let dict = (json.object) as! NSDictionary
+                let mysignModel = MySignModel.init(fromDictionary: dict)
+                
+                
+                
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+        
+    }
+    
+    
     
     
     
