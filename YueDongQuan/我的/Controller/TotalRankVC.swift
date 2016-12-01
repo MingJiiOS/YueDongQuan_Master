@@ -4,14 +4,15 @@ import UIKit
 
 class TotalRankVC: MainViewController {
 
-  private  var totalRankModel : TotalRankModel?
-  private var totalRankArray :[TotalRankArray]?
+    var totalRankModel : TotalRankModel?
+   var totalRankArray :[TotalRankArray]?
   private  let totalTableView = UITableView(frame: CGRectZero,
                                      style: .Grouped)
     private var thumbnailSrc : String?
     //我的热豆
     var mydongdou : String?
-    
+    var RedouCha : Int = 0
+    var rak : String?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,7 +26,7 @@ class TotalRankVC: MainViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        loadTotalRankData()
+        
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
     override func viewWillDisappear(animated: Bool) {
@@ -63,7 +64,9 @@ extension TotalRankVC : UITableViewDelegate,UITableViewDataSource {
               cell.config(self.mydongdou!,
                     name:userInfo.name,
                     headUrl:userInfo.thumbnailSrc,
-                    No1Url: (self.totalRankArray?.first?.originalSrc)!)
+                    No1Url: (self.totalRankArray?.first?.originalSrc)!,
+                    chaStr:self.RedouCha.description,
+                    rak:self.rak!)
             }
        
             
@@ -122,36 +125,5 @@ extension TotalRankVC : UITableViewDelegate,UITableViewDataSource {
     }
 }
 extension TotalRankVC {
-    func loadTotalRankData()  {
-        /*
-         v	接口验证参数
-         uid	用户ID
-        */
-        
-        let dict:[String:AnyObject] = ["v":v,
-                                       "uid":userInfo.uid]
-        MJNetWorkHelper().dongdouranking(dongdouranking,
-                                         dongdourankingModel: dict,
-                                         success: { (responseDic, success) in
-                                            if success {
-                                                self.totalRankModel = DataSource().getdongdourankingData(responseDic)/*
-                                                 self.ZeroCommentAry.sortInPlace { (num1:myFoundCommentComment,
-                                                 num2:myFoundCommentComment) -> Bool in
-                                                 return num1.time > num2.time
-                                                 }
-                                                 */
-                self.totalRankArray = self.totalRankModel?.data.array
-                self.totalRankArray!.sortInPlace({ (num1:TotalRankArray, num2:TotalRankArray) -> Bool in
-                return Int(num1.dongdou) > Int(num2.dongdou)
-            })
-                                                
-             self.totalTableView.reloadData()
-      }
-            }) { (error) in
-          self.showMJProgressHUD(error.description,
-                                 isAnimate: false,
-                                 startY: ScreenHeight-40-40-40-20)
-        }
-        
-    }
+    
 }

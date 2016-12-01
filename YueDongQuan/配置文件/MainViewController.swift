@@ -109,19 +109,11 @@ class MainViewController: UIViewController {
         subLabel.text = message as String
         subLabel.textColor = kBlueColor
         subLabel.textAlignment = .Left
-        subLabel.font = UIFont.systemFontOfSize(kTopScaleOfFont)
+        subLabel.font = kAutoFontWithTop
         HUDView .addSubview(subLabel)
-        
+        image.image = UIImage(named: "connection_failed")
         HUDView .addSubview(image)
-        var ary = [UIImage]()
-        for index in 1...90{
-            
-            let images = UIImage(named: NSString(format: "cool－%d（被拖移）.tiff", index) as String)
-            ary .append(images!)
-        }
-        
-        image.animationImages = ary
-        image.startAnimating()
+       
         
         
         func shakeToUpShow(aView: UIView) {

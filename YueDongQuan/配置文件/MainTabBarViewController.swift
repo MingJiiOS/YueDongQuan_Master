@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainTabBarViewController: UITabBarController {
+class MainTabBarViewController: UITabBarController,UITabBarControllerDelegate {
 
     let discover = DiscoverViewController()
     let changDi = FieldViewController()
@@ -20,25 +20,29 @@ class MainTabBarViewController: UITabBarController {
         super.viewDidLoad()
         
         
-        let nvc1 : UINavigationController = CustomNavigationBar(rootViewController: discover)
-        let nvc2 : UINavigationController = CustomNavigationBar(rootViewController: changDi)
-        let nvc3 : UINavigationController = CustomNavigationBar(rootViewController: mid)
-        let nvc4 : UINavigationController = CustomNavigationBar(rootViewController: quanZi)
-        let nvc5 : UINavigationController =  CustomNavigationBar(rootViewController: personal)
         
         let tabBar1 = UITabBarItem(title: "发现", image: (Pubilc.getImageView("ic_faxian_3f3f3f")), selectedImage: (Pubilc.getImageView("ic_faxian_0088ff")))
         let tabBar2 = UITabBarItem(title: "场地", image: (Pubilc.getImageView("ic_changdi_3f3f3f")), selectedImage:(Pubilc.getImageView("ic_changdi_0088ff")))
       
         let tabBar4 = UITabBarItem(title: "圈子", image: (Pubilc.getImageView("ic_quanzi_3f3f3f")), selectedImage: (Pubilc.getImageView("ic_quanzi_0088ff")))
         let tabBar5 = UITabBarItem(title: "我的", image: (Pubilc.getImageView("ic_wode_3f3f3f")), selectedImage: (Pubilc.getImageView("ic_wode_0088ff")))
-        self.addCenterButtonController(UIImage(named:"ic_fabu_0088ff")!, selectImage: UIImage(named: ""))
-        
+        self.addCenterButtonController(UIImage(named:"ic_fabu")!, selectImage: UIImage(named: ""))
+        let nvc1 : UINavigationController = CustomNavigationBar(rootViewController: discover)
+        let nvc2 : UINavigationController = CustomNavigationBar(rootViewController: changDi)
+        let nvc3 : UINavigationController = CustomNavigationBar(rootViewController: mid)
+        let nvc4 : UINavigationController = CustomNavigationBar(rootViewController: quanZi)
+        let nvc5 : UINavigationController =  CustomNavigationBar(rootViewController: personal)
+
         nvc1.tabBarItem = tabBar1
         nvc2.tabBarItem = tabBar2
         nvc4.tabBarItem = tabBar4
+        nvc4.tabBarItem.badgeValue = "99+"
         nvc5.tabBarItem = tabBar5
         
-        self.tabBar.tintColor = UIColor(red: 17/255, green: 182/255, blue: 244/255, alpha: 1.0)
+//        self.tabBar.tintColor = UIColor(patternImage: UIImage(named: "Main_tabBar_background")!)
+//        self.tabBar.backgroundImage = UIImage(named: "Main_tabBar_background")
+//        self.tabBar.barTintColor = UIColor(patternImage: UIImage(named: "Main_tabBar_background")!)
+//        
         self.viewControllers = [nvc1,nvc2,nvc3,nvc4,nvc5]
         
     }
@@ -53,7 +57,8 @@ class MainTabBarViewController: UITabBarController {
         button.setBackgroundImage(selectImage, forState: .Highlighted)
         let heightDifference: CGFloat = buttonImage.size.height - self.tabBar.frame.size.height
         if heightDifference < 0 {
-            button.center = self.tabBar.center
+            button.centerX = self.tabBar.centerX
+            button.centerY = self.tabBar.centerY - 20
         }
         else {
             var center = self.tabBar.center
@@ -78,7 +83,9 @@ class MainTabBarViewController: UITabBarController {
         super.didReceiveMemoryWarning()
         
     }
-    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        print(viewController.tabBarItem.title)
+    }
 }
 
 extension MainTabBarViewController : YXCustomActionSheetDelegate {

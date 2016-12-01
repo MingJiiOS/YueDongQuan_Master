@@ -16,128 +16,141 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
     var myDongdou : String?
     
     //数据模型
-    var todayModel : TodayDongdouModel?
-    var histroyModel : HistoryDongdouModel?
-    
-    
-    
+   private var todayModel : TodayDongdouModel?
+   private var histroyModel : HistoryDongdouModel?
+   private var totalRankModel : TotalRankModel?
+   private var totalRankArray :[TotalRankArray]?
+    //排名
+    private var rak : Int = 0
+    private var cha : Int = 0
     
     var  headBgView = MyDongdouView?()
         override func viewDidLoad() {
         super.viewDidLoad()
+                  //MARK:下载数据
+            loadTodayData()
+            loadHistroyData()
+            loadTotalRankData()
 
-        
-        
     }
 
     func creatView()  {
         
         //头部红色背景图
-       
-        headBgView = MyDongdouView(frame: CGRectMake(0, -64, ScreenWidth, ScreenHeight/2.5), numberStr: self.myDongdou!,rankStr:(self.histroyModel?.data.rak.description)!)
-       
-        headBgView!.backgroundColor = UIColor.redColor()
-        animates()
-        self.view .addSubview(headBgView!)
-        
-        
-        
-//        ref = MJContextRef(frame:CGRectMake(0,headBgView!.frame.size.height-64-13,ScreenWidth,13))
-        
-        self.view .addSubview(ref)
-        ref.snp_makeConstraints { (make) in
-            make.left.equalTo(0)
-            make.right.equalTo(0)
-            make.top.equalTo((headBgView?.snp_bottom)!).offset(-13)
-            make.height.equalTo(13)
-        }
-       ref.backgroundColor = UIColor.clearColor()
-//        
-//       mainScrollView = UIScrollView(frame: CGRectMake(0, headBgView!.frame.size.height-64, ScreenWidth, ScreenHeight-headBgView!.frame.size.height))
-      
-        
-        self.view .addSubview(mainScrollView)
-        mainScrollView.scrollEnabled = false
-        mainScrollView.snp_makeConstraints { (make) in
-            make.left.right.equalTo(0)
-            make.top.equalTo((headBgView?.snp_bottom)!)
-            make.height.equalTo(ScreenHeight)
-        }
-        mainScrollView.contentSize = CGSizeMake(ScreenWidth*2, ScreenHeight-headBgView!.frame.size.height)
-        
-        mainScrollView.delegate = self
-        
-        todayDongdouTableView = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight), style: .Plain)
-        mainScrollView .addSubview(todayDongdouTableView)
-//        todayDongdouTableView.snp_makeConstraints { (make) in
-//            make.left.right.equalTo(0)
-//            make.top.equalTo(mainScrollView.snp_top)
-//            make.bottom.equalTo(mainScrollView.snp_bottom)
-//        }
-        todayDongdouTableView.tag = 1
-        todayDongdouTableView.delegate = self
-        todayDongdouTableView.dataSource = self
-        
-        
-//        todayDongdouTableView.scrollEnabled = false
-        
-        histroyDongdouTableView = UITableView(frame: CGRect(x: ScreenWidth, y: 0, width: ScreenWidth, height: ScreenHeight), style: .Plain)
-        mainScrollView .addSubview(histroyDongdouTableView)
-        
-//        histroyDongdouTableView.snp_makeConstraints { (make) in
-//            make.left.equalTo(todayDongdouTableView.snp_right)
-//            make.right.equalTo(ScreenWidth)
-//            make.top.bottom.equalTo(0)
-//        }
-        histroyDongdouTableView.tag = 2
-        histroyDongdouTableView.delegate = self
-        histroyDongdouTableView.dataSource = self
-        
+//        if self.totalRankModel != nil {
+            headBgView = MyDongdouView(frame: CGRectMake(0, -64, ScreenWidth, ScreenHeight/2.5), numberStr: self.myDongdou!,rankStr:self.rak.description)
+            
+            headBgView!.backgroundColor = UIColor.redColor()
+            animates()
+            self.view .addSubview(headBgView!)
+            
+            
+            
+            //        ref = MJContextRef(frame:CGRectMake(0,headBgView!.frame.size.height-64-13,ScreenWidth,13))
+            
+            self.view .addSubview(ref)
+            ref.snp_makeConstraints { (make) in
+                make.left.equalTo(0)
+                make.right.equalTo(0)
+                make.top.equalTo((headBgView?.snp_bottom)!).offset(-13)
+                make.height.equalTo(13)
+            }
+            ref.backgroundColor = UIColor.clearColor()
+            //
+            //       mainScrollView = UIScrollView(frame: CGRectMake(0, headBgView!.frame.size.height-64, ScreenWidth, ScreenHeight-headBgView!.frame.size.height))
+            
+            
+            self.view .addSubview(mainScrollView)
+            mainScrollView.scrollEnabled = false
+            mainScrollView.snp_makeConstraints { (make) in
+                make.left.right.equalTo(0)
+                make.top.equalTo((headBgView?.snp_bottom)!)
+                make.height.equalTo(ScreenHeight)
+            }
+            mainScrollView.contentSize = CGSizeMake(ScreenWidth*2, ScreenHeight-headBgView!.frame.size.height)
+            
+            mainScrollView.delegate = self
+            
+            todayDongdouTableView = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight), style: .Plain)
+            mainScrollView .addSubview(todayDongdouTableView)
+            //        todayDongdouTableView.snp_makeConstraints { (make) in
+            //            make.left.right.equalTo(0)
+            //            make.top.equalTo(mainScrollView.snp_top)
+            //            make.bottom.equalTo(mainScrollView.snp_bottom)
+            //        }
+            todayDongdouTableView.tag = 1
+            todayDongdouTableView.delegate = self
+            todayDongdouTableView.dataSource = self
+            
+            
+            //        todayDongdouTableView.scrollEnabled = false
+            
+            histroyDongdouTableView = UITableView(frame: CGRect(x: ScreenWidth, y: 0, width: ScreenWidth, height: ScreenHeight), style: .Plain)
+            mainScrollView .addSubview(histroyDongdouTableView)
+            
+            //        histroyDongdouTableView.snp_makeConstraints { (make) in
+            //            make.left.equalTo(todayDongdouTableView.snp_right)
+            //            make.right.equalTo(ScreenWidth)
+            //            make.top.bottom.equalTo(0)
+            //        }
+            histroyDongdouTableView.tag = 2
+            histroyDongdouTableView.delegate = self
+            histroyDongdouTableView.dataSource = self
+            
+            
+            //点击按钮左右滑动
+            headBgView!.clickIndexClosure { (index) in
+                if index == 1{
+                    UIView.animateWithDuration(0.2, animations: {
+                        
+                        
+                        self.ref.snp_remakeConstraints(closure: { (make) in
+                            make.left.equalTo(0)
+                            make.right.equalTo(0)
+                            make.top.equalTo((self.headBgView?.snp_bottom)!).offset(-13)
+                            make.height.equalTo(13)
+                        })
+                        self.headBgView!.todaTongDou.alpha = 0.5
+                        self.headBgView!.histroyDongdou.alpha = 0.2
+                        self.mainScrollView.contentOffset = CGPoint(x: 0, y: 0)
+                        
+                    })
+                }
+                if index == 2{
+                    UIView.animateWithDuration(0.2, animations: {
+                        
+                        self.ref.snp_remakeConstraints(closure: { (make) in
+                            make.left.equalTo(ScreenWidth/2)
+                            make.right.equalTo(ScreenWidth/2)
+                            make.top.equalTo((self.headBgView?.snp_bottom)!).offset(-13)
+                            make.height.equalTo(13)
+                        })
+                        self.headBgView!.histroyDongdou.alpha = 0.5
+                        self.headBgView!.todaTongDou.alpha = 0.2
+                        self.mainScrollView.contentOffset = CGPoint(x: ScreenWidth, y: 0)
+                        
+                    })
+                    
+                }
+                if index == 100 {
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                if index == 23 {
+                    let total = TotalRankVC()
+                    total.mydongdou = self.myDongdou
+                    if self.totalRankModel != nil{
+                        total.totalRankModel = self.totalRankModel
+                        total.totalRankArray = self.totalRankArray
+                        total.RedouCha = self.cha
+                        total.rak = self.rak.description
+                        self.push(total)
+                    }
+                    
+                }
+            }
 
-        //点击按钮左右滑动
-        headBgView!.clickIndexClosure { (index) in
-            if index == 1{
-                UIView.animateWithDuration(0.2, animations: {
-                    
-                    
-                    self.ref.snp_remakeConstraints(closure: { (make) in
-                        make.left.equalTo(0)
-                        make.right.equalTo(0)
-                        make.top.equalTo((self.headBgView?.snp_bottom)!).offset(-13)
-                        make.height.equalTo(13)
-                    })
-                    self.headBgView!.todaTongDou.alpha = 0.5
-                    self.headBgView!.histroyDongdou.alpha = 0.2
-                    self.mainScrollView.contentOffset = CGPoint(x: 0, y: 0)
-                    
-                })
+//        }
             }
-            if index == 2{
-                UIView.animateWithDuration(0.2, animations: {
-                    
-                    self.ref.snp_remakeConstraints(closure: { (make) in
-                        make.left.equalTo(ScreenWidth/2)
-                        make.right.equalTo(ScreenWidth/2)
-                        make.top.equalTo((self.headBgView?.snp_bottom)!).offset(-13)
-                        make.height.equalTo(13)
-                    })
-                    self.headBgView!.histroyDongdou.alpha = 0.5
-                    self.headBgView!.todaTongDou.alpha = 0.2
-                    self.mainScrollView.contentOffset = CGPoint(x: ScreenWidth, y: 0)
-                    
-                })
-                
-            }
-            if index == 100 {
-                self.navigationController?.popViewControllerAnimated(true)
-            }
-            if index == 23 {
-                let total = TotalRankVC()
-                total.mydongdou = self.myDongdou
-                self.push(total)
-            }
-        }
-    }
     
     func animates()  {
         UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: UIViewAnimationOptions.CurveEaseInOut, animations: { 
@@ -149,9 +162,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
     }
     
     override func viewWillAppear(animated: Bool) {
-        //MARK:下载数据
-        loadTodayData()
-        loadHistroyData()
+        
     self.navigationController?.navigationBar.hidden = true
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
@@ -249,5 +260,52 @@ extension MyDongDouViewController {
         }) { (error) in
             
         }
+    }
+    func loadTotalRankData()  {
+        /*
+         v	接口验证参数
+         uid	用户ID
+         */
+        
+        let dict:[String:AnyObject] = ["v":v,
+                                       "uid":userInfo.uid]
+        MJNetWorkHelper().dongdouranking(dongdouranking,
+                                         dongdourankingModel: dict,
+                                         success: { (responseDic, success) in
+                                            if success {
+                                                self.totalRankModel = DataSource().getdongdourankingData(responseDic)/*
+                                                 self.ZeroCommentAry.sortInPlace { (num1:myFoundCommentComment,
+                                                 num2:myFoundCommentComment) -> Bool in
+                                                 return num1.time > num2.time
+                                                 }
+                                                 */
+                                                
+                                                self.totalRankArray = self.totalRankModel?.data.array
+                                                //做倒序
+                                                self.totalRankArray!.sortInPlace({ (num1:TotalRankArray, num2:TotalRankArray) -> Bool in
+                                                    return Int(num1.dongdou) > Int(num2.dongdou)
+                                                })
+                                                //循环整个rank数据
+                                                for id in self.totalRankArray!{
+                                                    
+                                                    //排名自加
+                                                    self.rak += 1
+                                                    //如果uid相同 userInfo.uid表示当前用户的uid
+                                                    if userInfo.uid == id.uid{
+                                                        //取到当前下标数组的上一个数组
+                                                        let ii = self.totalRankArray![self.rak-2]
+                                                        //计算差量
+                                                        self.cha = Int(ii.dongdou)! - Int(id.dongdou)!
+                                                      return
+                                                    }
+                                                }
+                                                
+                                            }
+        }) { (error) in
+            self.showMJProgressHUD(error.description,
+                                   isAnimate: false,
+                                   startY: ScreenHeight-40-40-40-20)
+        }
+        
     }
 }

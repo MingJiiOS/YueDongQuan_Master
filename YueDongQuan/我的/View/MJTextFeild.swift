@@ -10,14 +10,16 @@ import UIKit
 
 class MJTextFeild: UITextField {
 
-
+    //边框颜色
+    var borderFillColor : UIColor!
+    
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect) {
        self.tintColor = kBlueColor
         
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetFillColorWithColor(context!, kBlueColor.CGColor)
+        CGContextSetFillColorWithColor(context!, borderFillColor.CGColor)
         CGContextFillRect(context!, CGRectMake(0, CGRectGetHeight(self.frame)-0.5, CGRectGetWidth(self.frame), 0.5))
         
         

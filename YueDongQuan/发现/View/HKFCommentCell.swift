@@ -20,7 +20,7 @@ class HKFCommentCell: UITableViewCell {
         self.contentView.addSubview(self.contentLabel!)
         self.contentLabel?.preferredMaxLayoutWidth  = ScreenWidth - 20
         self.contentLabel?.numberOfLines = 0
-        self.contentLabel?.font = UIFont.systemFontOfSize(13)
+        self.contentLabel?.font = kAutoFontWithMid
 //        weak var weakSelf = self
         self.contentLabel?.snp_makeConstraints(closure: { (make) in
 //            make.edges.equalTo((weakSelf?.contentView)!)

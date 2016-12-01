@@ -18,7 +18,7 @@ class ParterDataViewController: MainViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+       
         parterView = MJParterDataView(frame: self.view.frame,
                                       circleID: self.circleid!,
                                       uid:self.uid!,

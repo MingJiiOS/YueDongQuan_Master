@@ -36,14 +36,14 @@ class MJAllParterView: UIView,UITableViewDelegate,UITableViewDataSource {
         if self.memberModel != nil {
             cell.headImage?.bgImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
             cell.headImage?.subImage.backgroundColor = UIColor.brownColor()
-            cell.nameLabel.text = self.memberModel?.data[indexPath.row].name
+            cell.nameLabel.text = self.memberModel?.data.array[indexPath.row].name
         }
 
      return cell
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.memberModel != nil {
-            return (self.memberModel?.data.count)!
+            return (self.memberModel?.data.array.count)!
         }
         return 0
     }

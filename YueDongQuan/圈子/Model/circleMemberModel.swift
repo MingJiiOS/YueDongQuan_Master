@@ -1,5 +1,8 @@
 //
 //	circleMemberModel.swift
+//
+//	Create by 方果 黄 on 29/11/2016
+//	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
@@ -8,7 +11,7 @@ import Foundation
 class circleMemberModel : NSObject, NSCoding{
 
 	var code : String!
-	var data : [circleMemberData]!
+	var data : circleMemberData!
 	var flag : String!
 
 
@@ -17,12 +20,8 @@ class circleMemberModel : NSObject, NSCoding{
 	 */
 	init(fromDictionary dictionary: NSDictionary){
 		code = dictionary["code"] as? String
-		data = [circleMemberData]()
-		if let dataArray = dictionary["data"] as? [NSDictionary]{
-			for dic in dataArray{
-				let value = circleMemberData(fromDictionary: dic)
-				data.append(value)
-			}
+		if let dataData = dictionary["data"] as? NSDictionary{
+			data = circleMemberData(fromDictionary: dataData)
 		}
 		flag = dictionary["flag"] as? String
 	}
@@ -32,16 +31,12 @@ class circleMemberModel : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
 		if code != nil{
 			dictionary["code"] = code
 		}
 		if data != nil{
-			var dictionaryElements = [NSDictionary]()
-			for dataElement in data {
-				dictionaryElements.append(dataElement.toDictionary())
-			}
-			dictionary["data"] = dictionaryElements
+			dictionary["data"] = data.toDictionary()
 		}
 		if flag != nil{
 			dictionary["flag"] = flag
@@ -56,7 +51,7 @@ class circleMemberModel : NSObject, NSCoding{
     @objc required init(coder aDecoder: NSCoder)
 	{
          code = aDecoder.decodeObjectForKey("code") as? String
-         data = aDecoder.decodeObjectForKey("data") as? [circleMemberData]
+         data = aDecoder.decodeObjectForKey("data") as? circleMemberData
          flag = aDecoder.decodeObjectForKey("flag") as? String
 
 	}

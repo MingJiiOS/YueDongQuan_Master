@@ -29,11 +29,10 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜设置",
-                                                                style: .Plain,
-                                                                target: self,
-                                                                action: #selector(pop))
+        self.navigationItem.leftBarButtonItem?.setBackgroundImage(UIImage(named: "navigator_btn_backs"), forState: UIControlState.Normal, barMetrics: UIBarMetrics.Default)
+        let btn = UIButton.leftItem("设置")
+        btn.addTarget(self, action: #selector(pop), forControlEvents: UIControlEvents.TouchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: btn)
        
         self.creatView()
         loadData()
@@ -55,31 +54,33 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
 
     
     func creatView()  {
-        self.view .addSubview(tableView)
-        tableView.snp_makeConstraints { (make) in
-            make.left.right.top.bottom.equalTo(0)
-        }
+       
+        tableView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
+         self.view .addSubview(tableView)
+        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.contentSize = CGSize(width: ScreenWidth, height: ScreenHeight-44-64)
+        tableView.scrollEnabled = false
+//        tableView.contentSize = CGSize(width: ScreenWidth, height: ScreenHeight-44-64)
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0)
         tableView.tableHeaderView?.removeFromSuperview()
         
         overQuanzi = UIButton(type: .Custom)
-        self.view.addSubview(overQuanzi!)
+        self.view .addSubview(overQuanzi!)
         overQuanzi?.custom_acceptEventInterval = 5
-        overQuanzi!.snp_makeConstraints { (make) in
+        overQuanzi?.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(ScreenWidth/8)
             make.right.equalTo(-ScreenWidth/8)
             make.height.equalTo(kAutoStaticCellHeight)
-            make.bottom.equalTo(-100)
-           
-        }
+            make.top.equalTo(kAutoStaticCellHeight*6 + 50 )
+        })
         overQuanzi!.backgroundColor = UIColor(red: 254/255, green: 21/255, blue: 61/255, alpha: 1)
         overQuanzi!.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         overQuanzi?.addTarget(self, action: #selector(overQuanziAction), forControlEvents: UIControlEvents.TouchUpInside)
         overQuanzi!.layer.cornerRadius = 5
         overQuanzi!.layer.masksToBounds = true
+
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -114,7 +115,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
             })
             
         }
-        return 60
+        return kAutoStaticCellHeight
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -224,10 +225,14 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 3
     }
-    func tableView(tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        return 1
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+            return 5
+        
+        
     }
    
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.section == 2 {

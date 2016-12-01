@@ -76,7 +76,7 @@ class MJAlertView: UIView {
         cancelBtn.frame = CGRect(x: 0, y: 0, width: btnWith, height: 49.5)
         cancelBtn.backgroundColor = UIColor.whiteColor()
         cancelBtn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        cancelBtn.titleLabel?.font = UIFont.systemFontOfSize(18)
+        cancelBtn.titleLabel?.font = kAutoFontWithTop
       
         cancelBtn.tag = 1
         cancelBtn.addTarget(self, action: #selector(clickBtnAction(_:)), forControlEvents: .TouchUpInside)
@@ -85,7 +85,7 @@ class MJAlertView: UIView {
         sureBtn.frame = CGRect(x: 0 , y: 50.5, width: btnWith, height:49.5)
         sureBtn.backgroundColor = UIColor.whiteColor()
         sureBtn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        sureBtn.titleLabel?.font = UIFont.systemFontOfSize(18)
+        sureBtn.titleLabel?.font = kAutoFontWithTop
         
         sureBtn.tag = 2
         sureBtn.addTarget(self, action: #selector(clickBtnAction(_:)), forControlEvents: .TouchUpInside)

@@ -32,7 +32,7 @@ class MJProgressHUD: UIWindow {
         subLabel.text = message as String
         subLabel.textColor = kBlueColor
         subLabel.textAlignment = .Left
-        subLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+        subLabel.font = kAutoFontWithMid
         HUDView .addSubview(subLabel)
         
         //消失

@@ -9,6 +9,7 @@
 import UIKit
 import IQKeyboardManagerSwift
 import Alamofire
+import RealReachability
 //import RealmSwift
 //import Realm
 let AMAPAPIKEY = "cc7ada21dae93efe53c70dc7d6a46598"
@@ -45,6 +46,8 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
 
         //高德地图
         AMapServices.sharedServices().apiKey = AMAPAPIKEY
+        CLLocationManager().requestAlwaysAuthorization()
+        CLLocationManager().requestWhenInUseAuthorization()
         //融云
         RCIM.sharedRCIM().initWithAppKey(RONGCLOUDAPPKEY)
 
@@ -61,57 +64,60 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
                                                          name: RCKitDispatchConnectionStatusChangedNotification,
                                                          object: nil)
          //检测网络
+        RealReachability.sharedInstance().startNotifier()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(networkChanged), name: kRealReachabilityChangedNotification, object: nil)
          judgeReachbility()
          self.window?.rootViewController = HKFTableBarController()
-        
+        //监测版本
+         checkVersion()
         //MARK:自动登录
         if FLFMDBManager.shareManager().fl_isExitTable(UserDataInfoModel) != false{
                 var dic:[String:AnyObject] = NSDictionary() as! [String : AnyObject]
                 let userData =  getUserInfoDataBaseFromFMDB()
                 let result = userData.firstObject as! UserDataInfoModel
-                if result.pw != ""  && result.phone != ""{
-                    //调用数据库
-                    let describe = UIDevice.currentDevice().systemName
-                    dic = ["v":v,
-                           "phone":(result.phone)!,
-                           "pw":(result.pw)!,
-                           "describe":describe]
-                    MJNetWorkHelper().loginWithUserInfo(login,
-                                                        userModel: dic,
-                                                        success: { (responseDic, success) in
-                                                            let loginmodel = DataSource().getUserInfo(responseDic)
-                                                            //MARK:融云资料
-                                                            info.name = loginmodel.data.name
-                                                            info.userId = loginmodel.data.uid.description
-                                                            //                        info.portraitUri = loginmodel.data.thumbnailSrc
-                                                            info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
-                                                            RCIM.sharedRCIM().userInfoDataSource = self
-                                                            RCIM.sharedRCIM().groupInfoDataSource = self
-                                                            MJGetToken().requestTokenFromServeris(getToken
-                                                                , success: { (responseDic, success) in
-                                                                    let model = TokenModel(fromDictionary: responseDic)
-                                                                    userInfo.token = model.data.token
-                                                                    
-                                                                    let helper = MJLoginOpreationHelper()
-                                                                    if helper.IMConnectStatus == .ConnectionStatus_Connected{
-                                                                        return
-                                                                    }else{
-                                                                        helper.connectToIM({ (isLogin, userId) in
-                                                                            MJrcuserInfo.userId = userId as String
-                                                                            helper.getConnectionStatus()
-                                                                            
-                                                                            }, errorBlock: { (isLogin, errorValue) in
-                                                                                
-                                                                        })
-                                                                    }
-                                                                }, fail: { (error) in
-                                                                    
-                                                            })
-                        }, fail: { (error) in
-                            print("返回错误信息",error)
-                    })
-                }
-                
+//                if result.pw != ""  && result.phone != ""{
+//                    //调用数据库
+//                    let describe = UIDevice.currentDevice().systemName
+//                    dic = ["v":v,
+//                           "phone":(result.phone)!,
+//                           "pw":(result.pw)!,
+//                           "describe":describe]
+//                    MJNetWorkHelper().loginWithUserInfo(login,
+//                                                        userModel: dic,
+//                                                        success: { (responseDic, success) in
+//                                                            let loginmodel = DataSource().getUserInfo(responseDic)
+//                                                            //MARK:融云资料
+//                                                            info.name = loginmodel.data.name
+//                                                            info.userId = loginmodel.data.uid.description
+//                                                            //                        info.portraitUri = loginmodel.data.thumbnailSrc
+//                                                            info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
+//                                                            RCIM.sharedRCIM().userInfoDataSource = self
+//                                                            RCIM.sharedRCIM().groupInfoDataSource = self
+//                                                            MJGetToken().requestTokenFromServeris(getToken
+//                                                                , success: { (responseDic, success) in
+//                                                                    let model = TokenModel(fromDictionary: responseDic)
+//                                                                    userInfo.token = model.data.token
+//                                                                    
+//                                                                    let helper = MJLoginOpreationHelper()
+//                                                                    if helper.IMConnectStatus == .ConnectionStatus_Connected{
+//                                                                        return
+//                                                                    }else{
+//                                                                        helper.connectToIM({ (isLogin, userId) in
+//                                                                            MJrcuserInfo.userId = userId as String
+//                                                                            helper.getConnectionStatus()
+//                                                                            
+//                                                                            }, errorBlock: { (isLogin, errorValue) in
+//                                                                                
+//                                                                        })
+//                                                                    }
+//                                                                }, fail: { (error) in
+//                                                                    
+//                                                            })
+//                        }, fail: { (error) in
+//                            print("返回错误信息",error)
+//                    })
+//                }
+            
             
         }else{
             self.window?.rootViewController?.presentViewController(YDQLoginRegisterViewController(), animated: true, completion: nil)
@@ -247,7 +253,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
                 
             }
 //        }
-      
+        
         
         
     }
@@ -255,21 +261,43 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
 }
 //MARK:网络监测
 extension AppDelegate {
-    
+    func networkChanged(notifation:NSNotification)  {
+        let reachability = notifation.object as! RealReachability
+        let status:ReachabilityStatus = reachability.currentReachabilityStatus()
+        reachability.reachabilityWithBlock { (status:ReachabilityStatus) in
+            switch status {
+            case ReachabilityStatus.RealStatusNotReachable:
+                LeafNotification.showInController(self.window?.rootViewController, withText: "网络不可用", type: LeafNotificationTypeWarrning)
+                break
+            case ReachabilityStatus.RealStatusUnknown:
+                LeafNotification.showInController(self.window?.rootViewController, withText: "未知网络", type: LeafNotificationTypeWarrning)
+                break
+            case ReachabilityStatus.RealStatusViaWiFi:
+                 LeafNotification.showInController(self.window?.rootViewController, withText: "您正处于WiFi状态", type: LeafNotificationTypeWarrning)
+                break
+            case ReachabilityStatus.RealStatusViaWWAN:
+                 LeafNotification.showInController(self.window?.rootViewController, withText: "您正处于蜂窝数据连接状态", type: LeafNotificationTypeWarrning)
+                break
+                
+            default:
+                break
+            }
+        }
+    }
     func judgeReachbility()   {
         let manager = NetworkReachabilityManager(host: "www.baidu.com")
         manager!.listener = { status in
             switch status {
             case .NotReachable:
                 print("网络不可用")
-                LeafNotification.showInController(self.window?.rootViewController, withText: "网络不可用", type: LeafNotificationTypeWarrning)
-             self.showMJProgressHUD("网络不可用", isAnimate: false)
+                
+//             self.showMJProgressHUD("网络不可用", isAnimate: false)
             case .Unknown:
                 print("未知网络")
                self.showMJProgressHUD("未知网络", isAnimate: false)
             case .Reachable(.EthernetOrWiFi):
                 print("您正处于WiFi状态")
-                LeafNotification.showInController(self.window?.rootViewController, withText: "您正处于WiFi状态", type: LeafNotificationTypeWarrning)
+               
             case .Reachable(.WWAN):
                 print("您正处于蜂窝数据连接状态")
                 
@@ -375,5 +403,15 @@ extension AppDelegate{
         print("接受到远程消息 = ",userInfo)
         let alert = UIAlertView(title: userInfo.description, message: "", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "Ok", "OK")
         alert.show()
+    }
+}
+//MARK:版本监测
+extension AppDelegate{
+    func checkVersion()  {
+        XHVersion.checkNewVersion()
+        XHVersion.checkNewVersionAndCustomAlert { (appinfo:XHAppInfo!) in
+           let versionview = VerionUpdateView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-60))
+            self.window?.addSubview(versionview)
+        }
     }
 }

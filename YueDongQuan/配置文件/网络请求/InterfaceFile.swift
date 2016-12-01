@@ -112,6 +112,8 @@ let deleteannouncement = "deleteannouncement"
 let circlelogo = "circlelogo"
 //MARK:接口名 关注
 let focus = "focus"
+//MARK:取消关注
+let cancelfocus = "cancelfocus"
 //MARK:接口名 查询我的动豆（今日动豆/历史动豆）
 let mydongdou = "mydongdou"
 //MARK:接口名 动豆总排行
@@ -126,3 +128,7 @@ let dissolution = "dissolution"
 let getryinfo = "getryinfo"
 //MARK:接口名 融云获取圈子logo和名字
 let getrycircle = "getrycircle"
+//MARK:接口名 我的关注
+let myattention = "myattention"
+//MARK:接口名 我的粉丝
+let fans = "fans"

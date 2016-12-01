@@ -78,7 +78,7 @@ class MJDatePikerView: UIView {
         }
         cancelBtn.setTitle("取消", forState: UIControlState.Normal)
         cancelBtn.setTitleColor(kBlueColor, forState: UIControlState.Normal)
-        cancelBtn.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
+        cancelBtn.titleLabel?.font = kAutoFontWithTop
         cancelBtn.contentHorizontalAlignment = .Left
         cancelBtn.tag = 1
        
@@ -92,7 +92,7 @@ class MJDatePikerView: UIView {
         }
         sureBtn.backgroundColor = UIColor.redColor()
         sureBtn.setTitleColor(kBlueColor, forState: UIControlState.Normal)
-        sureBtn.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
+        sureBtn.titleLabel?.font = kAutoFontWithTop
         sureBtn.contentHorizontalAlignment = .Right
         sureBtn.tag = 2
         

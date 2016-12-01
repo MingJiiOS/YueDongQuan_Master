@@ -76,10 +76,10 @@ class SearchController: UIViewController,UISearchBarDelegate,UIScrollViewDelegat
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.tabBarController?.hidesBottomBarWhenPushed = true
+        self.navigationController!.tabBarController?.hidesBottomBarWhenPushed = true
     }
     override func viewWillDisappear(animated: Bool) {
-        self.tabBarController?.hidesBottomBarWhenPushed = false
+        self.navigationController!.tabBarController?.hidesBottomBarWhenPushed = false
     }
     
     

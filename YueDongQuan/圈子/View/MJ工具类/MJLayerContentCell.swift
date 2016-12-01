@@ -18,11 +18,11 @@ class MJLayerContentCell: UITableViewCell {
      init(style: UITableViewCellStyle, reuseIdentifier: String?,model:circleMemberModel) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addBtn.frame = CGRect(x: 20, y: 8, width: 44, height: 44)
+        addBtn.frame = CGRect(x: 20, y: 5, width: kAutoStaticCellHeight - 10, height: kAutoStaticCellHeight - 10)
         
         self.contentView .addSubview(addBtn)
         
-        addBtn.layer.cornerRadius = 44/2
+        addBtn.layer.cornerRadius = (kAutoStaticCellHeight - 10) / 2
         addBtn.layer.masksToBounds = true
         addBtn.layer.shadowOffset = CGSize(width: -2, height: -2)
         addBtn.layer.shadowColor = kBlueColor.CGColor
@@ -31,19 +31,19 @@ class MJLayerContentCell: UITableViewCell {
         addBtn.setBackgroundImage(UIImage(named: "addMember"), forState: UIControlState.Normal)
         self.selectionStyle = .None
         let image = UIImageView()
-        let modeldata = model.data
+        let modeldata = model.data.array
         
-        for index in 1...model.data.count {
+        for index in 1...model.data.array.count {
             let circleLayer = CAShapeLayer()
-            circleLayer.bounds = CGRect(x: 0, y: 0, width: 44, height: 44)
-            circleLayer.position = CGPoint(x: 44+index*64, y: 30)
+            circleLayer.bounds = CGRect(x: 0, y: 0, width: kAutoStaticCellHeight - 10, height: kAutoStaticCellHeight - 10)
+            circleLayer.position = CGPoint(x: kAutoStaticCellHeight - 10 + CGFloat(index) * (kAutoStaticCellHeight - 10 + kAuotoGapWithBaseGapTen), y: addBtn.centerY)
             circleLayer.backgroundColor = UIColor.blackColor().CGColor
             circleLayer.cornerRadius = circleLayer.bounds.size.width/2
             circleLayer.masksToBounds = true
             self.contentView.layer .addSublayer(circleLayer)
             let layerShadow = CALayer()
-            layerShadow.bounds = CGRect(x: 0, y: 0, width: 44, height: 44)
-            layerShadow.position = CGPoint(x: 44+index*64, y: 30)
+            layerShadow.bounds = CGRect(x: 0, y: 0, width: kAutoStaticCellHeight - 10, height: kAutoStaticCellHeight - 10)
+            layerShadow.position = CGPoint(x: kAutoStaticCellHeight - 10 + CGFloat(index) * (kAutoStaticCellHeight - 10 + kAuotoGapWithBaseGapTen), y: addBtn.centerY)
             layerShadow.cornerRadius = layerShadow.bounds.size.width/2
             layerShadow.shadowColor = kBlueColor.CGColor
             layerShadow.shadowOffset = CGSize(width: 2, height: 1)

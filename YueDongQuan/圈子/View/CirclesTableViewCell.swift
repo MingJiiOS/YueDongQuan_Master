@@ -76,12 +76,12 @@ class CirclesTableViewCell: UITableViewCell {
         self.textLabel?.frame = CGRect(x: self.contentView.frame.size.height-10+10+10,
                                        y: (self.textLabel?.frame.size.height)!-10,
                                        width: (self.textLabel?.frame.size.width)!,
-                                       height: (self.textLabel?.frame.size.height)!)
+                                       height: ((self.imageView?.frame.size.height)! / 2))
         
         self.detailTextLabel?.frame = CGRect(x: self.contentView.frame.size.height-10+10+10,
-                                             y: ((self.textLabel?.frame.size.height)!*2+5)-10,
+                                             y: 5 + ((self.imageView?.frame.size.height)! / 2),
                                              width: (self.detailTextLabel?.frame.size.width)!,
-                                             height: (self.detailTextLabel?.frame.size.height)!)
+                                             height: ((self.imageView?.frame.size.height)! / 2))
     }
 
 }

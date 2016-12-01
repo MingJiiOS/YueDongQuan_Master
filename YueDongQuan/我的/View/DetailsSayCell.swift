@@ -82,7 +82,7 @@ class DetailsSayCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource 
         self.userName?.textColor = UIColor(red: 54/255, green: 71/255, blue: 121/255, alpha: 0.9)
         self.userName?.preferredMaxLayoutWidth = ScreenWidth - 10 - 40 - 30
         self.userName?.numberOfLines = 0
-        self.userName?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
+        self.userName?.font = kAutoFontWithTop
         self.userName?.snp_makeConstraints(closure: { (make) in
             make.left.equalTo((WeakSelf!.headImage!.snp_right)).offset(5)
             make.top.equalTo((WeakSelf!.headImage!.snp_top))
@@ -105,7 +105,7 @@ class DetailsSayCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource 
         
         // MARK:分钟数
         self.timeAgo = UILabel()
-        self.timeAgo?.font = UIFont(name: "Arial", size: kSmallScaleOfFont)
+        self.timeAgo?.font = kAutoFontWithSmall
         self.contentView .addSubview(self.timeAgo!)
         self.timeAgo!.preferredMaxLayoutWidth = ScreenWidth-20 ;
         self.timeAgo!.numberOfLines = 0;
@@ -120,7 +120,7 @@ class DetailsSayCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource 
         self.contentView .addSubview(self.contentlabel!)
         self.contentlabel?.preferredMaxLayoutWidth = ScreenWidth - 20
         self.contentlabel?.numberOfLines = 0
-        self.contentlabel!.font = UIFont.boldSystemFontOfSize(kTopScaleOfFont)
+        self.contentlabel!.font = kAutoFontWithTop
         self.contentlabel?.snp_makeConstraints(closure: { (make) in
             make.left.equalTo((headImage?.snp_right)!)
             make.right.equalTo(-10)
@@ -161,6 +161,7 @@ class DetailsSayCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource 
         self.replyBtn?.setTitle("回复", forState: UIControlState.Normal)
         self.replyBtn?.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.contentlabel?.text = model[indexpath.section - 1].content
+        
         //孙子级评论
         var tableViewHeight = CGFloat()
         self.tableView?.delegate = self
@@ -329,7 +330,7 @@ class DetailsHeaderCell: UITableViewCell {
         self.nameLabel?.textColor = UIColor(red: 54/255, green: 71/255, blue: 121/255, alpha: 0.9)
         self.nameLabel?.preferredMaxLayoutWidth = ScreenWidth - 10 - 40 - 30
         self.nameLabel?.numberOfLines = 0
-        self.nameLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+        self.nameLabel?.font = kAutoFontWithMid
         self.nameLabel?.snp_makeConstraints(closure: { (make) in
             make.left.equalTo((WeakSelf!.headImageView!.snp_right)).offset(5)
             make.top.equalTo((WeakSelf!.headImageView!.snp_top))
@@ -351,7 +352,7 @@ class DetailsHeaderCell: UITableViewCell {
         
         
         self.descLabel = UILabel()
-        self.descLabel?.font = UIFont(name: "Arial", size: kMidScaleOfFont)
+        self.descLabel?.font = kAutoFontWithMid
         let tapTexts = UITapGestureRecognizer(target: self, action: #selector(tapOnText))
         self.descLabel?.addGestureRecognizer(tapTexts)
         self.contentView .addSubview(self.descLabel!)
@@ -367,7 +368,7 @@ class DetailsHeaderCell: UITableViewCell {
         self.contentView .addSubview(self.contentLabel!)
         self.contentLabel?.preferredMaxLayoutWidth = ScreenWidth - 20
         self.contentLabel?.numberOfLines = 0
-        self.contentLabel!.font = UIFont.boldSystemFontOfSize(kTopScaleOfFont)
+        self.contentLabel!.font = kAutoFontWithTop
         self.contentLabel?.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(10)
             make.right.equalTo(-10)
@@ -389,7 +390,7 @@ class DetailsHeaderCell: UITableViewCell {
         self.seeBtn = UIButton(type: .Custom)
         
         
-        seeBtn?.titleLabel?.font = UIFont(name: "Arial", size: kMidScaleOfFont)
+        seeBtn?.titleLabel?.font = kAutoFontWithMid
         seeBtn?.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         seeBtn?.setImage(UIImage(named: "ic_liulan"), forState: UIControlState.Normal)
         //    seeBtn?.sizeToFit()
@@ -406,7 +407,7 @@ class DetailsHeaderCell: UITableViewCell {
         self.zanBtn = UIButton(type: .Custom)
         
         
-        zanBtn?.titleLabel?.font = UIFont(name: "Arial", size: kMidScaleOfFont)
+        zanBtn?.titleLabel?.font = kAutoFontWithMid
         zanBtn?.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         zanBtn?.setImage(UIImage(named: "ic_zan_a6a6a6"), forState: UIControlState.Normal)
         zanBtn?.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Selected)
@@ -424,7 +425,7 @@ class DetailsHeaderCell: UITableViewCell {
         self.commentBtn = UIButton(type: .Custom)
         
         
-        commentBtn?.titleLabel?.font = UIFont(name: "Arial", size: kMidScaleOfFont)
+        commentBtn?.titleLabel?.font = kAutoFontWithMid
         commentBtn?.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         commentBtn?.setImage(UIImage(named: "ic_pinglun"), forState: UIControlState.Normal)
         commentBtn?.contentHorizontalAlignment = .Left
@@ -449,7 +450,7 @@ class DetailsHeaderCell: UITableViewCell {
             make.height.equalTo(24)
         })
         deleteBtn!.sizeToFit()
-        deleteBtn?.titleLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+        deleteBtn?.titleLabel?.font = kAutoFontWithMid
         deleteBtn?.setImage(UIImage(named: "jubao"), forState: UIControlState.Normal)
         deleteBtn?.setTitleColor(kBlueColor, forState: UIControlState.Normal)
         deleteBtn?.addTarget(self, action: #selector(deleteSayContent), forControlEvents: UIControlEvents.TouchUpInside)
@@ -522,7 +523,7 @@ extension DetailsHeaderCell {
         self.commentModel = model.comment
         
         self.nameLabel?.text = userInfo.name
-        MJMessageCell().distinguishSayTypeWithTypeId(model, index: indexpath)
+//        MJMessageCell().distinguishSayTypeWithTypeId(model, index: indexpath)
         
         let timeStr = TimeStampToDate().getTimeString(model.time)
         self.descLabel?.text = timeStr
@@ -543,8 +544,13 @@ extension DetailsHeaderCell {
         self.headImageView?.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
         
         
-        let attrString = NSMutableAttributedString(string:  model.content)
-        self.contentLabel?.attributedText = attrString
+        let tempStr = "<body> " + model.content + " </body>"
+        let resultStr1 = tempStr.stringByReplacingOccurrencesOfString("\\n", withString: "<br/>", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let data = resultStr1.dataUsingEncoding(NSUnicodeStringEncoding)
+        let options = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
+        let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
+        //        self.descLabel?.attributedText = html
+        self.contentLabel?.attributedText = html
         
         
         if model.images.count != 0 {

@@ -44,7 +44,9 @@ class TotalRankHeadCell: UITableViewCell {
             make.height.equalTo(20)
             make.width.equalTo(ScreenWidth/2)
         }
-        backBtn.setTitle("←|总排行榜", forState: UIControlState.Normal)
+        backBtn.setImage(UIImage(named: "navigator_btn_backs"), forState: UIControlState.Normal)
+        backBtn.setTitle("总排行榜", forState: UIControlState.Normal)
+        backBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, ScreenWidth/2/2+20)
         backBtn.contentHorizontalAlignment = .Left
         backBtn.sizeToFit()
         backBtn .addTarget(self, action: #selector(back), forControlEvents: UIControlEvents.TouchUpInside)
@@ -166,14 +168,15 @@ class TotalRankHeadCell: UITableViewCell {
     
     
     //填充cell内容
-    func config(dongDouNunmber:String,name:String,headUrl:String,No1Url:String)  {
+    func config(dongDouNunmber:String,name:String,headUrl:String,No1Url:String,chaStr:String,rak:String)  {
         
         renzheng.hidden = true
         head.sd_setImageWithURL(NSURL(string: headUrl))
-        rankLabel.text = "380"
+        rankLabel.text = rak
         headImage.sd_setImageWithURL(NSURL(string: No1Url), placeholderImage: UIImage(named: "默认头像"))
         nickName.text = name
-        explainLabel.text = "距离前一名还差50"
+        
+        explainLabel.text = String(format: "距离前一名还差%@",chaStr)
         dongdouBtn.setImage(UIImage(named: "ic_doudong"), forState: UIControlState.Normal)
         dongdouBtn.setTitle(dongDouNunmber, forState: UIControlState.Normal)
     }

@@ -70,6 +70,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         customTabBar.backgroundColor = UIColor.whiteColor()
         customTabBar.delegate = self
         customTabBar.items = self.items as [AnyObject]
+        customTabBar.btn.badgeValue = "99+"
         
         self.view.addSubview(customTabBar)
         self.tabBar.removeFromSuperview()
@@ -125,6 +126,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         vc.title = title
         vc.tabBarItem.image = image
         vc.tabBarItem.selectedImage = selectImage
+        
         self.items.addObject(vc.tabBarItem)
         
 //        self.controllerAry.addObject(nav)

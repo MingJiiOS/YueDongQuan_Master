@@ -31,7 +31,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
     var pagesize = 0
     
     var judgeSayNumber = Int()
-    //单词请求条数
+    //单次请求条数
     let singleRqusetNum = 3
     
     private let kChatToolBarHeight:CGFloat = 49
@@ -53,27 +53,32 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+          downloadData()
+        
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-        self .creatViewWithSnapKit()
-        self.view.addSubview(self.keyboard)
-        self.view.bringSubviewToFront(self.keyboard)
-        self.creatViewWithSnapKit("ic_lanqiu", secondBtnImageString: "ic_search",
-                                               thirdBtnImageString: "ic_search")
-        
-        if FLFMDBManager.shareManager().fl_isExitTable(MyFoundDataBase) {
-          let arr =  FLFMDBManager.shareManager().fl_searchModelArr(MyFoundDataBase) 
-           self.modelArrM.removeAllObjects()
-            self.modelArrM .addObject(arr)
-        }else{
-            downloadData()
-
+        if self.modelArrM.count != 0 {
+          self .creatViewWithSnapKit()
+            self.view.addSubview(self.keyboard)
+            self.view.bringSubviewToFront(self.keyboard)
+            self.creatViewWithSnapKit("ic_lanqiu", secondBtnImageString: "ic_search",
+                                      thirdBtnImageString: "ic_search")
+            
+            
+            
             let refresh = MJRefreshAutoNormalFooter(refreshingTarget: self,
                                                     refreshingAction: #selector(refreshDownloadData))
             
             MainBgTableView.mj_footer = refresh
-
+            MainBgTableView.estimatedRowHeight = 100
+        }else{
+            let img = UIImage(named: "noneData")
+            let noData = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0),
+                size: CGSize(width: ((img?.size.width)! / 1.5), height: (img?.size.height)! / 1.5)))
+            noData.image = img
+            noData.center = self.view.center
+            self.view .addSubview(noData)
         }
 
     }
@@ -87,8 +92,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         keyboard.allowSwitchBar = false
         keyboard.placeHolder = "评论"
         return keyboard
-        
-        
+  
     }()
     //MARK:数据源 不管是从数据库来 还是网络请求来 都用这一个
       private  lazy var modelArrM:NSMutableArray = {
@@ -218,12 +222,13 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
                                                          selector: #selector(keyboardWillHide),
                                                          name: UIKeyboardWillHideNotification, object: nil)
         MainBgTableView.reloadData()
+        MainBgTableView.estimatedRowHeight = 100
         let titleLabel = UILabel(frame: CGRect(x: 0,
             y: 0,
             width: ScreenWidth*0.5,
             height: 44))
         titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.font = UIFont(name: "Heiti SC", size: 18)
+        titleLabel.font = kAutoFontWithTop
         titleLabel.center = CGPoint(x: ScreenWidth/2, y: 22)
         titleLabel.text = userInfo.name
         titleLabel.textAlignment = .Center
@@ -269,6 +274,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         
         MainBgTableView.delegate = self
         MainBgTableView.dataSource = self
+        MainBgTableView.showsVerticalScrollIndicator = false
         MainBgTableView.separatorStyle = .None
         MainBgTableView.custom_CellAcceptEventInterval = 2
         MainBgTableView.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
@@ -302,12 +308,17 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
                     MJNetWorkHelper().checkMyFound(myfound, myfoundModel: foundDic, success: { (responseDic, success) in
                       let model =  DataSource().getmyfound(responseDic)
                         self.myfoundmodel = model
+                        
                         self.modelArrM.removeAllObjects()
-                        for id in model.data.array{
-                            self.saveMyfoundDataWithFMDB(id,FLDBID: id.description)
-                            self.modelArrM.addObject(id)
+                        if model.code != "405"{
+                            for id in model.data.array{
+                                self.saveMyfoundDataWithFMDB(id,FLDBID: id.description)
+                                self.modelArrM.addObject(id)
+                            }
+                        self.updateUI()
                         }
-                        self.performSelectorOnMainThread(#selector(self.updateUI), withObject: self.myfoundmodel, waitUntilDone: true)
+                        
+                      
                         }, fail: { (error) in
                             
                     })
@@ -345,7 +356,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         self.MainBgTableView.reloadRowsAtIndexPaths([indexpath], withRowAnimation: .Fade)
     }
     
-    func passCellHeightWithMessageModel(model: MyFoundDataBase,
+    func passCellHeightWithMessageModel(model: myFoundModel,
                                         commentModel: myFoundComment,
                                         indexP: NSIndexPath,
                                         cellHeight: CGFloat,
@@ -381,14 +392,14 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
             return 1;
         }else{
             
-            
-            
-                    judgeSayNumber = self.modelArrM.count
-                    return self.modelArrM.count
-            
-            
+            if myfoundmodel != nil {
+                judgeSayNumber = (self.myfoundmodel?.data.array.count)!
+                return (self.myfoundmodel?.data.array.count)!
+            }
+
             
         }
+        return 0
         
     }
     
@@ -412,7 +423,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                 }else{
                     let h = MJMessageCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
                         let cell = sourceCell as! MJMessageCell
-                        cell.configCellWithModel(self.modelArrM[indexPath.row] as! MyFoundDataBase ,indexpath: indexPath)
+                        cell.configCellWithModel(self.myfoundmodel! ,indexpath: indexPath)
                         }, cache: { () -> [NSObject : AnyObject]! in
                             
                             return [kHYBCacheUniqueKey : self.modelArrM.count.description,
@@ -515,7 +526,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     let weakTable = tableView
                    
                     if self.myfoundmodel != nil {
-                        messageCell?.configCellWithModel(self.modelArrM[indexPath.row] as! MyFoundDataBase ,indexpath: indexPath)
+                        messageCell?.configCellWithModel(self.myfoundmodel! ,indexpath: indexPath)
                     }
                     
                     messageCell?.CommentBtnClick({ (commentBtn, indexPath,pingluntype,foundId) in

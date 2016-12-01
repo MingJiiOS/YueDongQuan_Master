@@ -101,6 +101,59 @@ class MJParterDataView: UIView,UITableViewDelegate,UITableViewDataSource {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView .deselectRowAtIndexPath(indexPath, animated: true)
     }
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            return 0.001
+          case 1:
+            return 0.001
+             case 2:
+            return kAutoStaticCellHeight/2
+             case 3:
+            return kAutoStaticCellHeight/2
+        default:
+            break
+        }
+        return 0.0001
+    }
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            return 0.001
+        case 1:
+            return kAuotoGapWithBaseGapTen
+        case 2:
+            return kAuotoGapWithBaseGapTen
+        case 3:
+            return kAuotoGapWithBaseGapTwenty
+        default:
+            break
+        }
+        return 0.0001
+    }
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        switch section {
+        case 0:
+            return UIView()
+        case 1:
+            return UIView()
+        case 2:
+            let label = UILabel()
+            label.text = "  加入黑名单后,该成员将不能再加入圈子"
+            label.font = kAutoFontWithMid
+            label.textColor = UIColor.darkGrayColor()
+            return label
+        case 3:
+            let label = UILabel()
+            label.text = "转让圈主后,你讲不再是该圈圈主"
+            label.font = kAutoFontWithMid
+            label.textColor = UIColor.darkGrayColor()
+            return label
+        default:
+            break
+        }
+        return UIView()
+    }
 }
 extension MJParterDataView {
     func loadParterData(circleid:String,parterUid:String)  {

@@ -7,7 +7,7 @@
 //
 
 #import "YJTabBar.h"
-#import "YJTabBarButton.h"
+
 #import "UIButton+Badge.h"
 //#import "UIControl+Custom.h"
 @interface YJTabBar()
@@ -41,20 +41,20 @@ static YJTabBar *_instance = nil;
     _items = items;
     for (UITabBarItem * item in _items) {
         
-        YJTabBarButton *btn = [YJTabBarButton buttonWithType:UIButtonTypeCustom];
-        btn.item = item;
+        self.btn = [YJTabBarButton buttonWithType:UIButtonTypeCustom];
+        self.btn.item = item;
         
-        btn.tag = self.buttons.count;
+        self.btn.tag = self.buttons.count;
+        NSLog(@"按钮的tag值%ld",(long)self.btn.tag);
+        [self.btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchDown];
         
-        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchDown];
-        
-        if (btn.tag == 0) {
-            [self btnClick:btn];
+        if (self.btn.tag == 0) {
+            [self btnClick:self.btn];
              
         }
-
-        [self addSubview:btn];
-        [self.buttons addObject:btn];
+        
+        [self addSubview:self.btn];
+        [self.buttons addObject:self.btn];
     }
 }
 
@@ -150,5 +150,14 @@ static YJTabBar *_instance = nil;
     
 }
 
-
+//- (void)drawRect:(CGRect)rect{
+////    super.rect = rect
+//CGContextRef context = UIGraphicsGetCurrentContext();
+//    CGContextSetRGBStrokeColor(context, 0, 0, 1, 1);
+//    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+//     CGContextMoveToPoint(context, width/5*2, 30);
+//    
+//    CGContextAddArcToPoint(context, width/5*2 + width/5/2, 0, width/5*3 ,30, 30);
+//    CGContextStrokePath(context);
+//}
 @end

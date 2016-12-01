@@ -24,7 +24,7 @@ class HelpandfeedbackVC: MainViewController,UITextViewDelegate{
                                               alpha: 1.0 )
         let textView = BRPlaceholderTextView(frame: CGRect(x: 0, y: 5, width: ScreenWidth, height: ScreenWidth/3))
         textView.placeholder = "  请提出您的宝贵意见 .....\n \n \n \n \n"
-        textView.font = UIFont.systemFontOfSize(13)
+        textView.font = kAutoFontWithMid
         self.view.addSubview(textView)
         textView.delegate = self
         textView.maxTextLength = 300
@@ -38,7 +38,7 @@ class HelpandfeedbackVC: MainViewController,UITextViewDelegate{
         
         numerLabel.textColor = UIColor.grayColor()
         numerLabel.textAlignment = .Right
-        numerLabel.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
+        numerLabel.font = kAutoFontWithSmall
         numerLabel.attributedText = NSMutableAttributedString(string: "\(0)/300")
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "反馈", style: .Plain, target: self, action: #selector(publish))

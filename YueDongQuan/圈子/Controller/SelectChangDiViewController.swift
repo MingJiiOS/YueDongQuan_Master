@@ -29,8 +29,10 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜选择场地", style: .Plain, target: self, action: #selector(pop))
+        self.navigationItem.leftBarButtonItem?.setBackgroundImage(UIImage(named: "navigator_btn_backs"), forState: UIControlState.Normal, barMetrics: UIBarMetrics.Default)
+        let btn = UIButton.leftItem("选择场地")
+        btn.addTarget(self, action: #selector(pop), forControlEvents: UIControlEvents.TouchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: btn)
         
         tableView = UITableView(frame: CGRectZero, style: .Grouped)
         tableView.frame = self.view.frame
@@ -92,7 +94,7 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
             
             cell?.detailTextLabel?.text = String(format: "离你 %0.1fm", (self.fieldModel?.data.array[indexPath.row].distance)!)
             cell?.detailTextLabel?.textColor = UIColor.grayColor()
-            cell?.detailTextLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+            cell?.detailTextLabel?.font = kAutoFontWithMid
             cell?.textLabel?.textColor = UIColor.blackColor()
             let btn = MHRadioButton(groupId: "firstGroup", atIndex: 0)
             MHRadioButton.addObserver(self, forFroupId: "firstGroup")
