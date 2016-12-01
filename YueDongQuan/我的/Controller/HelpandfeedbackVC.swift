@@ -11,7 +11,7 @@ import UIKit
 class HelpandfeedbackVC: MainViewController,UITextViewDelegate{
     
     lazy var numerLabel = UILabel()
-    var  strLength : Int!
+    var  strLength : Int! = 0
     
     var circleId : String?
     
@@ -42,13 +42,18 @@ class HelpandfeedbackVC: MainViewController,UITextViewDelegate{
         numerLabel.attributedText = NSMutableAttributedString(string: "\(0)/300")
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "反馈", style: .Plain, target: self, action: #selector(publish))
-        
+        self.navigationItem.rightBarButtonItem?.enabled = false
         
     }
     //MARK:textView delegate
     func textViewDidChange(textView: UITextView) {
         content = textView.text
         strLength = NSString(string: textView.text).length
+        if strLength > 0 {
+            self.navigationItem.rightBarButtonItem?.enabled = true
+        }else{
+             self.navigationItem.rightBarButtonItem?.enabled = false
+        }
         
         let attributeString = NSMutableAttributedString(string: "\(strLength)/300")
         numerLabel.attributedText = attributeString
@@ -70,7 +75,11 @@ extension HelpandfeedbackVC {
     //MARK:发布公告
     func publish()  {
         
-        if strLength != 0 {
+            
+        if strLength > 0 {
+            
+            
+            
             let dict:[String:AnyObject] = ["v":v,
                                            "uid":userInfo.uid,
                                            "circleId":self.circleId!,
@@ -81,8 +90,6 @@ extension HelpandfeedbackVC {
             }) { (error) in
                 self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～", isAnimate: true, startY: ScreenHeight-40-40-40-20)
             }
-        }else{
-            self.navigationItem.rightBarButtonItem?.enabled = false
         }
         
         

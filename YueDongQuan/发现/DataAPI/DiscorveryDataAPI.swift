@@ -126,17 +126,29 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     /*******************************************/
     func requestLastestMoreDataList(typeId:String,longitude:Double,latitude:Double) {
         
+//        let cnt = (persitencyManager?.getLastestDefaultData().count)
+//        var pageNo = (cnt! + 10 - 1)/10
+        
+////        NSLog("pageNo = \(pageNo)")
+//        if cnt < 10 {
+//            persitencyManager?.removeLastestData()
+//            senderNoDataMessage()
+//        }else{
+//            pageNo += 1
+//        }
+        
         let cnt = (persitencyManager?.getLastestDefaultData().count)
         var pageNo = (cnt! + 10 - 1)/10
         
-//        NSLog("pageNo = \(pageNo)")
+        //        NSLog("pageNo = \(pageNo)")
         if cnt < 10 {
             persitencyManager?.removeLastestData()
             senderNoDataMessage()
+            //            pageNo = 1
+            return
         }else{
             pageNo += 1
         }
-        
         
         
         httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)

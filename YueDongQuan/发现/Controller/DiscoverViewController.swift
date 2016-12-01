@@ -444,10 +444,10 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     
     func chatKeyBoardSendText(text: String!) {
         
-        let str  = NSObject.emojiToString(text)
-        print(str)
         
-        sendMsg(str)
+        
+        
+        
         
         self.keyboard.keyboardDownForComment()
     }

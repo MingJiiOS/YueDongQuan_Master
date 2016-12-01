@@ -15,6 +15,9 @@ PODS:
   - HYBSnapkitAutoCellHeight (2.0.0):
     - SnapKit (~> 0.18)
   - IQKeyboardManagerSwift (3.3.7)
+  - libextobjc/EXTScope (0.4.1):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/RuntimeExtensions (0.4.1)
   - Masonry (0.6.4)
   - MJRefresh (3.1.12)
   - RealReachability (1.1.8):
@@ -27,8 +30,16 @@ PODS:
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
   - SnapKit (0.30.0.beta2)
+  - SRGMediaPlayer (1.9.11):
+    - libextobjc/EXTScope (~> 0.4.1)
+    - SRGMediaPlayer/Version (= 1.9.11)
+    - TransitionKit (~> 2.2.0)
+  - SRGMediaPlayer/Version (1.9.11):
+    - libextobjc/EXTScope (~> 0.4.1)
+    - TransitionKit (~> 2.2.0)
   - SVProgressHUD (2.0.3)
   - SwiftyJSON (2.3.2)
+  - TransitionKit (2.2.1)
   - TZImagePickerController (1.6.7)
   - XHImageViewer (0.1.2)
   - XLProgressHUD (1.0.5)
@@ -47,6 +58,7 @@ DEPENDENCIES:
   - RongCloudIMKit (~> 2.7.2)
   - SDWebImage (~> 3.8.1)
   - SnapKit (~> 0.30.0.beta2)
+  - SRGMediaPlayer (~> 1.9.11)
   - SVProgressHUD
   - SwiftyJSON (~> 2.3.2)
   - TZImagePickerController (~> 1.6.7)
@@ -63,18 +75,21 @@ SPEC CHECKSUMS:
   HYBMasonryAutoCellHeight: 9296583777080d32ba6257f55e52b7334dd481fc
   HYBSnapkitAutoCellHeight: a0dccfa71a986d6ce745eed96291a629c3d91cbd
   IQKeyboardManagerSwift: 7d06186460470f3f7e767630861a1303980ee5cf
+  libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   RealReachability: e6c8a2bbffa316006e8c282efc1ee2567d61a920
   RongCloudIMKit: 9dcdee89da511bf1fa375ac0646754783cdb9c9e
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SnapKit: c4bb32b1d3c5d18ff63bf95ffcbc599d2bab964c
+  SRGMediaPlayer: 70642b1f7a77622bac6cd126773119fb44c94d73
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  TransitionKit: 9ceccda4cd0cdc0a05ef85eb235e5a3292c3c250
   TZImagePickerController: d3b16a1ab3393b251a23fbb22ac2d6bc83a50d5f
   XHImageViewer: 7b275d2aa829e56761c30303b9d51cae086a90b9
   XLProgressHUD: 43835d0404b2efdee052c25851eb082e2f98ca99
 
-PODFILE CHECKSUM: 24730aafc7a1f858cc6c60c9d50570225bd7cf2a
+PODFILE CHECKSUM: fd99cf93038dee455064372957b04a255f54fd91
 
 COCOAPODS: 1.0.1

@@ -29,6 +29,7 @@ class DiscoveryArray{
     var isPraise : Int!
     var distance : Double!
     var uid : Int!
+    var vPreviewThu : String!
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
@@ -59,6 +60,7 @@ class DiscoveryArray{
                 model.netName = dic["netName"] as? String
                 model.time = dic["time"] as? Int
                 model.uid = dic["uid"] as? Int
+                model.mainId = dic["mainId"] as? Int
                 if let replys = dic["reply"] as? String{
                     model.reply = replys
                 }else{
@@ -92,6 +94,10 @@ class DiscoveryArray{
         distance = dictionary["distance"] as? Double
         
         uid = dictionary["uid"] as? Int
+        
+        if let videoPicture = dictionary["vPreviewThu"] as? String {
+            vPreviewThu = videoPicture
+        }
 	}
 
 }
