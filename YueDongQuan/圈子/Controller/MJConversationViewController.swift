@@ -72,7 +72,12 @@ class MJConversationViewController: RCConversationViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0 / 255, green: 107 / 255, blue: 186 / 255, alpha: 1)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜", style: .Plain, target: self, action: #selector(pop))
+        self.navigationItem.leftBarButtonItem?.setBackgroundImage(UIImage(named: "navigator_btn_backs"), forState: UIControlState.Normal, barMetrics: UIBarMetrics.Default)
+        let btn = UIButton.leftItem("返回")
+        
+        btn.addTarget(self, action: #selector(pop), forControlEvents: UIControlEvents.TouchUpInside)
+        self.navigationItem.leftBarButtonItem =  UIBarButtonItem(customView: btn)
+
         self.navigationItem.leftBarButtonItem?.tag = 1
         let searchBtn = UIBarButtonItem(title: "公告", style: .Plain, target: self, action: #selector(clickBtnAction(_:)))
         let offset = UIOffset(horizontal: 20, vertical: 0)
@@ -86,9 +91,7 @@ class MJConversationViewController: RCConversationViewController {
         if self.permissions == 2 {
              searchBtn.enabled = false
         }
-        
-        
-        
+   
     }
     
     func loadMemberData()  {
@@ -170,6 +173,23 @@ class MJConversationViewController: RCConversationViewController {
 
 }
 
-extension MJConversationViewController {
- 
+extension UIButton {
+   class func leftItem(title:String?)->UIButton  {
+        let btn = UIButton(type: .Custom)
+        let imageforbtn = UIImage(named: "navigator_btn_backs")
+        btn.setImage(imageforbtn, forState: UIControlState.Normal)
+        btn.setTitle(title, forState: UIControlState.Normal)
+        btn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+//                btn.backgroundColor = UIColor.redColor()
+        let imageSize = imageforbtn?.size
+         let titleSizze = title!.sizeWithAttributes([NSFontAttributeName : UIFont.systemFontOfSize((imageSize?.height)!)])
+        btn.titleLabel?.font = UIFont.systemFontOfSize((imageSize?.height)!)
+
+        btn.frame = CGRect(origin: CGPoint(x: -20, y: 0), size: CGSize(width: (imageSize?.width)! + titleSizze.width + 5,  height: (imageSize?.height)!))
+        btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 2.5)
+        btn.titleEdgeInsets = UIEdgeInsetsMake(0, 2.5, 0, 0)
+        
+//        btn.sizeToFit()
+        return btn
+    }
 }

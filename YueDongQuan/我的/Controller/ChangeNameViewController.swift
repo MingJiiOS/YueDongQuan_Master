@@ -20,7 +20,8 @@ class ChangeNameViewController: MainViewController,UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(getUserName), name: UITextFieldTextDidChangeNotification, object: nil)
         
         reNamefeild.frame = CGRectMake(10, 0, ScreenWidth-20, 44)
-        
+        reNamefeild.borderFillColor = kBlueColor
+            
         reNamefeild.delegate = self
         reNamefeild.placeholder = userInfo.name
      self.view .addSubview(reNamefeild)

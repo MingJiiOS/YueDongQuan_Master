@@ -55,12 +55,13 @@ class MyDongdouView: UIView {
         backbtn.snp_makeConstraints { (make) in
             make.left.equalTo(10)
             make.top.equalTo(34)
-            make.width.equalTo(100)
+            make.width.equalTo(ScreenWidth/2)
             make.height.equalTo(20)
         }
         backbtn.contentHorizontalAlignment = .Left
 //        backbtn.custom_acceptEventInterval = 0.5
-        backbtn.setTitle("←|我的热豆", forState: UIControlState.Normal)
+        backbtn.setImage(UIImage(named: "navigator_btn_backs"), forState: UIControlState.Normal)
+        backbtn.setTitle("我的热豆", forState: UIControlState.Normal)
         backbtn.sizeToFit()
         backbtn .addTarget(self, action: #selector(back), forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -114,7 +115,7 @@ class MyDongdouView: UIView {
         
         let attributeString = NSMutableAttributedString(string: "\(numberStr)热豆")
         //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-        attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "HiraKaKuProN-W3", size: 30)!,
+        attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "HiraKaKuProN-W3", size: kTopScaleOfFont*1.5)!,
                                      range: NSMakeRange(0, numberStr.length))
         //设置字体颜色
         //        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blueColor(),

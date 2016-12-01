@@ -10,8 +10,8 @@
 #define DEFAULT_EDGE 24.0f
 #define DEFAULT_SPACE_IMG_TEXT 5.0f
 #define DEFAULT_RATE_WIDTH 0.8f
-#define DEFAULT_DURATION 10.5f
-#define DEFAULT_ANIMATON_DURATION 10.3f
+#define DEFAULT_DURATION 3.5f
+#define DEFAULT_ANIMATON_DURATION 1.3f
 #define DEFAULT_HEIGHT 45.0f
 
 @interface LeafNotification()
@@ -83,7 +83,7 @@
 }
 -(void)showWithAnimation:(BOOL)animation{
     CGRect frame = self.frame;
-    if([self.controller.parentViewController isKindOfClass:[UINavigationController class]] && !self.controller.navigationController.navigationBar.isHidden){
+    if([self.controller.parentViewController isKindOfClass:[UINavigationController class]] ){
         frame.origin.y = 64-DEFAULT_SPACE_IMG_TEXT;
     }else{
         frame.origin.y = -DEFAULT_SPACE_IMG_TEXT;

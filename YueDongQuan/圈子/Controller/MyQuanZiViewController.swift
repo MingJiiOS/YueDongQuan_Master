@@ -111,7 +111,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                 //MARK:权限为圈主的数据
                  let cell = stytemCell(style: .Subtitle, reuseIdentifier: "cell")
                 cell.detailTextLabel?.textColor = UIColor.grayColor()
-                cell.detailTextLabel?.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
+                cell.detailTextLabel?.font = kAutoFontWithSmall
                 if count1 != 0 && count2 == 0 {//只有自己的圈子，没有加入的
                     cell.textLabel?.text = ownNameAry[indexPath.row] as? String
                     cell.imageView?.sd_setImageWithURL(NSURL(string: thumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: "热动篮球LOGO"))
@@ -130,7 +130,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                     cell.textLabel?.text = self.myclrclemodel?.data.array[indexPath.row].name
 
                     cell.detailTextLabel?.textColor = UIColor.grayColor()
-                    cell.detailTextLabel?.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
+                    cell.detailTextLabel?.font = kAutoFontWithSmall
 
                     cell.textLabel?.text = joinNameAry[indexPath.row] as? String
                  cell.imageView?.sd_setImageWithURL(NSURL(string: jointhumbnailSrcAry[indexPath.row] as! String), placeholderImage: UIImage(named: "热动篮球LOGO"))
@@ -192,16 +192,17 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
             if section == 0 {
                 let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
                 headLabel.text = "我管理的圈子"
-                headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+                headLabel.font = kAutoFontWithMid
                 headLabel.textAlignment = .Center
                 headLabel.textColor = UIColor.grayColor()
+                
                 return headLabel
             }
         }else if count1 == 0 && count2 != 0{
             if section == 0 {
                 let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
                 headLabel.text = "我加入的圈子"
-                headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+                headLabel.font = kAutoFontWithMid
                 headLabel.textAlignment = .Center
                 headLabel.textColor = UIColor.grayColor()
                 return headLabel
@@ -210,7 +211,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
             if section == 0 {
                 let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
                 headLabel.text = "我管理的圈子"
-                headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+                headLabel.font = kAutoFontWithMid
                 headLabel.textAlignment = .Center
                 headLabel.textColor = UIColor.grayColor()
                 return headLabel
@@ -218,7 +219,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
             else{
                 let headLabel = UILabel(frame: CGRectMake(20, 0, ScreenWidth-20, ScreenHeight/15))
                 headLabel.text = "我加入的圈子"
-                headLabel.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+                headLabel.font = kAutoFontWithMid
                 headLabel.textAlignment = .Center
                 headLabel.textColor = UIColor.grayColor()
                 return headLabel

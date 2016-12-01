@@ -34,6 +34,7 @@ target 'YueDongQuan' do
 #    pod 'YYKit', '~> 1.0.9'
     pod 'SVProgressHUD'
     pod 'FMDB'
+    pod 'RealReachability'
   # Pods for YueDongQuan
 
 

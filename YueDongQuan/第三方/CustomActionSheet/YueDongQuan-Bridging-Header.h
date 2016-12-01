@@ -11,8 +11,8 @@
 
 #import "UserDataInfoModel.h"
 #import "MyFoundDataBase.h"
-
-
+#import "XHVersion.h"
+#import "RCDChatListCell.h"
 #import "UIButton+Badge.h"
 #import "LeafNotification.h"
 #import "MHRadioButton.h"
@@ -49,7 +49,8 @@
 #import "UIBarButtonItem+YJItem.h"
 #import "UIImage+YJImage.h"
 #import "UIView+Frame.h"
-#import "YJBadgeView.h"
+
+
 #import "YJTabBarButton.h"
 #import "XTimer.h"
 #import "LxGridViewFlowLayout.h"

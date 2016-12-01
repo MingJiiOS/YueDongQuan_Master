@@ -82,9 +82,13 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
           if  Row == 0 {
             self.title = "所有成员"
             self.view.addSubview(tableView)
+            let search = MJSearchbar(placeholder:"搜索成员昵称")
+            
+            self.view .addSubview(search)
             tableView.snp_makeConstraints { (make) in
                 make.left.right.equalTo(0)
-                make.top.bottom.equalTo(0)
+                make.top.equalTo(kAutoStaticCellHeight*0.9)
+                make.bottom.equalTo(0)
             }
             tableView.delegate = self
             tableView.dataSource = self
@@ -119,21 +123,21 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let   cell = MJHeadImageCell(style: .Default, reuseIdentifier: "cell")
         if self.memberModel != nil {
-            if self.memberModel?.data[indexPath.row].permissions == 1 {
+            if self.memberModel?.data.array[indexPath.row].permissions == 1 {
                 //获取到圈主的uid
-                self.permissions1Uid = self.memberModel?.data[indexPath.row].uid
+                self.permissions1Uid = self.memberModel?.data.array[indexPath.row].uid
             }
-            cell.headImage?.bgImage.sd_setImageWithURL(NSURL(string: self.memberModel!.data[indexPath.row].thumbnailSrc),
+            cell.headImage?.bgImage.sd_setImageWithURL(NSURL(string: self.memberModel!.data.array[indexPath.row].thumbnailSrc),
                                                        placeholderImage: UIImage(named: "默认头像"))
             cell.headImage?.subImage.backgroundColor = UIColor.brownColor()
-            cell.nameLabel.text = self.memberModel?.data[indexPath.row].name
+            cell.nameLabel.text = self.memberModel?.data.array[indexPath.row].name
         }
         
         return cell
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.memberModel != nil {
-            return (self.memberModel?.data.count)!
+            return (self.memberModel?.data.array.count)!
         }
         return 0
     }
@@ -144,7 +148,7 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
         tableView .deselectRowAtIndexPath(indexPath, animated: true)
         if self.memberModel != nil {
             if let block = self.clickRowClourse{
-                block(index: indexPath.row,circleID: self.circleId!,uid:(self.memberModel?.data[indexPath.row].uid.description)!)
+                block(index: indexPath.row,circleID: self.circleId!,uid:(self.memberModel?.data.array[indexPath.row].uid.description)!)
             }
         }   
     }

@@ -64,6 +64,7 @@ class SendPhoneNumberView: UIView {
         yanZhengMaLabel.setTitle("验证码", forState: UIControlState.Normal)
         yanZhengMaLabel.titleLabel?.adjustsFontSizeToFitWidth = true
         yanZhengMaLabel.contentVerticalAlignment = .Bottom
+        yanZhengMaFeild.borderFillColor = kBlueColor
         yanZhengMaLabel.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         yanZhengMaLabel.userInteractionEnabled = false
         self .addSubview(yanZhengMaFeild)
@@ -99,7 +100,7 @@ class SendPhoneNumberView: UIView {
         nextStapBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         nextStapBtn.backgroundColor = kBlueColor
         nextStapBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        nextStapBtn.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
+        nextStapBtn.titleLabel?.font = kAutoFontWithTop
         nextStapBtn.titleLabel?.textAlignment = .Center
         nextStapBtn.layer.cornerRadius = 5
         nextStapBtn.layer.masksToBounds = true

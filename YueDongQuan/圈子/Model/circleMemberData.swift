@@ -1,5 +1,8 @@
 //
 //	circleMemberData.swift
+//
+//	Create by 方果 黄 on 29/11/2016
+//	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
 import Foundation
@@ -7,22 +10,20 @@ import Foundation
 
 class circleMemberData : NSObject, NSCoding{
 
-	var id : Int!
-	var name : String!
-	var thumbnailSrc : String!
-	var permissions : Int!
-	var uid : Int!
+	var array : [circleMemberArray]!
 
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: NSDictionary){
-		id = dictionary["id"] as? Int
-		name = dictionary["name"] as? String
-		thumbnailSrc = dictionary["thumbnailSrc"] as? String
-		permissions = dictionary["permissions"] as? Int
-		uid = dictionary["uid"] as? Int
+		array = [circleMemberArray]()
+		if let arrayArray = dictionary["array"] as? [NSDictionary]{
+			for dic in arrayArray{
+				let value = circleMemberArray(fromDictionary: dic)
+				array.append(value)
+			}
+		}
 	}
 
 	/**
@@ -30,21 +31,13 @@ class circleMemberData : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
-		if id != nil{
-			dictionary["id"] = id
-		}
-		if name != nil{
-			dictionary["name"] = name
-		}
-		if thumbnailSrc != nil{
-			dictionary["thumbnailSrc"] = thumbnailSrc
-		}
-		if permissions != nil{
-			dictionary["permissions"] = permissions
-		}
-		if uid != nil{
-			dictionary["uid"] = uid
+		var dictionary = NSMutableDictionary()
+		if array != nil{
+			var dictionaryElements = [NSDictionary]()
+			for arrayElement in array {
+				dictionaryElements.append(arrayElement.toDictionary())
+			}
+			dictionary["array"] = dictionaryElements
 		}
 		return dictionary
 	}
@@ -55,11 +48,7 @@ class circleMemberData : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         id = aDecoder.decodeObjectForKey("id") as? Int
-         name = aDecoder.decodeObjectForKey("name") as? String
-         thumbnailSrc = aDecoder.decodeObjectForKey("thumbnailSrc") as? String
-         permissions = aDecoder.decodeObjectForKey("permissions") as? Int
-         uid = aDecoder.decodeObjectForKey("uid") as? Int
+         array = aDecoder.decodeObjectForKey("array") as? [circleMemberArray]
 
 	}
 
@@ -69,20 +58,8 @@ class circleMemberData : NSObject, NSCoding{
     */
     @objc func encodeWithCoder(aCoder: NSCoder)
 	{
-		if id != nil{
-			aCoder.encodeObject(id, forKey: "id")
-		}
-		if name != nil{
-			aCoder.encodeObject(name, forKey: "name")
-		}
-		if thumbnailSrc != nil{
-			aCoder.encodeObject(thumbnailSrc, forKey: "thumbnailSrc")
-		}
-		if permissions != nil{
-			aCoder.encodeObject(permissions, forKey: "permissions")
-		}
-		if uid != nil{
-			aCoder.encodeObject(uid, forKey: "uid")
+		if array != nil{
+			aCoder.encodeObject(array, forKey: "array")
 		}
 
 	}

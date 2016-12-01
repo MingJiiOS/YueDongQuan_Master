@@ -175,7 +175,9 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
     //点击搜索按钮
     @objc private func clickSearchBtn(){
         let searchVC = SearchController()
+        self.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(searchVC, animated: true)
+        self.hidesBottomBarWhenPushed = false
     }
     //点击添加按钮
     @objc private func clickAddBtn(){

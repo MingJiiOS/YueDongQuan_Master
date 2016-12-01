@@ -56,10 +56,12 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         super.viewDidLoad()
         if self.fieldData.count != 0 {
             self.title = "场地位置信息"
+            
             self.creatViewWithIsResult(true)
         }else{
             self.title = "附近的圈子"
             self.creatViewWithIsResult(false)
+          
             changeFrameAnimate(0.5)
         }
         //MARK:自定义经纬度
@@ -100,7 +102,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
             mapView.snp_makeConstraints { (make) in
                 make.left.equalTo(ScreenWidth)
                 make.right.equalTo(ScreenWidth)
-                make.top.equalTo(0)
+                make.top.equalTo(55)
                 make.bottom.equalTo(whiteView.snp_top)
             }
             mapView.delegate = self
@@ -123,16 +125,14 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
 
     }
-    override func viewDidAppear(animated: Bool) {
-        self.locationManager.startUpdatingLocation()
-    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
-     
+     self.locationManager.startUpdatingLocation()
 //        tableView.reloadData()
        
        
@@ -171,7 +171,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     }
     
     func reGeocodeAction() {
-        mapView.removeAnnotations(mapView.annotations)
+//        mapView.removeAnnotations(mapView.annotations)
         
         locationManager.requestLocationWithReGeocode(true, completionBlock: completionBlock)
     }
@@ -211,6 +211,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
                 }
                 
                 self?.addAnnotationsToMapView(annotation)
+                
             }
             
         }
@@ -219,7 +220,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     func addAnnotationsToMapView(annotation: MAAnnotation) {
         mapView.addAnnotation(annotation)
         mapView.selectAnnotation(annotation, animated: true)
-        mapView.setZoomLevel(15.1, animated: false)
+        mapView.setZoomLevel(15.1, animated: true)
         mapView.setCenterCoordinate(annotation.coordinate, animated: true)
         
     }
@@ -304,6 +305,8 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
             if redAnnotation == nil {
                 redAnnotation = MJRedAnnotationView(annotation: annotation,reuseIdentifier: redReuseIndetifier)
             }
+            redAnnotation.canShowCallout = true
+            redAnnotation.draggable = true
             return redAnnotation
         }
         return nil
@@ -319,9 +322,11 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     }
     
     func mapView(mapView: MAMapView!, annotationView view: MAAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
-         showActionsheet()
+        
+        
+        showActionsheet(view.annotation.coordinate)
     }
-    func showActionsheet()  {
+    func showActionsheet(coordinate:CLLocationCoordinate2D)  {
         let sheet = UIAlertController(title: nil, message: "打开方式", preferredStyle: .ActionSheet)
         let AMapAction = UIAlertAction(title: "高德地图", style: .Default, handler:{ (alert: UIAlertAction!) -> Void in
             
@@ -333,7 +338,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         })
         
         let stystemmap = UIAlertAction(title: "地图", style: .Default) { (alert:UIAlertAction) in
-            self.openStytemMap()
+            self.openStytemMap(coordinate)
         }
         
         let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (alert: UIAlertAction!) -> Void in
@@ -364,9 +369,9 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
 
     }
     //MARK:打开系统自带的地图
-    func openStytemMap()  {
-        let cur = CLLocation(latitude: 29.589202, longitude: 106.496634)
-        let to = CLLocation(latitude: 29.58550212134, longitude: 106.49637401276)
+    func openStytemMap(coordinate:CLLocationCoordinate2D)  {
+        let cur = CLLocation(latitude: self.latitude, longitude: self.longitude)
+        let to = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
         let culo = MKMapItem(placemark: MKPlacemark(coordinate: cur.coordinate, addressDictionary: nil))
         let tolo = MKMapItem(placemark: MKPlacemark(coordinate: to.coordinate, addressDictionary: nil))
@@ -495,6 +500,7 @@ extension OtherQuanZiViewController {
         }
         mapView.addAnnotations(annotations as [AnyObject])
         mapView.showAnnotations(annotations as [AnyObject], animated: true)
+        
     func updateUI()  {
         tableView.reloadData()
     }

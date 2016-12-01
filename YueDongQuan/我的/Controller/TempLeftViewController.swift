@@ -16,8 +16,7 @@ class TempLeftViewController: MainViewController {
     }
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
-       
-        
+   
     }
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false

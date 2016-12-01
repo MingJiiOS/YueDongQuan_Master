@@ -23,6 +23,8 @@ class CircleHeadView: UIView,UITableViewDelegate,UITableViewDataSource {
         let tableView = UITableView(frame: frame)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .None
+        
         self .addSubview(tableView)
     }
     
@@ -33,6 +35,16 @@ class CircleHeadView: UIView,UITableViewDelegate,UITableViewDataSource {
         var cell = tableView.dequeueReusableCellWithIdentifier("cell")
         if cell == nil {
             cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
+            let line = UIView()
+            cell?.contentView .addSubview(line)
+            line.backgroundColor = UIColor(red: 200/255, green: 199/255, blue: 204/255, alpha: 1)
+            line.snp_makeConstraints(closure: { (make) in
+                make.left.equalTo(kAuotoGapWithBaseGapTwenty)
+                make.right.equalTo(0)
+                make.height.equalTo(0.5)
+                make.bottom.equalTo(0)
+            })
+            
             let array = ["附近的圈子","我的圈子"]
              let imageAry = ["img_newquanzi","img_myquanzi"]
              cell!.textLabel?.text = array[indexPath.row]

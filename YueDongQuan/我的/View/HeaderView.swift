@@ -10,7 +10,7 @@ import UIKit
 
 class HeaderView: UIView {
     
-    let headerBgView = UIView()
+    let headerBgView = UIImageView()
     var isSelected = Bool()
     //用户头像
     let headImage = UIImageView()
@@ -40,21 +40,40 @@ class HeaderView: UIView {
                     make.right.equalTo(0).offset(0)
         
                 }
-        
+    
                 headerBgView.backgroundColor = UIColor(red: 0 / 255, green: 107 / 255, blue: 186 / 255, alpha: 1)
-        
+                headerBgView.image = UIImage(named: "secai")
                 //头像
         
                 self .addSubview(headImage)
                 headImage.backgroundColor = UIColor.grayColor()
     headImage.layer.shadowColor = UIColor.blackColor().CGColor;
-    headImage.layer.shadowOffset = CGSizeMake(1,1);
+    headImage.layer.shadowOffset = CGSizeMake(2,1);
     headImage.layer.shadowOpacity = 0.8;//阴影透明度，默认0
     headImage.layer.shadowRadius = 1;
+    headImage.layer.cornerRadius = 5
+  
+    let shadowLayer = CALayer()
+    /*
+     layerShadow.bounds = CGRect(x: 0, y: 0, width: kAutoStaticCellHeight - 10, height: kAutoStaticCellHeight - 10)
+     layerShadow.position = CGPoint(x: kAutoStaticCellHeight - 10 + CGFloat(index) * (kAutoStaticCellHeight - 10 + kAuotoGapWithBaseGapTen), y: addBtn.centerY)
+     layerShadow.cornerRadius = layerShadow.bounds.size.width/2
+     layerShadow.shadowColor = kBlueColor.CGColor
+     layerShadow.shadowOffset = CGSize(width: 2, height: 1)
+     layerShadow.shadowOpacity = 0.6
+     layerShadow.borderColor = UIColor.whiteColor().CGColor
+     layerShadow.borderWidth = 2
+     self.contentView.layer .addSublayer(layerShadow)
+
+     */
+    shadowLayer.bounds = CGRect(origin: CGPoint(x: 0, y: 0),
+                                size: CGSize(width: ScreenWidth-ScreenWidth/2.7*2, height: ScreenWidth-ScreenWidth/2.7*2))
+    
+    
                 headImage.snp_makeConstraints { (make) in
                     make.width.height.equalTo(ScreenWidth-ScreenWidth/2.7*2)
-                    make.right.equalTo(-30)
-                    make.bottom.equalTo(30)
+                    make.right.equalTo(-kAuotoGapWithBaseGapTwenty)
+                    make.bottom.equalTo(kAuotoGapWithBaseGapTwenty)
         
                 }
         }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import MJRefresh
 class HeInfoVC: MainViewController {
 
     var heInfoTable = UITableView()
@@ -17,7 +17,12 @@ class HeInfoVC: MainViewController {
     var focusModel : FocusModel?
     
     var bottomView : UIButton?
+    //条数
+    var pagesize = 0
     
+    var judgeSayNumber = Int()
+    //单次请求条数
+    let singleRqusetNum = 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +39,7 @@ class HeInfoVC: MainViewController {
         heInfoTable.dataSource = self
         heInfoTable.custom_CellAcceptEventInterval = 2
         heInfoTable.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
-        
+        heInfoTable.showsVerticalScrollIndicator = false
         bottomView = UIButton(type: .Custom)
         self.view .addSubview(bottomView!)
         bottomView?.snp_makeConstraints(closure: { (make) in
@@ -44,12 +49,17 @@ class HeInfoVC: MainViewController {
         })
         bottomView?.backgroundColor = kBlueColor
         bottomView?.addTarget(self, action: #selector(focusOnHe), forControlEvents: UIControlEvents.TouchUpInside)
+        let refresh = MJRefreshAutoNormalFooter(refreshingTarget: self,
+                                                refreshingAction: #selector(refreshDownloadData))
+        
+        heInfoTable.mj_footer = refresh
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loadHeFoundData()
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+        self.heInfoTable.estimatedRowHeight = 100
     }
    
     override func viewWillDisappear(animated: Bool) {
@@ -112,6 +122,7 @@ extension HeInfoVC:UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.hefoundModel != nil {
+            judgeSayNumber = (self.hefoundModel?.data.array.count)!
             return (self.hefoundModel?.data.array.count)!
         }
      return 0
@@ -175,11 +186,20 @@ extension HeInfoVC {
          pageNo	当前页数:从1开始
          pageSize	每页多少条数据
         */
+         let index = 1
+        let pageNo = index
+        //singleRqusetNum 默认的自加条数 自定
+        pagesize += singleRqusetNum
+        
+        print("请求的条数 = ",pagesize)
+        
+        
+        let pageSize =  pagesize
         let dict:[String:AnyObject]  = ["v":v,
                      "operateId":userInfo.uid.description,
                      "uid":self.userid!,
-                     "pageNo":1,
-                     "pageSize":5]
+                     "pageNo":pageNo,
+                     "pageSize":pageSize]
         MJNetWorkHelper().checkHeFound(hefound, HeFoundModel: dict, success: { (responseDic, success) in
             self.hefoundModel = DataSource().gethefoundData(responseDic)
             self.performSelectorOnMainThread(#selector(self.updateHeFoundUI), withObject: self.hefoundModel, waitUntilDone: true)
@@ -265,5 +285,22 @@ extension HeInfoVC {
                 self.bottomView?.setTitle("发送消息", forState: UIControlState.Normal)
             }
         }
+        heInfoTable.reloadData()
+        if pagesize - judgeSayNumber >= singleRqusetNum + 1 {
+            heInfoTable.mj_footer.endRefreshingWithNoMoreData()
+        }else{
+            //            if self.myfoundmodel != nil {
+            //                if self.myfoundmodel?.code != "405" {
+            heInfoTable.mj_footer.endRefreshing()
+            //                }else{
+            //                    return
+            //                }
+            //            }
+            
+        }
+    }
+    func refreshDownloadData()  {
+        heInfoTable.mj_footer.beginRefreshing()
+        loadHeFoundData()
     }
 }

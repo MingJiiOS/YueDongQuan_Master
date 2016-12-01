@@ -125,12 +125,12 @@ class MJNoticeCell: UITableViewCell {
         putTimeStr = TimeStampToDate().TimestampToDate(model.data.array[indexPath.row].time)
         let attributeString = NSMutableAttributedString(string: "\(userNameStr) \(putTimeStr)")
         //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-        attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Bold", size: kTopScaleOfFont)!,
+        attributeString.addAttribute(NSFontAttributeName, value: kAutoFontWithTop!,
                                      range: NSMakeRange(0, userNameStr.length))
         //设置字体颜色
         attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(),
                                      range: NSMakeRange(0, userNameStr.length+1))
-        attributeString.addAttribute(NSForegroundColorAttributeName, value: UIFont(name: "HelveticaNeue-Bold", size: kMidScaleOfFont)!, range: NSMakeRange(userNameStr.length+1, putTimeStr.length))
+        attributeString.addAttribute(NSForegroundColorAttributeName, value: kAutoFontWithMid!, range: NSMakeRange(userNameStr.length+1, putTimeStr.length))
         attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(),
                                      range: NSMakeRange(userNameStr.length+1, putTimeStr.length))
         //        //设置文字背景颜色

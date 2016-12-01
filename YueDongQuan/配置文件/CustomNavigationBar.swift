@@ -15,16 +15,17 @@ class CustomNavigationBar: UINavigationController {
 
         let  navigationTitleAttribute : NSDictionary = NSDictionary(object: UIColor.redColor(), forKey: NSForegroundColorAttributeName)
         self.navigationBar.titleTextAttributes = navigationTitleAttribute as [NSObject:AnyObject] as? [String : AnyObject]
+       
     }
     
-    override func pushViewController(viewController: UIViewController, animated: Bool) {
-        viewController.hidesBottomBarWhenPushed = true
-        super.pushViewController(viewController, animated: animated)
-    }
+//    override func pushViewController(viewController: UIViewController, animated: Bool) {
+//        viewController.hidesBottomBarWhenPushed = true
+//        super.pushViewController(viewController, animated: animated)
+//    }
     
-    override func popViewControllerAnimated(animated: Bool) -> UIViewController? {
-        return (super.popViewControllerAnimated(animated))
-    }
+//    override func popViewControllerAnimated(animated: Bool) -> UIViewController? {
+//        return (super.popViewControllerAnimated(animated))
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

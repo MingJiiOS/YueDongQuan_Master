@@ -14,6 +14,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     lazy var quanZiBtn = UIButton()
     //圈子名
     var quanZiNameField = MJTextFeild()
+    
     //主场名
     var zhuChangName = MJTextFeild()
     //圈子密码控件
@@ -47,8 +48,11 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         label.text = "新建圈子"
         self.navigationItem.titleView = label
         self.navigationController?.navigationBar.barTintColor = kBlueColor
+        let btn = UIButton.leftItem("返回")
+        btn.addTarget(self, action: #selector(back), forControlEvents: UIControlEvents.TouchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: btn)
+        
        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "←｜返回", style: .Plain, target: self, action: #selector(back))
         self.createView()
     }
     func createView()  {
@@ -75,9 +79,10 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         quanZiBtn.setTitle("圈子logo", forState: UIControlState.Normal)
         quanZiBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0)
         quanZiBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        quanZiBtn.titleLabel?.font = UIFont.systemFontOfSize(kMidScaleOfFont)
+        quanZiBtn.titleLabel?.font = kAutoFontWithMid
         quanZiBtn .addTarget(self, action: #selector(selectCircleLogo), forControlEvents: UIControlEvents.TouchUpInside)
         self.view .addSubview(quanZiNameField)
+        quanZiNameField.borderFillColor = kBlueColor
         quanZiNameField.snp_makeConstraints { (make) in
             make.left.equalTo(10)
             make.right.equalTo(-10)
@@ -91,6 +96,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         quanZiNameField.placeholder = "请填写圈子名"
         quanZiNameField.leftView = label1
         quanZiNameField.keyboardType = .NamePhonePad
+        quanZiNameField.borderFillColor = kBlueColor
         quanZiNameField.leftViewMode = .Always
         quanZiNameField.tag = 10
         self.view .addSubview(zhuChangName)
@@ -102,10 +108,12 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         }
         let label2 = UILabel(frame:CGRectMake(0, 0, (ScreenWidth-20)/4, 30) )
         label2.text = "主场"
+        zhuChangName.borderFillColor = kBlueColor
         zhuChangName.userInteractionEnabled = false
         zhuChangName.placeholder = "选择场地"
         zhuChangName.delegate = self
         zhuChangName.leftView = label2
+        zhuChangName.borderFillColor = kBlueColor
         zhuChangName.leftViewMode = .Always
         self.view .addSubview(circlePasswordFeild)
         circlePasswordFeild.snp_makeConstraints { (make) in
@@ -117,9 +125,12 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         let label3 = UILabel(frame:CGRectMake(0, 0, (ScreenWidth-20)/4, 30) )
         label3.text = "密码"
         label3.textColor = UIColor.blackColor()
+        circlePasswordFeild.borderFillColor = kBlueColor
+        circlePasswordFeild.secureTextEntry = true
         circlePasswordFeild.placeholder = "此圈子为私密圈子,需要密码"
         circlePasswordFeild.secureTextEntry = true
         circlePasswordFeild.delegate = self
+        circlePasswordFeild.borderFillColor = kBlueColor
         circlePasswordFeild.leftView = label3
         circlePasswordFeild.leftViewMode = .Always
         circlePasswordFeild.tag = 20

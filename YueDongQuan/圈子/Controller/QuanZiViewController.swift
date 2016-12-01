@@ -25,12 +25,14 @@ class QuanZiViewController: RCConversationListViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "圈子"
-         self.edgesForExtendedLayout = .None
+        
         self.creatView()
         self.creatViewWithSnapKit("ic_lanqiu", secondBtnImageString: "ic_search", thirdBtnImageString: "ic_add")
         
+        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        self.conversationListTableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         
-        
+        self.conversationListTableView.delegate = self
         
         self.showConnectingStatusOnNavigatorBar = true
         //定位未读会话
@@ -46,7 +48,7 @@ class QuanZiViewController: RCConversationListViewController
          object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateBadgeValueForTabBarItem), name: RCKitDispatchReadReceiptNotification, object: nil)
         self.setDisplayConversationTypes([1,2,3,4,5] as [AnyObject]!)
-        self.conversationListTableView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-120)
+        self.conversationListTableView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
         self.conversationListTableView.tableFooterView = UIView()
     }
     override func viewWillAppear(animated: Bool) {
@@ -254,5 +256,38 @@ extension QuanZiViewController{
                 self.refreshConversationTableViewIfNeeded()
             }
         }
+    }
+}
+extension QuanZiViewController{
+    
+//    override func willReloadTableData(dataSource: NSMutableArray!) -> NSMutableArray! {
+//        for i in 0...dataSource.count-1 {
+//            let model = dataSource[i] as! RCConversationModel
+//            if model.conversationType == .ConversationType_SYSTEM && model.lastestMessage.isMemberOfClass(RCContactNotificationMessage) {
+//                model.conversationModelType = .CONVERSATION_MODEL_TYPE_CUSTOMIZATION
+//            }
+//            if model.lastestMessage.isKindOfClass(RCGroupNotificationMessage) {
+//              let groupNotification = model.lastestMessage as! RCGroupNotificationMessage
+//                if groupNotification.operation == "Quit" {
+//                    let jsondata = groupNotification.data.dataUsingEncoding(NSUTF8StringEncoding)
+//                    let dictionary = try? NSJSONSerialization.JSONObjectWithData(jsondata!, options: .MutableContainers) as! NSDictionary
+//                    let data = dictionary!["data"]!.isKindOfClass(NSDictionary) ? dictionary!["data"] : nil
+//                    let nickName = dictionary!["operatorNickname"]!.isKindOfClass(NSDictionary) ? dictionary!["operatorNickname"] : nil
+//                    if nickName.des == RCIM.sharedRCIM().currentUserInfo.name {
+//                        <#code#>
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
+    override func rcConversationListTableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> RCConversationBaseCell! {
+        let model = self.conversationListDataSource[indexPath.row] as! RCConversationModel
+        let cell = RCDChatListCell(style: .Default, reuseIdentifier: "") 
+        cell.model = model
+        return cell
+    }
+    override func rcConversationListTableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return kAutoStaticCellHeight
     }
 }

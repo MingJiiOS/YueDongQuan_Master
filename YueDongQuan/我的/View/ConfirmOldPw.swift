@@ -67,7 +67,7 @@ class ConfirmOldPw: UIView {
         //标题
         titleLabel.frame = CGRect(x: 0, y: 15, width: width, height: 25)
         titleLabel.textColor = RGB_Color(r: 66, g: 66, b: 66, a: 1)
-        titleLabel.font = UIFont.systemFontOfSize(kTopScaleOfFont)
+        titleLabel.font = kAutoFontWithTop
         titleLabel.textAlignment = .Center
         whiteView.addSubview(titleLabel)
         //内容
@@ -75,17 +75,18 @@ class ConfirmOldPw: UIView {
         contentLabel.numberOfLines = 0
         contentLabel.textAlignment = .Center
         contentLabel.textColor = RGB_Color(r: 66, g: 66, b: 66, a: 1)
-        contentLabel.font = UIFont.systemFontOfSize(kTopScaleOfFont)
+        contentLabel.font = kAutoFontWithTop
         whiteView.addSubview(contentLabel)
         passWord.frame = CGRectMake(24, 90, width-48, 30)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(passwordMask), name: UITextFieldTextDidChangeNotification, object: nil)
+        passWord.borderFillColor = kBlueColor
         whiteView .addSubview(passWord)
         //取消按钮
         let btnWith = (width - 130) / 2/2
         cancelBtn.frame = CGRect(x: width-btnWith*2 - 10, y: 165, width: btnWith, height: 20)
         cancelBtn.backgroundColor = UIColor.whiteColor()
         cancelBtn.setTitleColor(RGB_Color(r: 150, g: 150, b: 150, a: 1), forState: UIControlState.Normal)
-        cancelBtn.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
+        cancelBtn.titleLabel?.font = kAutoFontWithTop
         cancelBtn.layer.cornerRadius = 3
         cancelBtn.clipsToBounds = true
         cancelBtn.tag = 1
@@ -95,7 +96,7 @@ class ConfirmOldPw: UIView {
         sureBtn.frame = CGRect(x: width-btnWith-10 , y: 165, width: btnWith, height: 20)
         sureBtn.backgroundColor = UIColor.whiteColor()
         sureBtn.setTitleColor(kBlueColor, forState: UIControlState.Normal)
-        sureBtn.titleLabel?.font = UIFont.systemFontOfSize(kTopScaleOfFont)
+        sureBtn.titleLabel?.font = kAutoFontWithTop
         sureBtn.layer.cornerRadius = 3
         sureBtn.clipsToBounds = true
         sureBtn.tag = 2

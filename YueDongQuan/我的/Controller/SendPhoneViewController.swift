@@ -19,31 +19,39 @@ class SendPhoneViewController: MainViewController {
         super.viewDidLoad()
         
        SendNumberview .frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight)
-//        let realm = try! Realm()
-//        let result = realm.objects(RLUserInfo)
-//        let item = result.first
-//      SendNumberview.phoneNumber.text = item?.phone
-//        self.view .addSubview(SendNumberview)
-//        let dict = ["v":v,
-//                    "phone":item?.phone]
-//        MJNetWorkHelper().sendphone("sendphone", sendphoneModel: dict, success: { (responseDic, success) in
-//            self.sendphoneModel = DataSource().getSendPhoneData(responseDic)
-//            self.SendNumberview.sendMaskCodeback { (maskcode) in
-//                if maskcode != self.sendphoneModel?.data.code{
-//                    self.showMJProgressHUD(maskcode, isAnimate: true, startY: ScreenHeight-40-40-60)
-//                }else{
-//                    let set = SetNewPasswordViewController()
-//                    set.isSendPhone = true
-//                    self.push(set)
-//                }
-//            }
-//        }) { (error) in
-//            self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40-20)
-//        }
+        let consumeItems =  getUserInfoDataBaseFromFMDB()
+        if consumeItems == [] {
+            
+        }else{
+            let result = consumeItems.firstObject as! UserDataInfoModel
+      SendNumberview.phoneNumber.text = result.phone
+        self.view .addSubview(SendNumberview)
+        let dict = ["v":v,
+                    "phone":result.phone]
+        MJNetWorkHelper().sendphone("sendphone", sendphoneModel: dict, success: { (responseDic, success) in
+            self.sendphoneModel = DataSource().getSendPhoneData(responseDic)
+            self.SendNumberview.sendMaskCodeback { (maskcode) in
+                if maskcode != self.sendphoneModel?.data.code{
+                    self.showMJProgressHUD(maskcode, isAnimate: true, startY: ScreenHeight-40-40-60)
+                }else{
+                    let set = SetNewPasswordViewController()
+                    set.isSendPhone = true
+                    self.push(set)
+                }
+            }
+        }) { (error) in
+            self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40-20)
+        }
         
-        
+     }
     }
-
+    func getUserInfoDataBaseFromFMDB() ->NSArray {
+        if FLFMDBManager.shareManager().fl_isExitTable(UserDataInfoModel) {
+            let modelAll = FLFMDBManager.shareManager().fl_searchModelArr(UserDataInfoModel) as NSArray
+            return modelAll
+        }
+        return []
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         

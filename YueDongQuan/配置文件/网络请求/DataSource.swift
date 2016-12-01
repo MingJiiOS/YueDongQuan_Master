@@ -442,5 +442,19 @@ class DataSource: NSObject {
         return model
 
     }
-    
+    //MARK:解析我的关注
+    func getmyattentionData(datasource:NSDictionary) -> MyAttentionModel {
+        let model = MyAttentionModel(fromDictionary: datasource)
+        return model
+    }
+    //MARK:解析我的粉丝
+    func getfansData(datasource:NSDictionary) -> FansModel {
+        let model = FansModel(fromDictionary: datasource)
+        return model
+    }
+    //MARK:解析 取消关注
+    func getcancelfocusData(datasource:NSDictionary) -> updateNameModel {
+        let model = updateNameModel(fromDictionary: datasource)
+        return model
+    }
 }

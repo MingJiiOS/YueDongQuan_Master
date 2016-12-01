@@ -38,6 +38,7 @@ class SetNewPasswordViewController: MainViewController {
         }
         newPassWordLabel.setTitle("新密码", forState: UIControlState.Normal)
 //        newPassWordLabel.backgroundColor = UIColor.redColor()
+        newPassWordFeild.borderFillColor = kBlueColor
         newPassWordLabel.userInteractionEnabled = false
         newPassWordLabel.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         newPassWordLabel.contentVerticalAlignment = .Bottom
@@ -50,6 +51,7 @@ class SetNewPasswordViewController: MainViewController {
             make.height.equalTo(ScreenHeight/15)
         }
         sureNewPassWordLabel.setTitle("确认密码", forState: UIControlState.Normal)
+        sureNewPassWordField.borderFillColor = kBlueColor
         sureNewPassWordLabel.userInteractionEnabled = false
         sureNewPassWordLabel.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
        sureNewPassWordLabel.contentVerticalAlignment = .Bottom

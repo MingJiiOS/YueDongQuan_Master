@@ -59,7 +59,7 @@ class SettingCell: UITableViewCell {
             make.left.equalTo(headImage.snp_right).offset(kGAP*2)
             make.width.equalTo(kAutoStaticCellHeight/2)
         }
-        userSex.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
+        userSex.font = kAutoFontWithSmall
         userSex.textAlignment = .Left
         
         userAge.snp_makeConstraints { (make) in
@@ -68,7 +68,7 @@ class SettingCell: UITableViewCell {
             make.bottom.equalTo(self.contentView.snp_bottom)
             make.width.equalTo(kAutoStaticCellHeight/2)
         }
-        userAge.font = UIFont.systemFontOfSize(kSmallScaleOfFont)
+        userAge.font = kAutoFontWithSmall
         userSex.textAlignment = .Left
         self.accessoryType = .DisclosureIndicator
     }

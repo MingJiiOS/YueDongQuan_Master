@@ -256,6 +256,10 @@ class MJNetWorkHelper: NSObject {
     func focus(interfaceName:NSString,focusModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {
         post(interfaceName, requestModel: focusModel, success: success, fail: fail)
     }
+    //MARK:取消关注
+    func cancelfocus(interfaceName:NSString,cancelfocusModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {
+        post(interfaceName, requestModel: cancelfocusModel, success: success, fail: fail)
+    }
     //MARK:查询我的动豆（今日动豆/历史动豆）
     func mydongdou(interfaceName:NSString,mydongdouModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {
         post(interfaceName, requestModel: mydongdouModel, success: success, fail: fail)
@@ -283,6 +287,14 @@ class MJNetWorkHelper: NSObject {
     //MARK:融云获取圈子logo和名字
     func getrycircle(interfaceName:NSString,getrycircleModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock) {
         post(interfaceName, requestModel: getrycircleModel, success: success, fail: fail)
+    }
+    //MARK:我的关注
+    func myttention(interfaceName:NSString,myttentionModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {
+         post(interfaceName, requestModel: myttentionModel, success: success, fail: fail)
+    }
+    //MARK:我的粉丝
+    func fans(interfaceName:NSString,fansModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock) {
+        post(interfaceName, requestModel: fansModel, success: success, fail: fail)
     }
 }
 
