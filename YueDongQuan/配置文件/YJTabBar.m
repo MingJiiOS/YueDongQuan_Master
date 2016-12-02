@@ -14,7 +14,7 @@
 
 @property (nonatomic, weak) UIButton *plusButton;
 
-@property (nonatomic, strong) NSMutableArray *buttons;
+
 
 @property (nonatomic, weak) UIButton *selectedButton;
 
@@ -45,7 +45,7 @@ static YJTabBar *_instance = nil;
         self.btn.item = item;
         
         self.btn.tag = self.buttons.count;
-        NSLog(@"按钮的tag值%ld",(long)self.btn.tag);
+        
         [self.btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchDown];
         
         if (self.btn.tag == 0) {
@@ -64,7 +64,7 @@ static YJTabBar *_instance = nil;
     button.selected = YES;
     _selectedButton = button;
     
-    for (UIButton *btn in _buttons) {
+    for (YJTabBarButton *btn in _buttons) {
         if (btn == button) {
             break;
         }

@@ -35,18 +35,10 @@ class QuanZiViewController: RCConversationListViewController
         self.conversationListTableView.delegate = self
         
         self.showConnectingStatusOnNavigatorBar = true
+        
         //定位未读会话
         self.index = 0
-        //接收定位到未读会话的通知
-        NSNotificationCenter.defaultCenter().addObserver(self,
-         selector: #selector(GotoNextCoversation),
-         name: "GotoNextCoversation",
-         object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self,
-         selector: #selector(updateForSharedMessageInsertSuccess),
-         name: "RCDSharedMessageInsertSuccess",
-         object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateBadgeValueForTabBarItem), name: RCKitDispatchReadReceiptNotification, object: nil)
+       
         self.setDisplayConversationTypes([1,2,3,4,5] as [AnyObject]!)
         self.conversationListTableView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
         self.conversationListTableView.tableFooterView = UIView()
@@ -57,11 +49,24 @@ class QuanZiViewController: RCConversationListViewController
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(receiveNeedRefreshNotification), name: "kRCNeedReloadDiscussionListNotification", object: nil)
         let groupNotify = RCUserInfo(userId: "__system__", name: "群组通知", portrait: nil)
         RCIM.sharedRCIM().refreshUserInfoCache(groupNotify, withUserId: "__system__")
+        //接收定位到未读会话的通知
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(GotoNextCoversation),
+                                                         name: "GotoNextCoversation",
+                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(updateForSharedMessageInsertSuccess),
+                                                         name: "RCDSharedMessageInsertSuccess",
+                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateBadgeValueForTabBarItem), name: RCKitDispatchMessageNotification, object: nil)
+
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "kRCNeedReloadDiscussionListNotification", object: nil)
+          NSNotificationCenter.defaultCenter().removeObserver(self, name: RCKitDispatchMessageNotification, object: nil)
+          NSNotificationCenter.defaultCenter().removeObserver(self, name: "GotoNextCoversation", object: nil)
     }
     func creatViewWithSnapKit(leftBarButtonImageString:NSString,secondBtnImageString:String,thirdBtnImageString:String)  {
         
@@ -205,9 +210,9 @@ extension QuanZiViewController {
             }
         
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.5)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            self.refreshConversationTableViewIfNeeded()
-        }
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.5)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+//            self.refreshConversationTableViewIfNeeded()
+//        }
     }
     
 }
@@ -217,12 +222,16 @@ extension QuanZiViewController{
         self.refreshConversationTableViewIfNeeded()
     }
     func updateBadgeValueForTabBarItem()  {
-        dispatch_async(dispatch_get_main_queue()) { 
-            let count = RCIMClient.sharedRCIMClient().getUnreadCount(self.displayConversationTypeArray)
+        
+        dispatch_sync(dispatch_get_main_queue()) {
+            let count = RCIMClient.sharedRCIMClient().getTotalUnreadCount()
+            let tab = self.tabBarController as! HKFTableBarController
+            let btn = tab.customTabBar.buttons.objectAtIndex(2) as! YJTabBarButton
             if count > 0{
-                self.tabBarController?.tabBar.showBadgeOnItemIndex(3, badgeValue: count)
+                btn.badgeValue = count.description
+                 self.conversationListTableView.reloadData()
             }else{
-                self.tabBarController?.tabBar.hideBadgeOnItemIndex(0)
+                btn.badgeValue = "0"
             }
         }
     }

@@ -42,7 +42,19 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         
         manger.delegate = self
         manger.startUpdatingLocation()
+        
     }
+    internal class func sharedManager() -> HKFTableBarController {
+        
+        struct Static {
+            //Singleton instance. Initializing keyboard manger.
+            static let kbManager = HKFTableBarController()
+        }
+        
+        /** @return Returns the default singleton instance. */
+        return Static.kbManager
+    }
+    
     
     func amapLocationManager(manager: AMapLocationManager!, didFailWithError error: NSError!) {
         
@@ -70,7 +82,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         customTabBar.backgroundColor = UIColor.whiteColor()
         customTabBar.delegate = self
         customTabBar.items = self.items as [AnyObject]
-        customTabBar.btn.badgeValue = "99+"
+        
         
         self.view.addSubview(customTabBar)
         self.tabBar.removeFromSuperview()

@@ -10,7 +10,7 @@
 
 #import "UIView+Frame.h"
 //#import "UIControl+Custom.h"
-
+#import "UIButton+Badge.h"
 #define YJImageRidio 0.7
 
 @interface YJTabBarButton ()

@@ -55,8 +55,9 @@ class ConfirmOldPw: UIView {
         //布局
         self.frame = CGRect(x: 0, y: 0, width: screen_width, height: screen_height)
         self.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
-        tap.addTarget(self, action: #selector(ConfirmOldPw.dismiss))
-        self.addGestureRecognizer(tap)
+        //添加点击手势 达到 diss效果
+//        tap.addTarget(self, action: #selector(ConfirmOldPw.dismiss))
+//        self.addGestureRecognizer(tap)
         //白底
         whiteView.frame = CGRect(x: 30, y: screen_height/2 - 100, width: screen_width - 60, height: 200)
         whiteView.backgroundColor = UIColor.whiteColor()

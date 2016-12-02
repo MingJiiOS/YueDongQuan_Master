@@ -1,7 +1,7 @@
 //
 //	TotalRankArray.swift
 //
-//	Create by 方果 黄 on 11/11/2016
+//	Create by 方果 黄 on 2/12/2016
 //	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
@@ -10,7 +10,7 @@ import Foundation
 
 class TotalRankArray : NSObject, NSCoding{
 
-	var dongdou : String!
+	var dongdou : Int!
 	var name : String!
 	var originalSrc : String!
 	var uid : Int!
@@ -20,7 +20,7 @@ class TotalRankArray : NSObject, NSCoding{
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: NSDictionary){
-		dongdou = dictionary["dongdou"] as? String
+		dongdou = dictionary["dongdou"] as? Int
 		name = dictionary["name"] as? String
 		originalSrc = dictionary["originalSrc"] as? String
 		uid = dictionary["uid"] as? Int
@@ -31,7 +31,7 @@ class TotalRankArray : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
 		if dongdou != nil{
 			dictionary["dongdou"] = dongdou
 		}
@@ -53,7 +53,7 @@ class TotalRankArray : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         dongdou = aDecoder.decodeObjectForKey("dongdou") as? String
+         dongdou = aDecoder.decodeObjectForKey("dongdou") as? Int
          name = aDecoder.decodeObjectForKey("name") as? String
          originalSrc = aDecoder.decodeObjectForKey("originalSrc") as? String
          uid = aDecoder.decodeObjectForKey("uid") as? Int

@@ -17,6 +17,38 @@
             endingLineNumber = "139"
             landmarkName = "checkSites()"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YueDongQuan.SelectChangDiViewController.checkSites () -&gt; ()"
+                  moduleName = "YueDongQuan"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HFG/Desktop/%E5%A5%BD%E7%90%83%E7%83%AD%E6%96%87%E4%BB%B6%E5%A4%B9/develop/20161020/YueDongQuan_Master/YueDongQuan/%E5%9C%88%E5%AD%90/Controller/SelectChangDiViewController.swift"
+                  timestampString = "502361403.955919"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "139"
+                  endingLineNumber = "139"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YueDongQuan.SelectChangDiViewController.(checkSites () -&gt; ()).(closure #1)"
+                  moduleName = "YueDongQuan"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HFG/Desktop/%E5%A5%BD%E7%90%83%E7%83%AD%E6%96%87%E4%BB%B6%E5%A4%B9/develop/20161020/YueDongQuan_Master/YueDongQuan/%E5%9C%88%E5%AD%90/Controller/SelectChangDiViewController.swift"
+                  timestampString = "502361403.958842"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "141"
+                  endingLineNumber = "141"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

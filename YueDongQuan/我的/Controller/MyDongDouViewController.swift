@@ -140,7 +140,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
                     total.mydongdou = self.myDongdou
                     if self.totalRankModel != nil{
                         total.totalRankModel = self.totalRankModel
-                        total.totalRankArray = self.totalRankArray
+                        total.totalRankArray = self.totalRankModel?.data.array
                         total.RedouCha = self.cha
                         total.rak = self.rak.description
                         self.push(total)
@@ -282,9 +282,9 @@ extension MyDongDouViewController {
                                                 
                                                 self.totalRankArray = self.totalRankModel?.data.array
                                                 //做倒序
-                                                self.totalRankArray!.sortInPlace({ (num1:TotalRankArray, num2:TotalRankArray) -> Bool in
-                                                    return Int(num1.dongdou) > Int(num2.dongdou)
-                                                })
+//                                                self.totalRankArray!.sortInPlace({ (num1:TotalRankArray, num2:TotalRankArray) -> Bool in
+//                                                    return Int(num1.dongdou) > Int(num2.dongdou)
+//                                                })
                                                 //循环整个rank数据
                                                 for id in self.totalRankArray!{
                                                     
@@ -295,7 +295,7 @@ extension MyDongDouViewController {
                                                         //取到当前下标数组的上一个数组
                                                         let ii = self.totalRankArray![self.rak-2]
                                                         //计算差量
-                                                        self.cha = Int(ii.dongdou)! - Int(id.dongdou)!
+//                                                        self.cha = Int(ii.dongdou)! - Int(id.dongdou)!
                                                       return
                                                     }
                                                 }

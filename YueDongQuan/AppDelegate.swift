@@ -17,7 +17,7 @@ let RONGCLOUDAPPKEY = "uwd1c0sxug581"
 @UIApplicationMain
 class AppDelegate: UIResponder,
 UIApplicationDelegate,
-UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
+UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMessageDelegate
 {
 
     var window: UIWindow?
@@ -50,7 +50,9 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         CLLocationManager().requestWhenInUseAuthorization()
         //融云
         RCIM.sharedRCIM().initWithAppKey(RONGCLOUDAPPKEY)
-        RCIMClient.sharedRCIMClient()
+        RCIM.sharedRCIM().receiveMessageDelegate = self
+        
+   
         //初始化融云即登录
         let manager = IQKeyboardManager.sharedManager()
         manager.enable = true
@@ -67,7 +69,10 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         RealReachability.sharedInstance().startNotifier()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(networkChanged), name: kRealReachabilityChangedNotification, object: nil)
          judgeReachbility()
-         self.window?.rootViewController = HKFTableBarController()
+        let tabbar = HKFTableBarController.sharedManager()
+        
+        
+         self.window?.rootViewController = tabbar
         //监测版本
          checkVersion()
         //MARK:自动登录
@@ -132,9 +137,30 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         self.window!.makeKeyAndVisible()
         return true
     }
-    
+    func onRCIMReceiveMessage(message: RCMessage!, left: Int32) {
+        
+        print("接收到消息 = ",message)
+        
+        
+        if UIApplication.sharedApplication().applicationState == .Active {
+            let unreadMessage = RCIMClient.sharedRCIMClient().getTotalUnreadCount()
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            if unreadMessage > 0 {
+                let tabbar = HKFTableBarController.sharedManager()
+                let btn:YJTabBarButton = tabbar.customTabBar.buttons.objectAtIndex(2) as! YJTabBarButton
+                btn.badgeValue = Int(unreadMessage).description
+               print("未读消息条数 = ",Int(unreadMessage))
+            }
+        }else if UIApplication.sharedApplication().applicationState == .Background || UIApplication.sharedApplication().applicationState == .Inactive{
+            
+             let unreadMessage = RCIMClient.sharedRCIMClient().getTotalUnreadCount()
+            UIApplication.sharedApplication().applicationIconBadgeNumber = Int(unreadMessage)
+            print("未读消息条数 = ",Int(unreadMessage))
+        }
+
+    }
     func getUserInfoDataBaseFromFMDB() -> NSArray  {
-        let modelAll = FLFMDBManager.shareManager().fl_searchModelArr(UserDataInfoModel) as! NSArray
+        let modelAll = FLFMDBManager.shareManager().fl_searchModelArr(UserDataInfoModel) as NSArray
         return modelAll
     }
     
@@ -173,15 +199,15 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     }
     //MARK:程序已经进入后台
     func applicationDidEnterBackground(application: UIApplication) {
-
+//      application.applicationIconBadgeNumber = 0
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-
+       application.applicationIconBadgeNumber = 0
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
-
+//       application.applicationIconBadgeNumber = 0
     }
 
     func applicationWillTerminate(application: UIApplication) {

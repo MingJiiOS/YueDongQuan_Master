@@ -484,7 +484,7 @@ extension FieldViewController {
         let para = ["cityname":cityname,"key":"f79792162ce1e684b8fb9afede3df581","dtype":"json"]
         print(para.description)
         
-        Alamofire.request(.POST, NSURL(string:"http://op.juhe.cn/onebox/weather/query")!, parameters: para).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string:"http://op.juhe.cn/onebox/weather/query")!, parameters: para).responseJSON { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
