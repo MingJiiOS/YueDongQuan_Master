@@ -183,7 +183,7 @@ class MineCell: UITableViewCell {
     }
     func config(model:myInfoModel)  {
         name.text = userInfo.name
-        let size = name.text!.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop!])
+        let size = name.text!.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop])
         name.snp_updateConstraints { (make) in
             make.width.equalTo(size.width + 10)
         }

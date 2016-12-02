@@ -18,13 +18,18 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     let cellID  = "HKFTableViewCell"
     private var TopMenuView: UIScrollView!//顶部按钮
     private var ContentView: UIScrollView!//容器
+    private var ordertemp = 0 {
+        didSet{
+            pullDownRef()
+        }
+    }//附近筛选参数
     
     private var menuBgView = UIView()
     private var menuArray = [String]()
     private var tableViewArray = [UITableView]()
     private var refreshTableView = UITableView()
     private var menuTitle = String()
-    private var requestCanShu = [String]()
+    private var requestCanShu = ["14","15","11","12","13"]
     
     private let http = DiscorveryDataAPI.shareInstance
     private var AllModelData = [DiscoveryArray]()
@@ -86,23 +91,85 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     /***********************************/
+    
+    
+    
+    @objc private func setNav(){
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_lanqiu"), style: UIBarButtonItemStyle.Plain, target: self, action: nil)
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 24.0 / 255, green: 90.0 / 255, blue: 172.0 / 255, alpha: 1.0)
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 65, height: 32))
+        let searchBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+        
+        searchBtn.setImage(UIImage(named: "ic_search"), forState: UIControlState.Normal)
+        searchBtn.addTarget(self, action: #selector(clickSearchBtn), forControlEvents: UIControlEvents.TouchUpInside)
+        rightView.addSubview(searchBtn)
+        let addBtn = UIButton(frame: CGRect(x: 33, y: 0, width: 32, height: 32))
+        addBtn.setImage(UIImage(named: "ic_add"), forState: UIControlState.Normal)
+        rightView.addSubview(addBtn)
+        addBtn.addTarget(self, action: #selector(clickAddBtn), forControlEvents: UIControlEvents.TouchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightView)
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+    }
+    
+    @objc private func clickSearchBtn(){
+        let searchVC = SearchController()
+        self.navigationController?.pushViewController(searchVC, animated: true)
+    }
+    
+    @objc private func clickAddBtn(sender:UIBarButtonItem,event:UIEvent){
+        FTPopOverMenu.showFromEvent(event, withMenu: ["二维码","上传场地","新建圈子"], imageNameArray: ["ic_erweima","ic_shangchuan","ic_xinjianquanzi"], doneBlock: { (index:Int) in
+            
+            switch index {
+            case 0:
+                NSLog("indext = \(index)")
+            case 1:
+                NSLog("indext = \(index)")
+            case 2:
+                NSLog("indext = \(index)")
+            default:
+                break
+            }
+            
+            }) { 
+                
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNav()
         manger.delegate = self
         self.edgesForExtendedLayout = .None
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(notifyChangeModel), name: "LastestOrderDataChanged", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(noDataNotifyProcess), name: "SenderNoDataNotify", object: nil)
         createMenu()
-        refreshTableView(0)
         
+        createFlowBtn()
         self.view.addSubview(self.keyboard)
         self.view.bringSubviewToFront(self.keyboard)
+        
+    }
+    
+    
+    
+    //创建一个悬浮的按钮
+    @objc private func  createFlowBtn(){
+        let flowView = UIImageView(frame: CGRect(x: ScreenWidth - 120, y: 40, width: 100, height: 40))
+        flowView.image = UIImage(named: "ic_float")
+        flowView.contentMode = .ScaleAspectFit
+        flowView.layer.masksToBounds = true
+        flowView.layer.cornerRadius = 10
+        self.view.addSubview(flowView)
+        self.view.bringSubviewToFront(flowView)
     }
 //MARK:判断视频是什么状态
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         manger.startUpdatingLocation()
+        
+        
         
     }
     override func shouldAutorotate() -> Bool {
@@ -117,7 +184,7 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
 //MARK:创建顶部按钮
     func createMenu(){
         self.menuArray = ["最新","关注","图片|视频","活动|约战", "求加入|招募"]
-        self.requestCanShu = ["14","15","11","12","13"]
+        
         TopMenuView = UIScrollView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 40))
         self.view.addSubview(TopMenuView)
         TopMenuView.scrollEnabled = true
@@ -167,11 +234,12 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             tableView.delegate = self
             tableView.dataSource = self
             tableView.registerClass(HKFTableViewCell.self, forCellReuseIdentifier: cellID)
-            tableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(NewDiscoveryVC.pullDownRef))
-            tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(NewDiscoveryVC.pullUpRef))
+            
             tableViewArray.append(tableView)
             scrollView.addSubview(tableView)
         }
+        
+        refreshTableView(0)
         
     }
 //MARK:刷新tableview
@@ -179,24 +247,25 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         
         refreshTableView = tableViewArray[index]
-        
+        refreshTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(NewDiscoveryVC.pullDownRef))
+        refreshTableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(NewDiscoveryVC.pullUpRef))
         refreshTableView.estimatedRowHeight = 200
         var frame = refreshTableView.frame
         frame.origin.x = ScreenWidth * CGFloat(index)
         refreshTableView.frame = frame
         menuTitle = menuArray[index]
-        let typeIDTemp = requestCanShu[index]
+        let typeIDTemp = self.requestCanShu[index]
         self.typeID = typeIDTemp
         pullDownRef()
     }
 //MARK:下拉刷新
     @objc private func pullDownRef(){
         http.removeAllModelData()
-        http.requestLastestDataList(self.typeID, pageNo: 1,longitude: self.userLongitude,latitude: self.userLatitude)
+        http.requestLastestDataList(self.typeID, pageNo: 1,longitude: self.userLongitude,latitude: self.userLatitude ,order:self.ordertemp)
     }
 //MARK:上拉加载更多
     @objc private func pullUpRef(){
-       http.requestLastestMoreDataList(self.typeID,longitude: self.userLongitude,latitude: self.userLatitude)
+       http.requestLastestMoreDataList(self.typeID,longitude: self.userLongitude,latitude: self.userLatitude ,order:self.ordertemp)
     }
     
     @objc private func notifyChangeModel(){
@@ -263,6 +332,13 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         //            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
         //            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
         return cell!
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let newDiscoveryDetailVC = NewDiscoveryDetailVC()
+        newDiscoveryDetailVC.newDiscoveryArray  = [self.AllModelData[indexPath.row]]
+        self.navigationController?.pushViewController(newDiscoveryDetailVC, animated: true)
+        
     }
     
     
@@ -364,6 +440,7 @@ extension NewDiscoveryVC {
         self.userLongitude = location.coordinate.longitude
         
         manger.stopUpdatingLocation()
+        
     }
 }
 

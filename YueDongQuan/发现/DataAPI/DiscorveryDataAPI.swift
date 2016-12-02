@@ -83,9 +83,9 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
     }
     
     
-    func requestLastestDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
+    func requestLastestDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double,order:Int) {
         persitencyManager?.removeAllLastestData()
-        httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo,longitude:longitude,latitude: latitude )
+        httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo,longitude:longitude,latitude: latitude,order:order )
     }
     
     func requestImageDataList(typeId:String,pageNo:Int,longitude:Double,latitude:Double) {
@@ -124,7 +124,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         httpClient?.requestSay_SayMyNotifyData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
     }
     /*******************************************/
-    func requestLastestMoreDataList(typeId:String,longitude:Double,latitude:Double) {
+    func requestLastestMoreDataList(typeId:String,longitude:Double,latitude:Double,order:Int) {
         
 //        let cnt = (persitencyManager?.getLastestDefaultData().count)
 //        var pageNo = (cnt! + 10 - 1)/10
@@ -151,7 +151,7 @@ class DiscorveryDataAPI : DiscorveryHTTPClientDelegate{
         }
         
         
-        httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude)
+        httpClient?.requestSay_SayLatestData(typeId, pageNo: pageNo,longitude: longitude,latitude: latitude ,order:order)
     }
     
     func requestImageMoreDataList(typeId:String,longitude:Double,latitude:Double) {

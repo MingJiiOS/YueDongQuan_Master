@@ -80,6 +80,8 @@
 //加密文件
 #import "NSObject+EncodingString.h"
 #import "NSData+AES256.h"
+//弹出选择视图
+#import "FTPopOverMenu.h"
 //#import <ShareSDK/ShareSDK.h>
 ////#import <ShareSDKUI/ShareSDK+SSUI.h>
 //#import <ShareSDKConnector/ShareSDKConnector.h>

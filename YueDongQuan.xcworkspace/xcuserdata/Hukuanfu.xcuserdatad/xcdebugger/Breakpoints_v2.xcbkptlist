@@ -4,6 +4,22 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/DiscoverViewController.swift"
+            timestampString = "502340492.087511"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
+            landmarkName = "chatKeyBoardSendText(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
@@ -19,14 +35,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/DiscoverViewController.swift"
-            timestampString = "501078213.267983"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/FieldViewController.swift"
+            timestampString = "502360445.909099"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "448"
-            endingLineNumber = "448"
-            landmarkName = "chatKeyBoardSendText(text:)"
-            landmarkType = "7">
+            startingLineNumber = "459"
+            endingLineNumber = "459"
+            landmarkName = "request(_:longitude:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -35,14 +51,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YueDongQuan/&#x7b2c;&#x4e09;&#x65b9;/NSObject+Emoji_String.m"
-            timestampString = "501081864.486865"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/FieldViewController.swift"
+            timestampString = "502360684.326969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "-emojiToString:"
-            landmarkType = "7">
+            startingLineNumber = "517"
+            endingLineNumber = "517"
+            landmarkName = "requestFieldSignData(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

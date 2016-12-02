@@ -28,11 +28,11 @@ let kAuotoGapWithBaseGapTen = 10 * ScreenWidth / 320
 //MARK:自动间距 基础间距为 20
 let kAuotoGapWithBaseGapTwenty = 20 * ScreenWidth / 320
 //MARK:全局字体 大号
-let kAutoFontWithTop = UIFont(name: "Arial", size: kTopScaleOfFont)
+var kAutoFontWithTop : UIFont = UIFont(name: "Arial", size: kTopScaleOfFont)!
 //MARK:全局字体 中号
-let kAutoFontWithMid = UIFont(name: "Arial", size: kMidScaleOfFont)
+var kAutoFontWithMid : UIFont = UIFont(name: "Arial", size: kMidScaleOfFont)!
 //MARK:全局字体 小号
-let kAutoFontWithSmall = UIFont(name: "Arial", size: kSmallScaleOfFont)
+let kAutoFontWithSmall : UIFont = UIFont(name: "Arial", size: kSmallScaleOfFont)!
 //MARK:接口验证参数
 let v = NSObject.getEncodeString("20160901")
 
