@@ -246,7 +246,7 @@ extension SearchController {
                     do {
                         dict = try NSJSONSerialization.JSONObjectWithData(response.data!, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
                         
-                        NSLog("dict = \(dict!["data"]!["array"])")
+//                        NSLog("dict = \(dict!["data"]!["array"])")
                         let model = SearchCircleModel.init(fromDictionary: dict!)
                         if model.code == "200" && model.flag == "1"{
                             

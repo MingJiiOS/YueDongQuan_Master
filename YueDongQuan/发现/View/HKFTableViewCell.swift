@@ -64,6 +64,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     var imageArry = [String]()
     
+    private var popView = SimplePopupView()
     
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -173,6 +174,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.contentView.addSubview(self.displayView)
         displayView.photoWidth = (ScreenWidth - 30)/3
         displayView.photoHeight = (ScreenWidth - 30)/3
+        displayView.scrollEnabled = false
         self.displayView.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(10)
             make.right.equalTo(-10)
@@ -281,7 +283,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         self.tableView?.separatorStyle = .None
         self.hyb_lastViewInCell = self.tableView
-        self.hyb_bottomOffsetToCell = 0
+        self.hyb_bottomOffsetToCell = 2
         
         
         
@@ -484,7 +486,13 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         return h
         
     }
-    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5
+    }
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        return view
+    }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -527,7 +535,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(myJubao))
         
-        let popView = SimplePopupView(frame: CGRect(x: 30, y: 50, width: 60, height: 30), andDirection: PopViewDirectionTop, andTitles: titleArr, andImages: nil, trianglePecent: 0.5)
+        popView = SimplePopupView(frame: CGRect(x: 30, y: 50, width: 60, height: 30), andDirection: PopViewDirectionTop, andTitles: titleArr, andImages: nil, trianglePecent: 0.5)
         popView.popTintColor  = UIColor.whiteColor()
         popView.popColor = UIColor.blackColor()
         popView.addGestureRecognizer(tap)
@@ -540,7 +548,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         let foundId = self.testModel?.id
         let typeId = self.testModel?.typeId
         self.delegate?.clickJuBaoBtnAtIndexPath(foundId!, typeId: typeId!)
-        
+        popView.hide()
     }
     
     

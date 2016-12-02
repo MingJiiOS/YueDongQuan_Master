@@ -235,8 +235,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         
         
         switch currentShowTableViewIndex {
-        case 0:
-            http.requestLastestDataList("17", pageNo: 1,longitude: self.userLongitude,latitude: self.userLatitude)
+        case 0: break
+//            http.requestLastestDataList("17", pageNo: 1,longitude: self.userLongitude,latitude: self.userLatitude)
         case 1:
             http.requestImageDataList("11", pageNo: 1,longitude: self.userLongitude,latitude: self.userLatitude)
         case 2:
@@ -262,7 +262,8 @@ class DiscoverViewController: UIViewController,MAMapViewDelegate,AMapLocationMan
         
         switch currentShowTableViewIndex {
         case 0:
-            http.requestLastestMoreDataList("17",longitude: self.userLongitude,latitude: self.userLatitude)
+            break
+//            http.requestLastestMoreDataList("17",longitude: self.userLongitude,latitude: self.userLatitude)
         case 1:
             http.requestImageMoreDataList("11",longitude: self.userLongitude,latitude: self.userLatitude)
         case 2:

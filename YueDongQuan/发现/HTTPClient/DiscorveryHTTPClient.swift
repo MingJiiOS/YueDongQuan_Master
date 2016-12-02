@@ -28,10 +28,10 @@ class DiscorveryHTTPClient {
     
     
     //17 请求发现页面最新的默认数据
-    func requestSay_SayLatestData(typeId:String,pageNo:Int,longitude:Double,latitude:Double){
+    func requestSay_SayLatestData(typeId:String,pageNo:Int,longitude:Double,latitude:Double,order:Int){
         let vcode = NSObject.getEncodeString("20160901")
         
-        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10,"longitude":longitude,"latitude":latitude]
+        let para = ["v":vcode,"uid":userInfo.uid.description,"typeId":typeId,"pageNo":pageNo,"pageSize":10,"longitude":longitude,"latitude":latitude,"order":order]
         print("para=\(para)")
         Alamofire.request(.POST, NSURL(string: testUrl + "/found")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
