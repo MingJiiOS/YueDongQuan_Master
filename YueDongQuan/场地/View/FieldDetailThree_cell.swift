@@ -37,7 +37,9 @@ class FieldDetailThree_cell: UITableViewCell {
     func configWithModel(model:ToDaySignArray){
         self.headerImage.sd_setImageWithURL(NSURL(string: model.originalSrc),placeholderImage: UIImage(named: "热动篮球LOGO"))
         self.nameLabel.text = model.name
-        
+        if model.endTime != 0 {
+            
+        }
 
     }
     

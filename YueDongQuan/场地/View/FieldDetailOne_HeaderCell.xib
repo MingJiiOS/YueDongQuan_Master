@@ -222,6 +222,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="签到" width="32" height="32"/>
+        <image name="签到" width="30" height="32"/>
     </resources>
 </document>

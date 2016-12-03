@@ -73,12 +73,21 @@ class FieldDetailOne_HeaderCell: UITableViewCell {
         self.FieldDetailImage.sd_setImageWithURL(NSURL(string: model.thumbnailSrc),placeholderImage: UIImage(named: "热动篮球LOGO"))
         self.FieldDetailName.text = model.name
         if model.distance > 1000 {
-            self.FieldDeatailDistance.text = String(format: "距离%0.2fkm",model.distance/1000)
+            self.FieldDeatailDistance.text = "距离\(model.distance/1000)km"
         }else{
-            self.FieldDeatailDistance.text = String(format: "距离%0.2fm",model.distance)
+            self.FieldDeatailDistance.text = "距离\(model.distance)m"
+        }
+        if model.startTime != nil || model.endTime != nil {
+            if model.startTime != 0 && model.endTime != 0 {
+                self.FieldDetail_SignBtn.setTitle("已签到", forState: UIControlState.Normal)
+            }
         }
         
-        self.FieldDetailPrice.text = String(format: "价格:%@",model.cost)
+        
+        if model.cost != nil {
+            self.FieldDetailPrice.text = String(format: "价格:%@",model.cost)
+        }
+        
     }
     
     

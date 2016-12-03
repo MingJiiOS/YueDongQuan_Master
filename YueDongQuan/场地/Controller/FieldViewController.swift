@@ -30,6 +30,8 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     var fieldModel : FieldModel?
     var weatherModel : WeatherModel?
     
+    private var userLocationData = CLLocation()
+    
     private var fieldAnimation = [CLLocation](){
         didSet{
             let annotation = MJRedAnnotation()
@@ -50,7 +52,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     override func viewDidLoad() {
         super.viewDidLoad()
         self.edgesForExtendedLayout = .None
-        
+        setNav()
         
         FieldContentView = UIScrollView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight - 64 - 49))
         self.view.addSubview(FieldContentView)
@@ -214,7 +216,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         manger.startUpdatingLocation()
-        setNav()
+        
         
         
     }
@@ -271,7 +273,9 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     
     func amapLocationManager(manager: AMapLocationManager!, didUpdateLocation location: CLLocation!) {
         _mapView?.setCenterCoordinate(CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), animated: true)
-        request(location.coordinate.latitude, longitude: location.coordinate.longitude)
+        self.userLocationData = CLLocation(latitude: CLLocationDegrees(location.coordinate.latitude), longitude: CLLocationDegrees(location.coordinate.longitude))
+        
+        requestFieldData(location.coordinate.latitude, longitude: location.coordinate.longitude)
         manger.stopUpdatingLocation()
         
         manager.requestLocationWithReGeocode(true) { (location:CLLocation!, geoCode:AMapLocationReGeocode!, error:NSError!) in
@@ -343,9 +347,9 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
+        NSLog("----------\(indexPath.row)")
         let cell : NewFieldCellTableViewCell = tableView.dequeueReusableCellWithIdentifier("NewFieldCellTableViewCell", forIndexPath: indexPath) as! NewFieldCellTableViewCell
-        cell.indexPathTag = indexPath.row
+        cell.indexPathTag = indexPath
         let model = self.fieldModel?.data.array[indexPath.row]
         cell.configWithModel(model!)
         
@@ -362,9 +366,26 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         self.navigationController?.pushViewController(vc, animated: true)
     }
     //MARK:点击cell中的签到按钮
-    func clickFieldSignBtn(sender: UIButton) {
-        let sitesId = self.fieldModel?.data.array[sender.tag].id
-        requestFieldSignData(sitesId!)
+    func clickFieldSignBtn(sender: NSIndexPath) {
+        print(sender.row)
+        
+        let sitesId = self.fieldModel?.data.array[sender.row].id
+        
+        let model = self.fieldModel?.data.array[sender.row]
+        NSLog("\(model?.startTime)---\(model?.endTime)")
+        if (model?.startTime == nil && model?.endTime == nil) {
+            //签到
+            requestFieldSignData(sitesId!)
+        }else if (model?.startTime != 0 && model?.endTime == nil ) {
+            //签退
+            requestFieldSignExitData(sitesId!)
+            
+        }else if (model?.endTime != 0 && model?.startTime != 0) {
+            requestFieldSignExitData(sitesId!)
+            
+        }
+        
+        
     }
     
     
@@ -445,7 +466,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
  */
 
 extension FieldViewController {
-    func request(latitude:Double,longitude:Double){
+    func requestFieldData(latitude:Double,longitude:Double){
         let v = NSObject.getEncodeString("20160901")
         
         let para = ["v":v,"latitude":latitude,"longitude":longitude,"uid":userInfo.uid]
@@ -466,6 +487,7 @@ extension FieldViewController {
                         let loctionTemp = CLLocation(latitude: CLLocationDegrees(item.latitude), longitude: CLLocationDegrees(item.longitude))
                         self.fieldAnimation.append(loctionTemp)
                     }
+                    
                     
                     
                     self.fieldTable.reloadData()
@@ -518,7 +540,9 @@ extension FieldViewController {
                 let dict = (json.object) as! NSDictionary
                 let mysignModel = MySignModel.init(fromDictionary: dict)
                 
-                
+                if mysignModel.code == "200" && mysignModel.flag == "1" {
+                    self.requestFieldData(self.userLocationData.coordinate.latitude, longitude: self.userLocationData.coordinate.longitude)
+                }
                 
                 
             case .Failure(let error):
@@ -526,6 +550,35 @@ extension FieldViewController {
             }
         }
         
+    }
+    
+    
+    internal func requestFieldSignExitData(siteId:Int){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":userInfo.uid,"signId":siteId]
+        print(para.description)
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/exitsite")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                //                NSLog("json1=\(json)")
+                let dict = (json.object) as! NSDictionary
+                let mysignModel = MySignModel.init(fromDictionary: dict)
+                
+                if mysignModel.code == "200" && mysignModel.flag == "1" {
+                    self.requestFieldData(self.userLocationData.coordinate.latitude, longitude: self.userLocationData.coordinate.longitude)
+                }
+
+                
+                
+                
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
     }
     
     

@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/FieldViewController.swift"
-            timestampString = "502360445.909099"
+            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/NewDiscoveryVC.swift"
+            timestampString = "502376426.827503"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "459"
-            endingLineNumber = "459"
-            landmarkName = "request(_:longitude:)"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "clickFlowViewBtn(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,11 +42,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/FieldViewController.swift"
-            timestampString = "502360684.326969"
+            timestampString = "502447826.295356"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "517"
-            endingLineNumber = "517"
+            startingLineNumber = "384"
+            endingLineNumber = "384"
+            landmarkName = "clickFieldSignBtn(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/FieldViewController.swift"
+            timestampString = "502445747.418967"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "543"
+            endingLineNumber = "543"
             landmarkName = "requestFieldSignData(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -57,46 +73,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/NewDiscoveryVC.swift"
-            timestampString = "502376426.827503"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/FieldViewController.swift"
+            timestampString = "502445868.647709"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "clickFlowViewBtn(_:)"
+            startingLineNumber = "544"
+            endingLineNumber = "544"
+            landmarkName = "requestFieldSignData(_:)"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YueDongQuan.NewDiscoveryVC.(clickFlowViewBtn in _F64E1035CBCDF1FF77A8E9184D450F63) (__ObjC.UIButton) -&gt; ()"
-                  moduleName = "YueDongQuan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/LastNewProject/YueDongQuan_Master/YueDongQuan/%E5%8F%91%E7%8E%B0/Controller/NewDiscoveryVC.swift"
-                  timestampString = "502381045.513762"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "177"
-                  endingLineNumber = "177"
-                  offsetFromSymbolStart = "19">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YueDongQuan.NewDiscoveryVC.((clickFlowViewBtn in _F64E1035CBCDF1FF77A8E9184D450F63) (__ObjC.UIButton) -&gt; ()).(closure #1)"
-                  moduleName = "YueDongQuan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/LastNewProject/YueDongQuan_Master/YueDongQuan/%E5%8F%91%E7%8E%B0/Controller/NewDiscoveryVC.swift"
-                  timestampString = "502381045.514003"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "179"
-                  endingLineNumber = "179"
-                  offsetFromSymbolStart = "8">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/FieldViewController.swift"
+            timestampString = "502447652.799562"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "378"
+            endingLineNumber = "378"
+            landmarkName = "clickFieldSignBtn(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x573a;&#x5730;/Controller/FieldViewController.swift"
+            timestampString = "502447654.180199"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
+            landmarkName = "clickFieldSignBtn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
