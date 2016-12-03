@@ -27,7 +27,7 @@ class DiscoveryArray{
     var name : String!
     var compressUrl : String!
     var isPraise : Int!
-    var distance : Double!
+    var distance : Int!
     var uid : Int!
     var vPreviewThu : String!
 	/**
@@ -91,7 +91,7 @@ class DiscoveryArray{
         }
         isPraise = dictionary["isPraise"] as? Int
         
-        distance = dictionary["distance"] as? Double
+        distance = dictionary["distance"] as? Int
         
         uid = dictionary["uid"] as? Int
         

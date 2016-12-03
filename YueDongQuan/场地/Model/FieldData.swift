@@ -19,19 +19,9 @@ class FieldData{
 		array = [FieldArray]()
 		if let arrayArray = dictionary["array"] as? [NSDictionary]{
 			for dic in arrayArray{
-                let model = FieldArray()
-                model.cost = dic["cost"] as? String
-                model.distance = dic["distance"] as? Float
-                model.id = dic["id"] as? Int
-                model.latitude = dic["latitude"] as? Float
-                model.longitude = dic["longitude"] as? Float
-                model.name = dic["name"] as? String
-                model.thumbnailSrc = dic["thumbnailSrc"] as? String
-                if let telphone = dic["telephone"] as? String{
-                    model.telephone = telphone
-                }
+                let arrayTemp = FieldArray.init(fromDictionary: dic)
                 
-				array.append(model)
+				array.append(arrayTemp)
 			}
 		}
 	}

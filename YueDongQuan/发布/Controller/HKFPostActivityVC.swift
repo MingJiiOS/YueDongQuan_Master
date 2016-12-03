@@ -66,7 +66,7 @@ class HKFPostActivityVC: UIViewController,UITextViewDelegate,AMapLocationManager
         let selectQzLabel = UILabel(frame: CGRect(x: CGRectGetMaxX(selectImg.frame) + 2, y: 3, width: ScreenWidth - 40, height: 24))
         selectQzLabel.text = "活动地址"
         selectQzLabel.font = UIFont.systemFontOfSize(12)
-        selectQzLabel.textAlignment = .Center
+        selectQzLabel.textAlignment = .Left
         selectQzLabel.textColor = UIColor.blackColor()
         selectQZView.addSubview(selectQzLabel)
         

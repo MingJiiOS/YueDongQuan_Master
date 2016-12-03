@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import TZImagePickerController
 
 
 class CheckDataInfo {
@@ -19,11 +20,11 @@ class CheckDataInfo {
     var startTime = Int()
 }
 
-class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionSheetDelegate,AMapLocationManagerDelegate {
+class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionSheetDelegate,TZImagePickerControllerDelegate {
 
     var controllerAry = NSMutableArray()
     var items = NSMutableArray()
-    var manger = AMapLocationManager()
+    
     let discover = NewDiscoveryVC()
     let changDi = FieldViewController()
     
@@ -33,6 +34,8 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     var checkModel : CheckModel!
     var dataInfo = CheckDataInfo()
     
+    private var clickPushIndex = 0
+    
     var customTabBar : YJTabBar!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +43,6 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         setUpAllChildVIewController()
         setUpTabBar()
         
-        manger.delegate = self
-        manger.startUpdatingLocation()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loginSuccess), name: "UserLoginSuccess", object: nil)
         
@@ -60,19 +61,6 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     func loginSuccess()  {
         let btn = customTabBar.buttons.objectAtIndex(0) as! YJTabBarButton
         customTabBar.btnClick(btn)
-    }
-    func amapLocationManager(manager: AMapLocationManager!, didFailWithError error: NSError!) {
-        
-    }
-    
-    func amapLocationManager(manager: AMapLocationManager!, didUpdateLocation location: CLLocation!) {
-        let latitude = location.coordinate.latitude
-        let longitude = location.coordinate.longitude
-        
-        manger.stopUpdatingLocation()
-        
-        checkFielSignYesAndNo(latitude, lng: longitude)
-        
     }
     
     override var hidesBottomBarWhenPushed: Bool{
@@ -123,18 +111,6 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         }
         
         
-        if index == 1 {
-            if dataInfo.flag {
-//                NSLog("xxxxxxx")
-                let notify = ["siteId":dataInfo.siteId,"startTime":dataInfo.startTime,"distance":dataInfo.distance,"nowTime":dataInfo.nowTime]
-                let notice = NSNotification(name: "CheckSignInfoProcess", object: notify)
-                NSNotificationCenter.defaultCenter().postNotification(notice)
-                dataInfo.flag = false
-                
-            }
-            
-        }
-        
         self.selectedIndex = index
         
     }
@@ -156,11 +132,16 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         switch btn.tag {
         case 0:
 //            NSLog("第\(0)个按钮被点击了")
-            let postImageVC = HKFPostPictureSayVC()
-            let nav = CustomNavigationBar(rootViewController: postImageVC)
-            self.presentViewController(nav, animated: false, completion: {
-                
-            })
+            
+            self.clickPushIndex = 0
+            let imagePickerVc = TZImagePickerController(maxImagesCount: 9, columnNumber: 3, delegate: self)
+            imagePickerVc.allowPickingVideo = false
+            imagePickerVc.allowPickingImage = true
+            imagePickerVc.allowPickingOriginalPhoto = true
+            imagePickerVc.sortAscendingByModificationDate = true
+            imagePickerVc.autoDismiss = false
+            self.presentViewController(imagePickerVc, animated: true, completion: nil)
+            
 //            postImageVC.hidesBottomBarWhenPushed = true
 //            self.navigationController?.pushViewController(postImageVC, animated: true)
 //            postImageVC.hidesBottomBarWhenPushed = false
@@ -168,11 +149,15 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
             
         case 1:
 //            NSLog("第\(1)个按钮被点击了")
-            let postVideo = HKFPostVideoSayVC()
-            let nav = CustomNavigationBar(rootViewController: postVideo)
-            self.presentViewController(nav, animated: false, completion: {
-                
-            })
+            self.clickPushIndex = 1
+            
+            let imagePickerVc = TZImagePickerController(maxImagesCount: 1, columnNumber: 1, delegate: self)
+            imagePickerVc.allowPickingVideo = true
+            imagePickerVc.allowPickingImage = false
+            imagePickerVc.allowPickingOriginalPhoto = false
+            imagePickerVc.sortAscendingByModificationDate = true
+            imagePickerVc.allowTakePicture = false
+            self.presentViewController(imagePickerVc, animated: true, completion: nil)
         case 2:
 //            NSLog("第\(2)个按钮被点击了")
             let postZhaoMu = HKFPostRecruitmentVC()
@@ -209,39 +194,6 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     }
     
     
-    func checkFielSignYesAndNo(lat:Double,lng:Double){
-        let v = NSObject.getEncodeString("20160901")
-        
-        let para = ["v":v,"uid":userInfo.uid,"lat":lat,"lng":lng]
-        print(para.description)
-        
-        Alamofire.request(.POST, NSURL(string: testUrl + "/getsigninfo")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
-            switch response.result {
-            case .Success:
-                let json = JSON(data: response.data!)
-                
-//                NSLog("checkJson=\(json)")
-                _ = (json.object) as! NSDictionary
-                
-                
-//                if (dict["code"]! as! String == "200" && dict["flag"]! as! String == "1"){
-//                        self.checkModel = CheckModel.init(fromDictionary: dict)
-//                    if (self.checkModel.data.flag == true) {
-//                        self.dataInfo.distance = self.checkModel.data.distance
-//                        self.dataInfo.flag = self.checkModel.data.flag
-//                        self.dataInfo.nowTime = self.checkModel.data.nowTime
-//                        self.dataInfo.startTime = self.checkModel.data.startTime
-//                        self.dataInfo.siteId = self.checkModel.data.siteId
-//                    }
-//                    
-//                }
-                
-                
-            case .Failure(let error):
-                print(error)
-            }
-        }
-    }
     
     
 
@@ -249,6 +201,46 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    func imagePickerControllerDidCancel(picker: TZImagePickerController!) {
+        
+    }
+    
+    func imagePickerController(picker: TZImagePickerController!, didFinishPickingVideo coverImage: UIImage!, sourceAssets asset: AnyObject!) {
+        
+        let postVideo = HKFPostVideoSayVC()
+        postVideo.mutableVideo = NSMutableArray(array: [coverImage])
+//        let nav = CustomNavigationBar(rootViewController: postVideo)
+        picker.pushViewController(postVideo, animated: false)
+    }
+    
+    func imagePickerController(picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [AnyObject]!, isSelectOriginalPhoto: Bool) {
+        
+        
+        if clickPushIndex == 0 {
+            
+            let postImageVC = HKFPostPictureSayVC()
+            postImageVC.selectedImages = photos!
+            postImageVC.mutableArray = NSMutableArray(array: photos!)
+//            let nav = CustomNavigationBar(rootViewController: postImageVC)
+//            self.navigationController?.pushViewController(nav, animated: true)
+            picker.pushViewController(postImageVC, animated: true)
+        }
+//        self.selectedImages = photos
+//        self.publishPhotosView.reloadDataWithImages(NSMutableArray(array: photos))
+        
+    }
+    
+    func imagePickerController(picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [AnyObject]!, isSelectOriginalPhoto: Bool, infos: [[NSObject : AnyObject]]!) {
+        
+    }
+    
+    deinit{
+        NSNotificationCenter .defaultCenter() .removeObserver(self)
+    }
+    
+    
     
 
     /*
@@ -262,3 +254,6 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     */
 
 }
+
+
+
