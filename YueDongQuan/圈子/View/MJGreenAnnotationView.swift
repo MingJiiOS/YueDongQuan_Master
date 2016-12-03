@@ -48,32 +48,43 @@ class MJRedAnnotationView: MAAnnotationView {
     
 }
 class MJOrangeAnnotationView: MAAnnotationView{
+    var
+    sitsName : String? = ""
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
-    init!(annotation: MAAnnotation!, reuseIdentifier: String!,siteName:String!) {
+  override  init!(annotation: MAAnnotation!, reuseIdentifier: String!) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
-        let size = siteName.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop])
+//        let siteArr = siteNameAry as! [CirclesArray]
+//        
+//        for item in 0...siteArr.count - 1 {
+        
+             let size = sitsName!.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop])
+            
+            self.image = UIImage().GetImageWithColor(UIColor(red: 1, green: 57/255, blue: 0, alpha: 1), width: size.width + 10, height: 30, cornerRadius: 0)
+            let label = UILabel(frame: CGRect(x: 5, y: 0, width: size.width, height: 30))
+            label.text = sitsName
+            label.textAlignment = .Center
+            label.adjustsFontSizeToFitWidth = true
+            label.textColor = UIColor.whiteColor()
+            self .addSubview(label)
+            let ref = trangleRef()
+            ref.fillcolor = UIColor(red: 1, green: 57/255, blue: 0, alpha: 1)
+            ref.frame = CGRect(x: 0, y: 30, width: size.width + 10, height: 10)
+            self .addSubview(ref)
+            ref.backgroundColor = UIColor.clearColor()
+            
+            self.canShowCallout = true
+            self.calloutOffset = CGPoint(x: -5, y: 0)
+            self.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure)
+//        }
+       
 
         
         
-        self.image = UIImage().GetImageWithColor(UIColor(red: 1, green: 57/255, blue: 0, alpha: 1), width: size.width + 10, height: 30, cornerRadius: 0)
-        let label = UILabel(frame: CGRect(x: 5, y: 0, width: size.width, height: 30))
-        label.text = siteName
-        label.textAlignment = .Center
-        label.adjustsFontSizeToFitWidth = true
-        label.textColor = UIColor.whiteColor()
-        self .addSubview(label)
-        let ref = trangleRef()
-        ref.fillcolor = UIColor(red: 1, green: 57/255, blue: 0, alpha: 1)
-        ref.frame = CGRect(x: 0, y: 30, width: size.width + 10, height: 10)
-        self .addSubview(ref)
-        ref.backgroundColor = UIColor.clearColor()
-        
-        self.canShowCallout = true
-        self.calloutOffset = CGPoint(x: -5, y: 0)
-        self.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure)
+       
         
     }
     

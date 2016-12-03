@@ -48,6 +48,28 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
     deinit{
         print("deinit")
     }
+    
+    func createPushNociteBtn()  {
+        let btn = UIButton(type: .Custom)
+        btn.frame = CGRect(x: 0, y: ScreenHeight, width: ScreenWidth, height: 49)
+        self.view .addSubview(btn)
+//        btn.snp_makeConstraints { (make) in
+//            make.left.right.equalTo(0)
+//            make.bottom.equalTo(49)
+//            make.height.equalTo(49)
+//        }
+        btn.backgroundColor = kBlueColor
+        btn.setTitle("发布公告", forState: UIControlState.Normal)
+        btn.addTarget(self, action: #selector(toPush), forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
+    func toPush()  {
+        let push = publishNoticeViewController()
+        push.circleId = self.circleid
+        self.push(push)
+    }
+    
+    
     func creatView()  {
         
         
@@ -81,7 +103,7 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
             sendNewNotice.snp_makeConstraints { (make) in
                 make.left.right.equalTo(0)
                 make.height.equalTo(44)
-                make.bottom.equalTo(0)
+                make.bottom.equalTo(49)
             }
             sendNewNotice.backgroundColor = UIColor(red: 0 / 255, green: 125 / 255, blue: 255 / 25, alpha: 1)
             sendNewNotice.setTitle("发布新公告", forState: UIControlState.Normal)

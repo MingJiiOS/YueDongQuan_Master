@@ -47,7 +47,7 @@ class MJCommentCell: UITableViewCell {
     func configCellWithModel(model:myFoundComment)  {
      let comId = model.commentId
         if comId != 0 {
-            if model.uid == model.commentId{
+            if userInfo.uid == model.uid{
                 let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:  %@", model.netName,model.netName,model.content))
                 attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
                                              range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:model.netName).length))
@@ -58,25 +58,25 @@ class MJCommentCell: UITableViewCell {
                 
                 
             }else{
-               //两个不同的人相互回复
-                let dict = ["v":v,"operateId":userInfo.uid.description,"uid":model.commentId.description]
-                MJNetWorkHelper().checkHeInfo(heinfo, HeInfoModel: dict, success: { (responseDic, success) in
-                    if success {
-                     let ohterName = responseDic["data"]!["name"] as! String
-                        let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:  %@", model.netName,ohterName,model.content))
-                        //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-                       
-                        //设置字体颜色
-                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
-                            range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:ohterName).length))
-                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
-                            range: NSMakeRange(0, NSString(string:model.netName).length))
-                        
-                        self.contentLabel?.attributedText = attributeString
-                    }
-                    }, fail: { (error) in
-                        
-                })
+//               //两个不同的人相互回复
+//                let dict = ["v":v,"operateId":userInfo.uid.description,"uid":model.commentId.description]
+//                MJNetWorkHelper().checkHeInfo(heinfo, HeInfoModel: dict, success: { (responseDic, success) in
+//                    if success {
+//                     let ohterName = responseDic["data"]!["name"] as! String
+//                        let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:  %@", model.netName,ohterName,model.content))
+//                        //从文本0开始6个字符字体HelveticaNeue-Bold,16号
+//                       
+//                        //设置字体颜色
+//                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
+//                            range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:ohterName).length))
+//                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
+//                            range: NSMakeRange(0, NSString(string:model.netName).length))
+//                        
+//                        self.contentLabel?.attributedText = attributeString
+//                    }
+//                    }, fail: { (error) in
+//                        
+//                })
                 
             }
         }else{
@@ -92,7 +92,7 @@ class MJCommentCell: UITableViewCell {
 
         }
         
-        
+//
       
         
     }

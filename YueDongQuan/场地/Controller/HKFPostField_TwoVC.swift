@@ -27,8 +27,9 @@ class HKFPostField_TwoVC: UIViewController,FieldPostCellDelegate {
     private var field_Price : String?
     //场馆id
     private var field_Id : Int = 0
-    
+    //地址
     var addressTemp = String()
+    //用户位置
     var userLocationTemp = CLLocation()
     
     
@@ -164,6 +165,7 @@ class HKFPostField_TwoVC: UIViewController,FieldPostCellDelegate {
         sureBtn.setTitle("确认提交场馆信息", forState: UIControlState.Normal)
         sureBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         sureBtn.titleLabel?.font = kAutoFontWithTop
+        sureBtn.addTarget(self, action: #selector(clickSaveFieldInfoBtn), forControlEvents: UIControlEvents.TouchUpInside)
         let selectImage = UITapGestureRecognizer(target: self, action: #selector(clickSelectImage))
         fieldImage.userInteractionEnabled = true
         fieldImage.addGestureRecognizer(selectImage)
@@ -173,7 +175,7 @@ class HKFPostField_TwoVC: UIViewController,FieldPostCellDelegate {
     func dismissVC(){
         self.navigationController?.popViewControllerAnimated(true)
     }
-    
+    //MARK:上传场地
     internal func clickSaveFieldInfoBtn(){
 //        NSLog("点击了保存信息")
         
@@ -264,7 +266,8 @@ extension HKFPostField_TwoVC : UIImagePickerControllerDelegate,UINavigationContr
         self.fieldImage.image =  UIImage(data: data!);
         self.imageUrl = image
         self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
-        requestUpfile(image!)
+//        requestUpfile(image!)
+        self.table.reloadData()
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -383,7 +386,7 @@ extension HKFPostField_TwoVC:UITableViewDelegate,UITableViewDataSource{
                 
               
             }else{
-               self.addressTemp = (cell?.detailTextLabel?.text)!
+              cell?.detailTextLabel?.text = self.addressTemp
             }
 
             return cell!
@@ -391,6 +394,9 @@ extension HKFPostField_TwoVC:UITableViewDelegate,UITableViewDataSource{
            var cell:FieldPostCell = tableView.dequeueReusableCellWithIdentifier("FieldPostCell") as! FieldPostCell
             cell = FieldPostCell(style: .Default, reuseIdentifier: "FieldPostCell")
             cell.po_delegate = self
+            if self.imageUrl != nil {
+              cell.field_image.image = self.imageUrl
+            }
             
             return cell
         }

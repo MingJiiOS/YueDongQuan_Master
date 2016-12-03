@@ -223,10 +223,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
             alert.show()
         }
     }
-    //获取媒体资源
-    
-    
-    
+
     //选择图片完成后要执行的方法
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         //得到图片

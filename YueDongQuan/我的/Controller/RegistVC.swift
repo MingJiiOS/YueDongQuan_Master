@@ -140,7 +140,7 @@ class RegistVC: MainViewController,UITextFieldDelegate,RCAnimatedImagesViewDeleg
         headImage.layer.borderWidth = 1
         headImage.backgroundColor = kBlueColor
         headImage.layer.borderColor = UIColor.whiteColor().CGColor
-        headImage.sd_setImageWithURL(NSURL(string: "http://img.hb.aicdn.com/bcbc67dcae4b539f7c9afb30db12dcd0efebe5f0ca55-OT8oGG_fw658"), placeholderImage: UIImage(named: "热动篮球LOGO"))
+        headImage.image = UIImage(named: "热动篮球LOGO")
         
 
         

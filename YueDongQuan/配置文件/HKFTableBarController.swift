@@ -36,7 +36,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     var customTabBar : YJTabBar!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.tabBar.hidden = true
         setUpAllChildVIewController()
         setUpTabBar()
         

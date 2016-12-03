@@ -20,11 +20,17 @@ class CircleDataView: UIView, UITableViewDelegate,UITableViewDataSource{
     var circleLogo : String?
     var circleName : String?
     var circleSite : String?
+    typealias selectCellClourse = (indexpath:NSIndexPath)->Void
+    var selectBlock : selectCellClourse?
+    func selectWhichCell(block:selectCellClourse?)  {
+        selectBlock = block
+    }
+    let tableView = UITableView(frame: CGRectZero, style: .Grouped)
     
-    override init(frame: CGRect) {
+     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let tableView = UITableView(frame: CGRectZero, style: .Grouped)
+        
         self .addSubview(tableView)
         tableView.snp_makeConstraints { (make) in
             make.left.right.equalTo(0)
@@ -63,7 +69,7 @@ class CircleDataView: UIView, UITableViewDelegate,UITableViewDataSource{
             let array = ["圈子名","主场"]
             var cell = tableView.dequeueReusableCellWithIdentifier("cell")
             if cell == nil {
-               cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
+               cell = UITableViewCell(style: .Value1, reuseIdentifier: "cell")
             }
             
             cell?.textLabel?.text = array[indexPath.row]
@@ -101,6 +107,9 @@ class CircleDataView: UIView, UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if self.selectBlock != nil {
+            self.selectBlock!(indexpath:indexPath)
+        }
     }
 }
 

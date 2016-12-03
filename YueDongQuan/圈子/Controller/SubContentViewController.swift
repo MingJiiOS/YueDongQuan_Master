@@ -7,8 +7,10 @@
 //
 
 import UIKit
-
-class SubContentViewController: MainViewController,UITableViewDelegate,UITableViewDataSource {
+import Alamofire
+import SwiftyJSON
+import SVProgressHUD
+class SubContentViewController: MainViewController,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     //前一个页面点击的行数
     var   indexSection : NSInteger? = nil
     var   indexRow : NSInteger? = nil
@@ -26,8 +28,11 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
     var permissions1Uid : Int?
     //主场名
     var sitesName :String?
-    
+    var picker = UIImagePickerController()
+    var uploadimgaemodel : uploadImageModel?
+     let circleData = CircleDataView(frame: CGRectMake(0, 0, ScreenWidth, ScreenHeight))
 //    var consumeItems:Results<RLCircleMemberInfo>?
+    var newCircleName : String?
     
     override func viewDidLoad() {
  
@@ -53,6 +58,10 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
          self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
         self.tableView.reloadData()
         loadAllParterData()
+        if self.uploadimgaemodel != nil {
+        circleData.circleLogo = self.uploadimgaemodel?.data.url
+        }
+        
     }
   
     override func viewWillDisappear(animated: Bool) {
@@ -67,11 +76,34 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
         if sectionNumber == 0 {
             if Row == 0 {
                 self.title = "圈子资料"
-                let circleData = CircleDataView(frame: CGRectMake(0, 0, ScreenWidth, ScreenHeight))
+               
                 circleData.circleLogo = self.thumbnailSrc
                 circleData.circleName = self.circletitle
                 circleData.circleSite = self.sitesName
                 self.view = circleData
+                circleData.selectWhichCell({ (indexpath) in
+                    if indexpath.section == 0{
+                        self.selectCircleLogo()
+                    }else{
+                        if indexpath.row != 1{
+                            //改圈子名字
+                            var updateCircleNameField = ConfirmOldPw(title: "更改圈子名", message: nil, cancelButtonTitle: "取消", sureButtonTitle: "确定")
+                            updateCircleNameField.passWord.borderFillColor = kBlueColor
+                            updateCircleNameField.show()
+                            updateCircleNameField.clickIndexClosure({ (index, password) in
+                                if index == 1{
+                                    updateCircleNameField.dismiss()
+                                }else{
+                                    if password == ""{
+                                       updateCircleNameField.dismiss()
+                                    }else{
+                                        self.updateCircleName(password)
+                                    }
+                                }
+                            })
+                        }
+                    }
+                })
             }
         }
         if sectionNumber == 3 {
@@ -155,6 +187,133 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
             }
         }   
     }
+    
+    //MARK:创建新的圈子
+    func selectCircleLogo() {
+        let mjAlertView =  MJAlertView(title: nil, message: nil, cancelButtonTitle: "拍照", sureButtonTitle: "手机选择")
+        mjAlertView.show()
+        mjAlertView.clickIndexClosure({ (index) in
+            if index == 1{
+                //MARK:添加相机
+                self.addCarema()
+            }
+            if index == 2{
+                //MARK:打开本地相册
+                self.openPicLibrary()
+            }
+        })
+        
+    }
+    func addCarema()  {
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            
+            picker.delegate = self
+            picker.allowsEditing = true
+            picker.sourceType = .Camera
+            self.presentViewController(picker, animated: true, completion: nil)
+        }else{
+            let alert = SGAlertView(title: "⚠️警告", delegate: nil, contentTitle: "未检测您到摄像头", alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
+            alert.show()
+        }
+    }
+    
+    //选择图片完成后要执行的方法
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        //得到图片
+        let dic = info as NSDictionary
+        let image = dic.objectForKey(UIImagePickerControllerOriginalImage) as! UIImage
+        //图片存入相册
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        
+        //MARK:更换头像
+        Alamofire.upload(.POST, NSURL(string: kURL + "/fileUpload")!, multipartFormData: { (multipartFormData:MultipartFormData) in
+            
+            let data = UIImageJPEGRepresentation(image, 0.5)
+            let imageName = String(NSDate()) + ".png"
+            multipartFormData.appendBodyPart(data: data!, name: "file",fileName: imageName,mimeType: "image/png")
+            
+            let para = ["v":v,"uid":userInfo.uid.description,"file":""]
+            
+            
+            for (key,value) in para {
+                multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key )
+            }
+            
+            
+        }) { (encodingResult) in
+            switch encodingResult {
+            case .Success(let upload, _, _):
+                upload.responseString(completionHandler: { (response) in
+                    let json = JSON(data: response.data!)
+                    let dict = json.object
+                    print(json)
+                    let model = uploadImageModel(fromDictionary: dict as! NSDictionary)
+                    self.uploadimgaemodel = model
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.updateLogo(model.data.id.description)
+                    
+                })
+            case .Failure(let error):
+                print(error)
+            }
+        }
+        
+        
+    }
+    
+    func updateLogo(id:String)  {
+        let dict = ["v":v,
+                    "circleId":self.circleId,
+                    "logoId":id]
+        MJNetWorkHelper().circlelogo(circlelogo, circlelogoModel: dict, success: { (responseDic, success) in
+            SVProgressHUD.showSuccessWithStatus("成功")
+            SVProgressHUD.dismissWithDelay(0.5)
+            self.circleData.tableView.reloadData()
+            }) { (error) in
+                SVProgressHUD.showErrorWithStatus("失败")
+        }
+    }
+    
+    //点击取消
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    func openPicLibrary()  {
+        //相册是可以用模拟器打开
+        if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+            
+            picker.delegate = self
+            picker.allowsEditing = true
+            //打开相册选择照片
+            picker.sourceType = .PhotoLibrary
+            self.presentViewController(picker, animated: true, completion: nil)
+        }else{
+            let alert = UIAlertView(title: nil, message: "没有相机", delegate: self, cancelButtonTitle: "好的")
+            alert.show()
+        }
+    }
+    func updateCircleName(name:NSString) {
+        let dict:[String:AnyObject] = ["v":v,
+                    "uid":userInfo.uid.description,
+                    "circleId":self.circleId!,
+                    "name":name]
+        MJNetWorkHelper().updatecirclename(updatecirclename, updatecirclenameModel: dict, success: { (responseDic, success) in
+            let model = updateNameModel(fromDictionary: responseDic)
+            if model.code != "303"{
+            }else{
+                SVProgressHUD.showErrorWithStatus("失败")
+                SVProgressHUD.dismissWithDelay(1)
+                self.newCircleName = name as String
+                
+                self.circleData.circleName = self.newCircleName
+                self.circleData.tableView.reloadData()
+            }
+            }) { (error) in
+                SVProgressHUD.showErrorWithStatus("请求超时")
+                SVProgressHUD.dismissWithDelay(1)
+        }
+    }
+    
 }
 extension SubContentViewController {
     func loadAllParterData()  {

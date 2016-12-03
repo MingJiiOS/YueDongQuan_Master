@@ -29,7 +29,7 @@ class MJMessageCell: UITableViewCell {
     var displayView = PYPhotosView()
     var videoView = PYPhotosView()
     
-    var commentModel = MyFoundDataBase().comment
+    var commentModel = [myFoundComment]()
     
     var hefoundCommentModel = [HeFoundComment]()
     

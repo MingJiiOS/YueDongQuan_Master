@@ -9,7 +9,17 @@ import Foundation
 
 
 class myFoundComment{
-
+/*
+     "mainId" : 21,
+     "uid" : 21,
+     "foundId" : 58,
+     "id" : 63,
+     "time" : 1480763021000,
+     "content" : "The only thing ",
+     "netName" : "醉了",
+     "commentId" : 0
+     */
+    
 	var commentId : Int!
 	var content : String!
 	var foundId : Int!
@@ -18,7 +28,6 @@ class myFoundComment{
 	var netName : String!
 	var time : Int!
 	var uid : Int!
-	var comment : [myFoundComment]!
     var reply : String?
     
 

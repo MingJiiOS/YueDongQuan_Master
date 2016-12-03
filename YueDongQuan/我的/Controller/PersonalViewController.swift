@@ -23,7 +23,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
     //我的说说信息
     var myfoundmodel : myFoundModel?
     var replayTheSeletedCellModel : CommentModel?
-    var seletedCellHeight : CGFloat?
+    var seletedCellHeight : CGFloat? = 23.5
     var history_Y_offset : CGFloat? = 0.0
     
     var currentIndexPath : NSIndexPath?
@@ -58,7 +58,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-        if self.modelArrM.count != 0 {
+        if self.myfoundmodel?.code != "405" {
           self .creatViewWithSnapKit()
             self.view.addSubview(self.keyboard)
             self.view.bringSubviewToFront(self.keyboard)
@@ -142,26 +142,28 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
                 
             
             
-            requestCommentSay("", content: text, foundId: self.commentSayId!)
+            requestCommentSay("", content: text, foundId: self.commentSayId!,mainid: 0)
             
         case .selectCell :
-            let model = [myFoundComment]()
-            model[0].netName = userInfo.name
-            model[0].commentId = self.commentModel?.uid
-            model[0].content = text
-            model[0].foundId = self.commentSayId
-            model[0].id = (self.commentModel?.id)! + 1
-            model[0].reply = self.commentModel?.netName
-            model[0].time = Int(NSDate().timeIntervalSince1970)
-            model[0].uid = userInfo.uid
-            
+            let model = myFoundComment()
+            model.netName = userInfo.name
+            model.commentId = self.commentModel?.id
+            model.content = text
+            model.foundId = self.commentSayId
+            model.id = (self.commentModel?.id)! + 1
+            model.reply = self.commentModel?.netName
+            model.time = Int(NSDate().timeIntervalSince1970)
+            model.uid = userInfo.uid
+            model.mainId = self.commentModel?.mainId
           
-                self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!].comment.append(model[0])
+                self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!].comment.append(model)
                 let lastestModel  =  self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!]
                 reloadCellHeightForModelAndAtIndexPath(lastestModel!, indexPath: self.commentSayIndex!)
             
 //            self.reloadCellHeightForModel(self.myfoundmodel!, indexpath: (self.commentSayIndex)!)
-            requestCommentSay((self.commentModel?.uid.description)!, content: text, foundId: self.commentSayId!)
+            requestCommentSay((self.commentModel?.id.description)!,
+                              content: text,
+                              foundId: self.commentSayId!,mainid: (self.commentModel?.mainId)!)
             
         }
         
@@ -170,7 +172,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
     func reloadCellHeightForModelAndAtIndexPath(model: myFoundArray, indexPath: NSIndexPath) {
       
 //            self.MainBgTableView.reloadRowAtIndexPath(indexPath, withRowAnimation: UITableViewRowAnimation.Fade)
-         self.MainBgTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+//         self.MainBgTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         
     }
     //MARK:键盘通知 willShow
@@ -306,12 +308,12 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
                       let model =  DataSource().getmyfound(responseDic)
                         self.myfoundmodel = model
                         
-                        self.modelArrM.removeAllObjects()
+//                        self.modelArrM.removeAllObjects()
                         if model.code != "405"{
-                            for id in model.data.array{
-                                self.saveMyfoundDataWithFMDB(id,FLDBID: id.description)
-                                self.modelArrM.addObject(id)
-                            }
+//                            for id in model.data.array{
+//                                self.saveMyfoundDataWithFMDB(id,FLDBID: id.description)
+//                                self.modelArrM.addObject(id)
+//                            }
                         self.updateUI()
                         }
                         
@@ -369,12 +371,13 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         if commentModel.netName == userInfo.name {
             return
         }else{
+            self.history_Y_offset = commentCell.contentLabel?.convertRect(commentCell.contentLabel!.bounds, toView: wind).origin.y
+            self.seletedCellHeight = cellHeight
            self.keyboard.placeHolder = String(format: "回复%@", commentModel.netName)
             self.keyboard.keyboardUpforComment()
         }
         
-        self.history_Y_offset = commentCell.contentLabel?.convertRect(commentCell.contentLabel!.bounds, toView: wind).origin.y
-        self.seletedCellHeight = cellHeight
+        
         
     }
     //1.1默认返回3组
@@ -598,13 +601,13 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         if pagesize - judgeSayNumber >= singleRqusetNum + 1 {
             MainBgTableView.mj_footer.endRefreshingWithNoMoreData()
         }else{
-//            if self.myfoundmodel != nil {
-//                if self.myfoundmodel?.code != "405" {
-//                     MainBgTableView.mj_footer.endRefreshing()
-//                }else{
-//                    return
-//                }
-//            }
+            if self.myfoundmodel != nil {
+                if self.myfoundmodel?.code != "405" {
+                     MainBgTableView.mj_footer.endRefreshing()
+                }else{
+                    return
+                }
+            }
            
         }
        
@@ -614,13 +617,14 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
 extension PersonalViewController {
     //MARK:评论说说
     //评论说说
-    func requestCommentSay(commentId: String,content:String,foundId:Int){
+    func requestCommentSay(commentId: String,content:String,foundId:Int,mainid:Int){
         let v = NSObject.getEncodeString("20160901")
         let para = ["v":v,
                     "uid":userInfo.uid.description,
                     "commentId":commentId,
                     "content":content,
-                    "foundId":foundId]
+                    "foundId":foundId,
+                    "mainId":mainid]
         MJNetWorkHelper().commentfound(commentfound, commentfoundModel: para, success: { (responseDic, success) in
           let model =  DataSource().getcommentfoundData(responseDic)
             if model.code != "200"{

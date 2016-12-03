@@ -50,8 +50,8 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
     var dataArray = [AMapPOI]()
     var lastSelectIndex = NSIndexPath()
     
-    var addressString = String()
-    var selectUserLoaction = CLLocation()
+    var addressString : String?
+    var selectUserLoaction : CLLocation?
     
     private var annimationArray = [MJRedAnnotation]()
     
@@ -103,10 +103,27 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
     }
     func nextVC(){
         let postFieldVC = HKFPostField_TwoVC()
-        postFieldVC.addressTemp = self.addressString
-        postFieldVC.userLocationTemp = self.selectUserLoaction
-        self.navigationController?.pushViewController(postFieldVC, animated: false)
-        
+        if self.addressString != nil {
+            postFieldVC.addressTemp = self.addressString!
+            postFieldVC.userLocationTemp = self.selectUserLoaction!
+            self.navigationController?.pushViewController(postFieldVC, animated: true)
+        }else{
+            let model = dataArray.first
+            
+            self.addressString = model!.province + model!.city + model!.address + model!.name
+            let latitude = model!.location.latitude
+            let longtitude = model!.location.longitude
+            
+            let location = CLLocation(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longtitude))
+            self.selectUserLoaction = location
+            postFieldVC.addressTemp = self.addressString!
+            postFieldVC.userLocationTemp = self.selectUserLoaction!
+            if ((self.navigationController?.topViewController?.isKindOfClass(HKFPostField_OneVC)) != false){
+                self.navigationController?.pushViewController(postFieldVC, animated: true)
+            }
+        }
+       
+       
     }
     
     func dismissVC() {
@@ -264,7 +281,9 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
         btn.backgroundColor = UIColor.whiteColor()
         
         cell.accessoryView = btn
-        
+        if indexPath.row == 0 {
+            btn.selected()
+        }
         
         return cell
     }
@@ -273,31 +292,34 @@ class HKFPostField_OneVC: UIViewController,MAMapViewDelegate,AMapSearchDelegate,
     
     //MARK: 单选按钮选择代理
     func radioButtonSelectedAtIndex(index: UInt, inGroup groupID: String!, button: UIButton!) {
-        let cell = button.superview as! addressListCell
-        let model = cell.model
-        let address = model.province + model.city + model.address + model.name
-        print(address)
-        
-        let latitude = model.location.latitude
-        let longtitude = model.location.longitude
-        
-        let location = CLLocation(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longtitude))
-        print(location.description)
-        
-        
-        
-        self.selectUserLoaction = location
-        self.addressString = address
-        
-        let dict = ["address":address,"latitude":latitude,"longtitude":longtitude]
-        let notify = NSNotification(name: "发送位置信息到约战页面", object: dict)
-        
-        
-        if pushFlag {
-            NSNotificationCenter.defaultCenter().postNotification(notify)
-            self.navigationController?.popViewControllerAnimated(true)
-        }else{
+        if button.superview != nil {
+            let cell = button.superview as! addressListCell
+            let model = cell.model
+            let address = model.province + model.city + model.address + model.name
+//            print(address)
             
+            let latitude = model.location.latitude
+            let longtitude = model.location.longitude
+            
+            let location = CLLocation(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longtitude))
+//            print(location.description)
+            
+            
+            
+            self.selectUserLoaction = location
+            self.addressString = address
+            
+            let dict = ["address":address,"latitude":latitude,"longtitude":longtitude]
+            let notify = NSNotification(name: "发送位置信息到约战页面", object: dict)
+            
+            
+            if pushFlag {
+                NSNotificationCenter.defaultCenter().postNotification(notify)
+                self.navigationController?.popViewControllerAnimated(true)
+            }else{
+                
+            }
+
         }
         
     }
