@@ -58,16 +58,17 @@ class NewFieldCellTableViewCell: UITableViewCell {
         }
         
         
-        if (model.startTime == nil && model.endTime == nil) {
+        
+        if ( (model.endTime == nil && model.startTime == nil) ||
+            (model.endTime != nil && model.startTime != nil)) {
             //签到
-            self.newFieldSignBtn.setImage(UIImage(named: "签到"), forState: UIControlState.Normal)
-        }else if (model.startTime != 0 && model.endTime == nil ) {
+            NSLog("qqqqqqqq")
+//            self.newFieldSignBtn.setImage(UIImage(named: "签到"), forState: UIControlState.Normal)
+            self.newFieldSignBtn.setTitle("签到", forState: UIControlState.Normal)
+        }else  {
             //签退
+            NSLog("xxxxxxxx")
             self.newFieldSignBtn.setTitle("退场", forState: UIControlState.Normal)
-            
-        }else if (model.endTime != 0 && model.startTime != 0) {
-            
-            
         }
         
         

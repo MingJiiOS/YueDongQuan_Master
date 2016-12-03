@@ -415,7 +415,7 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         self.commentSayId = sayId
         self.typeStatus = type
         self.commentModel = model
-        self.commentMainID = model.mainId
+//        self.commentMainID = model.id
     }
     
     //刷新单个cell
@@ -516,7 +516,7 @@ extension NewDiscoveryVC {
             let modelss  =  self.AllModelData[(self.commentSayIndex?.row)!]
             reloadCellHeightForModelAndAtIndexPath(modelss, indexPath: self.commentSayIndex!)
         
-            NewRequestCommentSay(0, content: text, foundId: self.commentSayId!,mainId: userInfo.uid)
+            NewRequestCommentSay(withCommentId: 0, content: text, foundId: self.commentSayId!,mainId: 0)
         case .selectCell:
             let model = DiscoveryCommentModel()
             model.netName = userInfo.name
@@ -532,7 +532,7 @@ extension NewDiscoveryVC {
             let modelss  =  self.AllModelData[(self.commentSayIndex?.row)!]
             reloadCellHeightForModelAndAtIndexPath(modelss, indexPath: self.commentSayIndex!)
             
-            NewRequestCommentSay((self.commentModel?.id)!, content: text, foundId: self.commentSayId!,mainId: userInfo.uid)
+            NewRequestCommentSay(withCommentId: (self.commentModel?.id)!, content: text, foundId: self.commentSayId!,mainId: self.commentSayId!)
         }
         
         
@@ -541,7 +541,7 @@ extension NewDiscoveryVC {
     }
     
     //评论说说
-    private func NewRequestCommentSay(commentId: Int,content:String,foundId:Int,mainId:Int){
+    private func NewRequestCommentSay(withCommentId commentId: Int,content:String,foundId:Int,mainId:Int){
         let v = NSObject.getEncodeString("20160901")
         
         let para = ["v":v,"uid":userInfo.uid.description,"commentId":commentId,"content":content,"foundId":foundId,"mainId":mainId]

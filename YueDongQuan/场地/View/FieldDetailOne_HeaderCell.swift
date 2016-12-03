@@ -77,11 +77,11 @@ class FieldDetailOne_HeaderCell: UITableViewCell {
         }else{
             self.FieldDeatailDistance.text = "距离\(model.distance)m"
         }
-        if model.startTime != nil || model.endTime != nil {
-            if model.startTime != 0 && model.endTime != 0 {
-                self.FieldDetail_SignBtn.setTitle("已签到", forState: UIControlState.Normal)
-            }
-        }
+//        if model.startTime != nil || model.endTime != nil {
+//            if model.startTime != 0 && model.endTime != 0 {
+//                self.FieldDetail_SignBtn.setTitle("已签到", forState: UIControlState.Normal)
+//            }
+//        }
         
         
         if model.cost != nil {
