@@ -9,6 +9,9 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import MobileCoreServices
+import AVFoundation
+import MediaPlayer
 class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     lazy var  quanZiImage = UIImageView()
     lazy var quanZiBtn = UIButton()
@@ -38,7 +41,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     var longdu : Double?
     //纬度
     var ladu : Double?
-    
+    let picker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +49,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: ScreenWidth/3, height: 20))
         label.textAlignment = .Center
         label.text = "新建圈子"
+        label.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = label
         self.navigationController?.navigationBar.barTintColor = kBlueColor
         let btn = UIButton.leftItem("返回")
@@ -82,55 +86,55 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         quanZiBtn.titleLabel?.font = kAutoFontWithMid
         quanZiBtn .addTarget(self, action: #selector(selectCircleLogo), forControlEvents: UIControlEvents.TouchUpInside)
         self.view .addSubview(quanZiNameField)
-        quanZiNameField.borderFillColor = kBlueColor
+//        quanZiNameField.borderFillColor = kBlueColor
         quanZiNameField.snp_makeConstraints { (make) in
-            make.left.equalTo(10)
+            make.left.equalTo(kAuotoGapWithBaseGapTwenty)
             make.right.equalTo(-10)
             make.height.equalTo(44)
             make.top.equalTo(quanZiImage.snp_bottom).offset(60)
         }
         
-        let label1 = UILabel(frame:CGRectMake(0, 0, (ScreenWidth-20)/4, 30) )
+        let label1 = UILabel(frame:CGRectMake(kAuotoGapWithBaseGapTwenty, 0, (ScreenWidth-20)/4, 30) )
         label1.text = "圈子名"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(circleNameSaved), name: UITextFieldTextDidChangeNotification, object: nil)
         quanZiNameField.placeholder = "请填写圈子名"
         quanZiNameField.leftView = label1
         quanZiNameField.keyboardType = .NamePhonePad
-        quanZiNameField.borderFillColor = kBlueColor
+//        quanZiNameField.borderFillColor = kBlueColor
         quanZiNameField.leftViewMode = .Always
         quanZiNameField.tag = 10
         self.view .addSubview(zhuChangName)
         zhuChangName.snp_makeConstraints { (make) in
             make.top.equalTo(quanZiNameField.snp_bottom)
-            make.left.equalTo(10)
+            make.left.equalTo(kAuotoGapWithBaseGapTwenty)
             make.right.equalTo(-10)
             make.height.equalTo(44)
         }
-        let label2 = UILabel(frame:CGRectMake(0, 0, (ScreenWidth-20)/4, 30) )
+        let label2 = UILabel(frame:CGRectMake(kAuotoGapWithBaseGapTwenty, 0, (ScreenWidth-20)/4, 30) )
         label2.text = "主场"
-        zhuChangName.borderFillColor = kBlueColor
+//        zhuChangName.borderFillColor = kBlueColor
         zhuChangName.userInteractionEnabled = false
         zhuChangName.placeholder = "选择场地"
         zhuChangName.delegate = self
         zhuChangName.leftView = label2
-        zhuChangName.borderFillColor = kBlueColor
+//        zhuChangName.borderFillColor = kBlueColor
         zhuChangName.leftViewMode = .Always
         self.view .addSubview(circlePasswordFeild)
         circlePasswordFeild.snp_makeConstraints { (make) in
             make.top.equalTo(zhuChangName.snp_bottom)
-            make.left.equalTo(10)
+            make.left.equalTo(kAuotoGapWithBaseGapTwenty)
             make.right.equalTo(-10)
             make.height.equalTo(44)
         }
-        let label3 = UILabel(frame:CGRectMake(0, 0, (ScreenWidth-20)/4, 30) )
+        let label3 = UILabel(frame:CGRectMake(kAuotoGapWithBaseGapTwenty, 0, (ScreenWidth-20)/4, 30) )
         label3.text = "密码"
         label3.textColor = UIColor.blackColor()
-        circlePasswordFeild.borderFillColor = kBlueColor
+//        circlePasswordFeild.borderFillColor = kBlueColor
         circlePasswordFeild.secureTextEntry = true
         circlePasswordFeild.placeholder = "此圈子为私密圈子,需要密码"
         circlePasswordFeild.secureTextEntry = true
         circlePasswordFeild.delegate = self
-        circlePasswordFeild.borderFillColor = kBlueColor
+//        circlePasswordFeild.borderFillColor = kBlueColor
         circlePasswordFeild.leftView = label3
         circlePasswordFeild.leftViewMode = .Always
         circlePasswordFeild.tag = 20
@@ -144,14 +148,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
         }
         clearBtn.backgroundColor = UIColor.clearColor()
         clearBtn .addTarget(self, action: #selector(turn), forControlEvents: UIControlEvents.TouchUpInside)
-        self.view .addSubview(line)
-        line.snp_makeConstraints { (make) in
-            make.height.equalTo(0.8)
-            make.left.equalTo(10)
-            make.right.equalTo(-10)
-            make.bottom.equalTo(quanZiNameField.snp_top)
-        }
-        line.backgroundColor = kBlueColor
+       
         self.view .addSubview(createNewChangDi)
         createNewChangDi.snp_makeConstraints { (make) in
             make.left.equalTo(ScreenWidth/8)
@@ -216,7 +213,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     }
     func addCarema()  {
         if UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            let picker = UIImagePickerController()
+            
             picker.delegate = self
             picker.allowsEditing = true
             picker.sourceType = .Camera
@@ -226,7 +223,11 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
             alert.show()
         }
     }
-    //拍摄完成后要执行的方法
+    //获取媒体资源
+    
+    
+    
+    //选择图片完成后要执行的方法
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         //得到图片
         let dic = info as NSDictionary
@@ -276,7 +277,7 @@ class NewQuanZiViewController: MainViewController,UITextFieldDelegate,UIImagePic
     func openPicLibrary()  {
         //相册是可以用模拟器打开
         if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
-            let picker = UIImagePickerController()
+            
             picker.delegate = self
             picker.allowsEditing = true
             //打开相册选择照片
@@ -324,17 +325,17 @@ extension NewQuanZiViewController{
         let Pw = circlePw
         if self.uploadimgaemodel?.data.id != nil{
             if circleName != nil {
-                if NSString(string:circleName).length == 0 {
-                    self.showMJProgressHUD("圈子名字不能为空！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                if NSString(string:circleName).length != 0 {
+                   
                     if circlePw != nil {
                         if NSString(string:circlePw).length == 0 {
-                            self.showMJProgressHUD("密码不能少于6位！！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                            self.showMJProgressHUD("密码不能少于6位！！", isAnimate: true, startY: nil)
                         }else if  NSString(string:circlePw).length < 6 {
                             
                            
-                            self.showMJProgressHUD("密码不能少于6位！！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                            self.showMJProgressHUD("密码不能少于6位！！", isAnimate: true, startY: nil)
                         }else if NSString(string:circlePw).length > 16 {
-                            self.showMJProgressHUD("密码不能大于16位！！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                            self.showMJProgressHUD("密码不能大于16位！！", isAnimate: true, startY: nil)
                             
                         }else{
                             let dict:[String:AnyObject] = ["v":NSObject.getEncodeString("20160901"),
@@ -354,21 +355,21 @@ extension NewQuanZiViewController{
                                                             }
                             }) { (error) in
                                 
-                                self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: false,startY: ScreenHeight-40-40-40-20)
+                                self.showMJProgressHUD("创建失败,出现未知错误", isAnimate: false,startY: nil)
                             }
                         }
                     }else{
                         
-                        self.showMJProgressHUD("圈子密码不能为空", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                        self.showMJProgressHUD("圈子密码不能为空", isAnimate: true, startY: nil)
                     }
                     
                 }
             }else{
-                self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+                self.showMJProgressHUD("圈子名字不能为空！！", isAnimate: true, startY: nil)
                 
             }
         }else{
-           self.showMJProgressHUD("圈子logo不能为空！！", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+           self.showMJProgressHUD("圈子logo不能为空！！", isAnimate: true, startY: nil)
            
         }
 

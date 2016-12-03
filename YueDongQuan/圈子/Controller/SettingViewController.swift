@@ -13,11 +13,22 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
       var settingTableView = UITableView(frame: CGRectZero, style: .Grouped)
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "设置"
+        let titleLabel = UILabel(frame: CGRect(x: 0,
+            y: 0,
+            width: ScreenWidth*0.5,
+            height: 44))
+        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.font = kAutoFontWithTop
+        titleLabel.center = CGPoint(x: ScreenWidth/2, y: 22)
+        titleLabel.text = "设置"
+        titleLabel.textAlignment = .Center
+        titleLabel.sizeToFit()
+        self.navigationItem.titleView = titleLabel
         self.view .addSubview(settingTableView)
         settingTableView.snp_makeConstraints { (make) in
             make.left.right.equalTo(0)
-            make.top.bottom.equalTo(0)
+            make.top.equalTo(0)
+            make.bottom.equalTo(49)
         }
         settingTableView.delegate = self
         settingTableView.dataSource = self
@@ -35,22 +46,21 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
         // Dispose of any resources that can be recreated.
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 6
+        return 5
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 1
-        case 1:
             return 3
-        case 2:
+        case 1:
             return 2
+        case 2:
+            return 1
         case 3:
             return 1
         case 4:
-            return 3
-        case 5:
             return 1
+       
         default: break
             
         }
@@ -61,28 +71,17 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
         var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
         if cell == nil {
             cell = UITableViewCell(style: .Default, reuseIdentifier: cellId)
+            cell?.textLabel?.font = kAutoFontWithTop
+            cell?.detailTextLabel?.font = kAutoFontWithMid
         }
         cell?.accessoryType = .DisclosureIndicator
         
         switch indexPath.section {
            
-            
-        case 0:
-            var biVcell = SettingCell?()
-             biVcell = tableView.dequeueReusableCellWithIdentifier(cellId) as? SettingCell
-            biVcell = SettingCell(style: .Default, reuseIdentifier: cellId)
-            biVcell!.headImage.backgroundColor = UIColor.grayColor()
-            biVcell!.headImage.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc))
-            biVcell?.headImage.sd_setImageWithURL(NSURL(string: userInfo.thumbnailSrc), placeholderImage: UIImage(named: "默认头像.jpg"))
-            biVcell!.bigV.hidden = true
-            biVcell!.userName.text = userInfo.name
-            biVcell!.userSex.text = userInfo.sex
-            biVcell!.userAge.text = userInfo.age
-            biVcell!.accessoryType = .DisclosureIndicator
-            return biVcell!
+        
             
             
-            case 1:
+            case 0:
                 var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
                 if cell == nil {
                     cell = UITableViewCell(style:.Value1, reuseIdentifier: cellId)
@@ -97,7 +96,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
                 cell?.detailTextLabel?.text = "未认证"
                 }
             return cell!
-            case 2:
+            case 1:
                 let array = ["短信通知","修改密码"]
                 cell?.textLabel?.text = array[indexPath.row]
                 if indexPath.row == 0 {
@@ -105,15 +104,15 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
                     cell?.accessoryView = swich
                 }
                 return cell!
-            case 3:
+            case 2:
               
                 cell?.textLabel?.text = "清理缓存"
                 return cell!
-            case 4:
-                let array = ["帮助与反馈","关于运动圈","推荐给好友"]
+            case 3:
+                let array = ["关于运动圈"]
                 cell?.textLabel?.text = array[indexPath.row]
                 return cell!
-            case 5:
+            case 4:
                 let cellId = "cellId"
                 var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
                 if cell == nil {
@@ -129,11 +128,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 60
-        } else{
-            return 44
-    }
+        return kAutoStaticCellHeight
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -149,7 +144,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
         
         print("选中了第几组第几行",indexPath.section,indexPath.row)
-        if indexPath.section == 2 {
+        if indexPath.section == 1 {
             if indexPath.row == 1 {
                 
                 let alertView = MJAlertView(title: nil, message: nil, cancelButtonTitle: "验证旧密码", sureButtonTitle: "验证手机")
@@ -160,6 +155,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
                     if index == 1{
                         alertView.removeFromSuperview()
                         let textFeild = ConfirmOldPw(title: "修改密码", message: "请填写原密码", cancelButtonTitle: "取消", sureButtonTitle: "确定")
+                        
                         textFeild.show()
                         textFeild.clickIndexClosure({ (index,password) in
                             if index == 2{
@@ -175,11 +171,8 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
 
             }
         }
-        if indexPath.section == 0 {
-            let subPerson = SubPersonDataViewController()
-            self.navigationController?.pushViewController(subPerson, animated: true)
-        }
-        if indexPath.section == 4 {
+        
+        if indexPath.section == 3 {
             if indexPath.row == 2 {
             }
             if indexPath.row == 0 {
@@ -189,7 +182,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
             }
         }
         //MARK:清理缓存
-        if indexPath.section == 3 {
+        if indexPath.section == 2 {
         SDImageCache.sharedImageCache().clearDiskOnCompletion({ 
             print("clear完成")
         })
@@ -201,7 +194,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
 //            })
         }
         //退出登录操作
-        if indexPath.section == 5 {
+        if indexPath.section == 4 {
             userInfo.isLogin = false
             let defaults = NSUserDefaults.standardUserDefaults()
             for (key,_) in defaults.dictionaryRepresentation() {
@@ -209,8 +202,10 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
             }
             defaults.synchronize()
             RCIM.sharedRCIM().disconnect()
-            let nv = CustomNavigationBar(rootViewController: YDQLoginRegisterViewController())
-            self.navigationController?.presentViewController(nv, animated: true, completion: nil)
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("UserExitLogin", object: nil)
+            
+            
         }
         
     }

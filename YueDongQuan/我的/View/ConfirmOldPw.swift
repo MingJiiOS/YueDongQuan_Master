@@ -81,6 +81,7 @@ class ConfirmOldPw: UIView {
         passWord.frame = CGRectMake(24, 90, width-48, 30)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(passwordMask), name: UITextFieldTextDidChangeNotification, object: nil)
         passWord.borderFillColor = kBlueColor
+        passWord.secureTextEntry = true
         whiteView .addSubview(passWord)
         //取消按钮
         let btnWith = (width - 130) / 2/2

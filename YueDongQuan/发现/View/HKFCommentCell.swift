@@ -27,7 +27,7 @@ class HKFCommentCell: UITableViewCell {
                         make.left.right.top.equalTo(0)
         })
         self.hyb_lastViewInCell = self.contentLabel
-        self.hyb_bottomOffsetToCell  = 0
+        self.hyb_bottomOffsetToCell  = 10
         
     }
     
@@ -43,15 +43,16 @@ class HKFCommentCell: UITableViewCell {
         
         var reply = ""
         for item in self.commentArray {
-            if model.commentId == item.uid {
-                reply = item.netName
+            if model.commentId != 0 {
+                if item.uid == userInfo.uid{
+                    reply = item.netName
+                }
             }
         }
         model.reply = reply
         
-//        let context = NSObject.stringToContentEmoji()
-        let str = String(format: "%@回复%@：%@",model.netName,model.reply!,model.content)
-//        let temp = NSObject.stringToContentEmoji(str)
+        let context = model.content.stringByReplacingEmojiCheatCodesWithUnicode()
+        let str = String(format: "%@回复%@：%@",model.netName,model.reply!,context)
         let text = NSMutableAttributedString(string: str)
         
         text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))

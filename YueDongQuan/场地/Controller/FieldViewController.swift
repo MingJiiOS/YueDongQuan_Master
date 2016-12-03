@@ -448,7 +448,7 @@ extension FieldViewController {
     func request(latitude:Double,longitude:Double){
         let v = NSObject.getEncodeString("20160901")
         
-        let para = ["v":v,"latitude":latitude,"longitude":longitude]
+        let para = ["v":v,"latitude":latitude,"longitude":longitude,"uid":userInfo.uid]
         print(para.description)
         
         Alamofire.request(.POST, NSURL(string: testUrl + "/sites")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in

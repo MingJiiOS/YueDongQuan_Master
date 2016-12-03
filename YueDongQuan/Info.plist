@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -85,6 +83,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>好球热需要您的同意,才能访问相机</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>

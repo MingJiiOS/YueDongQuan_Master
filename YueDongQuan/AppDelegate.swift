@@ -34,6 +34,10 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
                                              y: 0,
                                          width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(exchangControllerVC), name: "UserExitLogin", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(userLoginSuccess), name: "UserLoginSuccess", object: nil)
+        
         print("接口验证参数",NSObject.getEncodeString("20160901"))
 //        print("数据库地址",RLMRealmConfiguration.defaultConfiguration().fileURL)
         //设置网络缓存 － 4M 的内存缓存 20M 的磁盘缓存，使用默认的缓存路径 Caches/bundleId
@@ -171,6 +175,18 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
             alertt.show()
         }
     }
+    
+    func exchangControllerVC(){
+        let nv = CustomNavigationBar(rootViewController: YDQLoginRegisterViewController())
+        
+        self.window?.rootViewController = nv
+//        self.navigationController?.presentViewController(nv, animated: true, completion: nil)
+    }
+    
+    
+    func userLoginSuccess(){
+        self.window?.rootViewController = HKFTableBarController()
+    }
         
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: RCKitDispatchConnectionStatusChangedNotification, object: nil)
@@ -187,7 +203,8 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
             RCIM.sharedRCIM().disconnect()
             let login = YDQLoginRegisterViewController()
             let nv = CustomNavigationBar(rootViewController: login)
-            self.window?.rootViewController?.presentViewController(nv, animated: true, completion: nil)
+            
+            self.window?.rootViewController = nv//?.presentViewController(nv, animated: true, completion: nil)
         }else{
             
         }

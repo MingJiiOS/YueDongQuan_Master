@@ -45,7 +45,7 @@ class QuanZiViewController: RCConversationListViewController
     }
     override func viewWillAppear(animated: Bool) {
         self.refreshConversationTableViewIfNeeded()
-        self.conversationListTableView.reloadData()
+//        self.conversationListTableView.reloadData()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(receiveNeedRefreshNotification), name: "kRCNeedReloadDiscussionListNotification", object: nil)
         let groupNotify = RCUserInfo(userId: "__system__", name: "群组通知", portrait: nil)
         RCIM.sharedRCIM().refreshUserInfoCache(groupNotify, withUserId: "__system__")

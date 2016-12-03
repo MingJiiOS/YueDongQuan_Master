@@ -600,7 +600,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         }else{
 //            if self.myfoundmodel != nil {
 //                if self.myfoundmodel?.code != "405" {
-                     MainBgTableView.mj_footer.endRefreshing()
+//                     MainBgTableView.mj_footer.endRefreshing()
 //                }else{
 //                    return
 //                }

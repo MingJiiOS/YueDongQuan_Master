@@ -165,7 +165,7 @@ extension MineVC:UITableViewDelegate,UITableViewDataSource{
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         switch indexPath.section {
         case 0:
-            
+            self.push(SubPersonDataViewController())
             return
         case 1:
             if indexPath.row == 1 {
@@ -182,6 +182,9 @@ extension MineVC:UITableViewDelegate,UITableViewDataSource{
         case 2:
             if indexPath.row == 0 {
                 self.push(VisitorVC())
+            }
+            if indexPath.row == 2 {
+                self.push(HelpandfeedbackVC())
             }
             return
         case 3:

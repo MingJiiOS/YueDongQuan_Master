@@ -34,7 +34,8 @@ class MJConversationViewController: RCConversationViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.conversationMessageCollectionView.reloadData()
+//        self.conversationMessageCollectionView.reloadData()
+        
         self.permissions = 2
         loadMemberData()
         
@@ -96,9 +97,9 @@ class MJConversationViewController: RCConversationViewController {
             
             self.navigationItem.rightBarButtonItems = [settingBtn,searchBtn]
             
-            if self.permissions == 2 {
-                searchBtn.enabled = false
-            }
+//            if self.permissions == 2 {
+//                searchBtn.enabled = false
+//            }
         }
         
         

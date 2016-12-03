@@ -120,17 +120,17 @@ class MJNoticeCell: UITableViewCell {
         self.noticemodel = model
         
         
-        headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+        headImage.sd_setImageWithURL(NSURL(string: model.data.array[indexPath.row].originalSrc))
         userNameStr = model.data.array[indexPath.row].name
         putTimeStr = TimeStampToDate().TimestampToDate(model.data.array[indexPath.row].time)
         let attributeString = NSMutableAttributedString(string: "\(userNameStr) \(putTimeStr)")
         //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-        attributeString.addAttribute(NSFontAttributeName, value: kAutoFontWithTop!,
+        attributeString.addAttribute(NSFontAttributeName, value: kAutoFontWithTop,
                                      range: NSMakeRange(0, userNameStr.length))
         //设置字体颜色
         attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(),
                                      range: NSMakeRange(0, userNameStr.length+1))
-        attributeString.addAttribute(NSForegroundColorAttributeName, value: kAutoFontWithMid!, range: NSMakeRange(userNameStr.length+1, putTimeStr.length))
+        attributeString.addAttribute(NSForegroundColorAttributeName, value: kAutoFontWithMid, range: NSMakeRange(userNameStr.length+1, putTimeStr.length))
         attributeString.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(),
                                      range: NSMakeRange(userNameStr.length+1, putTimeStr.length))
         //        //设置文字背景颜色

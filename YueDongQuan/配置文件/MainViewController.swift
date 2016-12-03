@@ -94,7 +94,7 @@ class MainViewController: UIViewController {
     }
     func showMJProgressHUD(message:NSString,isAnimate:Bool,startY:CGFloat?) {
         
-        HUDView.removeFromSuperview()
+//        HUDView.removeFromSuperview()
         HUDView.backgroundColor = UIColor.blackColor()
         HUDView.layer.cornerRadius = 5
         HUDView.layer.masksToBounds = true
@@ -103,35 +103,35 @@ class MainViewController: UIViewController {
         if startY == nil {
             HUDView.snp_makeConstraints { (make) in
                 make.left.equalTo((ScreenWidth-ScreenWidth*0.7)/2)
-                make.top.equalTo(69)
+                make.top.equalTo(0)
                 make.width.equalTo(0)
                 make.height.equalTo(40)
             }
         }else{
             HUDView.snp_makeConstraints { (make) in
-                make.left.equalTo((ScreenWidth-ScreenWidth*0.7)/2)
+                make.left.equalTo(0)
                 make.top.equalTo(startY!)
                 make.width.equalTo(0)
                 make.height.equalTo(40)
             }
         }
        
-        let image = UIImageView(frame: CGRectMake(0, 0, 40, 40))
-        image.animationDuration = 4
-        let size = message.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop!])
+       
+        let size = message.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop])
+       
         
-        let subLabel = UILabel(frame: CGRectMake(40, 5, CGRectGetWidth(HUDView.frame)-40, 30))
-        subLabel.text = message as String
-        subLabel.textColor = kBlueColor
-        subLabel.textAlignment = .Left
-        subLabel.font = kAutoFontWithTop
-        HUDView .addSubview(subLabel)
-        image.image = UIImage(named: "connection_failed")
-        HUDView .addSubview(image)
         HUDView.snp_updateConstraints { (make) in
-            make.width.equalTo(size.width + image.frame.size.width + 10)
+            make.width.equalTo(size.width  + 20)
+            make.left.equalTo((ScreenWidth - size.width - 20) / 2)
         }
         
+        let subLabel = UILabel(frame: CGRectMake(10, 5, CGRectGetWidth(HUDView.frame), 30))
+        subLabel.text = message as String
+        subLabel.textColor = UIColor.whiteColor()
+        subLabel.textAlignment = .Center
+        subLabel.font = kAutoFontWithTop
+        HUDView .addSubview(subLabel)
+        subLabel.adjustsFontSizeToFitWidth = true
         
         func shakeToUpShow(aView: UIView) {
             let animation = CAKeyframeAnimation(keyPath: "transform");

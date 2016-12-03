@@ -43,6 +43,8 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         manger.delegate = self
         manger.startUpdatingLocation()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loginSuccess), name: "UserLoginSuccess", object: nil)
+        
     }
     internal class func sharedManager() -> HKFTableBarController {
         
@@ -55,7 +57,10 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         return Static.kbManager
     }
     
-    
+    func loginSuccess()  {
+        let btn = customTabBar.buttons.objectAtIndex(0) as! YJTabBarButton
+        customTabBar.btnClick(btn)
+    }
     func amapLocationManager(manager: AMapLocationManager!, didFailWithError error: NSError!) {
         
     }

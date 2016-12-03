@@ -33,6 +33,11 @@ class FansVC: MainViewController,fansCellDelegate {
     }
     override func viewWillAppear(animated: Bool) {
         loadFansData()
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,7 +171,7 @@ class fansCell: UITableViewCell {
     func configMyFocus(array:MyAttentionArray)  {
         mj_imageView?.sd_setImageWithURL(NSURL(string: array.thumbnailSrc), placeholderImage: UIImage(named: "默认头像"))
         mj_textLabel?.text = array.name
-        let size = array.name.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop!])
+        let size = array.name.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop])
         mj_textLabel!.snp_updateConstraints { (make) in
             make.width.equalTo(size.width + 10)
         }
@@ -181,7 +186,7 @@ class fansCell: UITableViewCell {
     func configFans(array:FansArray)  {
         mj_imageView?.sd_setImageWithURL(NSURL(string: array.thumbnailSrc), placeholderImage: UIImage(named: "默认头像"))
         mj_textLabel?.text = array.name
-        let size = array.name.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop!])
+        let size = array.name.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop])
         mj_textLabel!.snp_updateConstraints { (make) in
             make.width.equalTo(size.width + 10)
         }

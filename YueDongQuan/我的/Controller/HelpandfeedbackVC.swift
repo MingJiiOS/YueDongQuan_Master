@@ -76,21 +76,21 @@ extension HelpandfeedbackVC {
     func publish()  {
         
             
-        if strLength > 0 {
-            
-            
-            
-            let dict:[String:AnyObject] = ["v":v,
-                                           "uid":userInfo.uid,
-                                           "circleId":self.circleId!,
-                                           "content":self.content!]
-            MJNetWorkHelper().publishannouncement(publishannouncement, publishannouncementModel: dict, success: { (responseDic, success) in
-                //如果成功，就返回
-                self.navigationController?.popViewControllerAnimated(true)
-            }) { (error) in
-                self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～", isAnimate: true, startY: ScreenHeight-40-40-40-20)
-            }
-        }
+//        if strLength > 0 {
+//            
+//            
+//            
+//            let dict:[String:AnyObject] = ["v":v,
+//                                           "uid":userInfo.uid,
+//                                           "circleId":self.circleId!,
+//                                           "content":self.content!]
+//            MJNetWorkHelper().publishannouncement(publishannouncement, publishannouncementModel: dict, success: { (responseDic, success) in
+//                //如果成功，就返回
+//                self.navigationController?.popViewControllerAnimated(true)
+//            }) { (error) in
+//                self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～", isAnimate: true, startY: ScreenHeight-40-40-40-20)
+//            }
+//        }
         
         
         

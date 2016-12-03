@@ -29,4 +29,5 @@
 @property (nonatomic,strong) YJTabBarButton *btn;
 @property (nonatomic, weak) id<YJTabBarDelegate> delegate;
 + (instancetype) shareYJTabBar;
+-(void)btnClick:(UIButton *)button;
 @end

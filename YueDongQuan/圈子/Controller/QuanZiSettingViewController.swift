@@ -18,6 +18,8 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     var circleinfoModel : CircleInfoModel?
     
     var memberModel : circleMemberModel?
+    //主场名
+    var sitesName :String?
     
     //圈子名字
     var Circletitle : String?
@@ -253,7 +255,8 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
             subContent.indexRow = indexPath.row
             subContent.circleId = self.circleId
             subContent.circletitle = self.Circletitle
-            subContent.thumbnailSrc = self.thumbnailSrc
+            subContent.thumbnailSrc = self.circleinfoModel?.data.thumbnailSrc
+            subContent.sitesName = self.sitesName
             self.push(subContent)
         }
         
@@ -295,12 +298,12 @@ extension QuanZiSettingViewController {
                 let model = DataSource().getcircleinfoData(responseDic)
                 if model.flag != "0"{
                      self.circleinfoModel = model
+                    self.sitesName = model.data.siteName
                     self.tableView.reloadData()
-                   
-                        
-                        if model.data.permissions != nil {
-                            if model.data.permissions != 2 {
-                                if model.data.permissions == 1{
+
+                        if model.data.array[0].permissions != nil {
+                            if model.data.array[0].permissions != 2 {
+                                if model.data.array[0].permissions == 1{
                                    self.overQuanzi!.setTitle("解散圈子", forState: UIControlState.Normal)
                                 }
                             }else{

@@ -20,7 +20,7 @@ class DetailsVC: MainViewController,ChatKeyBoardDelegate,ChatKeyBoardDataSource 
     //找出评论不是 0 的数组 这是回复数组
     var NoZeroCommentAry = [myFoundComment]()
     
-   
+    
     
     
     override func viewDidLoad() {
@@ -36,22 +36,25 @@ class DetailsVC: MainViewController,ChatKeyBoardDelegate,ChatKeyBoardDataSource 
         self.view.addSubview(self.keyboard)
         self.view.bringSubviewToFront(self.keyboard)
         
+        
         let zeroarray = NSMutableArray()
         let nozeroarray = NSMutableArray()
         for model in self.detailCommentArray {
             if model.commentId == 0 {
                 zeroarray.addObject(model)
             }else{
-              nozeroarray.addObject(model)
+                nozeroarray.addObject(model)
             }
         }
         self.ZeroCommentAry = zeroarray.copy() as! [myFoundComment]
         self.NoZeroCommentAry = nozeroarray.copy() as! [myFoundComment]
-        //MARK:评论数组倒序
+            //MARK:评论数组倒序
         self.ZeroCommentAry.sortInPlace { (num1:myFoundComment,
-                                    num2:myFoundComment) -> Bool in
-                                      return num1.time > num2.time
+            num2:myFoundComment) -> Bool in
+            return num1.time > num2.time
         }
+ 
+        
         
 
         

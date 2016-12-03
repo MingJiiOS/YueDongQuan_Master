@@ -1,7 +1,7 @@
 //
 //	CircleInfoModel.swift
 //
-//	Create by 方果 黄 on 11/11/2016
+//	Create by 方果 黄 on 2/12/2016
 //	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
@@ -32,7 +32,7 @@ class CircleInfoModel : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
 		if code != nil{
 			dictionary["code"] = code
 		}
