@@ -20,16 +20,6 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            scope = "0"
-            stopOnStyle = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
@@ -59,6 +49,54 @@
             endingLineNumber = "517"
             landmarkName = "requestFieldSignData(_:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YueDongQuan/&#x53d1;&#x73b0;/Controller/NewDiscoveryVC.swift"
+            timestampString = "502376426.827503"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "clickFlowViewBtn(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YueDongQuan.NewDiscoveryVC.(clickFlowViewBtn in _F64E1035CBCDF1FF77A8E9184D450F63) (__ObjC.UIButton) -&gt; ()"
+                  moduleName = "YueDongQuan"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/LastNewProject/YueDongQuan_Master/YueDongQuan/%E5%8F%91%E7%8E%B0/Controller/NewDiscoveryVC.swift"
+                  timestampString = "502381045.513762"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "177"
+                  endingLineNumber = "177"
+                  offsetFromSymbolStart = "19">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YueDongQuan.NewDiscoveryVC.((clickFlowViewBtn in _F64E1035CBCDF1FF77A8E9184D450F63) (__ObjC.UIButton) -&gt; ()).(closure #1)"
+                  moduleName = "YueDongQuan"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/redong/Desktop/%E6%82%A6%E5%8A%A8%E5%9C%88%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/2016-1018-Dev/LastNewProject/YueDongQuan_Master/YueDongQuan/%E5%8F%91%E7%8E%B0/Controller/NewDiscoveryVC.swift"
+                  timestampString = "502381045.514003"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "179"
+                  endingLineNumber = "179"
+                  offsetFromSymbolStart = "8">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

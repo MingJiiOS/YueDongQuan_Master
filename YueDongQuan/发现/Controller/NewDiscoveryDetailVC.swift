@@ -147,6 +147,7 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
 class NewDiscoveryHeaderCell: UITableViewCell {
     
     private var titleLabel : UILabel?//name
+    private var superLinkLabel : UILabel?
     private var descLabel : UILabel?//说说内容
     private var headImageView : UIImageView?//头像
     private var headTypeView : UIImageView?//是否认证
@@ -273,6 +274,17 @@ class NewDiscoveryHeaderCell: UITableViewCell {
         self.typeStatusView?.backgroundColor = UIColor.whiteColor()
         self.typeStatusView?.layer.masksToBounds = true
         self.typeStatusView?.layer.cornerRadius = 10
+        
+        self.superLinkLabel = UILabel()
+        self.contentView.addSubview(self.superLinkLabel!)
+        self.superLinkLabel!.snp_makeConstraints(closure: { (make) in
+            make.top.equalTo((weakSelf?.headImageView?.snp_bottom)!).offset(5)
+            make.right.equalTo(-20)
+            make.height.equalTo(20)
+        })
+        self.superLinkLabel?.textAlignment = .Left
+        
+        
         //说说内容
         self.descLabel = UILabel()
         self.contentView.addSubview(self.descLabel!)
@@ -281,7 +293,7 @@ class NewDiscoveryHeaderCell: UITableViewCell {
         self.descLabel?.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(10)
             make.right.equalTo(-10)
-            make.top.equalTo((weakSelf?.headImageView?.snp_bottom)!).offset(5)
+            make.top.equalTo((weakSelf?.superLinkLabel?.snp_bottom)!).offset(5)
         })
         
         //照片或视频展示
@@ -442,7 +454,7 @@ class NewDiscoveryHeaderCell: UITableViewCell {
             self.typeStatusView?.image = UIImage(named: "explain_vedio")
         case 13:
             //            print("活动")
-            self.titleLabel?.text = subModel.aname
+            self.titleLabel?.text = subModel.name
             self.typeStatusView?.image = UIImage(named: "explain_recruit")
         case 14:
             //            print("约战")
@@ -459,6 +471,25 @@ class NewDiscoveryHeaderCell: UITableViewCell {
             self.typeStatusView?.image = UIImage(named: "招募")
         default:
             break
+        }
+        
+        if model.typeId == 13 {
+            self.superLinkLabel!.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(35)
+            })
+            
+            let tempStr = "<body>" + " <a href = " + "www.baidu.com" + ">百度</a>" + "</body>"
+            //            let resultStr1 = tempStr.stringByReplacingOccurrencesOfString("\\n", withString: "<br/>", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            let data = tempStr.dataUsingEncoding(NSUnicodeStringEncoding)
+            let options = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
+            let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
+            
+            self.superLinkLabel?.attributedText = html
+            
+        }else{
+            self.superLinkLabel!.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(0)
+            })
         }
         
         if subModel.address == ""{
@@ -723,6 +754,9 @@ class NewDiscoveryCommentDeatilCell: UITableViewCell,UITableViewDataSource,UITab
             make.top.equalTo((self.contentlabel?.snp_bottom)!).offset(5)
             make.trailing.equalTo(-10)
         })
+        
+        self.tableView?.registerClass(NewDetailsCommentCell.self, forCellReuseIdentifier: "identtifier")
+        
         self.tableView?.separatorStyle = .None
         self.hyb_lastViewInCell = self.tableView
         self.hyb_bottomOffsetToCell = 0
