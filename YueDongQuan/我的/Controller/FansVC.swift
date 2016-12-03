@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FansVC: MainViewController {
+class FansVC: MainViewController,fansCellDelegate {
     
     private var fansModel : FansModel?
     lazy var table : UITableView = {
@@ -33,6 +33,11 @@ class FansVC: MainViewController {
     }
     override func viewWillAppear(animated: Bool) {
         loadFansData()
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,6 +53,8 @@ extension FansVC:UITableViewDelegate,UITableViewDataSource{
         if self.fansModel != nil {
             cell.configFans((self.fansModel?.data.array[indexPath.row])!)
         }
+        cell.indexpath = indexPath
+        cell.fans_delegate = self
         return cell
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -72,6 +79,7 @@ extension FansVC:UITableViewDelegate,UITableViewDataSource{
         label.backgroundColor = UIColor.groupTableViewBackgroundColor()
         return label
     }
+    
 }
 extension FansVC{
     
@@ -87,7 +95,18 @@ extension FansVC{
            self.showMJProgressHUD("请求超时", isAnimate: false, startY: ScreenHeight - 120)
         }
     }
-    
+    func clickRightBtn(indexpath: NSIndexPath) {
+       let userid = self.fansModel?.data.array[indexpath.row].operateId
+        let singleChat = MJConversationViewController()
+        
+        singleChat.conversationType = .ConversationType_PRIVATE
+        singleChat.targetId = userid?.description
+        singleChat.userName = userInfo.name
+        
+        singleChat.title = self.fansModel?.data.array[indexpath.row].name
+        
+        self.navigationController?.pushViewController(singleChat, animated: true)
+    }
 }
 
 protocol fansCellDelegate {

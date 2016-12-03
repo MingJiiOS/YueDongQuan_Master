@@ -29,6 +29,11 @@ class VisitorVC: MainViewController {
         super.viewWillAppear(animated)
 //        let cellNib = UINib(nibName: "VisiCell", bundle: nil)
 //        table.registerNib(cellNib, forCellReuseIdentifier: "VisiCell")
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

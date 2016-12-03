@@ -1,7 +1,7 @@
 //
 //	CircleInfoData.swift
 //
-//	Create by 方果 黄 on 11/11/2016
+//	Create by 方果 黄 on 2/12/2016
 //	Copyright © 2016. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
@@ -18,8 +18,8 @@ class CircleInfoData : NSObject, NSCoding{
 	var latitude : Float!
 	var longitude : Float!
 	var name : String!
-	var permissions : Int!
-	var pw : String!
+	var siteId : Int!
+	var siteName : String!
 	var thumbnailSrc : String!
 	var time : Int!
 	var typeId : Int!
@@ -43,8 +43,8 @@ class CircleInfoData : NSObject, NSCoding{
 		latitude = dictionary["latitude"] as? Float
 		longitude = dictionary["longitude"] as? Float
 		name = dictionary["name"] as? String
-		permissions = dictionary["permissions"] as? Int
-		pw = dictionary["pw"] as? String
+		siteId = dictionary["siteId"] as? Int
+		siteName = dictionary["siteName"] as? String
 		thumbnailSrc = dictionary["thumbnailSrc"] as? String
 		time = dictionary["time"] as? Int
 		typeId = dictionary["typeId"] as? Int
@@ -55,7 +55,7 @@ class CircleInfoData : NSObject, NSCoding{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		let dictionary = NSMutableDictionary()
+		var dictionary = NSMutableDictionary()
 		if announcement != nil{
 			dictionary["announcement"] = announcement
 		}
@@ -84,11 +84,11 @@ class CircleInfoData : NSObject, NSCoding{
 		if name != nil{
 			dictionary["name"] = name
 		}
-		if permissions != nil{
-			dictionary["permissions"] = permissions
+		if siteId != nil{
+			dictionary["siteId"] = siteId
 		}
-		if pw != nil{
-			dictionary["pw"] = pw
+		if siteName != nil{
+			dictionary["siteName"] = siteName
 		}
 		if thumbnailSrc != nil{
 			dictionary["thumbnailSrc"] = thumbnailSrc
@@ -116,8 +116,8 @@ class CircleInfoData : NSObject, NSCoding{
          latitude = aDecoder.decodeObjectForKey("latitude") as? Float
          longitude = aDecoder.decodeObjectForKey("longitude") as? Float
          name = aDecoder.decodeObjectForKey("name") as? String
-         permissions = aDecoder.decodeObjectForKey("permissions") as? Int
-         pw = aDecoder.decodeObjectForKey("pw") as? String
+         siteId = aDecoder.decodeObjectForKey("siteId") as? Int
+         siteName = aDecoder.decodeObjectForKey("siteName") as? String
          thumbnailSrc = aDecoder.decodeObjectForKey("thumbnailSrc") as? String
          time = aDecoder.decodeObjectForKey("time") as? Int
          typeId = aDecoder.decodeObjectForKey("typeId") as? Int
@@ -154,11 +154,11 @@ class CircleInfoData : NSObject, NSCoding{
 		if name != nil{
 			aCoder.encodeObject(name, forKey: "name")
 		}
-		if permissions != nil{
-			aCoder.encodeObject(permissions, forKey: "permissions")
+		if siteId != nil{
+			aCoder.encodeObject(siteId, forKey: "siteId")
 		}
-		if pw != nil{
-			aCoder.encodeObject(pw, forKey: "pw")
+		if siteName != nil{
+			aCoder.encodeObject(siteName, forKey: "siteName")
 		}
 		if thumbnailSrc != nil{
 			aCoder.encodeObject(thumbnailSrc, forKey: "thumbnailSrc")

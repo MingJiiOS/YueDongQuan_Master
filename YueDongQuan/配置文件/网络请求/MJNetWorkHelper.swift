@@ -11,11 +11,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 class MJNetWorkHelper: NSObject {
-    
-    
-    
-    
-    
+
     //请求成功返回值
     typealias SuccessBlock = (responseDic:NSDictionary,success:Bool)->Void
     var successBlock : SuccessBlock!

@@ -120,7 +120,7 @@ class MJNoticeCell: UITableViewCell {
         self.noticemodel = model
         
         
-        headImage.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+        headImage.sd_setImageWithURL(NSURL(string: model.data.array[indexPath.row].originalSrc))
         userNameStr = model.data.array[indexPath.row].name
         putTimeStr = TimeStampToDate().TimestampToDate(model.data.array[indexPath.row].time)
         let attributeString = NSMutableAttributedString(string: "\(userNameStr) \(putTimeStr)")

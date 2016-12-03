@@ -14,7 +14,7 @@ class SendPhoneViewController: MainViewController {
     var phoneNumber : String?
     var sendphoneModel : SendPhoneModel?
     var isSendPhone:Bool = false
-    
+    var result : UserDataInfoModel?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,27 +23,35 @@ class SendPhoneViewController: MainViewController {
         if consumeItems == [] {
             
         }else{
-            let result = consumeItems.firstObject as! UserDataInfoModel
-      SendNumberview.phoneNumber.text = result.phone
+             result = consumeItems.firstObject as? UserDataInfoModel
+      SendNumberview.phoneNumber.text = result!.phone
+            SendNumberview.reSendBtn.addTarget(self, action: #selector(resend), forControlEvents: UIControlEvents.TouchUpInside)
         self.view .addSubview(SendNumberview)
-        let dict = ["v":v,
-                    "phone":result.phone]
-        MJNetWorkHelper().sendphone("sendphone", sendphoneModel: dict, success: { (responseDic, success) in
-            self.sendphoneModel = DataSource().getSendPhoneData(responseDic)
-            self.SendNumberview.sendMaskCodeback { (maskcode) in
-                if maskcode != self.sendphoneModel?.data.code{
-                    self.showMJProgressHUD(maskcode, isAnimate: true, startY: ScreenHeight-40-40-60)
-                }else{
-                    let set = SetNewPasswordViewController()
-                    set.isSendPhone = true
-                    self.push(set)
-                }
-            }
-        }) { (error) in
-            self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40-20)
-        }
+        sendMaskcode()
         
      }
+    }
+    
+    func resend()  {
+        sendMaskcode()
+    }
+    func sendMaskcode(){
+    let dict = ["v":v,
+    "phone":result!.phone]
+    MJNetWorkHelper().sendphone("sendphone", sendphoneModel: dict, success: { (responseDic, success) in
+    self.sendphoneModel = DataSource().getSendPhoneData(responseDic)
+    self.SendNumberview.sendMaskCodeback { (maskcode) in
+    if maskcode != self.sendphoneModel?.data.code{
+    self.showMJProgressHUD(maskcode, isAnimate: true, startY: ScreenHeight-40-40-60)
+    }else{
+    let set = SetNewPasswordViewController()
+    set.isSendPhone = true
+    self.push(set)
+    }
+    }
+    }) { (error) in
+    self.showMJProgressHUD(error.description, isAnimate: true, startY: ScreenHeight-40-40-40-20)
+    }
     }
     func getUserInfoDataBaseFromFMDB() ->NSArray {
         if FLFMDBManager.shareManager().fl_isExitTable(UserDataInfoModel) {

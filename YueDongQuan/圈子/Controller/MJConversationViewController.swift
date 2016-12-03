@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum chatType {
+    
+}
+
 class MJConversationViewController: RCConversationViewController {
     
     typealias clickButton = (ButtonTag: Int) -> Void //声明闭包，点击按钮传值
@@ -30,7 +34,8 @@ class MJConversationViewController: RCConversationViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.conversationMessageCollectionView.reloadData()
+//        self.conversationMessageCollectionView.reloadData()
+        
         self.permissions = 2
         loadMemberData()
         
@@ -79,18 +84,25 @@ class MJConversationViewController: RCConversationViewController {
         self.navigationItem.leftBarButtonItem =  UIBarButtonItem(customView: btn)
 
         self.navigationItem.leftBarButtonItem?.tag = 1
-        let searchBtn = UIBarButtonItem(title: "公告", style: .Plain, target: self, action: #selector(clickBtnAction(_:)))
-        let offset = UIOffset(horizontal: 20, vertical: 0)
-        searchBtn.setBackButtonTitlePositionAdjustment(offset, forBarMetrics: .Default)
-        searchBtn.tag = 2
-        let settingBtn = UIBarButtonItem(title: "设置", style: .Plain, target: self, action: #selector(clickBtnAction(_:)))
-        settingBtn.tag = 3
         
-        self.navigationItem.rightBarButtonItems = [settingBtn,searchBtn]
-        
-        if self.permissions == 2 {
-             searchBtn.enabled = false
+        if self.conversationType == .ConversationType_PRIVATE {
+            return
+        }else{
+            let searchBtn = UIBarButtonItem(title: "公告", style: .Plain, target: self, action: #selector(clickBtnAction(_:)))
+            let offset = UIOffset(horizontal: 20, vertical: 0)
+            searchBtn.setBackButtonTitlePositionAdjustment(offset, forBarMetrics: .Default)
+            searchBtn.tag = 2
+            let settingBtn = UIBarButtonItem(title: "设置", style: .Plain, target: self, action: #selector(clickBtnAction(_:)))
+            settingBtn.tag = 3
+            
+            self.navigationItem.rightBarButtonItems = [settingBtn,searchBtn]
+            
+//            if self.permissions == 2 {
+//                searchBtn.enabled = false
+//            }
         }
+        
+        
    
     }
     

@@ -14,7 +14,7 @@
 
 @property (nonatomic, weak) UIButton *plusButton;
 
-@property (nonatomic, strong) NSMutableArray *buttons;
+
 
 @property (nonatomic, weak) UIButton *selectedButton;
 
@@ -45,7 +45,7 @@ static YJTabBar *_instance = nil;
         self.btn.item = item;
         
         self.btn.tag = self.buttons.count;
-        NSLog(@"按钮的tag值%ld",(long)self.btn.tag);
+        
         [self.btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchDown];
         
         if (self.btn.tag == 0) {
@@ -64,7 +64,7 @@ static YJTabBar *_instance = nil;
     button.selected = YES;
     _selectedButton = button;
     
-    for (UIButton *btn in _buttons) {
+    for (YJTabBarButton *btn in _buttons) {
         if (btn == button) {
             break;
         }
@@ -82,10 +82,10 @@ static YJTabBar *_instance = nil;
 - (UIButton *)plusButton{
     if (_plusButton == nil) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setImage:[UIImage imageNamed:@"ic_fabu_0088ff"] forState:UIControlStateNormal];
-        [btn setImage:[UIImage imageNamed:@"ic_fabu_0088ff"] forState:UIControlStateHighlighted];
-        [btn setBackgroundImage:[UIImage imageNamed:@"ic_fabu_0088ff"] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[UIImage imageNamed:@"ic_fabu_0088ff"] forState:UIControlStateHighlighted];
+        [btn setImage:[UIImage imageNamed:@"ic_fabu"] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"ic_fabu"] forState:UIControlStateHighlighted];
+        [btn setBackgroundImage:[UIImage imageNamed:@"ic_fabu"] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageNamed:@"ic_fabu"] forState:UIControlStateHighlighted];
      
         [btn sizeToFit];
         

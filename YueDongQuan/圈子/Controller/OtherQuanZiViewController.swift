@@ -26,7 +26,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     //地图试图
     lazy var mapView = MAMapView()
     //定位服务
-    var locationManager = AMapLocationManager()
+    var locationManager : AMapLocationManager!
     
     var completionBlock: ((location: CLLocation?,
     regeocode: AMapLocationReGeocode?,
@@ -54,6 +54,8 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //MARK:自定义经纬度
+        annotations = NSMutableArray()
         if self.fieldData.count != 0 {
             self.title = "场地位置信息"
             
@@ -61,16 +63,13 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         }else{
             self.title = "附近的圈子"
             self.creatViewWithIsResult(false)
-          
+
+           
             changeFrameAnimate(0.5)
         }
-        //MARK:自定义经纬度
-        annotations = NSMutableArray()
-        initCompleteBlock()
-        
         configLocationManager()
-        //逆地理编码
-        reGeocodeAction()
+        
+       
 
     }
     func creatViewWithIsResult(isresult:Bool)  {
@@ -107,7 +106,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
             }
             mapView.delegate = self
             mapView.showsUserLocation = true
-
+            mapView.setZoomLevel(15.1, animated: false)
         }else{
             mapView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
             self.view.addSubview(mapView)
@@ -121,7 +120,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.locationManager.stopUpdatingLocation()
+//        self.locationManager.stopUpdatingLocation()
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
 
     }
@@ -132,7 +131,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
-     self.locationManager.startUpdatingLocation()
+     
 //        tableView.reloadData()
        
        
@@ -158,22 +157,37 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     //MARK: - Action Handle
     
     func configLocationManager() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
-        locationManager.pausesLocationUpdatesAutomatically = false
-        
-        locationManager.allowsBackgroundLocationUpdates = true
-        
-        locationManager.locationTimeout = defaultLocationTimeout
-        
-        locationManager.reGeocodeTimeout = defaultReGeocodeTimeout
+        if CLLocationManager.locationServicesEnabled() {
+            self.locationManager = AMapLocationManager()
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            
+            self.locationManager.pausesLocationUpdatesAutomatically = false
+            
+            self.locationManager.allowsBackgroundLocationUpdates = true
+            
+            self.locationManager.locationTimeout = defaultLocationTimeout
+            
+            self.locationManager.reGeocodeTimeout = defaultReGeocodeTimeout
+            initCompleteBlock()
+            //逆地理编码
+            reGeocodeAction()
+            
+        }else if CLLocationManager.authorizationStatus() == .Denied{
+            let alert = SGAlertView(title: "⚠️",
+                                    delegate: nil,
+                                    contentTitle: "定位服务当前可能尚未打开,或者您没有允许“好球热”使用定位服务,请到设置中打开该应用的定位权限!",alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
+            alert.show()
+        }
+//        self.locationManager.startUpdatingLocation()
+       
     }
     
     func reGeocodeAction() {
 //        mapView.removeAnnotations(mapView.annotations)
         
-        locationManager.requestLocationWithReGeocode(true, completionBlock: completionBlock)
+        self.locationManager.requestLocationWithReGeocode(true, completionBlock: completionBlock)
     }
     
     
@@ -182,7 +196,8 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         completionBlock = { [weak self] (location: CLLocation?, regeocode: AMapLocationReGeocode?, error: NSError?) in
             if let error = error {
                 NSLog("locError:{%d - %@};", error.code, error.localizedDescription)
-                
+                let alert = SGAlertView(title: "⚠️", delegate: nil, contentTitle: "定位错误,请重试", alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
+                alert.show()
                 if error.code == AMapLocationErrorCode.LocateFailed.rawValue {
                     return;
                 }
@@ -292,7 +307,10 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
             
             var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier)
             if greenAnnotation == nil {
-                greenAnnotation = MJGreenAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier)
+//                for i in self.circlesModel.data.array {
+                    greenAnnotation = MJOrangeAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier,siteName: "石子山公园篮球场")
+//                }
+               
             }
             greenAnnotation?.canShowCallout  = true
             greenAnnotation?.draggable       = true
@@ -313,7 +331,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     }
 
     func mapView(mapView: MAMapView!, didSelectAnnotationView view: MAAnnotationView!) {
-        if view.isKindOfClass(MJGreenAnnotationView) {
+        if view.isKindOfClass(MJOrangeAnnotationView) {
             print("选中了绿色")
         }
         if view.isKindOfClass(MJRedAnnotationView) {
@@ -384,13 +402,20 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
 
     }
     //MARK: 定位服务代理
+    func amapLocationManager(manager: AMapLocationManager!, didFailWithError error: NSError!) {
+        print("定位错误 = ",error.description)
+        let alert = SGAlertView(title: "⚠️", delegate: nil, contentTitle: "定位错误,请重试", alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
+        alert.show()
+    }
+    
     func amapLocationManager(manager: AMapLocationManager!, didUpdateLocation location: CLLocation!) {
         
         
     }
     
     func mapView(mapView: MAMapView!, didUpdateUserLocation userLocation: MAUserLocation!) {
-  
+       
+        
     }
     
   
@@ -499,8 +524,8 @@ extension OtherQuanZiViewController {
                 
         }
         mapView.addAnnotations(annotations as [AnyObject])
-        mapView.showAnnotations(annotations as [AnyObject], animated: true)
-        
+//        mapView.showAnnotations(annotations as [AnyObject], animated: true)
+        mapView.showAnnotations(annotations as [AnyObject], edgePadding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), animated: true)
     func updateUI()  {
         tableView.reloadData()
     }
@@ -526,7 +551,7 @@ extension OtherQuanZiViewController {
             })
             mapView.addAnnotation(green)
             mapView.selectAnnotation(green, animated: true)
-            mapView.setZoomLevel(15.1, animated: false)
+            
             
         }
         

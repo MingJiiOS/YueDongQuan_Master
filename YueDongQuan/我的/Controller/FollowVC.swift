@@ -42,8 +42,12 @@ class FollowVC: MainViewController {
         super.viewWillAppear(animated)
          loadMyattentionData()
         self.table.reloadData()
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
-
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = false
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         

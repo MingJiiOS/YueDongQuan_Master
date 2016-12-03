@@ -24,6 +24,8 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
     var thumbnailSrc :String?
     //圈主uid
     var permissions1Uid : Int?
+    //主场名
+    var sitesName :String?
     
 //    var consumeItems:Results<RLCircleMemberInfo>?
     
@@ -68,6 +70,7 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
                 let circleData = CircleDataView(frame: CGRectMake(0, 0, ScreenWidth, ScreenHeight))
                 circleData.circleLogo = self.thumbnailSrc
                 circleData.circleName = self.circletitle
+                circleData.circleSite = self.sitesName
                 self.view = circleData
             }
         }
@@ -115,7 +118,7 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
                 print("qrcodestr",qrcodeStr)
                 let qrCode = QRCodeView(frame: self.view.frame,QRstring:qrcodeStr)
                 qrCode.quanZiName.text = self.circletitle
-                qrCode.image.sd_setImageWithURL(NSURL(string: "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"))
+                qrCode.image.sd_setImageWithURL(NSURL(string: self.thumbnailSrc!))
                 self.view .addSubview(qrCode)
             }
         }

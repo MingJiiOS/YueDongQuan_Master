@@ -42,6 +42,36 @@ class MJContextRef: UIButton {
     }
 }
 
+class trangleRef: UIView {
+    
+    var fillcolor : UIColor?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.fillcolor = UIColor()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func drawRect(rect: CGRect) {
+        let context = UIGraphicsGetCurrentContext()
+        let w = self.bounds.size.width
+        let point1 = CGPoint(x: w/2 - 6.5, y: 0)
+        let point2 = CGPoint(x: w/2 + 6.5, y: 0)
+        let point3 = CGPoint(x: w/2, y: 10)
+        let pointAry = [point1,point2,point3]
+        CGContextAddLines(context!, pointAry, 3)
+        CGPDFContextClose(context!)
+        CGContextSetFillColorWithColor(context!, (fillcolor?.CGColor)!)
+        CGContextDrawPath(context!, CGPathDrawingMode.Fill)
+    }
+    
+}
+
+
 class MJLineRef: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -68,10 +68,10 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
                 make.height.equalTo(ScreenHeight)
             }
             mainScrollView.contentSize = CGSizeMake(ScreenWidth*2, ScreenHeight-headBgView!.frame.size.height)
-            
+        
             mainScrollView.delegate = self
             
-            todayDongdouTableView = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight), style: .Plain)
+            todayDongdouTableView = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight - ScreenHeight/2.5), style: .Plain)
             mainScrollView .addSubview(todayDongdouTableView)
             //        todayDongdouTableView.snp_makeConstraints { (make) in
             //            make.left.right.equalTo(0)
@@ -81,11 +81,11 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
             todayDongdouTableView.tag = 1
             todayDongdouTableView.delegate = self
             todayDongdouTableView.dataSource = self
-            
+            todayDongdouTableView.contentInset = UIEdgeInsetsMake(0, 0, 49, 0)
             
             //        todayDongdouTableView.scrollEnabled = false
             
-            histroyDongdouTableView = UITableView(frame: CGRect(x: ScreenWidth, y: 0, width: ScreenWidth, height: ScreenHeight), style: .Plain)
+            histroyDongdouTableView = UITableView(frame: CGRect(x: ScreenWidth, y: 0, width: ScreenWidth, height: ScreenHeight - ScreenHeight/2.5), style: .Plain)
             mainScrollView .addSubview(histroyDongdouTableView)
             
             //        histroyDongdouTableView.snp_makeConstraints { (make) in
@@ -97,7 +97,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
             histroyDongdouTableView.delegate = self
             histroyDongdouTableView.dataSource = self
             
-            
+            histroyDongdouTableView.contentInset = UIEdgeInsetsMake(0, 0, 49, 0)
             //点击按钮左右滑动
             headBgView!.clickIndexClosure { (index) in
                 if index == 1{
@@ -140,7 +140,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
                     total.mydongdou = self.myDongdou
                     if self.totalRankModel != nil{
                         total.totalRankModel = self.totalRankModel
-                        total.totalRankArray = self.totalRankArray
+                        total.totalRankArray = self.totalRankModel?.data.array
                         total.RedouCha = self.cha
                         total.rak = self.rak.description
                         self.push(total)
@@ -216,7 +216,7 @@ class MyDongDouViewController: MainViewController,UITableViewDelegate,UITableVie
         
         return cell
     }
-
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return kAutoStaticCellHeight
     }
@@ -282,9 +282,9 @@ extension MyDongDouViewController {
                                                 
                                                 self.totalRankArray = self.totalRankModel?.data.array
                                                 //做倒序
-                                                self.totalRankArray!.sortInPlace({ (num1:TotalRankArray, num2:TotalRankArray) -> Bool in
-                                                    return Int(num1.dongdou) > Int(num2.dongdou)
-                                                })
+//                                                self.totalRankArray!.sortInPlace({ (num1:TotalRankArray, num2:TotalRankArray) -> Bool in
+//                                                    return Int(num1.dongdou) > Int(num2.dongdou)
+//                                                })
                                                 //循环整个rank数据
                                                 for id in self.totalRankArray!{
                                                     
@@ -295,7 +295,7 @@ extension MyDongDouViewController {
                                                         //取到当前下标数组的上一个数组
                                                         let ii = self.totalRankArray![self.rak-2]
                                                         //计算差量
-                                                        self.cha = Int(ii.dongdou)! - Int(id.dongdou)!
+//                                                        self.cha = Int(ii.dongdou)! - Int(id.dongdou)!
                                                       return
                                                     }
                                                 }

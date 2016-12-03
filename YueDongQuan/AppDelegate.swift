@@ -17,7 +17,7 @@ let RONGCLOUDAPPKEY = "uwd1c0sxug581"
 @UIApplicationMain
 class AppDelegate: UIResponder,
 UIApplicationDelegate,
-UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
+UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMessageDelegate
 {
 
     var window: UIWindow?
@@ -33,6 +33,10 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         self.window = UIWindow(frame: CGRect(x: 0,
                                              y: 0,
                                          width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(exchangControllerVC), name: "UserExitLogin", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(userLoginSuccess), name: "UserLoginSuccess", object: nil)
         
         print("接口验证参数",NSObject.getEncodeString("20160901"))
 //        print("数据库地址",RLMRealmConfiguration.defaultConfiguration().fileURL)
@@ -50,7 +54,9 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         CLLocationManager().requestWhenInUseAuthorization()
         //融云
         RCIM.sharedRCIM().initWithAppKey(RONGCLOUDAPPKEY)
-        RCIMClient.sharedRCIMClient()
+        RCIM.sharedRCIM().receiveMessageDelegate = self
+        
+   
         //初始化融云即登录
         let manager = IQKeyboardManager.sharedManager()
         manager.enable = true
@@ -67,7 +73,10 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         RealReachability.sharedInstance().startNotifier()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(networkChanged), name: kRealReachabilityChangedNotification, object: nil)
          judgeReachbility()
-         self.window?.rootViewController = HKFTableBarController()
+        let tabbar = HKFTableBarController.sharedManager()
+        
+        
+         self.window?.rootViewController = tabbar
         //监测版本
          checkVersion()
         //MARK:自动登录
@@ -132,9 +141,30 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
         self.window!.makeKeyAndVisible()
         return true
     }
-    
+    func onRCIMReceiveMessage(message: RCMessage!, left: Int32) {
+        
+        print("接收到消息 = ",message)
+        
+        
+        if UIApplication.sharedApplication().applicationState == .Active {
+            let unreadMessage = RCIMClient.sharedRCIMClient().getTotalUnreadCount()
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            if unreadMessage > 0 {
+                let tabbar = HKFTableBarController.sharedManager()
+                let btn:YJTabBarButton = tabbar.customTabBar.buttons.objectAtIndex(2) as! YJTabBarButton
+                btn.badgeValue = Int(unreadMessage).description
+               print("未读消息条数 = ",Int(unreadMessage))
+            }
+        }else if UIApplication.sharedApplication().applicationState == .Background || UIApplication.sharedApplication().applicationState == .Inactive{
+            
+             let unreadMessage = RCIMClient.sharedRCIMClient().getTotalUnreadCount()
+            UIApplication.sharedApplication().applicationIconBadgeNumber = Int(unreadMessage)
+            print("未读消息条数 = ",Int(unreadMessage))
+        }
+
+    }
     func getUserInfoDataBaseFromFMDB() -> NSArray  {
-        let modelAll = FLFMDBManager.shareManager().fl_searchModelArr(UserDataInfoModel) as! NSArray
+        let modelAll = FLFMDBManager.shareManager().fl_searchModelArr(UserDataInfoModel) as NSArray
         return modelAll
     }
     
@@ -144,6 +174,18 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
             let alertt = UIAlertView(title: "⚠️", message: "您的账号在其他设备上登录,请确定是否为本人操作,如非本人操作请及时修改您的登录密码", delegate: self, cancelButtonTitle: nil,otherButtonTitles: "好的")
             alertt.show()
         }
+    }
+    
+    func exchangControllerVC(){
+        let nv = CustomNavigationBar(rootViewController: YDQLoginRegisterViewController())
+        
+        self.window?.rootViewController = nv
+//        self.navigationController?.presentViewController(nv, animated: true, completion: nil)
+    }
+    
+    
+    func userLoginSuccess(){
+        self.window?.rootViewController = HKFTableBarController()
     }
         
     deinit {
@@ -161,7 +203,8 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
             RCIM.sharedRCIM().disconnect()
             let login = YDQLoginRegisterViewController()
             let nv = CustomNavigationBar(rootViewController: login)
-            self.window?.rootViewController?.presentViewController(nv, animated: true, completion: nil)
+            
+            self.window?.rootViewController = nv//?.presentViewController(nv, animated: true, completion: nil)
         }else{
             
         }
@@ -173,15 +216,15 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource
     }
     //MARK:程序已经进入后台
     func applicationDidEnterBackground(application: UIApplication) {
-
+//      application.applicationIconBadgeNumber = 0
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-
+       application.applicationIconBadgeNumber = 0
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
-
+//       application.applicationIconBadgeNumber = 0
     }
 
     func applicationWillTerminate(application: UIApplication) {

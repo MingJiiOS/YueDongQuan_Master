@@ -36,7 +36,7 @@ class MainTabBarViewController: UITabBarController,UITabBarControllerDelegate {
         nvc1.tabBarItem = tabBar1
         nvc2.tabBarItem = tabBar2
         nvc4.tabBarItem = tabBar4
-        nvc4.tabBarItem.badgeValue = "99+"
+        
         nvc5.tabBarItem = tabBar5
         
 //        self.tabBar.tintColor = UIColor(patternImage: UIImage(named: "Main_tabBar_background")!)
