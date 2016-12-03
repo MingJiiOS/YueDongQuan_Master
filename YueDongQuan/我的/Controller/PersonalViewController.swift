@@ -295,10 +295,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         pagesize += singleRqusetNum
         
         print("请求的条数 = ",pagesize)
-        
-        
         let pageSize =  pagesize
-       
         //查询我的说说
         let foundDic = ["v":v,
                         "uid":uid,
@@ -603,7 +600,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
         }else{
 //            if self.myfoundmodel != nil {
 //                if self.myfoundmodel?.code != "405" {
-                     MainBgTableView.mj_footer.endRefreshing()
+//                     MainBgTableView.mj_footer.endRefreshing()
 //                }else{
 //                    return
 //                }

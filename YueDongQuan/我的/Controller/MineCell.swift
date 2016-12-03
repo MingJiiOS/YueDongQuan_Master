@@ -211,7 +211,8 @@ class MineCell: UITableViewCell {
         no4btn.titleLabel?.font = kAutoFontWithTop
         sex.titleLabel?.font = kAutoFontWithTop
         age.font = kAutoFontWithTop
-        
+        focusBtn.hidden = true
+        messageBtn.hidden = true
 
     }
     func tapOnfansAction(sender:UIButton)  {

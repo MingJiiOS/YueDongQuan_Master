@@ -12,16 +12,20 @@ import Alamofire
 import SwiftyJSON
 import SDWebImage
 
-class HKFPostField_TwoVC: UIViewController {
-
+class HKFPostField_TwoVC: UIViewController,FieldPostCellDelegate {
+    //场地头像
     var fieldImage = UIImageView()
     var imagePicker : UIImagePickerController!
     private var imageUrl : UIImage?
     var editModel : FieldImageModel?
     private var imageData = NSData()
-    private var field_Name = ""
-    private var field_Tel = ""
-    private var field_Price = ""
+    //场馆名
+    private var field_Name : String?
+    //电话
+    private var field_Tel : String?
+    //价格
+    private var field_Price : String?
+    //场馆id
     private var field_Id : Int = 0
     
     var addressTemp = String()
@@ -38,8 +42,8 @@ class HKFPostField_TwoVC: UIViewController {
         setUI()
         
 //        NSLog("addressTemp = \(addressTemp),userLocationTemp = \(userLocationTemp.coordinate.latitude)")
-        
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didChangeTextfield), name: UITextFieldTextDidEndEditingNotification, object: nil)
+     
         
     }
     
@@ -126,7 +130,16 @@ class HKFPostField_TwoVC: UIViewController {
     }
     
     
-    
+    lazy var table : UITableView = {
+       var table = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight),
+                               style: UITableViewStyle.Grouped)
+        table.separatorStyle = .None
+        table.delegate = self
+        table.dataSource = self
+        table.scrollEnabled = false
+        table.registerClass(FieldPostCell.self, forCellReuseIdentifier: "FieldPostCell")
+        return table
+    }()
     
     
     
@@ -134,210 +147,27 @@ class HKFPostField_TwoVC: UIViewController {
     func setUI(){
         
         
-        
-        self.view.addSubview(fieldImage)
-        fieldImage.snp_makeConstraints { (make) in
-            make.centerX.equalTo(self.view.snp_centerX)
-            make.top.equalTo(100)
-            make.width.height.equalTo(100)
+        self.view .addSubview(self.table)
+
+        let sureBtn = UIButton(type: .Custom)
+        self.view .addSubview(sureBtn)
+        sureBtn.snp_makeConstraints { (make) in
+            make.top.equalTo(kAutoStaticCellHeight * 4 + kAuotoGapWithBaseGapTen + 64.001 + kAutoStaticCellHeight
+            )
+            make.left.equalTo(kAuotoGapWithBaseGapTwenty)
+            make.right.equalTo(-kAuotoGapWithBaseGapTwenty)
+            make.height.equalTo(kAutoStaticCellHeight)
         }
-        
-        fieldImage.image = UIImage(named: "banner_bg")
-        
-        let editImageView = UIView()
-        fieldImage.addSubview(editImageView)
-        editImageView.snp_makeConstraints { (make) in
-            make.left.right.equalTo(0)
-            make.bottom.equalTo(fieldImage.snp_bottom)
-            make.height.equalTo(30)
-        }
-        
-        let editImage = UIImageView()
-        editImageView.addSubview(editImage)
-        editImage.snp_makeConstraints { (make) in
-            make.left.equalTo(10)
-            make.top.equalTo(5)
-            make.width.height.equalTo(20)
-        }
-        editImage.image = UIImage(named: "ic_wode_3f3f3f")
-        
-        let editLabel = UILabel()
-        editImageView.addSubview(editLabel)
-        editLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(editImage.snp_right).offset(2)
-            make.top.equalTo(5)
-            make.right.equalTo(0)
-            make.height.equalTo(20)
-        }
-        editLabel.text = "场地图片"
-        editLabel.textAlignment = .Left
-        editLabel.textColor = UIColor.whiteColor()
-        
-        
-        
-        editImageView.backgroundColor = UIColor.brownColor()
-        
-        
-        
+        sureBtn.backgroundColor = UIColor(red: 0, green: 125 / 255, blue: 1, alpha: 1)
+        sureBtn.layer.cornerRadius = 5
+        sureBtn.layer.masksToBounds = true
+        sureBtn.setTitle("确认提交场馆信息", forState: UIControlState.Normal)
+        sureBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        sureBtn.titleLabel?.font = kAutoFontWithTop
         let selectImage = UITapGestureRecognizer(target: self, action: #selector(clickSelectImage))
         fieldImage.userInteractionEnabled = true
         fieldImage.addGestureRecognizer(selectImage)
-        
-        
-        
-        let lineView1 = UIView()
-        self.view.addSubview(lineView1)
-        lineView1.snp_makeConstraints { (make) in
-            make.top.equalTo(fieldImage.snp_bottom).offset(40)
-            make.left.equalTo(0).offset(10)
-            make.right.equalTo(0).offset(-10)
-            make.height.equalTo(1)
-        }
-        lineView1.backgroundColor = UIColor ( red: 0.9176, green: 0.9216, blue: 0.9412, alpha: 1.0 )
-        let fieldNameLabel = UILabel()
-        self.view.addSubview(fieldNameLabel)
-        fieldNameLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(lineView1.snp_left)
-            make.top.equalTo(lineView1.snp_bottom).offset(5)
-            make.height.equalTo(25)
-            make.width.equalTo(100)
-        }
-        fieldNameLabel.text = "场地名"
-        fieldNameLabel.textAlignment = .Left
-        fieldNameLabel.textColor = UIColor ( red: 0.1882, green: 0.1922, blue: 0.1961, alpha: 1.0 )
-        
-        let fieldNameText = UITextField()
-        self.view.addSubview(fieldNameText)
-        fieldNameText.snp_makeConstraints { (make) in
-            make.left.equalTo(fieldNameLabel.snp_right)
-            make.top.equalTo(fieldNameLabel.snp_top)
-            make.height.equalTo(fieldNameLabel.snp_height)
-            make.right.equalTo(0).offset(-10)
-        }
-        fieldNameText.placeholder = "请输入场地名称"
-        fieldNameText.textColor = UIColor ( red: 0.5922, green: 0.5922, blue: 0.5922, alpha: 1.0 )
-        fieldNameText.delegate = self
-        fieldNameText.tag = 100
-        fieldNameText.addTarget(self, action: #selector(getTextField(_:)), forControlEvents: UIControlEvents.AllEditingEvents)
-        
-        
-        let lineView2 = UIView()
-        self.view.addSubview(lineView2)
-        lineView2.snp_makeConstraints { (make) in
-            make.top.equalTo(fieldNameLabel.snp_bottom).offset(5)
-            make.left.equalTo(0).offset(10)
-            make.right.equalTo(0).offset(-10)
-            make.height.equalTo(1)
-        }
-        lineView2.backgroundColor = UIColor ( red: 0.9176, green: 0.9216, blue: 0.9412, alpha: 1.0 )
-        
-        
-        let fieldTelLabel = UILabel()
-        self.view.addSubview(fieldTelLabel)
-        fieldTelLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(lineView2.snp_left)
-            make.top.equalTo(lineView2.snp_bottom).offset(5)
-            make.height.equalTo(25)
-            make.width.equalTo(100)
-        }
-        fieldTelLabel.text = "订场电话"
-        fieldTelLabel.textAlignment = .Left
-        fieldTelLabel.textColor = UIColor ( red: 0.1882, green: 0.1922, blue: 0.1961, alpha: 1.0 )
-        
-        
-        let fieldTelText = UITextField()
-        self.view.addSubview(fieldTelText)
-        fieldTelText.snp_makeConstraints { (make) in
-            make.left.equalTo(fieldTelLabel.snp_right)
-            make.top.equalTo(fieldTelLabel.snp_top)
-            make.height.equalTo(fieldTelLabel.snp_height)
-            make.right.equalTo(0).offset(-10)
-        }
-        fieldTelText.placeholder = "请输入场地订场电话"
-        fieldTelText.textColor = UIColor ( red: 0.5922, green: 0.5922, blue: 0.5922, alpha: 1.0 )
-        fieldTelText.delegate = self
-        fieldTelText.keyboardType = .PhonePad
-        fieldTelText.tag = 200
-        fieldTelText.addTarget(self, action: #selector(getTextField(_:)), forControlEvents: UIControlEvents.AllEditingEvents)
-        
-        let lineView3 = UIView()
-        self.view.addSubview(lineView3)
-        lineView3.snp_makeConstraints { (make) in
-            make.top.equalTo(fieldTelLabel.snp_bottom).offset(5)
-            make.left.equalTo(0).offset(10)
-            make.right.equalTo(0).offset(-10)
-            make.height.equalTo(1)
-        }
-        lineView3.backgroundColor = UIColor ( red: 0.9176, green: 0.9216, blue: 0.9412, alpha: 1.0 )
-        
-        let fieldPriceLabel = UILabel()
-        self.view.addSubview(fieldPriceLabel)
-        fieldPriceLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(lineView3.snp_left)
-            make.top.equalTo(lineView3.snp_bottom).offset(5)
-            make.height.equalTo(25)
-            make.width.equalTo(100)
-        }
-        fieldPriceLabel.text = "价格"
-        fieldPriceLabel.textAlignment = .Left
-        fieldPriceLabel.textColor = UIColor ( red: 0.1882, green: 0.1922, blue: 0.1961, alpha: 1.0 )
-        
-        let priceOfHours = UILabel()
-        self.view.addSubview(priceOfHours)
-        priceOfHours.snp_makeConstraints { (make) in
-            make.top.equalTo(lineView3.snp_bottom).offset(5)
-            make.right.equalTo(0).offset(-10)
-            make.height.equalTo(fieldPriceLabel.snp_height)
-            make.width.equalTo(60)
-        }
-        priceOfHours.textColor = UIColor ( red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0 )
-        priceOfHours.text = "元/小时"
-        priceOfHours.textAlignment = .Right
-        
-        
-        
-        let fieldPriceText = UITextField()
-        self.view.addSubview(fieldPriceText)
-        fieldPriceText.snp_makeConstraints { (make) in
-            make.left.equalTo(fieldPriceLabel.snp_right)
-            make.top.equalTo(fieldPriceLabel.snp_top)
-            make.height.equalTo(fieldPriceLabel.snp_height)
-            make.right.equalTo(priceOfHours.snp_left)
-        }
-        fieldPriceText.placeholder = "请输入场地价格"
-        fieldPriceText.textColor = UIColor ( red: 0.5922, green: 0.5922, blue: 0.5922, alpha: 1.0 )
-        fieldPriceText.delegate = self
-        fieldPriceText.keyboardType = .NumberPad
-        fieldPriceText.tag = 300
-        fieldPriceText.addTarget(self, action: #selector(getTextField(_:)), forControlEvents: UIControlEvents.AllEditingEvents)
-        
-        let lineView4 = UIView()
-        self.view.addSubview(lineView4)
-        lineView4.snp_makeConstraints { (make) in
-            make.top.equalTo(fieldPriceLabel.snp_bottom).offset(5)
-            make.left.equalTo(0).offset(10)
-            make.right.equalTo(0).offset(-10)
-            make.height.equalTo(1)
-        }
-        lineView4.backgroundColor = UIColor ( red: 0.9176, green: 0.9216, blue: 0.9412, alpha: 1.0 )
-        
-        
-        let saveFieldInfoBtn = UIButton()
-        self.view.addSubview(saveFieldInfoBtn)
-        
-        saveFieldInfoBtn.snp_makeConstraints { (make) in
-            make.left.equalTo(0).offset(50)
-            make.top.equalTo(lineView4.snp_bottom).offset(30)
-            make.right.equalTo(0).offset(-50)
-            make.height.equalTo(35)
-        }
-        saveFieldInfoBtn.backgroundColor = UIColor ( red: 0.0824, green: 0.4353, blue: 0.9804, alpha: 1.0 )
-        saveFieldInfoBtn.setTitle("上传场地信息", forState: UIControlState.Normal)
-        saveFieldInfoBtn.setTitleColor(UIColor ( red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 ), forState: UIControlState.Normal)
-        saveFieldInfoBtn.addTarget(self, action: #selector(clickSaveFieldInfoBtn), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        
-        
+  
     }
     
     func dismissVC(){
@@ -355,19 +185,19 @@ class HKFPostField_TwoVC: UIViewController {
         }
         
         
-        if self.field_Name == ""{
+        if self.field_Name == nil{
             let alert = UIAlertView(title: "提示", message: "请填写场地名称", delegate: nil, cancelButtonTitle: "确定")
             alert.show()
             return
         }
         
-        if self.field_Tel == ""{
+        if self.field_Tel == nil{
             let alert = UIAlertView(title: "提示", message: "请填写场地联系电话", delegate: nil, cancelButtonTitle: "确定")
             alert.show()
             return
         }
         
-        if self.field_Price == ""{
+        if self.field_Price == nil{
             let alert = UIAlertView(title: "提示", message: "请填写场地价格", delegate: nil, cancelButtonTitle: "确定")
             alert.show()
             return
@@ -379,41 +209,13 @@ class HKFPostField_TwoVC: UIViewController {
         
     }
     
-    internal func getTextField(textField:UITextField){
-        switch textField.tag {
-        case 100:
-            print(textField.text)
-            self.field_Name = textField.text!
-        case 200:
-            print(textField.text)
-            self.field_Tel = textField.text!
-        case 300:
-            print(textField.text)
-            self.field_Price = textField.text!
-        default:
-            break
-        }
-    }
+  
     
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        switch textField.tag {
-        case 100:
-            print(textField.text)
-            self.field_Name = textField.text!
-        case 200:
-            print(textField.text)
-            self.field_Tel = textField.text!
-        case 300:
-            print(textField.text)
-            self.field_Price = textField.text!
-        default:
-            break
-        }
-    }
+
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.hidesBottomBarWhenPushed = true
+           NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(getPrice), name: "price", object: nil)
     }
     override func viewWillDisappear(animated: Bool) {
         self.tabBarController?.hidesBottomBarWhenPushed = false
@@ -430,12 +232,24 @@ class HKFPostField_TwoVC: UIViewController {
 }
 
 
-extension HKFPostField_TwoVC : UITextFieldDelegate {
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if  textField.isFirstResponder() {
-            textField.resignFirstResponder()
+extension HKFPostField_TwoVC  {
+    func didChangeTextfield(fication: NSNotification) {
+        let textfield = fication.object as! MJTextFeild
+        switch textfield.tag {
+        case 1:
+            self.field_Name = textfield.text!
+            return
+        case 2:
+            self.field_Tel = textfield.text!
+            return
+        default:
+            break
         }
-        return true
+        
+    }
+    func getPrice(fication:NSNotification)  {
+        self.field_Price = fication.object as? String
+        self.table.reloadData()
     }
 }
 
@@ -450,7 +264,7 @@ extension HKFPostField_TwoVC : UIImagePickerControllerDelegate,UINavigationContr
         self.fieldImage.image =  UIImage(data: data!);
         self.imageUrl = image
         self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
-//        requestUpfile(image!)
+        requestUpfile(image!)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -497,7 +311,7 @@ extension HKFPostField_TwoVC : UIImagePickerControllerDelegate,UINavigationContr
                     
                     if (self.editModel?.code == "200" && self.editModel?.flag == "1" ) {
                         let logoID = self.editModel?.data.id
-                        self.requestToEditorFieldInfo(self.userLocationTemp.coordinate.longitude, latitude: self.userLocationTemp.coordinate.latitude, logoId: logoID!, phone: self.field_Tel, cost: self.field_Price, name: self.field_Name, address: self.addressTemp)
+                        self.requestToEditorFieldInfo(self.userLocationTemp.coordinate.longitude, latitude: self.userLocationTemp.coordinate.latitude, logoId: logoID!, phone: self.field_Tel!, cost: self.field_Price!, name: self.field_Name!, address: self.addressTemp)
                         
                     }
                     
@@ -538,11 +352,169 @@ extension HKFPostField_TwoVC : UIImagePickerControllerDelegate,UINavigationContr
         }
     }
     
-    
-    
-    
-    
+}
+extension HKFPostField_TwoVC:UITableViewDelegate,UITableViewDataSource{
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+       
+        if indexPath.section != 0 {
+            var cell = tableView.dequeueReusableCellWithIdentifier("cell")
+            if cell == nil {
+                cell = UITableViewCell(style: .Value1, reuseIdentifier: "cell")
+            }
+            let ary = ["场地位置","场地价格"]
+            cell?.accessoryType = .DisclosureIndicator
+            cell!.textLabel?.text = ary[indexPath.row]
+            cell!.textLabel?.font = kAutoFontWithTop
+            cell?.detailTextLabel?.text = ary[indexPath.row]
+            cell?.detailTextLabel?.font = kAutoFontWithMid
+            let line = UIView()
+            cell?.contentView .addSubview(line)
+            line.backgroundColor = UIColor.groupTableViewBackgroundColor()
+            line.snp_makeConstraints(closure: { (make) in
+                make.left.right.bottom.equalTo(0)
+                make.height.equalTo(0.5)
+            })
+            if indexPath.row != 0 {
+                if self.field_Price != nil{
+                 cell?.detailTextLabel?.text = self.field_Price
+                }else{
+                   cell?.detailTextLabel?.text = "未填"
+                }
+                
+              
+            }else{
+               self.addressTemp = (cell?.detailTextLabel?.text)!
+            }
+
+            return cell!
+        }else{
+           var cell:FieldPostCell = tableView.dequeueReusableCellWithIdentifier("FieldPostCell") as! FieldPostCell
+            cell = FieldPostCell(style: .Default, reuseIdentifier: "FieldPostCell")
+            cell.po_delegate = self
+            
+            return cell
+        }
+   
+    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section != 0 {
+            return 2
+        }else{
+            return 1
+        }
+    }
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section != 0 {
+            return kAutoStaticCellHeight
+        }else{
+            return kAutoStaticCellHeight * 2
+        }
+    }
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return kAuotoGapWithBaseGapTen
+    }
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.001
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.section != 0{
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            if indexPath.row == 1 {
+                //跳转到价格设定
+                self.navigationController?.pushViewController(FieldPriceVC(), animated: true)
+            }else{
+                //跳转到设定场地
+                let oneVC = HKFPostField_OneVC()
+                oneVC.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+                self.navigationController?.pushViewController(oneVC, animated: true)
+              
+            }
+        }
+    }
+    func didTapOnField_image() {
+        clickSelectImage()
+    }
 }
 
-
+protocol FieldPostCellDelegate {
+    func didTapOnField_image()
+}
+class FieldPostCell: UITableViewCell {
+    //场馆logo
+    var field_image = UIImageView()
+    // 场馆名
+    var field_name = MJTextFeild()
+    //订场电话
+    var field_phone = MJTextFeild()
+    //确认提交场馆信息
+    var field_surepost = UIButton(type: .Custom)
+    
+    var po_delegate : FieldPostCellDelegate?
+    
+    
+    
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .None
+        self.contentView .addSubview(field_image)
+        self.contentView .addSubview(field_name)
+        self.contentView .addSubview(field_phone)
+        self.contentView .addSubview(field_surepost)
+        
+        //头像logo
+        self.field_image.snp_makeConstraints { (make) in
+            make.left.equalTo(kAuotoGapWithBaseGapTen)
+            make.top.equalTo(kAuotoGapWithBaseGapTwenty)
+            make.bottom.equalTo(-kAuotoGapWithBaseGapTwenty)
+            make.width.equalTo(kAutoStaticCellHeight*2 - kAuotoGapWithBaseGapTwenty*2)
+        }
+        self.field_image.layer.cornerRadius = 5
+        self.field_image.layer.masksToBounds = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(taponimage))
+        self.field_image.userInteractionEnabled = true
+        self.field_image.addGestureRecognizer(tap)
+        self.field_image.image = UIImage(named: "默认场地")
+        let btn = UIButton(type: .Custom)
+        self.field_image.addSubview(btn)
+        btn.snp_makeConstraints { (make) in
+            make.left.right.bottom.equalTo(0)
+            make.height.equalTo((kAutoStaticCellHeight*2 - kAuotoGapWithBaseGapTwenty*2) / 3.5)
+        }
+        btn.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+        btn.setTitle("上传场地地图", forState: UIControlState.Normal)
+        btn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        btn.titleLabel?.adjustsFontSizeToFitWidth = true
+        //场地名称
+        self.field_name.snp_makeConstraints { (make) in
+            make.left.equalTo(field_image.snp_right).offset(kAuotoGapWithBaseGapTen)
+            make.top.equalTo(field_image.snp_top)
+            make.right.equalTo(-kAuotoGapWithBaseGapTen)
+            make.height.equalTo((kAutoStaticCellHeight*2 - kAuotoGapWithBaseGapTwenty*2) / 2)
+        }
+        self.field_name.placeholder = "场地名称"
+        self.field_name.borderFillColor = UIColor.lightGrayColor()
+        self.field_name.tag = 1
+        //订场电话
+        self.field_phone.snp_makeConstraints { (make) in
+            make.left.equalTo(field_image.snp_right).offset(kAuotoGapWithBaseGapTen)
+            make.top.equalTo(field_name.snp_bottom)
+            make.right.equalTo(-kAuotoGapWithBaseGapTen)
+        }
+        self.field_phone.borderFillColor = UIColor.clearColor()
+        self.field_phone.placeholder = "订场电话(选填)"
+        self.field_phone.tag = 2
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    func taponimage()  {
+        self.po_delegate?.didTapOnField_image()
+    }
+}
 

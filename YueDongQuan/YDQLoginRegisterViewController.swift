@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 //import RealmSwift
 class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCAnimatedImagesViewDelegate{
     
@@ -87,14 +88,16 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         topView.startAnimating()
+        //MARK:旋转的圈
+        self.initLayer()
         self.navigationController?.navigationBar.hidden = true
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
     func initLayer()  {
         rotationLayer.bounds = CGRect(x: 0,
                                       y: 0,
-                                      width: (ScreenWidth/3.5),
-                                      height: (ScreenWidth/3.5))
+                                      width: (ScreenWidth/3.1),
+                                      height: (ScreenWidth/3.1))
         rotationLayer.backgroundColor = UIColor.clearColor().CGColor
         rotationLayer.position = CGPoint(x: topView.centerX,
                                          y:  ScreenHeight/4.5)
@@ -167,18 +170,22 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
                                     })
                                 }
                             }, fail: { (error) in
-                                
+                            
                         })
                         
+                        
+                        NSNotificationCenter.defaultCenter().postNotificationName("UserLoginSuccess", object: nil)
                         self.dismissViewControllerAnimated(true, completion: { 
-                            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+                          NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: nil)
+                            SVProgressHUD.dismiss()
                         })
                        
    
                     }
                     }, fail: { (error) in
-                     self.showMJProgressHUD("请求超时", isAnimate: false, startY: ScreenHeight-40-40-40-20)
                      
+                        SVProgressHUD.showErrorWithStatus("请求超时")
+                        SVProgressHUD.dismissWithDelay(1.5)
                        
                 })
             }
@@ -235,7 +242,7 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
         headImage.layer.borderWidth = 1
         headImage.backgroundColor = kBlueColor
         headImage.layer.borderColor = UIColor.whiteColor().CGColor
-        headImage.sd_setImageWithURL(NSURL(string: "http://img.hb.aicdn.com/bcbc67dcae4b539f7c9afb30db12dcd0efebe5f0ca55-OT8oGG_fw658"), placeholderImage: UIImage(named: "热动篮球LOGO"))
+        headImage.image = UIImage(named: "热动篮球LOGO")
         
 
         
@@ -398,8 +405,8 @@ class YDQLoginRegisterViewController: MainViewController,UITextFieldDelegate,RCA
 
     //MARK:用户登录操作
     func loginAction()  {
-        //MARK:旋转的圈
-        self.initLayer()
+        
+        SVProgressHUD.show()
         // 参数字典
         var dic = NSDictionary()
         //参数来源逻辑判断

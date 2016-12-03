@@ -25,7 +25,9 @@
 
 // items:保存每一个按钮对应tabBarItem模型
 @property (nonatomic, strong) NSArray * items;
+@property (nonatomic, strong) NSMutableArray *buttons;
 @property (nonatomic,strong) YJTabBarButton *btn;
 @property (nonatomic, weak) id<YJTabBarDelegate> delegate;
 + (instancetype) shareYJTabBar;
+-(void)btnClick:(UIButton *)button;
 @end

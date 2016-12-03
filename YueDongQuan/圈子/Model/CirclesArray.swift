@@ -9,8 +9,8 @@ class CirclesArray : NSObject, NSCoding{
 
 	var distance : Int!
 	var id : Int!
-	var latitude : Int!
-	var longitude : Int!
+	var latitude : Double!
+	var longitude : Double!
 	var name : String!
 	var number : Int!
 	var thumbnailSrc : String!
@@ -23,8 +23,8 @@ class CirclesArray : NSObject, NSCoding{
 	init(fromDictionary dictionary: NSDictionary){
 		distance = dictionary["distance"] as? Int
 		id = dictionary["id"] as? Int
-		latitude = dictionary["latitude"] as? Int
-		longitude = dictionary["longitude"] as? Int
+		latitude = dictionary["latitude"] as? Double
+		longitude = dictionary["longitude"] as? Double
 		name = dictionary["name"] as? String
 		number = dictionary["number"] as? Int
 		thumbnailSrc = dictionary["thumbnailSrc"] as? String
@@ -72,8 +72,8 @@ class CirclesArray : NSObject, NSCoding{
 	{
          distance = aDecoder.decodeObjectForKey("distance") as? Int
          id = aDecoder.decodeObjectForKey("id") as? Int
-         latitude = aDecoder.decodeObjectForKey("latitude") as? Int
-         longitude = aDecoder.decodeObjectForKey("longitude") as? Int
+         latitude = aDecoder.decodeObjectForKey("latitude") as? Double
+         longitude = aDecoder.decodeObjectForKey("longitude") as? Double
          name = aDecoder.decodeObjectForKey("name") as? String
          number = aDecoder.decodeObjectForKey("number") as? Int
          thumbnailSrc = aDecoder.decodeObjectForKey("thumbnailSrc") as? String

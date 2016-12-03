@@ -45,8 +45,8 @@ class MJSearchbar: UISearchBar {
         }
     
 //    self.delegate = self
-        let img:UIImage = UIImage().GetImageWithColor(UIColor.clearColor(), height: kAutoStaticCellHeight*0.9,cornerRadius:0)
-        let group:UIImage = UIImage().GetImageWithColor(UIColor.groupTableViewBackgroundColor(), height: kAutoStaticCellHeight*0.9/1.5,cornerRadius:10
+        let img:UIImage = UIImage().GetImageWithColor(UIColor.clearColor(),width:1, height: kAutoStaticCellHeight*0.9,cornerRadius:0)
+        let group:UIImage = UIImage().GetImageWithColor(UIColor.groupTableViewBackgroundColor(),width:1, height: kAutoStaticCellHeight*0.9/1.5,cornerRadius:10
         )
         
         self.setBackgroundImage(img, forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
@@ -61,12 +61,18 @@ class MJSearchbar: UISearchBar {
    
 }
 extension UIImage{
-      func GetImageWithColor(color:UIColor,height:CGFloat,cornerRadius:CGFloat) ->UIImage {
-        let r:CGRect = CGRect(x: 0, y: 0, width: 1, height: height)
-        UIGraphicsBeginImageContext(r.size)
+    func GetImageWithColor(color:UIColor,width:CGFloat?,height:CGFloat,cornerRadius:CGFloat) ->UIImage {
+        let r : CGRect?
+        if width == nil {
+           r  = CGRect(x: 0, y: 0, width: 1, height: height)
+        }else{
+           r  = CGRect(x: 0, y: 0, width: width!, height: height)
+        }
+        
+        UIGraphicsBeginImageContext(r!.size)
         let context = UIGraphicsGetCurrentContext()
         CGContextSetFillColorWithColor(context!, color.CGColor)
-        CGContextFillRect(context!, r)
+        CGContextFillRect(context!, r!)
         
 //        UIGraphicsBeginImageContextWithOptions(r.size, false, 0.0)
 //        CGContextAddPath(context, UIBezierPath(roundedRect: r, cornerRadius: cornerRadius).CGPath)

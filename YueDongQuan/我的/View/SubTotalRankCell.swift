@@ -97,8 +97,8 @@ class SubTotalRankCell: UITableViewCell {
       
         head.sd_setImageWithURL(NSURL(string: toModel[indexPath.row].originalSrc), placeholderImage: UIImage(named: "热动篮球LOGO"))
         dongdouBtn.setImage(UIImage(named: "ic_doudong"), forState: UIControlState.Normal)
-        dongdouBtn.setTitle(toModel[indexPath.row].dongdou, forState: UIControlState.Normal)
-        nickName.text = toModel[indexPath.row].name
+        dongdouBtn.setTitle(model[indexPath.row].dongdou.description, forState: UIControlState.Normal)
+        nickName.text = model[indexPath.row].name
         qiyeRenzheng.hidden = true
         
         numberImageLayer.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)

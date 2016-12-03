@@ -19,7 +19,13 @@ class MJTextFeild: UITextField {
        self.tintColor = kBlueColor
         
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetFillColorWithColor(context!, borderFillColor.CGColor)
+        if borderFillColor == nil {
+            CGContextSetFillColorWithColor(context!, UIColor.clearColor().CGColor)
+            
+        }else{
+            CGContextSetFillColorWithColor(context!, borderFillColor.CGColor)
+        }
+       
         CGContextFillRect(context!, CGRectMake(0, CGRectGetHeight(self.frame)-0.5, CGRectGetWidth(self.frame), 0.5))
         
         

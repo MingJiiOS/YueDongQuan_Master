@@ -214,11 +214,11 @@
                                 if ([code isEqualToString:@"501"]) {
                                    
                                     MainViewController *main = [[MainViewController alloc]init];
-                                    [main showMJProgressHUD:@"密码错误" isAnimate:false startY:[UIScreen mainScreen].bounds.size.height-40-40-40-20];
+//                                    [main showMJProgressHUD:@"密码错误" isAnimate:false startY:[UIScreen mainScreen].bounds.size.height-40-40-40-20];
                                     
                                 }else{
                                     MainViewController *main = [[MainViewController alloc]init];
-                                    [main showMJProgressHUD:@"加入成功" isAnimate:false startY:[UIScreen mainScreen].bounds.size.height-40-40-40-20];
+//                                    [main showMJProgressHUD:@"加入成功" isAnimate:false startY:[UIScreen mainScreen].bounds.size.height-40-40-40-20];
                                     
                                 }
                             }
