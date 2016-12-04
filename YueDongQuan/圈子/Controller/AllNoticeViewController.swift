@@ -94,7 +94,7 @@ class AllNoticeViewController: MainViewController,UITableViewDelegate,UITableVie
                 nonedataView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenWidth)
                 nonedataView.center = self.view.center
                 nonedataView.backgroundColor = UIColor.blackColor()
-                nonedataView.image = UIImage(named: "noneData")
+                nonedataView.image = UIImage(named: "img_wushuju2")
                 
                 self.view.addSubview(nonedataView)
 

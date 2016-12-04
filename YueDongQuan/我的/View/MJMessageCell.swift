@@ -12,7 +12,7 @@ protocol MJMessageCellDelegate {
     func reloadCellHeightForModel(model:myFoundModel,indexpath:NSIndexPath)
     func passCellHeightWithMessageModel(model:myFoundModel,commentModel:myFoundComment,indexP:NSIndexPath,cellHeight:CGFloat,commentCell:MJCommentCell,messageCell:MJMessageCell,statustype:PingLunType)
     func deleteSayContentFromMySayContent(index:NSIndexPath)
-    
+//    func textfieldBecomeEdit(commentCell:MJCommentCell,messageCell:MJMessageCell,statusType:PingLunType)
 }
 
 enum sayFromUserType {
@@ -21,7 +21,10 @@ enum sayFromUserType {
 }
 
 
-class MJMessageCell: UITableViewCell {
+class MJMessageCell: UITableViewCell,UITextFieldDelegate {
+    
+   
+    
     
     var type : sayFromUserType?
     
@@ -63,6 +66,13 @@ class MJMessageCell: UITableViewCell {
     func sendDeleteEvent(block:deleteClourse?)  {
         deleteBlock = block
     }
+    
+    typealias commentFieldClourse = (editField:UITextField,indexpath:NSIndexPath,foundId:Int,pingtype:PingLunType,text:String)->Void
+    var textfieldBlock : commentFieldClourse?
+    func becomeEditField(block:commentFieldClourse?)  {
+        textfieldBlock = block
+    }
+    
     
     
     var delegate : MJMessageCellDelegate?
@@ -284,12 +294,15 @@ class MJMessageCell: UITableViewCell {
     self.contentView .addSubview(moreBtn!)
     moreBtn?.snp_makeConstraints(closure: { (make) in
         make.left.equalTo((seeBtn?.snp_left)!)
+        make.right.equalTo((deleteBtn?.snp_right)!)
         make.top.equalTo((self.tableView?.snp_bottom)!).offset(20)
-        make.height.equalTo(21)
+        make.height.equalTo(21) //21
     })
-    moreBtn?.contentHorizontalAlignment = .Left
+//    moreBtn?.contentHorizontalAlignment = .Left
     moreBtn?.setTitle("查看更多评论>", forState: UIControlState.Normal)
     moreBtn?.setTitleColor(kBlueColor, forState: UIControlState.Normal)
+    moreBtn?.titleLabel?.font = kAutoFontWithMid
+    //MARK:评论框
     commentField = UITextField()
     self.contentView.addSubview(commentField!)
     commentField?.snp_makeConstraints(closure: { (make) in
@@ -298,6 +311,8 @@ class MJMessageCell: UITableViewCell {
         make.top.equalTo((moreBtn?.snp_bottom)!).offset(20)
         make.height.equalTo(30)
     })
+    commentField?.returnKeyType = .Send
+    commentField?.delegate = self
     commentField?.borderStyle = .RoundedRect
     commentField?.placeholder = "说点什么吧..."
     self.hyb_lastViewInCell = self.commentField
@@ -326,8 +341,18 @@ class MJMessageCell: UITableViewCell {
         }
     }
     
-    
-    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        
+        
+
+        return true
+    }
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if (self.textfieldBlock != nil ) {
+            self.textfieldBlock! (editField:textField,indexpath:self.indexPath,foundId:(self.myfoundArray?.id)!,pingtype:.pinglun,text:textField.text!)
+        }
+        return true
+    }
     
     
     override func awakeFromNib() {
@@ -397,8 +422,16 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         self.myfoundModel = model
 
         let attrString = NSMutableAttributedString(string:  model.data.array[indexpath.row].content)
-        
-        
+        //
+        if self.commentModel.count < 5 {
+            moreBtn?.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(1)
+            })
+            moreBtn?.hidden = true
+            commentField?.snp_updateConstraints(closure: { (make) in
+                make.top.equalTo((tableView?.snp_bottom)!).offset(20)
+            })
+        }
         //没有图片的情况
         if model.data.array[indexpath.row].images.count != 0 {
            let h1 = cellHeightByData1(model.data.array[indexpath.row].images.count)
@@ -626,7 +659,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! MJCommentCell
        
-        self.delegate?.passCellHeightWithMessageModel(self.myfoundModel!, commentModel: self.commentModel[indexPath.row] as! myFoundComment, indexP: indexPath, cellHeight: cell_height, commentCell: cell, messageCell: self,statustype: .selectCell)
+        self.delegate?.passCellHeightWithMessageModel(self.myfoundModel!, commentModel: self.commentModel[indexPath.row] , indexP: indexPath, cellHeight: cell_height, commentCell: cell, messageCell: self,statustype: .selectCell)
     }
     func cellHeightByData1(imageNum:Int)->CGFloat{
         

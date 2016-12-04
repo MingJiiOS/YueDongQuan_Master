@@ -73,7 +73,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
             MainBgTableView.mj_footer = refresh
             MainBgTableView.estimatedRowHeight = 100
         }else{
-            let img = UIImage(named: "noneData")
+            let img = UIImage(named: "img_wushuju2")
             let noData = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0),
                 size: CGSize(width: ((img?.size.width)! / 1.5), height: (img?.size.height)! / 1.5)))
             noData.image = img
@@ -125,24 +125,24 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         switch typeStatus! {
         case .pinglun:
 
-            let model = [myFoundComment]()
-            model[0].netName = userInfo.name
-            model[0].commentId = 0
-            model[0].content = text
-            model[0].foundId = self.commentSayId
-            model[0].id = (self.commentSayIndex?.row)! + 1
-            model[0].reply = ""
-            model[0].time = Int(NSDate().timeIntervalSince1970)
-            model[0].uid = userInfo.uid
+            let model = myFoundComment()
+            model.netName = userInfo.name
+            model.commentId = 0
+            model.content = text
+            model.foundId = self.commentSayId
+            model.id = (self.commentSayIndex?.row)! + 1
+            model.reply = ""
+            model.time = Int(NSDate().timeIntervalSince1970)
+            model.uid = userInfo.uid
+            model.mainId = 0
             
-            
-                self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!].comment.append(model[0])
+                self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!].comment.append(model)
                 let lastestModel  =  self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!]
                 reloadCellHeightForModelAndAtIndexPath(lastestModel!, indexPath: self.commentSayIndex!)
                 
             
             
-            requestCommentSay("", content: text, foundId: self.commentSayId!,mainid: 0)
+//            requestCommentSay("", content: text, foundId: self.commentSayId!,mainid: 0)
             
         case .selectCell :
             let model = myFoundComment()
@@ -161,10 +161,10 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
                 reloadCellHeightForModelAndAtIndexPath(lastestModel!, indexPath: self.commentSayIndex!)
             
 //            self.reloadCellHeightForModel(self.myfoundmodel!, indexpath: (self.commentSayIndex)!)
-            requestCommentSay((self.commentModel?.id.description)!,
-                              content: text,
-                              foundId: self.commentSayId!,
-                              mainid: (self.commentModel?.id)!)
+//            requestCommentSay((self.commentModel?.id.description)!,
+//                              content: text,
+//                              foundId: self.commentSayId!,
+//                              mainid: (self.commentModel?.id)!)
             
         }
         
@@ -226,17 +226,17 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
                                                          name: UIKeyboardWillHideNotification, object: nil)
         MainBgTableView.reloadData()
         MainBgTableView.estimatedRowHeight = 100
-        let titleLabel = UILabel(frame: CGRect(x: 0,
-            y: 0,
-            width: ScreenWidth*0.5,
-            height: 44))
-        titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.font = kAutoFontWithTop
-        titleLabel.center = CGPoint(x: ScreenWidth/2, y: 22)
-        titleLabel.text = userInfo.name
-        titleLabel.textAlignment = .Center
-        titleLabel.sizeToFit()
-        self.navigationItem.titleView = titleLabel
+//        let titleLabel = UILabel(frame: CGRect(x: 0,
+//            y: 0,
+//            width: ScreenWidth*0.5,
+//            height: 44))
+//        titleLabel.textColor = UIColor.whiteColor()
+//        titleLabel.font = kAutoFontWithTop
+//        titleLabel.center = CGPoint(x: ScreenWidth/2, y: 22)
+//        titleLabel.text =
+//        titleLabel.textAlignment = .Center
+//        titleLabel.sizeToFit()
+        self.title = userInfo.name
         
            let tab = self.tabBarController as! HKFTableBarController
 //        tab.customTabBar.frame = CGRect(x: 0, y: ScreenHeight, width: ScreenWidth, height: 49)
@@ -282,7 +282,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         MainBgTableView.showsVerticalScrollIndicator = false
         MainBgTableView.separatorStyle = .None
         MainBgTableView.custom_CellAcceptEventInterval = 2
-        MainBgTableView.contentInset = UIEdgeInsetsMake(0, 0, 45, 0)
+        MainBgTableView.contentInset = UIEdgeInsetsMake(0, 0, 45+49, 0)
         
         
     }
@@ -421,20 +421,23 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
             
         }else{
             
-                if self.modelArrM.count == 0 {
-                    return ScreenWidth
-                }else{
-                    let h = MJMessageCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
-                        let cell = sourceCell as! MJMessageCell
+               
+                  let h = MJMessageCell.hyb_cellHeight(forTableView: MainBgTableView, config: { (cell) in
+                        let cell = cell as! MJMessageCell
                         cell.configCellWithModel(self.myfoundmodel! ,indexpath: indexPath)
-                        }, cache: { () -> [NSObject : AnyObject]! in
-                            
-                            return [kHYBCacheUniqueKey : self.modelArrM.count.description,
-                                kHYBCacheStateKey:"",
-                                kHYBRecalculateForStateKey:1]
+                        }, updateCacheIfNeeded: { () -> (key: String, stateKey: String, shouldUpdate: Bool) in
+                            return ((self.myfoundmodel?.data.array.count.description)!, "key", true)
+   
                     })
-                    return h+10
-                }
+//                    let h = MJMessageCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
+//                       
+//                        }, cache: { () -> [NSObject : AnyObject]! in
+//                            
+//                            
+//                    })
+                    NSLog("cell的高度 = %f", h)
+                    return h
+                
             
         }
    
@@ -557,6 +560,22 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                         self.myfoundmodel!.isExpand = !(self.myfoundmodel?.isExpand)!
                         weakTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                     })
+                messageCell?.becomeEditField({ (editField,indexpath,foundId,pingtype,text) in
+                    self.typeStatus = pingtype
+                    self.commentSayId = foundId
+                    self.commentSayIndex = indexpath
+                    self.seletedCellHeight = 0
+                    self.needUpdateOffset = true
+                    self.history_Y_offset = editField.convertRect(editField.bounds, toView: weakWindow).origin.y
+                    weakSelf.currentIndexPath = indexPath
+//                    weakSelf.keyboard.keyboardUpforComment()
+                    if text != ""{
+                        self.sendMsg(text)
+                    }
+                })
+                
+               
+                
                     return messageCell!
             }
             return cell!
