@@ -23,6 +23,7 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     var address = ""
     var selectQzLabel : UILabel!
     private var circleIdTemp = String()
+    private var wordCountLabel : UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +48,16 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
         }
         textView.delegate = self
         
+        wordCountLabel = UILabel(frame: CGRect(x:0, y: textView.frame.maxY, width: ScreenWidth, height: 19))
+        wordCountLabel.font = UIFont.systemFontOfSize(14)
+        wordCountLabel.textColor = UIColor.lightGrayColor()
+        wordCountLabel.text = "0/140"
+        wordCountLabel.backgroundColor = UIColor.whiteColor()
+        wordCountLabel.textAlignment = .Right
+        self.view.addSubview(wordCountLabel)
         
-        let selectQZView = UIView(frame: CGRect(x: 0, y: CGRectGetMaxY(textView.frame) + 10, width: ScreenWidth, height: 30))
+        
+        let selectQZView = UIView(frame: CGRect(x: 0, y: CGRectGetMaxY(wordCountLabel.frame) + 10, width: ScreenWidth, height: 30))
         selectQZView.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(selectQZView)
         
@@ -190,11 +199,28 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     
     
     func textViewDidChange(textView: UITextView) {
-
-//        let str = textView.text
+        let wordCount = textView.text.characters.count
+        self.wordCountLabel.text = String(format: "%ld/140",wordCount)
+        wordLimit(textView)
     }
     
+    func wordLimit(text:UITextView) {
+        if (text.text.characters.count <= 140) {
+            self.sayString = text.text
+            
+        }else{
+            //            self._textView.editable = false
+            let alert = UIAlertView(title: "提示", message: "字数超出限制", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+        }
+    }
     
+    func textViewDidBeginEditing(textView: UITextView) {
+        textView.text = "招募目的：因队伍发展需要，现对外公开招募队员。\r\n招募要求：热爱球队，能与本队的队员进行交流。"
+        let wordCount = textView.text.characters.count
+        self.wordCountLabel.text = String(format: "%ld/140",wordCount)
+        wordLimit(textView)
+    }
     
     
     func textViewDidEndEditing(textView: UITextView) {

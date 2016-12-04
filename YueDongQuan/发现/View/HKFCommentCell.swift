@@ -43,23 +43,31 @@ class HKFCommentCell: UITableViewCell {
         
         var reply = ""
         for item in self.commentArray {
-            if model.commentId != 0 {
-                if item.uid == userInfo.uid{
-                    reply = item.netName
-                }
+            
+            if model.commentId == item.id {
+                reply = item.netName
+                
+                let context = model.content.stringByReplacingEmojiCheatCodesWithUnicode()
+                let str = String(format: "%@评论%@：%@",model.netName,reply,context)
+                let text = NSMutableAttributedString(string: str)
+                
+                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))
+                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, reply.characters.count))
+                self.contentLabel!.attributedText = text
             }
+            
         }
-        model.reply = reply
+//        model.reply = reply
+//        if model.commentId == 0 {
+//            let context = model.content.stringByReplacingEmojiCheatCodesWithUnicode()
+//            let str = String(format: "%@：%@",model.netName,context)
+//            let text = NSMutableAttributedString(string: str)
+//            
+//            text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))
+//            //                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, model.reply!.characters.count))
+//            self.contentLabel!.attributedText = text
+//        }
         
-        let context = model.content.stringByReplacingEmojiCheatCodesWithUnicode()
-        let str = String(format: "%@回复%@：%@",model.netName,model.reply!,context)
-        let text = NSMutableAttributedString(string: str)
-        
-        text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))
-        text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, model.reply!.characters.count))
-        
-        
-        self.contentLabel!.attributedText = text
         
     }
     

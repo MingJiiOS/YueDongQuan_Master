@@ -14,7 +14,7 @@ import Alamofire
 import SwiftyJSON
 
 
-class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate{
+class HKFPostPictureSayVC: UIViewController,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate,UITextViewDelegate{
 
     private var helper = MJAmapHelper()
     var mutableArray = NSMutableArray()
@@ -27,10 +27,12 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
             
         }
     }
-    var _textField : CustomTextField!
+    private var postContentText = ""
+    private var _textView = PlaceholderTextView()
     var publishPhotosView : PYPhotosView!
-    var contentText = ""
     var userAddress = String()
+    private var wordCountLabel : UILabel!
+    private var bgView = UIView()
     
     private var userLatitude : Double = 0
     private var userLongitude : Double = 0
@@ -47,22 +49,48 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
     }
     
     func createUI(){
-        _textField = CustomTextField(frame: CGRect(x: 10, y: 5, width: ScreenWidth - 20, height: 40), placeholder: "说点什么吧.....(120字内)", clear: true, fontSize: 15)
-        _textField.delegate = self
-        _textField.textColor = UIColor.blackColor()
-        _textField.addTarget(self, action: #selector(getTextFieldString(_:)), forControlEvents: UIControlEvents.AllEditingEvents)
-        self.view.addSubview(_textField)
+        
+        bgView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 120))
+        self.view.addSubview(bgView)
+        _textView = PlaceholderTextView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 100))
+        _textView.backgroundColor = UIColor.whiteColor()
+        _textView.delegate = self
+        _textView.font = UIFont.systemFontOfSize(14)
+        _textView.textColor = UIColor.blackColor()
+        _textView.textAlignment = .Left
+        _textView.editable = true
+        _textView.placeholder = "说点什么吧.....(120字内)"
+        _textView.placeholderColor = UIColor.lightGrayColor()
+        bgView.addSubview(_textView)
+        wordCountLabel = UILabel(frame: CGRect(x:0, y: _textView.frame.maxY + 1, width: ScreenWidth, height: 19))
+        wordCountLabel.font = UIFont.systemFontOfSize(14)
+        wordCountLabel.textColor = UIColor.lightGrayColor()
+        wordCountLabel.text = "0/120"
+        wordCountLabel.backgroundColor = UIColor.whiteColor()
+        wordCountLabel.textAlignment = .Right
+        bgView.addSubview(wordCountLabel)
+        let lineView = UIView(frame: CGRect(x: 0, y: _textView.frame.maxY, width: ScreenWidth, height: 1))
+        lineView.backgroundColor = UIColor.lightGrayColor()
+        bgView.addSubview(lineView)
+        self.automaticallyAdjustsScrollViewInsets = false
+        let lineViewtwo = UIView(frame: CGRect(x: 0, y: bgView.frame.maxY, width: ScreenWidth, height: 1))
+        lineView.backgroundColor = UIColor.lightGrayColor()
+        self.view.addSubview(lineViewtwo)
+
         
         publishPhotosView = PYPhotosView()
         publishPhotosView.backgroundColor = UIColor.whiteColor()
         publishPhotosView.py_x = 2*5
-        publishPhotosView.py_y = 2*2 + 64
+        publishPhotosView.py_y = 2*2 + 122
         publishPhotosView.pageType = .Label
         publishPhotosView.photoWidth = (ScreenWidth - 30)/3
         publishPhotosView.photoHeight = (ScreenWidth - 30)/3
         
         publishPhotosView.delegate = self
         self.view.addSubview(publishPhotosView)
+//        publishPhotosView.snp_makeConstraints { (make) in
+//            make.top.equalTo(bgView.snp_bottom).offset(5)
+//        }
         publishPhotosView.reloadDataWithImages(mutableArray)
         let showLocationView = UIView()
         showLocationView.backgroundColor = UIColor.whiteColor()
@@ -103,7 +131,7 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
     
     func setNav(){
         self.view.backgroundColor = UIColor.whiteColor()
-        self.title = "发布说说"
+        self.navigationItem.title = "发布说说"
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HKFPostPictureSayVC.back))
@@ -121,17 +149,43 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func getTextFieldString(textField:UITextField){
-        self.contentText = textField.text!
+    
+    //MARK:新的输入框
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if ("\n" == text) {
+            textView.resignFirstResponder()
+            return false
+        }
+        
+        return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        self.contentText = textField.text!
+    func textViewDidChange(textView: UITextView) {
+        let wordCount = textView.text.characters.count
+        self.wordCountLabel.text = String(format: "%ld/120",wordCount)
+        wordLimit(textView)
     }
+    
+    func wordLimit(text:UITextView) {
+        if (text.text.characters.count <= 120) {
+            self.postContentText = text.text
+            
+        }else{
+//            self._textView.editable = false
+            let alert = UIAlertView(title: "提示", message: "字数超出限制", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+        }
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        _textView.resignFirstResponder()
+    }
+    
+    
     
     func send(){
         
-        if self.contentText == "" {
+        if self.postContentText == "" {
             let alert = UIAlertView(title: "提示", message: "说说内容不能为空", delegate: nil, cancelButtonTitle: "确定")
             alert.show()
             return
@@ -353,7 +407,7 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
                             
 //                            NSLog("图片字符串id=\(imageIdStr)")
                             
-                            self.requestToPostImagesSay(self.contentText, latitude: self.userLatitude, longitude: self.userLongitude, imgs: imageIdStr, address: self.userAddress)
+                            self.requestToPostImagesSay(self.postContentText, latitude: self.userLatitude, longitude: self.userLongitude, imgs: imageIdStr, address: self.userAddress)
                         }
                         
                     }

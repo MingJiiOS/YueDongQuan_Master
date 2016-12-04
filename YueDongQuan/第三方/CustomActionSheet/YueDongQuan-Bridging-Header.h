@@ -64,7 +64,7 @@
 #import "SimplePopupView.h"
 #import "JZVideoPlayerView.h"
 #import "VedioDetailViewController.h"
-
+#import "PlaceholderTextView.h"
 //重写发现
 //#import "SegmentViewController.h"
 //#import "UIView+frame.h"

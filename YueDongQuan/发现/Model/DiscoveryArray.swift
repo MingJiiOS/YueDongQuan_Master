@@ -50,22 +50,17 @@ class DiscoveryArray{
 //                let value = DiscoveryCommentModel(fromDictionary: dic)
 //                comment.append(value)
                 let model = DiscoveryCommentModel()
+                model.beUid = dic["beUid"] as? Int
+                model.beUserName = dic["beUserName"] as? String
                 model.commentId = dic["commentId"] as? Int
-//                if let temp = dic["content"] as? String {
-//                    model.content = NSObject.stringToContentEmoji(temp)
-//                }
                 model.content = dic["content"] as? String
                 model.foundId = dic["foundId"] as? Int
                 model.id = dic["id"] as? Int
+                model.mainId = dic["mainId"] as? Int
                 model.netName = dic["netName"] as? String
                 model.time = dic["time"] as? Int
                 model.uid = dic["uid"] as? Int
-                model.mainId = dic["mainId"] as? Int
-                if let replys = dic["reply"] as? String{
-                    model.reply = replys
-                }else{
-                    model.reply = ""
-                }
+                
                 comment.append(model)
             }
         }

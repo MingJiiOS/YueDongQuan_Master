@@ -166,15 +166,30 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         self.view.addSubview(flowView)
         self.view.bringSubviewToFront(flowView)
         
-        let tapBtn = UIButton(frame: CGRect(x: ScreenWidth - 120, y: 40, width: 100, height: 40))
+        let tapBtn = UIButton(frame: CGRect(x: ScreenWidth - 130, y: 40, width: 80, height: 40))
         tapBtn.addTarget(self, action: #selector(clickFlowViewBtn), forControlEvents: UIControlEvents.TouchUpInside)
-        tapBtn.bringSubviewToFront(flowView)
+        self.view.addSubview(tapBtn)
+        self.view.bringSubviewToFront(tapBtn)
         
         
     }
     
     @objc private func clickFlowViewBtn(sender:UIButton){
         FTPopOverMenu.showForSender(sender, withMenu: ["按时间排序","按距离排序"], doneBlock: { (index:Int) in
+            
+            switch index {
+                case 0 :
+                    NSLog("xxxx")
+                    self.ordertemp = 0
+                    break
+                case 1 :
+                    NSLog("ooooo")
+                    self.ordertemp = 1
+                    break
+                default:
+                    break
+            }
+            
             
             }) { 
                 
@@ -351,7 +366,7 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let newDiscoveryDetailVC = NewDiscoveryDetailVC()
-        newDiscoveryDetailVC.newDiscoveryArray  = [self.AllModelData[indexPath.section]]
+        newDiscoveryDetailVC.newDiscoveryArray  = self.AllModelData[indexPath.section]
         self.navigationController?.pushViewController(newDiscoveryDetailVC, animated: true)
         
     }
@@ -508,7 +523,6 @@ extension NewDiscoveryVC {
             model.content = text
             model.foundId = self.commentSayId
             model.id = (self.commentSayIndex?.row)! + 1
-            model.reply = ""
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
             
@@ -523,8 +537,7 @@ extension NewDiscoveryVC {
             model.commentId = (self.commentModel?.id)
             model.content = text
             model.foundId = self.commentSayId
-            model.id = (self.commentModel?.id)!
-            model.reply = self.commentModel?.netName
+            model.id = (self.commentModel?.id)! + 1
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
             
@@ -532,7 +545,7 @@ extension NewDiscoveryVC {
             let modelss  =  self.AllModelData[(self.commentSayIndex?.row)!]
             reloadCellHeightForModelAndAtIndexPath(modelss, indexPath: self.commentSayIndex!)
             
-            NewRequestCommentSay(withCommentId: (self.commentModel?.id)!, content: text, foundId: self.commentSayId!,mainId: self.commentSayId!)
+            NewRequestCommentSay(withCommentId: (self.commentModel?.id)!, content: text, foundId: self.commentSayId!,mainId: (self.commentModel?.id)!)
         }
         
         

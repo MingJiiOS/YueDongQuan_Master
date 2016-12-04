@@ -12,7 +12,7 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
 
     private var DetailTable : UITableView!
     
-    var newDiscoveryArray = [DiscoveryArray]()
+    var newDiscoveryArray : DiscoveryArray?
     var newDiscoveryOfZeroCommentArr = [DiscoveryCommentModel]()
     var newDiscoveryOfNoZeroCommentArr = [DiscoveryCommentModel]()
     
@@ -32,7 +32,7 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
         let newDisZeroArray = NSMutableArray()
         let newDisNoZeroArray = NSMutableArray()
         
-        for model in (self.newDiscoveryArray.first!.comment)!{
+        for model in (self.newDiscoveryArray!.comment)!{
             if model.commentId == 0 {
                 newDisZeroArray.addObject(model)
                 
@@ -42,13 +42,13 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
         }
         
         self.newDiscoveryOfZeroCommentArr = newDisZeroArray.copy() as! [DiscoveryCommentModel]
-        self.newDiscoveryOfNoZeroCommentArr = newDisZeroArray.copy() as! [DiscoveryCommentModel]
+        self.newDiscoveryOfNoZeroCommentArr = newDisNoZeroArray.copy() as! [DiscoveryCommentModel]
         
         self.newDiscoveryOfZeroCommentArr.sortInPlace({ (num1:DiscoveryCommentModel, num2:DiscoveryCommentModel) -> Bool in
             return num1.time > num2.time
         })
         
-        print(self.newDiscoveryArray.first?.comment.count)
+        print(self.newDiscoveryArray!.comment.count)
         print(self.newDiscoveryOfNoZeroCommentArr.count)
         print(self.newDiscoveryOfZeroCommentArr.count)
         
@@ -89,9 +89,9 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
             
             let h = NewDiscoveryHeaderCell.hyb_heightForTableView(tableView, config: { (sourceCell : UITableViewCell!) in
                 let cell = sourceCell as! NewDiscoveryHeaderCell
-                cell.configCellWithModelAndIndexPath(self.newDiscoveryArray.first!, indexPath: indexPath)
+                cell.configCellWithModelAndIndexPath((self.newDiscoveryArray)!, indexPath: indexPath)
                 }, cache: { () -> [NSObject : AnyObject]! in
-                return [kHYBCacheUniqueKey : ("\(self.newDiscoveryArray.first!.id)"),
+                return [kHYBCacheUniqueKey : ("\(self.newDiscoveryArray?.id)"),
                                     kHYBCacheStateKey:"",kHYBRecalculateForStateKey:1]
             })
             return h
@@ -104,7 +104,7 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
                                                                 indexpath: indexPath)
                 }, cache: { () -> [NSObject : AnyObject]! in
                     
-                    return [kHYBCacheUniqueKey : (self.newDiscoveryArray.first?.id.description)!,
+                    return [kHYBCacheUniqueKey : (self.newDiscoveryArray?.id.description)!,
                         kHYBCacheStateKey:"",
                         kHYBRecalculateForStateKey:1]
             })
@@ -116,7 +116,7 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
         if indexPath.section == 0 {
             var detailHeaderCell = tableView.dequeueReusableCellWithIdentifier("cell") as? NewDiscoveryHeaderCell
             detailHeaderCell = NewDiscoveryHeaderCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
-            detailHeaderCell?.configCellWithModelAndIndexPath(newDiscoveryArray.first!, indexPath: indexPath)
+            detailHeaderCell?.configCellWithModelAndIndexPath(self.newDiscoveryArray!, indexPath: indexPath)
             return detailHeaderCell!
             
         }else{
@@ -755,7 +755,7 @@ class NewDiscoveryCommentDeatilCell: UITableViewCell,UITableViewDataSource,UITab
             make.trailing.equalTo(-10)
         })
         
-        self.tableView?.registerClass(NewDetailsCommentCell.self, forCellReuseIdentifier: "identtifier")
+//        self.tableView?.registerClass(NewDetailsCommentCell.self, forCellReuseIdentifier: "identtifier")
         
         self.tableView?.separatorStyle = .None
         self.hyb_lastViewInCell = self.tableView
@@ -787,7 +787,7 @@ class NewDiscoveryCommentDeatilCell: UITableViewCell,UITableViewDataSource,UITab
         var tableViewHeight = CGFloat()
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
-        self.tableView?.registerClass(DetailsCommentCell.self,
+        self.tableView?.registerClass(NewDetailsCommentCell.self,
                                       forCellReuseIdentifier: "identtifier")
         if subModel.count != 0 {
             if subModel.count == 1 {
@@ -830,11 +830,13 @@ class NewDiscoveryCommentDeatilCell: UITableViewCell,UITableViewDataSource,UITab
         }
         
         for id in self.NoZeroCommentAry{
-            if id.commentId == self.commentModelTemp!.mainId {
+            if id.commentId == self.commentModelTemp!.id {
                 
                 ary.addObject(id)
             }
         }
+        
+        //self.tableView?.reloadData()
         
     }
     
@@ -842,7 +844,7 @@ class NewDiscoveryCommentDeatilCell: UITableViewCell,UITableViewDataSource,UITab
     //数据源
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("identtifier") as! NewDetailsCommentCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("identtifier",forIndexPath: indexPath) as! NewDetailsCommentCell
         cell = NewDetailsCommentCell(style: .Default, reuseIdentifier: "identtifier")
         //        if indexPath.row <= self.ary.count {
         cell.configSubCommentCellWithModel(ary[indexPath.row] as! DiscoveryCommentModel)
