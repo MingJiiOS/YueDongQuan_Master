@@ -51,7 +51,7 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     //弹出键盘
     lazy var keyboard:ChatKeyBoard = {
-        var keyboard = ChatKeyBoard(navgationBarTranslucent: true)
+        var keyboard = ChatKeyBoard(navgationBarTranslucent: false)
         keyboard.delegate = self
         keyboard.dataSource = self
         keyboard.keyBoardStyle = KeyBoardStyle.Comment
@@ -431,6 +431,14 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         self.typeStatus = type
         self.commentModel = model
 //        self.commentMainID = model.id
+    }
+    
+    
+    //点击超链接文本
+    func clickSuperLinkLabelURL(indexPath: NSIndexPath) {
+        let webVC = ActivityDetailWebVC()
+        webVC.urlStr = "http://www.ctyundong.com"
+        self.navigationController?.pushViewController(webVC, animated: true)
     }
     
     //刷新单个cell
