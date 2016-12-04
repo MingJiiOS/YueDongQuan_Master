@@ -38,7 +38,15 @@ class FieldDetailThree_cell: UITableViewCell {
         self.headerImage.sd_setImageWithURL(NSURL(string: model.originalSrc),placeholderImage: UIImage(named: "热动篮球LOGO"))
         self.nameLabel.text = model.name
         if model.endTime != 0 {
+            let timeTemp = NSDate.init(timeIntervalSince1970: Double(model.endTime/1000))
             
+            let timeInterval = timeTemp.timeIntervalSince1970
+            let timer = NSDate().timeIntervalSince1970
+            if timer > timeInterval{
+                self.SportsStatus.text = "已离场"
+            }else{
+                self.SportsStatus.text = "运动中"
+            }
         }
 
     }

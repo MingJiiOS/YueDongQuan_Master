@@ -17,7 +17,7 @@ protocol FieldDetailOne_HeaderCellDelegate {
 class FieldDetailOne_HeaderCell: UITableViewCell {
     
     var delegate : FieldDetailOne_HeaderCellDelegate?
-
+    var YesOrNoExitFieldTemp = Bool()
     @IBOutlet weak var FieldDetailImage: UIImageView!
     
     @IBOutlet weak var FieldDetailName: UILabel!
@@ -77,11 +77,27 @@ class FieldDetailOne_HeaderCell: UITableViewCell {
         }else{
             self.FieldDeatailDistance.text = "距离\(model.distance)m"
         }
-//        if model.startTime != nil || model.endTime != nil {
-//            if model.startTime != 0 && model.endTime != 0 {
-//                self.FieldDetail_SignBtn.setTitle("已签到", forState: UIControlState.Normal)
-//            }
-//        }
+        if (model.startTime != nil && model.endTime == nil) {
+            self.FieldDetail_SignBtn.setTitle("已签到", forState: UIControlState.Normal)
+            self.FieldDetail_SignBtn.backgroundColor = UIColor.lightGrayColor()
+            self.FieldDetail_SignBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            self.FieldDetail_SignBtn.userInteractionEnabled = false
+//            self.FieldDetail_SignBtn.setImage(UIImage(named: "FieldDetail_yiqiandao"), forState: UIControlState.Normal)
+        }else{
+//            self.FieldDetail_SignBtn.setImage(UIImage(named: "FieldDetail_qiandao"), forState: UIControlState.Normal)
+            self.FieldDetail_SignBtn.setTitle("签到", forState: UIControlState.Normal)
+            self.FieldDetail_SignBtn.backgroundColor = UIColor.whiteColor()
+            self.FieldDetail_SignBtn.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+            self.FieldDetail_SignBtn.userInteractionEnabled = true
+        }
+        
+        
+        if YesOrNoExitFieldTemp{
+            self.FieldDetail_SignBtn.setTitle("签到", forState: UIControlState.Normal)
+            self.FieldDetail_SignBtn.backgroundColor = UIColor.whiteColor()
+            self.FieldDetail_SignBtn.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+            self.FieldDetail_SignBtn.userInteractionEnabled = true
+        }
         
         
         if model.cost != nil {

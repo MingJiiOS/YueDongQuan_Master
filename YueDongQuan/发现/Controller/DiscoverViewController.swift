@@ -904,7 +904,7 @@ extension DiscoverViewController {
             model.content = text
             model.foundId = self.commentSayId
             model.id = (self.commentSayIndex?.row)! + 1
-            model.reply = ""
+            
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
             
@@ -960,7 +960,7 @@ extension DiscoverViewController {
             model.content = text
             model.foundId = self.commentSayId
             model.id = (self.commentModel?.id)! + 1
-            model.reply = self.commentModel?.netName
+            
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
             
