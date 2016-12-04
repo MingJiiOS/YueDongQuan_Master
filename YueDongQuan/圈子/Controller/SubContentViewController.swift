@@ -30,7 +30,7 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
     var sitesName :String?
     var picker = UIImagePickerController()
     var uploadimgaemodel : uploadImageModel?
-     let circleData = CircleDataView(frame: CGRectMake(0, 0, ScreenWidth, ScreenHeight))
+     let circleData = CircleDataView(frame: CGRectZero)
 //    var consumeItems:Results<RLCircleMemberInfo>?
     var newCircleName : String?
     
@@ -80,7 +80,11 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
                 circleData.circleLogo = self.thumbnailSrc
                 circleData.circleName = self.circletitle
                 circleData.circleSite = self.sitesName
-                self.view = circleData
+                self.view .addSubview(circleData) 
+                circleData.snp_makeConstraints(closure: { (make) in
+                    make.left.right.top.equalTo(0)
+                    make.bottom.equalTo(49)
+                })
                 circleData.selectWhichCell({ (indexpath) in
                     if indexpath.section == 0{
                         self.selectCircleLogo()
@@ -123,7 +127,7 @@ class SubContentViewController: MainViewController,UITableViewDelegate,UITableVi
             tableView.snp_makeConstraints { (make) in
                 make.left.right.equalTo(0)
                 make.top.equalTo(kAutoStaticCellHeight*0.9)
-                make.bottom.equalTo(0)
+                make.bottom.equalTo(49)
             }
             tableView.delegate = self
             tableView.dataSource = self

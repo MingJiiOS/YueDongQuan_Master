@@ -14,7 +14,7 @@ class FieldDetailController: UIViewController,UITableViewDelegate,UITableViewDat
 
     
     private var detailTable : UITableView!
-    var firstModel = FieldArray()
+    var firstModel : FieldArray!
     var thirdModel = [ToDaySignArray]()
     
     private var secondCell_height : CGFloat = 0
@@ -34,8 +34,8 @@ class FieldDetailController: UIViewController,UITableViewDelegate,UITableViewDat
         super.viewDidLoad()
 
         self.edgesForExtendedLayout = .None
-        
-        detailTable = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight - 49 - 64), style: UITableViewStyle.Grouped)
+        self.title = "场地详情"
+        detailTable = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight  - 64), style: UITableViewStyle.Grouped)
         self.view.addSubview(detailTable)
         
         let cellNib_one = UINib(nibName: "FieldDetailOne_HeaderCell", bundle: nil)
@@ -253,7 +253,8 @@ extension FieldDetailController {
                 
                 if signModel.code == "200" && signModel.flag == "1" {
                     self.thirdModel = signModel.data.array
-                    self.detailTable.reloadData()
+                    let indexPath = NSIndexPath(forRow: 0, inSection: 2)
+                    self.detailTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
                 }
                 
                 

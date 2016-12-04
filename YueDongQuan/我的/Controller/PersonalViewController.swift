@@ -154,7 +154,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
             model.reply = self.commentModel?.netName
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
-            model.mainId = self.commentModel?.mainId
+            model.mainId = self.commentModel?.id
           
                 self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!].comment.append(model)
                 let lastestModel  =  self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!]
@@ -163,7 +163,8 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
 //            self.reloadCellHeightForModel(self.myfoundmodel!, indexpath: (self.commentSayIndex)!)
             requestCommentSay((self.commentModel?.id.description)!,
                               content: text,
-                              foundId: self.commentSayId!,mainid: (self.commentModel?.mainId)!)
+                              foundId: self.commentSayId!,
+                              mainid: (self.commentModel?.id)!)
             
         }
         
@@ -237,7 +238,8 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
         
-            
+           let tab = self.tabBarController as! HKFTableBarController
+//        tab.customTabBar.frame = CGRect(x: 0, y: ScreenHeight, width: ScreenWidth, height: 49)
         
       
         
@@ -271,7 +273,8 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
         MainBgTableView = UITableView(frame: CGRectZero, style: .Grouped)
         self.view .addSubview(MainBgTableView)
         MainBgTableView.snp_makeConstraints { (make) in
-            make.left.right.top.bottom.equalTo(0)
+            make.left.right.top.equalTo(0)
+            make.bottom.equalTo(49)
         }
         
         MainBgTableView.delegate = self
@@ -526,6 +529,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     let weakTable = tableView
                    
                     if self.myfoundmodel != nil {
+                        
                         messageCell?.configCellWithModel(self.myfoundmodel! ,indexpath: indexPath)
                     }
                     

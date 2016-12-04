@@ -457,4 +457,9 @@ class DataSource: NSObject {
         let model = updateNameModel(fromDictionary: datasource)
         return model
     }
+    //MARK:解析 我的访客
+    func getMyvisitorsData(datasource:NSDictionary) -> MyVisitorsModel {
+        let model = MyVisitorsModel(fromDictionary: datasource)
+        return model
+    }
 }

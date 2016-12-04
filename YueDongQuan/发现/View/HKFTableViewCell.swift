@@ -23,6 +23,8 @@ protocol HKFTableViewCellDelegate {
     
     func clickCellHeaderImageForToHeInfo(index:NSIndexPath,uid:String)//头像点击事件
     
+    func clickVideoBtn(indexPath:NSIndexPath)//视频播放
+    
 }
 
 
@@ -36,6 +38,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     
     var titleLabel : UILabel?//name
+    var superLinkLabel : UILabel?//活动说说超链接
     var descLabel : UILabel?//说说内容
     var headImageView : UIImageView?//头像
     var headTypeView : UIImageView?//是否认证
@@ -159,6 +162,17 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.typeStatusView?.backgroundColor = UIColor.whiteColor()
         self.typeStatusView?.layer.masksToBounds = true
         self.typeStatusView?.layer.cornerRadius = 10
+        
+        self.superLinkLabel = UILabel()
+        self.contentView.addSubview(self.superLinkLabel!)
+        self.superLinkLabel!.snp_makeConstraints(closure: { (make) in
+            make.top.equalTo((weakSelf?.headImageView?.snp_bottom)!).offset(5)
+            make.right.equalTo(-20)
+            make.height.equalTo(20)
+        })
+        self.superLinkLabel?.textAlignment = .Left
+
+        
         //说说内容
         self.descLabel = UILabel()
         self.contentView.addSubview(self.descLabel!)
@@ -167,7 +181,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         self.descLabel?.snp_makeConstraints(closure: { (make) in
             make.left.equalTo(10)
             make.right.equalTo(-10)
-            make.top.equalTo((weakSelf?.headImageView?.snp_bottom)!).offset(5)
+            make.top.equalTo((weakSelf?.superLinkLabel?.snp_bottom)!).offset(5)
         })
         
         //照片或视频展示
@@ -195,7 +209,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.height.width.equalTo(40)
         }
         self.playVideoBtn.setImage(UIImage(named: "audionews_index_play@2x.png"), forState: UIControlState.Normal)
-        
+        self.playVideoBtn.addTarget(self, action: #selector(clickCreateVideoPlayerVC(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.videoImage.backgroundColor = UIColor.brownColor()
         self.videoImage.userInteractionEnabled = true
         
@@ -272,7 +286,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         
         
         
-        self.tableView = UITableView(frame: CGRectZero)
+        self.tableView = UITableView(frame: CGRectZero,style: UITableViewStyle.Grouped)
         self.tableView?.scrollEnabled = false
         self.contentView.addSubview(self.tableView!)
         self.tableView?.snp_makeConstraints(closure: { (make) in
@@ -296,14 +310,19 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    @objc private func clickCreateVideoPlayerVC(sender:UIButton){
+        self.delegate?.clickVideoBtn(self.indexPath!)
+    }
     
     func configCellWithModelAndIndexPath(model : DiscoveryArray,indexPath : NSIndexPath){
         
         self.indexPath = indexPath
         let subModel = model
         
-        self.distanceLabel?.text = String(format: "%0.2fkm",(model.distance))
+        
+        self.distanceLabel?.text = "\(model.distance)m"
+        
+        
         
         
         if subModel.csum != nil{
@@ -330,7 +349,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.typeStatusView?.image = UIImage(named: "explain_vedio")
         case 13:
             //            print("活动")
-            self.titleLabel?.text = subModel.aname
+            self.titleLabel?.text = subModel.name
             self.typeStatusView?.image = UIImage(named: "explain_recruit")
         case 14:
             //            print("约战")
@@ -347,6 +366,25 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.typeStatusView?.image = UIImage(named: "招募")
         default:
             break
+        }
+        
+        if model.typeId == 13 {
+            self.superLinkLabel!.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(35)
+            })
+            
+            let tempStr = "<body>" + " <a href = " + "www.baidu.com" + ">百度</a>" + "</body>"
+//            let resultStr1 = tempStr.stringByReplacingOccurrencesOfString("\\n", withString: "<br/>", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            let data = tempStr.dataUsingEncoding(NSUnicodeStringEncoding)
+            let options = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
+            let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
+            
+            self.superLinkLabel?.attributedText = html
+            
+        }else{
+            self.superLinkLabel!.snp_updateConstraints(closure: { (make) in
+                make.height.equalTo(0)
+            })
         }
         
         if subModel.address == ""{
@@ -486,11 +524,17 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         return h
         
     }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.0001
+    }
+    
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 5
+        return 10
     }
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView()
+        view.backgroundColor = UIColor.whiteColor()
         return view
     }
     

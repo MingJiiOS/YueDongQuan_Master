@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MJGreenAnnotationView: MAAnnotationView {
+class MJGreenAnnotationView: MAPinAnnotationView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,7 +27,7 @@ class MJGreenAnnotationView: MAAnnotationView {
     }
     
 }
-class MJRedAnnotationView: MAAnnotationView {
+class MJRedAnnotationView: MAPinAnnotationView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,7 +47,7 @@ class MJRedAnnotationView: MAAnnotationView {
     }
     
 }
-class MJOrangeAnnotationView: MAAnnotationView{
+class MJOrangeAnnotationView: MAPinAnnotationView{
     var
     sitsName : String? = ""
     

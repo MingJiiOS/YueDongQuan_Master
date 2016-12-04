@@ -28,17 +28,14 @@ class publishNoticeViewController: MainViewController,UITextViewDelegate{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor ( red: 0.9176,
-                                              green: 0.9176,
-                                              blue: 0.9529,
-                                              alpha: 1.0 )
+        self.view.backgroundColor = UIColor.whiteColor()
         let textView = BRPlaceholderTextView(frame: CGRect(x: 0, y: 5, width: ScreenWidth, height: ScreenWidth/3))
         textView.placeholder = "  有什么要和成员说的 .....\n \n \n \n \n"
         textView.font = kAutoFontWithMid
         self.view.addSubview(textView)
         textView.delegate = self
         textView.maxTextLength = 300
-        
+        textView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.view .addSubview(numerLabel)
         numerLabel.snp_makeConstraints { (make) in
             make.right.equalTo(textView.snp_right)
@@ -79,21 +76,23 @@ class publishNoticeViewController: MainViewController,UITextViewDelegate{
 extension publishNoticeViewController {
     //MARK:发布公告
     func publish()  {
-        
-        if strLength != 0 {
-            let dict:[String:AnyObject] = ["v":v,
-                                           "uid":userInfo.uid,
-                                           "circleId":self.circleId!,
-                                           "content":self.content!]
-            MJNetWorkHelper().publishannouncement(publishannouncement, publishannouncementModel: dict, success: { (responseDic, success) in
-                //如果成功，就返回
-                self.navigationController?.popViewControllerAnimated(true)
-            }) { (error) in
-                
-                self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～", isAnimate: true,startY: ScreenHeight-40-40-40-20)
+        if strLength != nil {
+            if strLength != 0 {
+                let dict:[String:AnyObject] = ["v":v,
+                                               "uid":userInfo.uid,
+                                               "circleId":self.circleId!,
+                                               "content":self.content!]
+                MJNetWorkHelper().publishannouncement(publishannouncement, publishannouncementModel: dict, success: { (responseDic, success) in
+                    //如果成功，就返回
+                    self.navigationController?.popViewControllerAnimated(true)
+                }) { (error) in
+                    
+                    self.showMJProgressHUD("失败！出现未知错误(づ￣3￣)づ╭❤～", isAnimate: true,startY: ScreenHeight-40-40-40-20)
+                }
+            }else{
+                self.navigationItem.rightBarButtonItem?.enabled = false
             }
-        }else{
-           self.navigationItem.rightBarButtonItem?.enabled = false
+
         }
         
         

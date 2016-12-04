@@ -227,6 +227,9 @@
 		BF5AAD7D1DF1621100531697 /* TotalRankModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5AAD7A1DF1621100531697 /* TotalRankModel.swift */; };
 		BF5B75521DDB12DD0035FF17 /* VerionUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5B75511DDB12DD0035FF17 /* VerionUpdateView.swift */; };
 		BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */; };
+		BF5DB4CA1DF40A2B00A19940 /* MyVisitorsArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DB4C71DF40A2B00A19940 /* MyVisitorsArray.swift */; };
+		BF5DB4CB1DF40A2B00A19940 /* MyVisitorsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DB4C81DF40A2B00A19940 /* MyVisitorsData.swift */; };
+		BF5DB4CC1DF40A2B00A19940 /* MyVisitorsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DB4C91DF40A2B00A19940 /* MyVisitorsModel.swift */; };
 		BF5E56231DDB2EBD00FC4312 /* SendPhoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E56211DDB2EBD00FC4312 /* SendPhoneData.swift */; };
 		BF5E56241DDB2EBD00FC4312 /* SendPhoneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E56221DDB2EBD00FC4312 /* SendPhoneModel.swift */; };
 		BF6631181DD1BF5500263F67 /* HeInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6631171DD1BF5500263F67 /* HeInfoVC.swift */; };
@@ -950,6 +953,9 @@
 		BF5AAD7A1DF1621100531697 /* TotalRankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankModel.swift; sourceTree = "<group>"; };
 		BF5B75511DDB12DD0035FF17 /* VerionUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerionUpdateView.swift; sourceTree = "<group>"; };
 		BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesTableViewCell.swift; sourceTree = "<group>"; };
+		BF5DB4C71DF40A2B00A19940 /* MyVisitorsArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVisitorsArray.swift; sourceTree = "<group>"; };
+		BF5DB4C81DF40A2B00A19940 /* MyVisitorsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVisitorsData.swift; sourceTree = "<group>"; };
+		BF5DB4C91DF40A2B00A19940 /* MyVisitorsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVisitorsModel.swift; sourceTree = "<group>"; };
 		BF5E56211DDB2EBD00FC4312 /* SendPhoneData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPhoneData.swift; sourceTree = "<group>"; };
 		BF5E56221DDB2EBD00FC4312 /* SendPhoneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPhoneModel.swift; sourceTree = "<group>"; };
 		BF6631171DD1BF5500263F67 /* HeInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeInfoVC.swift; sourceTree = "<group>"; };
@@ -1923,6 +1929,9 @@
 		BF071F151D9A0D68000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BF5DB4C71DF40A2B00A19940 /* MyVisitorsArray.swift */,
+				BF5DB4C81DF40A2B00A19940 /* MyVisitorsData.swift */,
+				BF5DB4C91DF40A2B00A19940 /* MyVisitorsModel.swift */,
 				BFE078491DF168EF00831425 /* myFoundComment.swift */,
 				BFE0784A1DF168EF00831425 /* myFoundArray.swift */,
 				BFE0784B1DF168EF00831425 /* myFoundData.swift */,
@@ -4292,6 +4301,7 @@
 				BFFCE0541DBF471A0045087A /* SubTotalRankCell.swift in Sources */,
 				BF071F351D9A0D68000551F7 /* HeaderView.swift in Sources */,
 				BFFE1A871DF006A300227F9F /* FieldDetailTwo_Cell.swift in Sources */,
+				BF5DB4CC1DF40A2B00A19940 /* MyVisitorsModel.swift in Sources */,
 				BFB44F651DC9731B0066D49F /* OfficialAccountToolbar.m in Sources */,
 				BFAD63241D9E13BE006234E1 /* MJLoginOpreationHelper.swift in Sources */,
 				BF21486A1DE7E796005580F4 /* LeafNotification.m in Sources */,
@@ -4331,6 +4341,7 @@
 				BF9CA1811DC87EFD0043F535 /* CommentModel.m in Sources */,
 				BFC48BCE1DEE984A0087551D /* MyAttentionArray.swift in Sources */,
 				BF6631251DD1D23B00263F67 /* HeFoundImage.swift in Sources */,
+				BF5DB4CB1DF40A2B00A19940 /* MyVisitorsData.swift in Sources */,
 				BFB44F601DC9731B0066D49F /* FaceSourceManager.m in Sources */,
 				BFC48BCF1DEE984A0087551D /* MyAttentionData.swift in Sources */,
 				5C072B601D8F8D2500420F6D /* YoYoAlertView.swift in Sources */,
@@ -4470,6 +4481,7 @@
 				5C26FBB11DD451B7005A6ABD /* CheckData.swift in Sources */,
 				BFFE1A891DF006A300227F9F /* NewFieldCellTableViewCell.swift in Sources */,
 				BF9CA17E1DC87D000043F535 /* MJCommentCell.swift in Sources */,
+				BF5DB4CA1DF40A2B00A19940 /* MyVisitorsArray.swift in Sources */,
 				5C42CACB1DC0584100669EB5 /* HKFPostField_TwoVC.swift in Sources */,
 				5C343A001D90E8AB0077BFDD /* SignRankCell.swift in Sources */,
 				5C67E8E91DF102C3003F880A /* XHVersion.m in Sources */,

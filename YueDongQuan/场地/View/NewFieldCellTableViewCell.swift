@@ -10,13 +10,13 @@ import UIKit
 
 
 protocol NewFieldCellTableViewCellDelegate {
-    func clickFieldSignBtn(sender:UIButton)
+    func clickFieldSignBtn(sender:NSIndexPath)
 }
 
 
 class NewFieldCellTableViewCell: UITableViewCell {
     
-    var indexPathTag = Int()
+    var indexPathTag = NSIndexPath()
     
     var delegate : NewFieldCellTableViewCellDelegate?
     
@@ -34,14 +34,14 @@ class NewFieldCellTableViewCell: UITableViewCell {
     @IBOutlet weak var newFieldSignBtn: UIButton!
     
     @IBAction func ClickFieldSignBtn(sender: UIButton) {
-        self.delegate?.clickFieldSignBtn(sender)
+        self.delegate?.clickFieldSignBtn(self.indexPathTag)
     }
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.newFieldSignBtn.tag = indexPathTag
+//        self.newFieldSignBtn.tag = indexPathTag
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -53,13 +53,29 @@ class NewFieldCellTableViewCell: UITableViewCell {
     func configWithModel(model:FieldArray){
         self.newFieldImage.sd_setImageWithURL(NSURL(string: model.thumbnailSrc),placeholderImage: UIImage(named: "热动篮球LOGO"))
         self.newFieldName.text = model.name
-        if model.distance > 1000 {
-            self.newFieldDistantce.text = String(format: "距离%0.2fkm",model.distance/1000)
-        }else{
-            self.newFieldDistantce.text = String(format: "距离%0.2fm",model.distance)
+        if model.distance != nil {
+            self.newFieldDistantce.text = "距离\(model.distance)m"
         }
         
-        self.newFieldPrice.text = String(format: "价格:%@",model.cost)
+        
+        
+        if ( (model.endTime == nil && model.startTime == nil) ||
+            (model.endTime != nil && model.startTime != nil)) {
+            //签到
+            NSLog("qqqqqqqq")
+//            self.newFieldSignBtn.setImage(UIImage(named: "签到"), forState: UIControlState.Normal)
+            self.newFieldSignBtn.setTitle("签到", forState: UIControlState.Normal)
+        }else  {
+            //签退
+            NSLog("xxxxxxxx")
+            self.newFieldSignBtn.setTitle("退场", forState: UIControlState.Normal)
+        }
+        
+        
+        if model.cost != nil {
+            self.newFieldPrice.text = String(format: "价格:%@",model.cost)
+        }
+        
         
     }
     

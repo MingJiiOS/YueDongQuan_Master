@@ -19,6 +19,9 @@ class DetailsSayCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource 
     private var contentlabel : UILabel?
     private var tableView : UITableView?
     var commentModel : myFoundComment?
+    //我的所有说说
+    private var allMyfoundCommentAry = [myFoundComment]()
+    
     //子评论数组
     private var NoZeroCommentAry = [myFoundComment]()
     //子评论行数
@@ -148,7 +151,7 @@ class DetailsSayCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource 
       }
     func getCommentModel(model:[myFoundComment]){
         
-//      self.NoZeroCommentAry = model
+      self.allMyfoundCommentAry = model
     }
    
     func configPingLunCell(model:[myFoundComment],subModel:[myFoundComment],indexpath:NSIndexPath)  {
@@ -209,7 +212,7 @@ class DetailsSayCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource 
         }
         
         for id in self.NoZeroCommentAry{
-            if id.commentId == self.commentModel!.uid {
+            if id.commentId == self.commentModel!.id {
                 
                  ary.addObject(id)
             }
@@ -227,6 +230,7 @@ class DetailsSayCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource 
         var cell = tableView.dequeueReusableCellWithIdentifier("identtifier") as! DetailsCommentCell
         cell = DetailsCommentCell(style: .Default, reuseIdentifier: "identtifier")
 //        if indexPath.row <= self.ary.count {
+        cell.getAllCommentData(self.allMyfoundCommentAry)
           cell.configSubCommentCellWithModel(ary[indexPath.row] as! myFoundComment)
 //        }
         

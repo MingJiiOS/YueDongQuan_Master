@@ -27,6 +27,9 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
             
         }
     }
+    var mutableVideo = NSMutableArray()
+    
+    
     var _textField : CustomTextField!
     var publishPhotosView : PYPhotosView!
     var contentText = ""
@@ -63,7 +66,7 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
         
         publishPhotosView.delegate = self
         self.view.addSubview(publishPhotosView)
-        
+        publishPhotosView.reloadDataWithImages(mutableVideo)
         //第二view
         let showLocationView = UIView(frame: CGRect(x: 0, y: CGRectGetMaxY(publishPhotosView.frame) + 10, width: ScreenWidth, height: 30))
         showLocationView.backgroundColor = UIColor.whiteColor()
@@ -207,8 +210,8 @@ extension HKFPostVideoSayVC {
     func selectToPhotos() {
         let imagePickerVc = TZImagePickerController(maxImagesCount: 1, columnNumber: 1, delegate: self)
         imagePickerVc.allowPickingVideo = true
-        imagePickerVc.allowPickingImage = true
-        imagePickerVc.allowPickingOriginalPhoto = true
+        imagePickerVc.allowPickingImage = false
+        imagePickerVc.allowPickingOriginalPhoto = false
         imagePickerVc.sortAscendingByModificationDate = true
         
         self.navigationController?.presentViewController(imagePickerVc, animated: true, completion: nil)

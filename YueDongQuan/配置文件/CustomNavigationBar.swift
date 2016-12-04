@@ -13,7 +13,7 @@ class CustomNavigationBar: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let  navigationTitleAttribute : NSDictionary = NSDictionary(object: UIColor.redColor(), forKey: NSForegroundColorAttributeName)
+        let  navigationTitleAttribute : NSDictionary = NSDictionary(object: UIColor.whiteColor(), forKey: NSForegroundColorAttributeName)
         self.navigationBar.titleTextAttributes = navigationTitleAttribute as [NSObject:AnyObject] as? [String : AnyObject]
        
     }

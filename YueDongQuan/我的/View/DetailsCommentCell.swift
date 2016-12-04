@@ -60,8 +60,7 @@ class DetailsCommentCell: UITableViewCell {
 //           self.allComment { (md) in
 //        if self.allCommentAry != nil {
         
-            
-                
+        
                         
                         let attributeString = NSMutableAttributedString(string: String(format: "%@回复:  %@", model.netName,model.content))
                         //从文本0开始6个字符字体HelveticaNeue-Bold,16号

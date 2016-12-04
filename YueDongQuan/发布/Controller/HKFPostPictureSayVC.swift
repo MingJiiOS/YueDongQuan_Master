@@ -17,6 +17,7 @@ import SwiftyJSON
 class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate{
 
     private var helper = MJAmapHelper()
+    var mutableArray = NSMutableArray()
     var selectedImages = [UIImage]()
     var imageStr = String()
     var manger = AMapLocationManager()
@@ -62,7 +63,7 @@ class HKFPostPictureSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDele
         
         publishPhotosView.delegate = self
         self.view.addSubview(publishPhotosView)
-        
+        publishPhotosView.reloadDataWithImages(mutableArray)
         let showLocationView = UIView()
         showLocationView.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(showLocationView)
@@ -198,16 +199,16 @@ extension HKFPostPictureSayVC {
         
         actionSheetController.addAction(cancelAction)
         
-        //拍照
-        let takePictureAction: UIAlertAction = UIAlertAction(title: "拍照", style: .Default)
-        { action -> Void in
-            
-            
-            
-            
-        }
-        
-        actionSheetController.addAction(takePictureAction)
+//        //拍照
+//        let takePictureAction: UIAlertAction = UIAlertAction(title: "拍照", style: .Default)
+//        { action -> Void in
+//            
+//            
+//            
+//            
+//        }
+//        
+//        actionSheetController.addAction(takePictureAction)
         
         //相册选择
         let choosePictureAction: UIAlertAction = UIAlertAction(title: "相册", style: .Default)
@@ -259,6 +260,7 @@ extension HKFPostPictureSayVC : TZImagePickerControllerDelegate {
     func imagePickerController(picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [AnyObject]!, isSelectOriginalPhoto: Bool) {
         
         self.selectedImages = photos
+        
         self.publishPhotosView.reloadDataWithImages(NSMutableArray(array: photos))
       
     }

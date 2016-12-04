@@ -224,15 +224,15 @@ extension QuanZiViewController{
     func updateBadgeValueForTabBarItem()  {
         
         dispatch_sync(dispatch_get_main_queue()) {
-            let count = RCIMClient.sharedRCIMClient().getTotalUnreadCount()
-            let tab = self.tabBarController as! HKFTableBarController
-            let btn = tab.customTabBar.buttons.objectAtIndex(2) as! YJTabBarButton
-            if count > 0{
-                btn.badgeValue = count.description
-                 self.conversationListTableView.reloadData()
-            }else{
-                btn.badgeValue = "0"
-            }
+//            let count = RCIMClient.sharedRCIMClient().getTotalUnreadCount()
+//            let tab = self.tabBarController as! HKFTableBarController
+//            let btn = tab.customTabBar.buttons.objectAtIndex(2) as! YJTabBarButton
+//            if count > 0{
+//                btn.badgeValue = count.description
+//                 self.conversationListTableView.reloadData()
+//            }else{
+//                btn.badgeValue = "0"
+//            }
         }
     }
     func GotoNextCoversation()  {

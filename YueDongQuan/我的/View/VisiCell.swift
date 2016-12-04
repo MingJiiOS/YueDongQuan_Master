@@ -101,10 +101,19 @@ class VisiCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     //model:VisitorModel
-    func config()  {
+    func config(model:MyVisitorsArray)  {
         self.sexBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, kAuotoGapWithBaseGapTen)
+        if model.sex != "男" {
+            self.sexBtn.setImage(UIImage(named: "ic_女"), forState: UIControlState.Normal)
+        }else{
+            self.sexBtn.setImage(UIImage(named: "ic_男"), forState: UIControlState.Normal)
+        }
+        VisiImage.sd_setImageWithURL(NSURL(string: model.thumbnailSrc), placeholderImage: UIImage(named: "默认头像"))
+        VisiName.text = model.name
         self.VisiName.textAlignment = .Left
+        self.time.text =  TimeStampToDate().getTimeString(model.time)
         self.time.textAlignment = .Right
+        self.age.text = TimeStampToDate().TimestampToAge(model.birthday)
         self.age.textAlignment = .Left
     }
 }

@@ -26,6 +26,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
     
     var HUDView = UIView()
     var isFullScreen = Bool()
+    var tabbar = HKFTableBarController()
     
 //    var consumeItems:Results<RLUserInfo>?
 
@@ -73,7 +74,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
         RealReachability.sharedInstance().startNotifier()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(networkChanged), name: kRealReachabilityChangedNotification, object: nil)
          judgeReachbility()
-        let tabbar = HKFTableBarController.sharedManager()
+        
         
         
          self.window?.rootViewController = tabbar
@@ -150,7 +151,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
             let unreadMessage = RCIMClient.sharedRCIMClient().getTotalUnreadCount()
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
             if unreadMessage > 0 {
-                let tabbar = HKFTableBarController.sharedManager()
+                
                 let btn:YJTabBarButton = tabbar.customTabBar.buttons.objectAtIndex(2) as! YJTabBarButton
                 btn.badgeValue = Int(unreadMessage).description
                print("未读消息条数 = ",Int(unreadMessage))
@@ -185,7 +186,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
     
     
     func userLoginSuccess(){
-        self.window?.rootViewController = HKFTableBarController()
+        self.window?.rootViewController = tabbar
     }
         
     deinit {
@@ -235,7 +236,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
     func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
         if isFullScreen{
             return UIInterfaceOrientationMask.All
-            return [UIInterfaceOrientationMask.LandscapeRight,UIInterfaceOrientationMask.Portrait]
+//            return [UIInterfaceOrientationMask.LandscapeRight,UIInterfaceOrientationMask.Portrait]
         }
         
         return UIInterfaceOrientationMask.Portrait

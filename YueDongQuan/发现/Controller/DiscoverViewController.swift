@@ -598,7 +598,9 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         return UITableViewCell()
         
     }
-    
+    func clickVideoBtn(indexPath: NSIndexPath) {
+        
+    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch tableView.tag {

@@ -41,7 +41,6 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     private var userLatitude : Double = 0
     private var userLongitude : Double = 0
     
-    
     /*********评论所需 ************/
     private var commentSayIndex : NSIndexPath?
     private var typeStatus : PingLunType?
@@ -141,6 +140,7 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         super.viewDidLoad()
         setNav()
         manger.delegate = self
+        manger.startUpdatingLocation()
         self.edgesForExtendedLayout = .None
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(notifyChangeModel), name: "LastestOrderDataChanged", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(noDataNotifyProcess), name: "SenderNoDataNotify", object: nil)
@@ -152,7 +152,9 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         
     }
     
-    
+    deinit{
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     
     //创建一个悬浮的按钮
     @objc private func  createFlowBtn(){
@@ -163,11 +165,27 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         flowView.layer.cornerRadius = 10
         self.view.addSubview(flowView)
         self.view.bringSubviewToFront(flowView)
+        
+        let tapBtn = UIButton(frame: CGRect(x: ScreenWidth - 120, y: 40, width: 100, height: 40))
+        tapBtn.addTarget(self, action: #selector(clickFlowViewBtn), forControlEvents: UIControlEvents.TouchUpInside)
+        tapBtn.bringSubviewToFront(flowView)
+        
+        
     }
+    
+    @objc private func clickFlowViewBtn(sender:UIButton){
+        FTPopOverMenu.showForSender(sender, withMenu: ["按时间排序","按距离排序"], doneBlock: { (index:Int) in
+            
+            }) { 
+                
+        }
+    }
+    
+    
 //MARK:判断视频是什么状态
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        manger.startUpdatingLocation()
+        
         
         
         
@@ -219,6 +237,7 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
 //MARK:选择顶部按钮
     @objc private func selectMenu(sender:UIButton){
+        sender.setTitleColor(UIColor.blueColor(), forState: UIControlState.Selected)
         ContentView.contentOffset = CGPoint(x: ScreenWidth*CGFloat(sender.tag), y: 0)
         let xx = ScreenWidth*CGFloat(sender.tag - 1)*(MENU_BUTTON_WIDTH/ScreenWidth) - MENU_BUTTON_WIDTH
         TopMenuView.scrollRectToVisible(CGRect(x: xx, y: 0, width: ScreenWidth, height: TopMenuView.frame.size.height), animated: true)
@@ -229,11 +248,12 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     @objc private func addTableViewToScrollView(withScrollView scrollView:UIScrollView,withCount pageCount:Int,WithFrame frame:CGRect){
         
         for i in 0..<pageCount {
-            let tableView = UITableView(frame: CGRect(x: ScreenWidth*CGFloat(i), y: 0, width: ScreenWidth, height: ScreenHeight - TopMenuView.frame.size.height - 64 - 49))
+            let tableView = UITableView(frame: CGRect(x: ScreenWidth*CGFloat(i), y: 0, width: ScreenWidth, height: ScreenHeight - TopMenuView.frame.size.height - 64 - 49),style: UITableViewStyle.Grouped)
+            
             tableView.tag = i
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.registerClass(HKFTableViewCell.self, forCellReuseIdentifier: cellID)
+//            tableView.registerClass(HKFTableViewCell.self, forCellReuseIdentifier: cellID)
             
             tableViewArray.append(tableView)
             scrollView.addSubview(tableView)
@@ -273,7 +293,7 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         let tempModel = http.getLastestDataList()
         self.AllModelData = tempModel
         
-        refreshTableView.reloadData()
+        self.refreshTableView.reloadData()
         
         refreshTableView.mj_header.endRefreshing()
         refreshTableView.mj_footer.endRefreshing()
@@ -288,14 +308,19 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     @objc private func changeView(x:CGFloat){
         let xx = x*(MENU_BUTTON_WIDTH/ScreenWidth)
         menuBgView.frame = CGRect(x: xx, y: menuBgView.frame.origin.y, width: menuBgView.frame.size.width, height: menuBgView.frame.size.height)
+        
     }
 //MARK:UITableViewDataSource和UITableViewDelegate
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return AllModelData.count
     }
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1//AllModelData.count
+    }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let model = self.AllModelData[indexPath.row]
+        let model = self.AllModelData[indexPath.section]
         let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
             let cell = sourceCell as! HKFTableViewCell
             cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
@@ -310,13 +335,6 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         
-//        var cell = tableView.dequeueReusableCellWithIdentifier(cellID) as? HKFTableViewCell
-//        
-//        if (cell == nil) {
-//            cell = HKFTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: cellID)
-//            
-//        }
-//        cell!.indexPath = indexPath
         var cell = tableView.dequeueReusableCellWithIdentifier(cellID) as? HKFTableViewCell
         cell?.indexPath = indexPath
         cell = HKFTableViewCell(style: .Default, reuseIdentifier: cellID)
@@ -324,29 +342,43 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
 
         cell!.delegate = self
         cell!.headTypeView?.hidden = true
-        let model = self.AllModelData[indexPath.row]
+        let model = self.AllModelData[indexPath.section]
         cell!.configCellWithModelAndIndexPath(model , indexPath: indexPath)
-        cell?.playVideoBtn.tag = indexPath.row
-//
-        cell?.playVideoBtn.addTarget(self, action: #selector(createVideoPlayerVC), forControlEvents: UIControlEvents.TouchUpInside)
-        //            let distance = distanceBetweenOrderBy(self.userLatitude, longitude1: self.userLongitude, latitude2: (model.latitude)! , longitude2: (model.longitude)!)
-        //            cell.distanceLabel?.text = String(format: "离我%0.2fkm", Float(distance))
+        cell?.playVideoBtn.tag = indexPath.section
+
         return cell!
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let newDiscoveryDetailVC = NewDiscoveryDetailVC()
-        newDiscoveryDetailVC.newDiscoveryArray  = [self.AllModelData[indexPath.row]]
+        newDiscoveryDetailVC.newDiscoveryArray  = [self.AllModelData[indexPath.section]]
         self.navigationController?.pushViewController(newDiscoveryDetailVC, animated: true)
         
     }
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5
+    }
     
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView()
+        footer.backgroundColor = UIColor.whiteColor()
+        return footer
+    }
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.0001
+    }
     
+    func clickVideoBtn(indexPath: NSIndexPath) {
+        
+        let url = self.AllModelData[indexPath.section].compressUrl
+//        "http://static.tripbe.com/videofiles/20121214/9533522808.f4v.mp4"
+        moviePlayers = RTSMediaPlayerViewController(contentURL: NSURL(string: url)!)
+        
+        self.presentViewController(moviePlayers, animated: true, completion: nil)
+    }
     
     @objc private func createVideoPlayerVC(){
-        moviePlayers = RTSMediaPlayerViewController(contentURL: NSURL(string: "http://static.tripbe.com/videofiles/20121214/9533522808.f4v.mp4")!)
-
-        self.presentViewController(moviePlayers, animated: true, completion: nil)
+        
     }
     
     
@@ -383,7 +415,7 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         self.commentSayId = sayId
         self.typeStatus = type
         self.commentModel = model
-        self.commentMainID = model.mainId
+//        self.commentMainID = model.id
     }
     
     //刷新单个cell
@@ -440,7 +472,7 @@ extension NewDiscoveryVC {
         self.userLongitude = location.coordinate.longitude
         
         manger.stopUpdatingLocation()
-        
+        pullDownRef()
     }
 }
 
@@ -484,7 +516,7 @@ extension NewDiscoveryVC {
             let modelss  =  self.AllModelData[(self.commentSayIndex?.row)!]
             reloadCellHeightForModelAndAtIndexPath(modelss, indexPath: self.commentSayIndex!)
         
-            NewRequestCommentSay(0, content: text, foundId: self.commentSayId!,mainId: userInfo.uid)
+            NewRequestCommentSay(withCommentId: 0, content: text, foundId: self.commentSayId!,mainId: 0)
         case .selectCell:
             let model = DiscoveryCommentModel()
             model.netName = userInfo.name
@@ -500,7 +532,7 @@ extension NewDiscoveryVC {
             let modelss  =  self.AllModelData[(self.commentSayIndex?.row)!]
             reloadCellHeightForModelAndAtIndexPath(modelss, indexPath: self.commentSayIndex!)
             
-            NewRequestCommentSay((self.commentModel?.id)!, content: text, foundId: self.commentSayId!,mainId: userInfo.uid)
+            NewRequestCommentSay(withCommentId: (self.commentModel?.id)!, content: text, foundId: self.commentSayId!,mainId: self.commentSayId!)
         }
         
         
@@ -509,11 +541,11 @@ extension NewDiscoveryVC {
     }
     
     //评论说说
-    private func NewRequestCommentSay(commentId: Int,content:String,foundId:Int,mainId:Int){
+    private func NewRequestCommentSay(withCommentId commentId: Int,content:String,foundId:Int,mainId:Int){
         let v = NSObject.getEncodeString("20160901")
         
         let para = ["v":v,"uid":userInfo.uid.description,"commentId":commentId,"content":content,"foundId":foundId,"mainId":mainId]
-        Alamofire.request(.POST, NSURL(string: testUrl + "/commentfound")!, parameters: para as! [String : AnyObject]).responseString { response -> Void in
+        Alamofire.request(.POST, NSURL(string: testUrl + "/commentfound")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
             switch response.result {
             case .Success:
                 let json = JSON(data: response.data!)
@@ -550,6 +582,16 @@ extension NewDiscoveryVC {
                 print(error)
             }
         }
+    }
+    
+    @objc private func distanceBetweenOrderBy(withOldLat oldLat:Double,withOldLng oldLng:Double,withNewLat newLat:Double,withNewLng newLng: Double) -> String {
+        let curLocation = CLLocation(latitude: CLLocationDegrees(oldLat), longitude: CLLocationDegrees(oldLng))
+        
+        let newLocation = CLLocation(latitude: CLLocationDegrees(newLat), longitude: CLLocationDegrees(newLng))
+        
+        let distance = curLocation.distanceFromLocation(newLocation)
+        
+        return String(format: "%ld",distance)
     }
     
 }

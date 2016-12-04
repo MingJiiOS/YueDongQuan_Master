@@ -292,6 +292,10 @@ class MJNetWorkHelper: NSObject {
     func fans(interfaceName:NSString,fansModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock) {
         post(interfaceName, requestModel: fansModel, success: success, fail: fail)
     }
+    //MARK:我的访客
+    func myvisitors(interfaceName:NSString,myvisitorsModel:NSDictionary,success:SuccessBlock,fail:AFNErrorBlock)  {
+        post(interfaceName, requestModel: myvisitorsModel, success: success, fail: fail)
+    }
 }
 
 

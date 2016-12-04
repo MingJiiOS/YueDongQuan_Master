@@ -110,6 +110,7 @@ extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
           var detailsHeaderCell = tableView.dequeueReusableCellWithIdentifier("cell") as? DetailsHeaderCell
             detailsHeaderCell = DetailsHeaderCell(style: .Default, reuseIdentifier: "cell")
             if self.sayArray != nil {
+                
                 detailsHeaderCell?.configHeadCell(self.sayArray!, indexpath: indexPath)
             }
             return detailsHeaderCell!
@@ -123,7 +124,7 @@ extension DetailsVC : UITableViewDelegate,UITableViewDataSource{
                 detailscommentCell?.commentModel = self.ZeroCommentAry[indexPath.row]
 
             }
-
+             detailscommentCell?.getCommentModel(self.detailCommentArray)
             detailscommentCell?.configPingLunCell(self.ZeroCommentAry,subModel:self.NoZeroCommentAry, indexpath: indexPath)
             
             detailscommentCell?.commentBtnBlock({ (btn, indexpath,pingluntype) in

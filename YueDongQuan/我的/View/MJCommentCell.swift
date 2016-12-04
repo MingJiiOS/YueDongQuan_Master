@@ -12,11 +12,13 @@ class MJCommentCell: UITableViewCell {
 
      var contentLabel : UILabel?
     var subIndex : NSIndexPath?
+   private var allMyfoundAry = [myFoundComment]()
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
 
     override func setSelected( selected: Bool, animated: Bool) {
@@ -44,58 +46,101 @@ class MJCommentCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func getAllMyfoundAry(allmyfound:[myFoundComment]) {
+        self.allMyfoundAry = allmyfound
+    }
+    
     func configCellWithModel(model:myFoundComment)  {
-     let comId = model.commentId
-        if comId != 0 {
-            if userInfo.uid == model.uid{
-                let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:  %@", model.netName,model.netName,model.content))
-                attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
-                                             range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:model.netName).length))
-                attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
-                                             range: NSMakeRange(0, NSString(string:model.netName).length))
+        var reply = ""
+        
+        for item in self.allMyfoundAry {
+            
+            if model.commentId == item.id {
+                reply = item.netName
+                let context = model.content.stringByReplacingEmojiCheatCodesWithUnicode()
+                let str = String(format: "%@评论%@:%@",model.netName,reply,context)
+                let text = NSMutableAttributedString(string: str)
                 
-                self.contentLabel?.attributedText = attributeString
-                
-                
-            }else{
-//               //两个不同的人相互回复
-//                let dict = ["v":v,"operateId":userInfo.uid.description,"uid":model.commentId.description]
-//                MJNetWorkHelper().checkHeInfo(heinfo, HeInfoModel: dict, success: { (responseDic, success) in
-//                    if success {
-//                     let ohterName = responseDic["data"]!["name"] as! String
-//                        let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:  %@", model.netName,ohterName,model.content))
-//                        //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-//                       
-//                        //设置字体颜色
-//                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
-//                            range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:ohterName).length))
-//                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
-//                            range: NSMakeRange(0, NSString(string:model.netName).length))
-//                        
-//                        self.contentLabel?.attributedText = attributeString
-//                    }
-//                    }, fail: { (error) in
-//                        
-//                })
-                
+                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))
+                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, reply.characters.count))
+                self.contentLabel?.attributedText = text
             }
-        }else{
+        }
+        if model.commentId == 0 {
             let attributeString = NSMutableAttributedString(string: String(format: "%@:  %@", model.netName,model.content))
             //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-//            attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "Helvetica", size: 14)!,
-//                                         range: NSMakeRange(0, NSString(string:model.netName).length))
+            //            attributeString.addAttribute(NSFontAttributeName, value: UIFont(name: "Helvetica", size: 14)!,
+            //                                         range: NSMakeRange(0, NSString(string:model.netName).length))
             //设置字体颜色
             attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
                                          range: NSMakeRange(0, NSString(string:model.netName).length+1))
-
+            
             self.contentLabel?.attributedText = attributeString
-
+            
         }
+        }
+    
+    
+    
+    
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        for item in model {
+//         let comId = item.commentId
+//            let id = item.id
+//            if comId != 0 {
+//                if userInfo.uid == item.uid{
+//                    let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:  %@", item.netName,item.netName,item.content))
+//                    attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
+//                                                 range: NSMakeRange(NSString(string:item.netName).length + 2, NSString(string:item.netName).length))
+//                    attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
+//                                                 range: NSMakeRange(0, NSString(string:item.netName).length))
+//                    
+//                    self.contentLabel?.attributedText = attributeString
+//                    
+//                    
+//                }else{
+//                    //               //两个不同的人相互回复
+//                    //                let dict = ["v":v,"operateId":userInfo.uid.description,"uid":model.commentId.description]
+//                    //                MJNetWorkHelper().checkHeInfo(heinfo, HeInfoModel: dict, success: { (responseDic, success) in
+//                    //                    if success {
+//                    //                     let ohterName = responseDic["data"]!["name"] as! String
+//                    //                        let attributeString = NSMutableAttributedString(string: String(format: "%@回复%@:  %@", model.netName,ohterName,model.content))
+//                    //                        //从文本0开始6个字符字体HelveticaNeue-Bold,16号
+//                    //
+//                    //                        //设置字体颜色
+//                    //                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
+//                    //                            range: NSMakeRange(NSString(string:model.netName).length + 2, NSString(string:ohterName).length))
+//                    //                        attributeString.addAttribute(NSForegroundColorAttributeName, value: kBlueColor,
+//                    //                            range: NSMakeRange(0, NSString(string:model.netName).length))
+//                    //
+//                    //                        self.contentLabel?.attributedText = attributeString
+//                    //                    }
+//                    //                    }, fail: { (error) in
+//                    //
+//                    //                })
+//                    
+//                }
+//            }else{
+//               
+//        }
+//     
+//    }
+    
 //
       
         
-    }
+    
     func configHeFoundCellWithModel(model:HeFoundComment)  {
         let comId = model.commentId
         if comId != 0 {
@@ -148,5 +193,6 @@ class MJCommentCell: UITableViewCell {
         
         
     }
+
 
 }

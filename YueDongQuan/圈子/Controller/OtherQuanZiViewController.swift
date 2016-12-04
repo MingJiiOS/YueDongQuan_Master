@@ -305,8 +305,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         if annotation.isKindOfClass(MJGreenAnnotation) {
             let greenReuseIndetifier = "green"
             
-            var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier) as! MJGreenAnnotationView
-//            if greenAnnotation == nil {
+            var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier);             if greenAnnotation == nil {
                 greenAnnotation = MJGreenAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier)
 //                greenAnnotation.setSelected(true, animated: true)
     
@@ -314,7 +313,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
 //                greenAnnotation.calloutView?.siteName = item.name
 //            }
             
-//            }
+            }
             greenAnnotation.canShowCallout  = true
             greenAnnotation.draggable       = true
             return greenAnnotation

@@ -47,7 +47,9 @@ class HKFPostField_TwoVC: UIViewController,FieldPostCellDelegate {
      
         
     }
-    
+    deinit{
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidEndEditingNotification, object: nil)
+    }
     func setNav(){
         self.title = "上传场地"
         
