@@ -33,17 +33,18 @@ class MineVC: MainViewController {
             let nv = CustomNavigationBar(rootViewController: login)
             self.navigationController?.presentViewController(nv, animated: true, completion: nil)
         }else{
-            let titleLabel = UILabel(frame: CGRect(x: 0,
-                y: 0,
-                width: ScreenWidth*0.5,
-                height: 44))
-            titleLabel.textColor = UIColor.whiteColor()
-            titleLabel.font = kAutoFontWithTop
-            titleLabel.center = CGPoint(x: ScreenWidth/2, y: 22)
-            titleLabel.text = userInfo.name
-            titleLabel.textAlignment = .Center
-            titleLabel.sizeToFit()
-            self.navigationItem.titleView = titleLabel
+//            let titleLabel = UILabel(frame: CGRect(x: 0,
+//                y: 0,
+//                width: ScreenWidth*0.5,
+//                height: 44))
+//            titleLabel.textColor = UIColor.whiteColor()
+//            titleLabel.font = kAutoFontWithTop
+//            titleLabel.center = CGPoint(x: ScreenWidth/2, y: 22)
+//            titleLabel.text = userInfo.name
+//            titleLabel.textAlignment = .Center
+//            titleLabel.sizeToFit()
+//            self.navigationItem.titleView = titleLabel
+            self.navigationItem.title = "个人中心"
            loadMyinfo()
 
             self.minetable.reloadData()
