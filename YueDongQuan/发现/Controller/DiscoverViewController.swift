@@ -602,6 +602,11 @@ extension DiscoverViewController : UITableViewDelegate,UITableViewDataSource,HKF
         
     }
     
+    
+    func clickSuperLinkLabelURL(indexPath: NSIndexPath) {
+        
+    }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch tableView.tag {
         case 0:

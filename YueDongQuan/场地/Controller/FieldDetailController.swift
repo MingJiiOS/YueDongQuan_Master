@@ -84,10 +84,11 @@ class FieldDetailController: UIViewController,UITableViewDelegate,UITableViewDat
         
     }
     
+//MARK:点击去这里按钮，进行导航
     @objc private func clickLeftBtnToDaoHang(){
         
     }
-    
+//MARK:点击排行版按钮，查看排行榜
     @objc private func clickRightBtnToRanking(){
         
     }

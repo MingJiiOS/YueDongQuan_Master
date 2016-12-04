@@ -25,6 +25,9 @@ protocol HKFTableViewCellDelegate {
     
     func clickVideoBtn(indexPath:NSIndexPath)//视频播放
     
+    //点击超链接
+    func clickSuperLinkLabelURL(indexPath:NSIndexPath)
+    
 }
 
 
@@ -169,9 +172,14 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             make.top.equalTo((weakSelf?.headImageView?.snp_bottom)!).offset(5)
             make.right.equalTo(-20)
             make.height.equalTo(20)
+            make.left.equalTo(20)
         })
         self.superLinkLabel?.textAlignment = .Left
-
+        //添加手势
+        let tapSuperLink = UITapGestureRecognizer(target: self, action: #selector(clickSuperLinkLabel))
+        self.superLinkLabel?.userInteractionEnabled = true
+        self.superLinkLabel?.addGestureRecognizer(tapSuperLink)
+        
         
         //说说内容
         self.descLabel = UILabel()
@@ -350,7 +358,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         case 13:
             //            print("活动")
             self.titleLabel?.text = subModel.name
-            self.typeStatusView?.image = UIImage(named: "explain_recruit")
+            self.typeStatusView?.image = UIImage(named: "explain_JOIN")
         case 14:
             //            print("约战")
             self.titleLabel?.text =  subModel.name
@@ -372,14 +380,18 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.superLinkLabel!.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(35)
             })
+            let temp = model.aname
+            let attribStr = NSMutableAttributedString(string: temp)
+            attribStr.addAttributes([NSForegroundColorAttributeName : UIColor.blueColor()], range: NSMakeRange(0, model.aname.characters.count))
+            attribStr.addAttributes([NSUnderlineStyleAttributeName : NSNumber(integer: 1)], range: NSMakeRange(0, model.aname.characters.count))
+            attribStr.addAttributes([NSUnderlineColorAttributeName : UIColor.blueColor()], range: NSMakeRange(0, model.aname.characters.count))
+            let attch = NSTextAttachment()
+            attch.image = UIImage(named: "link")
+            attch.bounds = CGRect(x: 0, y: 0, width: 16, height: 16)
+            let string = NSAttributedString(attachment: attch)
+            attribStr.insertAttributedString(string, atIndex: 0)
             
-            let tempStr = "<body>" + " <a href = " + "www.baidu.com" + ">百度</a>" + "</body>"
-//            let resultStr1 = tempStr.stringByReplacingOccurrencesOfString("\\n", withString: "<br/>", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            let data = tempStr.dataUsingEncoding(NSUnicodeStringEncoding)
-            let options = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
-            let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
-            
-            self.superLinkLabel?.attributedText = html
+            self.superLinkLabel?.attributedText = attribStr
             
         }else{
             self.superLinkLabel!.snp_updateConstraints(closure: { (make) in
@@ -554,26 +566,30 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     }
     
     
-    func clickHeader(){
+    internal func clickHeader(){
         
         let uid = self.testModel!.uid
         NSLog("点击了头像")
         self.delegate?.clickCellHeaderImageForToHeInfo(self.indexPath!, uid: "\(uid)")
     }
     
+    internal func clickSuperLinkLabel(){
+        self.delegate?.clickSuperLinkLabelURL(self.indexPath!)
+    }
     
-    func clickPingLun(){
+    
+    internal func clickPingLun(){
         let id = self.testModel?.id
         self.delegate?.createPingLunView(self.indexPath!,sayId: id!, type: PingLunType.pinglun)
     }
     
-    func clickDianZanBtn(sender:UIButton){
+    internal func clickDianZanBtn(sender:UIButton){
         
         self.delegate?.clickDianZanBtnAtIndexPath(self.indexPath!)
         self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
     }
     
-    func clickJuBao() {
+    internal func clickJuBao() {
         //        print("点击了举报")
         let titleArr = ["举报"]
         
@@ -587,7 +603,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
         popView.show()
     }
     
-    func myJubao(){
+    internal func myJubao(){
         //        print("我要举报\(self.indexPath)行")
         let foundId = self.testModel?.id
         let typeId = self.testModel?.typeId
@@ -601,7 +617,7 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
     
     
     
-    func cellHeightByData1(imageNum:Int)->CGFloat{
+    internal func cellHeightByData1(imageNum:Int)->CGFloat{
         let totalWidth = self.bounds.size.width
         //        let lines:CGFloat = (CGFloat(imageNum))/3
         var picHeight:CGFloat = 0

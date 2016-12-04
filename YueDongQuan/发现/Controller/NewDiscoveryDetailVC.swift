@@ -281,9 +281,13 @@ class NewDiscoveryHeaderCell: UITableViewCell {
             make.top.equalTo((weakSelf?.headImageView?.snp_bottom)!).offset(5)
             make.right.equalTo(-20)
             make.height.equalTo(20)
+            make.left.equalTo(20)
         })
         self.superLinkLabel?.textAlignment = .Left
-        
+        //添加手势
+        let tapSuperLink = UITapGestureRecognizer(target: self, action: #selector(clickSuperLinkLabel))
+        self.superLinkLabel?.userInteractionEnabled = true
+        self.superLinkLabel?.addGestureRecognizer(tapSuperLink)
         
         //说说内容
         self.descLabel = UILabel()
@@ -455,7 +459,7 @@ class NewDiscoveryHeaderCell: UITableViewCell {
         case 13:
             //            print("活动")
             self.titleLabel?.text = subModel.name
-            self.typeStatusView?.image = UIImage(named: "explain_recruit")
+            self.typeStatusView?.image = UIImage(named: "explain_JOIN")
         case 14:
             //            print("约战")
             self.titleLabel?.text =  subModel.name
@@ -477,14 +481,18 @@ class NewDiscoveryHeaderCell: UITableViewCell {
             self.superLinkLabel!.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(35)
             })
+            let temp = model.aname
+            let attribStr = NSMutableAttributedString(string: temp)
+            attribStr.addAttributes([NSForegroundColorAttributeName : UIColor.blueColor()], range: NSMakeRange(0, model.aname.characters.count))
+            attribStr.addAttributes([NSUnderlineStyleAttributeName : NSNumber(integer: 1)], range: NSMakeRange(0, model.aname.characters.count))
+            attribStr.addAttributes([NSUnderlineColorAttributeName : UIColor.blueColor()], range: NSMakeRange(0, model.aname.characters.count))
+            let attch = NSTextAttachment()
+            attch.image = UIImage(named: "link")
+            attch.bounds = CGRect(x: 0, y: 0, width: 16, height: 16)
+            let string = NSAttributedString(attachment: attch)
+            attribStr.insertAttributedString(string, atIndex: 0)
             
-            let tempStr = "<body>" + " <a href = " + "www.baidu.com" + ">百度</a>" + "</body>"
-            //            let resultStr1 = tempStr.stringByReplacingOccurrencesOfString("\\n", withString: "<br/>", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            let data = tempStr.dataUsingEncoding(NSUnicodeStringEncoding)
-            let options = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
-            let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
-            
-            self.superLinkLabel?.attributedText = html
+            self.superLinkLabel?.attributedText = attribStr
             
         }else{
             self.superLinkLabel!.snp_updateConstraints(closure: { (make) in
@@ -569,6 +577,11 @@ class NewDiscoveryHeaderCell: UITableViewCell {
         }
         
         
+        
+    }
+    
+    
+    @objc private func clickSuperLinkLabel(){
         
     }
     
