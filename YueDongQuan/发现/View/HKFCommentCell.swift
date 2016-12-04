@@ -41,32 +41,30 @@ class HKFCommentCell: UITableViewCell {
     
     func configCellWithModel(model : DiscoveryCommentModel) {
         
-        var reply = ""
-        for item in self.commentArray {
+        
             
-            if model.commentId == item.id {
-                reply = item.netName
+        if model.beUserName != nil {
+            
                 
                 let context = model.content.stringByReplacingEmojiCheatCodesWithUnicode()
-                let str = String(format: "%@评论%@：%@",model.netName,reply,context)
+                let str = String(format: "%@评论%@：%@",model.netName,model.beUserName,context)
                 let text = NSMutableAttributedString(string: str)
                 
                 text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))
-                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, reply.characters.count))
+                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, model.beUserName.characters.count))
                 self.contentLabel!.attributedText = text
             }
-            
-        }
+        
 //        model.reply = reply
-//        if model.commentId == 0 {
-//            let context = model.content.stringByReplacingEmojiCheatCodesWithUnicode()
-//            let str = String(format: "%@：%@",model.netName,context)
-//            let text = NSMutableAttributedString(string: str)
-//            
-//            text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))
-//            //                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, model.reply!.characters.count))
-//            self.contentLabel!.attributedText = text
-//        }
+        if model.commentId == 0 {
+            let context = model.content.stringByReplacingEmojiCheatCodesWithUnicode()
+            let str = String(format: "%@：%@",model.netName,context)
+            let text = NSMutableAttributedString(string: str)
+            
+            text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))
+            //                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, model.reply!.characters.count))
+            self.contentLabel!.attributedText = text
+        }
         
         
     }
