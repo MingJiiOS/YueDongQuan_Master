@@ -102,8 +102,8 @@ class MJNoticeCell: UITableViewCell {
         lineLabel.backgroundColor = UIColor.lightGrayColor()
         self.contentView.addSubview(lineLabel)
         lineLabel.snp_makeConstraints { [unowned self] (make) -> Void in
-            make.height.equalTo(1)
-            make.left.equalTo(15);
+            make.height.equalTo(0.5)
+            make.left.equalTo(0);
             make.right.equalTo(0)
             make.bottom.equalTo(self.contentView)
         }

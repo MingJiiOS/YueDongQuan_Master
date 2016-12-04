@@ -204,6 +204,8 @@
 		BF2A1A8E1DF1A541005D35DC /* CircleInfoArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A1A8B1DF1A541005D35DC /* CircleInfoArray.swift */; };
 		BF2A1A8F1DF1A541005D35DC /* CircleInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A1A8C1DF1A541005D35DC /* CircleInfoData.swift */; };
 		BF2A1A901DF1A541005D35DC /* CircleInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A1A8D1DF1A541005D35DC /* CircleInfoModel.swift */; };
+		BF2EEA271DF287190054DF4F /* CustomCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2EEA261DF287190054DF4F /* CustomCalloutView.swift */; };
+		BF2EEA291DF288CE0054DF4F /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2EEA281DF288CE0054DF4F /* CustomAnnotationView.swift */; };
 		BF2F6C9A1DAE16510050B437 /* RegistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F6C991DAE16510050B437 /* RegistModel.swift */; };
 		BF2F6C9D1DAE25280050B437 /* imData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F6C9B1DAE25280050B437 /* imData.swift */; };
 		BF2F6C9E1DAE25280050B437 /* imModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2F6C9C1DAE25280050B437 /* imModel.swift */; };
@@ -226,6 +228,9 @@
 		BF5AAD7D1DF1621100531697 /* TotalRankModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5AAD7A1DF1621100531697 /* TotalRankModel.swift */; };
 		BF5B75521DDB12DD0035FF17 /* VerionUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5B75511DDB12DD0035FF17 /* VerionUpdateView.swift */; };
 		BF5BAC951DB0C2C700342B8C /* CirclesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */; };
+		BF5DB4CA1DF40A2B00A19940 /* MyVisitorsArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DB4C71DF40A2B00A19940 /* MyVisitorsArray.swift */; };
+		BF5DB4CB1DF40A2B00A19940 /* MyVisitorsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DB4C81DF40A2B00A19940 /* MyVisitorsData.swift */; };
+		BF5DB4CC1DF40A2B00A19940 /* MyVisitorsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DB4C91DF40A2B00A19940 /* MyVisitorsModel.swift */; };
 		BF5E56231DDB2EBD00FC4312 /* SendPhoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E56211DDB2EBD00FC4312 /* SendPhoneData.swift */; };
 		BF5E56241DDB2EBD00FC4312 /* SendPhoneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E56221DDB2EBD00FC4312 /* SendPhoneModel.swift */; };
 		BF6631181DD1BF5500263F67 /* HeInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6631171DD1BF5500263F67 /* HeInfoVC.swift */; };
@@ -236,6 +241,7 @@
 		BF6631241DD1D23B00263F67 /* HeFoundData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66311F1DD1D23B00263F67 /* HeFoundData.swift */; };
 		BF6631251DD1D23B00263F67 /* HeFoundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6631201DD1D23B00263F67 /* HeFoundImage.swift */; };
 		BF6631261DD1D23B00263F67 /* HeFoundModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6631211DD1D23B00263F67 /* HeFoundModel.swift */; };
+		BF6ED83C1DF2B6C800EA5C76 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6ED83B1DF2B6C800EA5C76 /* RadioButton.m */; };
 		BF6FD5241D9BAF0D00F52C48 /* MJAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */; };
 		BF7DDC9F1DA0AAC700772366 /* publishNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7DDC9E1DA0AAC700772366 /* publishNoticeViewController.swift */; };
 		BF9739CA1D9F6AD800E1B3EB /* MJClearCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9739C91D9F6AD800E1B3EB /* MJClearCache.swift */; };
@@ -924,6 +930,8 @@
 		BF2A1A8B1DF1A541005D35DC /* CircleInfoArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoArray.swift; sourceTree = "<group>"; };
 		BF2A1A8C1DF1A541005D35DC /* CircleInfoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoData.swift; sourceTree = "<group>"; };
 		BF2A1A8D1DF1A541005D35DC /* CircleInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleInfoModel.swift; sourceTree = "<group>"; };
+		BF2EEA261DF287190054DF4F /* CustomCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCalloutView.swift; sourceTree = "<group>"; };
+		BF2EEA281DF288CE0054DF4F /* CustomAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		BF2F6C991DAE16510050B437 /* RegistModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistModel.swift; sourceTree = "<group>"; };
 		BF2F6C9B1DAE25280050B437 /* imData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = imData.swift; sourceTree = "<group>"; };
 		BF2F6C9C1DAE25280050B437 /* imModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = imModel.swift; sourceTree = "<group>"; };
@@ -948,6 +956,9 @@
 		BF5AAD7A1DF1621100531697 /* TotalRankModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalRankModel.swift; sourceTree = "<group>"; };
 		BF5B75511DDB12DD0035FF17 /* VerionUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerionUpdateView.swift; sourceTree = "<group>"; };
 		BF5BAC941DB0C2C700342B8C /* CirclesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirclesTableViewCell.swift; sourceTree = "<group>"; };
+		BF5DB4C71DF40A2B00A19940 /* MyVisitorsArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVisitorsArray.swift; sourceTree = "<group>"; };
+		BF5DB4C81DF40A2B00A19940 /* MyVisitorsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVisitorsData.swift; sourceTree = "<group>"; };
+		BF5DB4C91DF40A2B00A19940 /* MyVisitorsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyVisitorsModel.swift; sourceTree = "<group>"; };
 		BF5E56211DDB2EBD00FC4312 /* SendPhoneData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPhoneData.swift; sourceTree = "<group>"; };
 		BF5E56221DDB2EBD00FC4312 /* SendPhoneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPhoneModel.swift; sourceTree = "<group>"; };
 		BF6631171DD1BF5500263F67 /* HeInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeInfoVC.swift; sourceTree = "<group>"; };
@@ -958,6 +969,8 @@
 		BF66311F1DD1D23B00263F67 /* HeFoundData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeFoundData.swift; sourceTree = "<group>"; };
 		BF6631201DD1D23B00263F67 /* HeFoundImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeFoundImage.swift; sourceTree = "<group>"; };
 		BF6631211DD1D23B00263F67 /* HeFoundModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeFoundModel.swift; sourceTree = "<group>"; };
+		BF6ED83A1DF2B6C800EA5C76 /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
+		BF6ED83B1DF2B6C800EA5C76 /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
 		BF6FD5221D9BAF0D00F52C48 /* MJAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MJAnnotation.swift; path = ../MJAnnotation.swift; sourceTree = "<group>"; };
 		BF7DDC9E1DA0AAC700772366 /* publishNoticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = publishNoticeViewController.swift; sourceTree = "<group>"; };
 		BF9739C91D9F6AD800E1B3EB /* MJClearCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJClearCache.swift; sourceTree = "<group>"; };
@@ -1919,6 +1932,9 @@
 		BF071F151D9A0D68000551F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BF5DB4C71DF40A2B00A19940 /* MyVisitorsArray.swift */,
+				BF5DB4C81DF40A2B00A19940 /* MyVisitorsData.swift */,
+				BF5DB4C91DF40A2B00A19940 /* MyVisitorsModel.swift */,
 				BFE078491DF168EF00831425 /* myFoundComment.swift */,
 				BFE0784A1DF168EF00831425 /* myFoundArray.swift */,
 				BFE0784B1DF168EF00831425 /* myFoundData.swift */,
@@ -2112,6 +2128,8 @@
 		BFAF23C41DB85F5000294988 /* MJ工具类 */ = {
 			isa = PBXGroup;
 			children = (
+				BF6ED83A1DF2B6C800EA5C76 /* RadioButton.h */,
+				BF6ED83B1DF2B6C800EA5C76 /* RadioButton.m */,
 				BFB44CBF1DC9731A0066D49F /* KeyBoard */,
 				BFBABCC31DC1F9F0009F068E /* UITableView+ClickTime.h */,
 				BFBABCC41DC1F9F0009F068E /* UITableView+ClickTime.m */,
@@ -2127,6 +2145,8 @@
 				BFD36CCA1DBA0202005005A3 /* TimeStampToDate.swift */,
 				BFD41FC61DC05061005A22E6 /* CustomTable.swift */,
 				BFC48BC91DEE7FF90087551D /* MJSearchbar.swift */,
+				BF2EEA261DF287190054DF4F /* CustomCalloutView.swift */,
+				BF2EEA281DF288CE0054DF4F /* CustomAnnotationView.swift */,
 			);
 			path = "MJ工具类";
 			sourceTree = "<group>";
@@ -4282,9 +4302,11 @@
 				BFA7FA411DE58A020084E59E /* UIColor+RCColor.m in Sources */,
 				BF071F3B1D9A0D68000551F7 /* MJTextFeild.swift in Sources */,
 				BF071F031D9A0D5F000551F7 /* MJQuanZiModel.swift in Sources */,
+				BF2EEA291DF288CE0054DF4F /* CustomAnnotationView.swift in Sources */,
 				BFFCE0541DBF471A0045087A /* SubTotalRankCell.swift in Sources */,
 				BF071F351D9A0D68000551F7 /* HeaderView.swift in Sources */,
 				BFFE1A871DF006A300227F9F /* FieldDetailTwo_Cell.swift in Sources */,
+				BF5DB4CC1DF40A2B00A19940 /* MyVisitorsModel.swift in Sources */,
 				BFB44F651DC9731B0066D49F /* OfficialAccountToolbar.m in Sources */,
 				BFAD63241D9E13BE006234E1 /* MJLoginOpreationHelper.swift in Sources */,
 				BF21486A1DE7E796005580F4 /* LeafNotification.m in Sources */,
@@ -4324,6 +4346,7 @@
 				BF9CA1811DC87EFD0043F535 /* CommentModel.m in Sources */,
 				BFC48BCE1DEE984A0087551D /* MyAttentionArray.swift in Sources */,
 				BF6631251DD1D23B00263F67 /* HeFoundImage.swift in Sources */,
+				BF5DB4CB1DF40A2B00A19940 /* MyVisitorsData.swift in Sources */,
 				BFB44F601DC9731B0066D49F /* FaceSourceManager.m in Sources */,
 				BFC48BCF1DEE984A0087551D /* MyAttentionData.swift in Sources */,
 				5C072B601D8F8D2500420F6D /* YoYoAlertView.swift in Sources */,
@@ -4414,6 +4437,7 @@
 				BF071F0A1D9A0D5F000551F7 /* MJNoticeCell.swift in Sources */,
 				BF071F391D9A0D68000551F7 /* MJContextRef.swift in Sources */,
 				5C7C3A0A1DB5CECC00EA598B /* UIView+LQXkeyboard.m in Sources */,
+				BF6ED83C1DF2B6C800EA5C76 /* RadioButton.m in Sources */,
 				BF071F061D9A0D5F000551F7 /* MJAllParterView.swift in Sources */,
 				BF2F6C9E1DAE25280050B437 /* imModel.swift in Sources */,
 				BF9739D11D9F81ED00E1B3EB /* TempLeftViewController.swift in Sources */,
@@ -4463,6 +4487,7 @@
 				5C26FBB11DD451B7005A6ABD /* CheckData.swift in Sources */,
 				BFFE1A891DF006A300227F9F /* NewFieldCellTableViewCell.swift in Sources */,
 				BF9CA17E1DC87D000043F535 /* MJCommentCell.swift in Sources */,
+				BF5DB4CA1DF40A2B00A19940 /* MyVisitorsArray.swift in Sources */,
 				5C42CACB1DC0584100669EB5 /* HKFPostField_TwoVC.swift in Sources */,
 				5C343A001D90E8AB0077BFDD /* SignRankCell.swift in Sources */,
 				5C67E8E91DF102C3003F880A /* XHVersion.m in Sources */,
@@ -4502,6 +4527,7 @@
 				BF071F0B1D9A0D5F000551F7 /* MJOtherQuanZiView.swift in Sources */,
 				5C27BAF81DB761D9005A2F8D /* PYProgressView.m in Sources */,
 				BFC1269C1DB4792F00E11088 /* CirclesArray.swift in Sources */,
+				BF2EEA271DF287190054DF4F /* CustomCalloutView.swift in Sources */,
 				BFDBE2BA1DD2AED60035B621 /* FansVC.swift in Sources */,
 				BFAF23CC1DB8A9D700294988 /* MJLayerContentCell.swift in Sources */,
 				5C913F951DBDEB0E00E567FB /* WeatherLife.swift in Sources */,

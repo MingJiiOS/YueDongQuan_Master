@@ -29,7 +29,7 @@ class MJMessageCell: UITableViewCell {
     var displayView = PYPhotosView()
     var videoView = PYPhotosView()
     
-    var commentModel = MyFoundDataBase().comment
+    var commentModel = [myFoundComment]()
     
     var hefoundCommentModel = [HeFoundComment]()
     
@@ -451,7 +451,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
             let cellheight = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
                 
                     let cell = sourceCell as! MJCommentCell
-                    cell.configCellWithModel(model as! myFoundComment)
+                    cell.configCellWithModel(self.commentModel[indexpath.row] as! myFoundComment)
                 
                 
                 
@@ -547,7 +547,10 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         cell.subIndex = indexPath
         
             if self.type! == .local {
-                cell.configCellWithModel(self.commentModel[indexPath.row] as! myFoundComment)
+                
+                cell.getAllMyfoundAry(self.commentModel)
+                
+                cell.configCellWithModel(self.commentModel[indexPath.row] )
             }else{
                 cell.configHeFoundCellWithModel(self.hefoundCommentModel[indexPath.row])
         }
@@ -571,7 +574,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
             let cell_height = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
                 
                     let cell = cell as! MJCommentCell
-                    cell.configCellWithModel(self.commentModel[indexPath.row] as! myFoundComment)
+                    cell.configCellWithModel(self.commentModel[indexPath.row])
                 
                 
             }) { () -> [NSObject : AnyObject]! in
@@ -610,7 +613,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         let cell_height = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
             
                 let cell = cell as! MJCommentCell
-                cell.configCellWithModel(self.commentModel[indexPath.row] as! myFoundComment)
+                cell.configCellWithModel(self.commentModel[indexPath.row])
             
            
         }) { () -> [NSObject : AnyObject]! in
@@ -722,7 +725,7 @@ extension MJMessageCell{
             let cellheight = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
                 
                     let cell = sourceCell as! MJCommentCell
-                    cell.configHeFoundCellWithModel(model )
+                    cell.configHeFoundCellWithModel(model)
                 
                 
                 

@@ -132,3 +132,5 @@ let getrycircle = "getrycircle"
 let myattention = "myattention"
 //MARK:接口名 我的粉丝
 let fans = "fans"
+//MARK:接口名 我的访客
+let myvisitors = "myvisitors"

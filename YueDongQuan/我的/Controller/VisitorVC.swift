@@ -7,17 +7,18 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class VisitorVC: MainViewController {
    
     var table = UITableView(frame: CGRectZero, style: UITableViewStyle.Grouped)
-    
+    private var myVisitorsModel : MyVisitorsModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
      self.view .addSubview(table)
         table.snp_makeConstraints { (make) in
-            make.left.right.top.bottom.equalTo(0)
+            make.left.right.top.equalTo(0)
+            make.bottom.equalTo(49)
         }
         table.delegate = self
         table.dataSource = self
@@ -52,18 +53,39 @@ class VisitorVC: MainViewController {
     */
 
 }
+
+extension VisitorVC{
+    func loadMyvisitorData()  {
+        let dict  = ["v":v,
+                     "uid":userInfo.uid]
+        MJNetWorkHelper().myvisitors(myvisitors, myvisitorsModel: dict, success: { (responseDic, success) in
+            let model = DataSource().getMyvisitorsData(responseDic)
+            if model.code != "404"{
+               self.myVisitorsModel = model
+            }
+            }) { (error) in
+          SVProgressHUD.showErrorWithStatus("请求超时")
+                SVProgressHUD.dismissWithDelay(1.5)
+        }
+        
+    }
+}
+
 extension VisitorVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("VisiCell")as! VisiCell
         
         cell = VisiCell(style: .Default, reuseIdentifier: "VisiCell")
-//        if self.myinfoModel != nil {
-//            cell.config(self.myinfoModel!)
-//        }
+        if self.myVisitorsModel != nil {
+            cell.config((self.myVisitorsModel?.data.array[indexPath.row])!)
+        }
     return cell
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if self.myVisitorsModel != nil {
+            return (self.myVisitorsModel?.data.array.count)!
+        }
+        return 0
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return kAutoStaticCellHeight

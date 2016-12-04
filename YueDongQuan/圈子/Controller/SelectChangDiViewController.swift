@@ -96,11 +96,15 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
             cell?.detailTextLabel?.textColor = UIColor.grayColor()
             cell?.detailTextLabel?.font = kAutoFontWithMid
             cell?.textLabel?.textColor = UIColor.blackColor()
-            let btn = MHRadioButton(groupId: "firstGroup", atIndex: 0)
+            let btn = MHRadioButton(groupId: "firstGroup", atIndex: 1)
             MHRadioButton.addObserver(self, forFroupId: "firstGroup")
-            btn.backgroundColor = UIColor.whiteColor()
-            cell?.accessoryView = btn
             
+            btn.backgroundColor = UIColor.whiteColor()
+            btn.tag = indexPath.row
+            cell?.accessoryView = btn
+            if indexPath.row == 0 {
+                btn.selected()
+            }
             
         }
         return cell!
@@ -114,15 +118,27 @@ class SelectChangDiViewController: MainViewController,UITableViewDelegate,UITabl
     }
     //MARK: 单选按钮选择代理
     func radioButtonSelectedAtIndex(index: UInt, inGroup groupID: String!, button: UIButton!) {
-        let cell = button.superview as! UITableViewCell
-        changGuanName = cell.textLabel?.text
-        if (myClosure != nil) {
-            myClosure!(name:changGuanName)
+        if button.superview != nil {
+            let cell = button.superview as! UITableViewCell
+            changGuanName = cell.textLabel?.text
             
+            if (myClosure != nil) {
+                myClosure!(name:changGuanName)
+                
+            }
         }
+        
+        
+        
     }
     //MARK:确定选择场馆
     func sureSelectChangguan()  {
+        if changGuanName == nil {
+            if (myClosure != nil) {
+                myClosure!(name:(self.fieldModel?.data.array.first?.name)!)
+                
+            }
+        }
         self.navigationController?.popViewControllerAnimated(true)
     }
     func createNewChangDi()  {

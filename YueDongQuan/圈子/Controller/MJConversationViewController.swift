@@ -65,9 +65,9 @@ class MJConversationViewController: RCConversationViewController {
             }
             if ButtonTag == 2{
                 
-                let push = publishNoticeViewController()
-                push.circleId = self.circleid
-                
+                let push = AllNoticeViewController()
+                push.permissions = self.permissions
+                push.circleid = self.circleid
                 self.push(push)
             }
             

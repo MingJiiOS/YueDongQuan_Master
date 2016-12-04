@@ -39,7 +39,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     var customTabBar : YJTabBar!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.tabBar.hidden = true
         setUpAllChildVIewController()
         setUpTabBar()
         
@@ -47,16 +47,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loginSuccess), name: "UserLoginSuccess", object: nil)
         
     }
-    internal class func sharedManager() -> HKFTableBarController {
-        
-        struct Static {
-            //Singleton instance. Initializing keyboard manger.
-            static let kbManager = HKFTableBarController()
-        }
-        
-        /** @return Returns the default singleton instance. */
-        return Static.kbManager
-    }
+
     
     func loginSuccess()  {
         let btn = customTabBar.buttons.objectAtIndex(0) as! YJTabBarButton
@@ -71,7 +62,7 @@ class HKFTableBarController: UITabBarController,YJTabBarDelegate,YXCustomActionS
     
     func setUpTabBar(){
         customTabBar = YJTabBar.shareYJTabBar()
-        customTabBar.frame = self.tabBar.frame
+        customTabBar.frame = CGRect(x: 0, y: ScreenHeight - 49, width: ScreenWidth, height: 49)
         customTabBar.backgroundColor = UIColor.whiteColor()
         customTabBar.delegate = self
         customTabBar.items = self.items as [AnyObject]

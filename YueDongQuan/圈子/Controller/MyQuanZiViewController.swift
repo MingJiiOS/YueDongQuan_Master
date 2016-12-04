@@ -263,7 +263,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
                     chatVC.circleid = joinClrcleIDAry[indexPath.row] as? String
                     chatVC.thumbnailSrc = jointhumbnailSrcAry[indexPath.row] as? String
                     chatVC.permissions = joinPermissionsAry[indexPath.row] as? NSInteger
-                }else if count1 == 0 && count2 == 0{
+                }else if count1 != 0 && count2 != 0{
                     chatVC.targetId = ownClrcleIDAry[indexPath.row] as! String
                     chatVC.userName = userInfo.name
                     chatVC.title = ownNameAry[indexPath.row] as? String

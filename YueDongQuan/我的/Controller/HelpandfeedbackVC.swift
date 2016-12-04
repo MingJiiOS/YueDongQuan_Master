@@ -18,15 +18,13 @@ class HelpandfeedbackVC: MainViewController,UITextViewDelegate{
     var content : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor ( red: 0.9176,
-                                              green: 0.9176,
-                                              blue: 0.9529,
-                                              alpha: 1.0 )
+        self.view.backgroundColor = UIColor.whiteColor()
         let textView = BRPlaceholderTextView(frame: CGRect(x: 0, y: 5, width: ScreenWidth, height: ScreenWidth/3))
         textView.placeholder = "  请提出您的宝贵意见 .....\n \n \n \n \n"
         textView.font = kAutoFontWithMid
         self.view.addSubview(textView)
         textView.delegate = self
+        textView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         textView.maxTextLength = 300
         self.view .addSubview(numerLabel)
         numerLabel.snp_makeConstraints { (make) in
