@@ -19,7 +19,7 @@ class HKFPostJoinTeamVC: UIViewController,AMapLocationManagerDelegate,UITextView
     private var userLongitude : Double = 0
     var joinSay = String()
     var joinAddress = String()
-    
+    private var wordCountLabel : UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,7 +43,15 @@ class HKFPostJoinTeamVC: UIViewController,AMapLocationManagerDelegate,UITextView
         }
         textView.delegate = self
         
-        let selectQZView = UIView(frame: CGRect(x: 0, y: CGRectGetMaxY(textView.frame) + 10, width: ScreenWidth, height: 30))
+        wordCountLabel = UILabel(frame: CGRect(x:0, y: textView.frame.maxY, width: ScreenWidth, height: 19))
+        wordCountLabel.font = UIFont.systemFontOfSize(14)
+        wordCountLabel.textColor = UIColor.lightGrayColor()
+        wordCountLabel.text = "0/140"
+        wordCountLabel.backgroundColor = UIColor.whiteColor()
+        wordCountLabel.textAlignment = .Right
+        self.view.addSubview(wordCountLabel)
+        
+        let selectQZView = UIView(frame: CGRect(x: 0, y: CGRectGetMaxY(wordCountLabel.frame) + 10, width: ScreenWidth, height: 30))
         selectQZView.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(selectQZView)
         
@@ -91,7 +99,22 @@ class HKFPostJoinTeamVC: UIViewController,AMapLocationManagerDelegate,UITextView
             
         }
     }
+    func textViewDidChange(textView: UITextView) {
+        let wordCount = textView.text.characters.count
+        self.wordCountLabel.text = String(format: "%ld/140",wordCount)
+        wordLimit(textView)
+    }
     
+    func wordLimit(text:UITextView) {
+        if (text.text.characters.count <= 140) {
+            self.joinSay = text.text
+            
+        }else{
+            //            self._textView.editable = false
+            let alert = UIAlertView(title: "提示", message: "字数超出限制", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+        }
+    }
     
     func textViewDidEndEditing(textView: UITextView) {
         self.joinSay = textView.text

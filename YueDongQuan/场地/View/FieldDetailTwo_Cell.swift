@@ -8,9 +8,14 @@
 
 import UIKit
 
+
+protocol FieldDetailTwo_CellDelegate {
+    func clickSignExitFieldBtn()
+}
+
 class FieldDetailTwo_Cell: UITableViewCell {
 
-    
+    var delegate : FieldDetailTwo_CellDelegate?
     @IBOutlet weak var Sign_ExitBtn: UIButton!
     
     @IBOutlet weak var SportsTime: UILabel!
@@ -25,12 +30,19 @@ class FieldDetailTwo_Cell: UITableViewCell {
     
     
     
+    @IBAction func clickSignExitBtn(sender: UIButton) {
+        
+        self.delegate?.clickSignExitFieldBtn()
+        
+    }
     
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.Sign_ExitBtn.layer.masksToBounds = true
+        self.Sign_ExitBtn.layer.cornerRadius = self.Sign_ExitBtn.frame.size.width/2
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

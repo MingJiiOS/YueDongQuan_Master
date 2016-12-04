@@ -70,6 +70,7 @@
 		5C67E8EF1DF10C52003F880A /* FTPopOverMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C67E8EE1DF10C52003F880A /* FTPopOverMenu.m */; };
 		5C67E8F11DF1266D003F880A /* NewDiscoveryDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C67E8F01DF1266D003F880A /* NewDiscoveryDetailVC.swift */; };
 		5C6826401DAC91250032B66E /* NSObject+EncodingString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */; };
+		5C72DE041DF3AF3100CCBC41 /* PlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C72DE031DF3AF3100CCBC41 /* PlaceholderTextView.m */; };
 		5C7C3A0A1DB5CECC00EA598B /* UIView+LQXkeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A081DB5CECC00EA598B /* UIView+LQXkeyboard.m */; };
 		5C7C3A0B1DB5CECC00EA598B /* YHMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A091DB5CECC00EA598B /* YHMessageView.swift */; };
 		5C7C3A0F1DB5CF3400EA598B /* FieldArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3A0C1DB5CF3400EA598B /* FieldArray.swift */; };
@@ -768,6 +769,8 @@
 		5C67E8F01DF1266D003F880A /* NewDiscoveryDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDiscoveryDetailVC.swift; sourceTree = "<group>"; };
 		5C68263E1DAC91250032B66E /* NSObject+EncodingString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+EncodingString.h"; sourceTree = "<group>"; };
 		5C68263F1DAC91250032B66E /* NSObject+EncodingString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+EncodingString.m"; sourceTree = "<group>"; };
+		5C72DE021DF3AF3100CCBC41 /* PlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceholderTextView.h; sourceTree = "<group>"; };
+		5C72DE031DF3AF3100CCBC41 /* PlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceholderTextView.m; sourceTree = "<group>"; };
 		5C7C3A071DB5CECC00EA598B /* UIView+LQXkeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LQXkeyboard.h"; sourceTree = "<group>"; };
 		5C7C3A081DB5CECC00EA598B /* UIView+LQXkeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LQXkeyboard.m"; sourceTree = "<group>"; };
 		5C7C3A091DB5CECC00EA598B /* YHMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YHMessageView.swift; sourceTree = "<group>"; };
@@ -2025,6 +2028,8 @@
 				5C24BB6C1D9A492500A6D25F /* YDQPrefixHeader.pch */,
 				5C26FBAF1DD451B7005A6ABD /* CheckData.swift */,
 				5C26FBB01DD451B7005A6ABD /* CheckModel.swift */,
+				5C72DE021DF3AF3100CCBC41 /* PlaceholderTextView.h */,
+				5C72DE031DF3AF3100CCBC41 /* PlaceholderTextView.m */,
 			);
 			path = "公共文件";
 			sourceTree = "<group>";
@@ -4415,6 +4420,7 @@
 				BFA7FA441DE592120084E59E /* UIButton+Badge.m in Sources */,
 				BFE1F6421DDC8C020050F5C6 /* UIControl+Custom.m in Sources */,
 				BF071F3D1D9A0D68000551F7 /* MyDongdouView.swift in Sources */,
+				5C72DE041DF3AF3100CCBC41 /* PlaceholderTextView.m in Sources */,
 				5C67E8EA1DF102C3003F880A /* XHVersionRequest.m in Sources */,
 				BFA6DDBA1D88EC91009017DE /* PchFile.swift in Sources */,
 				BF071F091D9A0D5F000551F7 /* MJHeadimageWithSubimageView.swift in Sources */,

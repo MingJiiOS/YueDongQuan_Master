@@ -14,7 +14,7 @@ import Alamofire
 import SwiftyJSON
 
 
-class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate {
+class HKFPostVideoSayVC: UIViewController,UITextViewDelegate,PYPhotosViewDelegate,PYPhotoBrowseViewDelegate,AMapLocationManagerDelegate {
 
     var KVideoUrlPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first?.stringByAppendingString("VideoURL")
     var helper = MJAmapHelper()
@@ -30,9 +30,12 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
     var mutableVideo = NSMutableArray()
     
     
-    var _textField : CustomTextField!
+    private var postContentText = ""
+    private var _textView = PlaceholderTextView()
+    private var wordCountLabel : UILabel!
+    private var bgView = UIView()
     var publishPhotosView : PYPhotosView!
-    var contentText = ""
+    
     private var videoData = NSData()
     
     private var userLatitude : Double = 0
@@ -50,16 +53,37 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
     }
     
     func createUI(){
-        _textField = CustomTextField(frame: CGRect(x: 10, y: 5, width: ScreenWidth - 20, height: 40), placeholder: "说点什么吧.....(120字内)", clear: true, fontSize: 15)
-        _textField.delegate = self
-        _textField.textColor = UIColor.blackColor()
-        _textField.addTarget(self, action: #selector(getTextFieldString(_:)), forControlEvents: UIControlEvents.AllEditingEvents)
-        self.view.addSubview(_textField)
+        bgView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 120))
+        self.view.addSubview(bgView)
+        _textView = PlaceholderTextView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 100))
+        _textView.backgroundColor = UIColor.whiteColor()
+        _textView.delegate = self
+        _textView.font = UIFont.systemFontOfSize(14)
+        _textView.textColor = UIColor.blackColor()
+        _textView.textAlignment = .Left
+        _textView.editable = true
+        _textView.placeholder = "说点什么吧.....(120字内)"
+        _textView.placeholderColor = UIColor.lightGrayColor()
+        bgView.addSubview(_textView)
+        wordCountLabel = UILabel(frame: CGRect(x:0, y: _textView.frame.maxY + 1, width: ScreenWidth, height: 19))
+        wordCountLabel.font = UIFont.systemFontOfSize(14)
+        wordCountLabel.textColor = UIColor.lightGrayColor()
+        wordCountLabel.text = "0/120"
+        wordCountLabel.backgroundColor = UIColor.whiteColor()
+        wordCountLabel.textAlignment = .Right
+        bgView.addSubview(wordCountLabel)
+        let lineView = UIView(frame: CGRect(x: 0, y: _textView.frame.maxY, width: ScreenWidth, height: 1))
+        lineView.backgroundColor = UIColor.lightGrayColor()
+        bgView.addSubview(lineView)
+        self.automaticallyAdjustsScrollViewInsets = false
+        let lineViewtwo = UIView(frame: CGRect(x: 0, y: bgView.frame.maxY, width: ScreenWidth, height: 1))
+        lineView.backgroundColor = UIColor.lightGrayColor()
+        self.view.addSubview(lineViewtwo)
         
         publishPhotosView = PYPhotosView()
         publishPhotosView.backgroundColor = UIColor.whiteColor()
         publishPhotosView.py_x = 2*5
-        publishPhotosView.py_y = 2*2 + 64
+        publishPhotosView.py_y = 2*2 + 122
         publishPhotosView.pageType = .Label
         publishPhotosView.photoWidth = (ScreenWidth - 30)/3
         publishPhotosView.photoHeight = (ScreenWidth - 30)/3
@@ -106,15 +130,6 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
     func setNav(){
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "发布视频说说"
-//        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-//        let imgView = UIImageView(frame:leftView.frame)
-//        imgView.image = UIImage(named: "")
-//        imgView.contentMode = .Center
-//        leftView.addSubview(imgView)
-//        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(back))
-//        
-//        leftView.addGestureRecognizer(tap)
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(back))
@@ -128,12 +143,15 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func getTextFieldString(textField:UITextField){
-        self.contentText = textField.text!
-    }
+    
     
     func send(){
 
+        if self.postContentText == "" {
+            let alert = UIAlertView(title: "提示", message: "视频说说内容不能为空", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+            return
+        }
         
         if self.videoData.length != 0 && (self.videoData.length/(1024*1024) <= 20) {
             SVProgressHUD.showWithStatus("视频发布中")
@@ -147,6 +165,41 @@ class HKFPostVideoSayVC: UIViewController,UITextFieldDelegate,PYPhotosViewDelega
         
         
     }
+    
+    
+    
+    
+    //MARK:新的输入框
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if ("\n" == text) {
+            textView.resignFirstResponder()
+            return false
+        }
+        
+        return true
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        let wordCount = textView.text.characters.count
+        self.wordCountLabel.text = String(format: "%ld/120",wordCount)
+        wordLimit(textView)
+    }
+    
+    func wordLimit(text:UITextView) {
+        if (text.text.characters.count <= 120) {
+            self.postContentText = text.text
+            
+        }else{
+            //            self._textView.editable = false
+            let alert = UIAlertView(title: "提示", message: "字数超出限制", delegate: nil, cancelButtonTitle: "确定")
+            alert.show()
+        }
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        _textView.resignFirstResponder()
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -244,32 +297,6 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
         
         
         
-//        
-//        let asset = asset as? AVURLAsset
-//        //                let data = NSData(contentsOfURL: asset!.URL)
-//        JFCompressionVideo.compressedVideoOtherMethodWithURL(asset?.URL, compressionType: AVAssetExportPresetLowQuality, compressionResultPath: { (resultPath:String!, memorySize:Float) in
-//            NSLog("memorySize = \(memorySize),resultPath=\(resultPath)")
-//            self.view.hideActivity()
-//            
-//            let data = NSData(contentsOfFile: resultPath)
-//            
-//            self.videoData = data!
-//            let fileSize = (data?.length)!/(1024*1024)
-//            self.view.showLoadingTilteActivity("压缩完成", position: "center")
-//            self.view.hideActivity()
-//            if fileSize >= 1024 {
-//                
-//            }
-//        })
-        
-        
-//        PHCachingImageManager().requestAVAssetForVideo((asset as? PHAsset)!, options: nil) { (asset:AVAsset?, audioMix:AVAudioMix?, info:[NSObject : AnyObject]?) in
-//            dispatch_async(dispatch_get_main_queue(), {
-//                
-//            })
-//        }
-        
-        
     }
     
     func imagePickerController(picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [AnyObject]!, isSelectOriginalPhoto: Bool) {
@@ -352,7 +379,7 @@ extension HKFPostVideoSayVC : TZImagePickerControllerDelegate {
                         
                         let videoId = self.imageModel?.data.id
                         
-                        self.requestToPostImagesSay(self.contentText, latitude: self.userLatitude, longitude: self.userLongitude, videoId: (videoId?.description)!, address: self.address)
+                        self.requestToPostImagesSay(self.postContentText, latitude: self.userLatitude, longitude: self.userLongitude, videoId: (videoId?.description)!, address: self.address)
                         
                         
 //                        NSLog("最后一张上传完成")

@@ -20,7 +20,10 @@ class HKFPostActivityVC: UIViewController,UITextViewDelegate,AMapLocationManager
     private var userLongitude : Double = 0
     var manager = AMapLocationManager()
     var actAddress = String()
+    private var fisrtCountLabel = UILabel()
+    private var secondCountLabel = UILabel()
     
+    private var textViews : BRPlaceholderTextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,25 +39,39 @@ class HKFPostActivityVC: UIViewController,UITextViewDelegate,AMapLocationManager
         
         let activityName = BRPlaceholderTextView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 44))
         activityName.placeholder = "\n活动名称（1-20字内）"
-        activityName.font = UIFont.systemFontOfSize(13)
+        activityName.font = UIFont.systemFontOfSize(14)
         activityName.delegate = self
         activityName.tag = 100
         self.view.addSubview(activityName)
+        fisrtCountLabel = UILabel(frame: CGRect(x:0, y: activityName.frame.maxY, width: ScreenWidth, height: 19))
+        fisrtCountLabel.font = UIFont.systemFontOfSize(14)
+        fisrtCountLabel.textColor = UIColor.lightGrayColor()
+        fisrtCountLabel.text = "0/20"
+        fisrtCountLabel.backgroundColor = UIColor.whiteColor()
+        fisrtCountLabel.textAlignment = .Right
+        self.view.addSubview(fisrtCountLabel)
         
-        let textView = BRPlaceholderTextView(frame: CGRect(x: 0, y: CGRectGetMaxY(activityName.frame) + 10, width: ScreenWidth, height: ScreenWidth/3))
-        textView.placeholder = "例： \n   开始时间：20XX年XX月XX日 7：00-8：00\n   结束时间：20XX年XX月XX日 7：00-8：00\n   活动详情：交流 （140字内）"
-        textView.font = UIFont.systemFontOfSize(13)
-        self.view.addSubview(textView)
-        textView.setPlaceholderFont(UIFont.systemFontOfSize(12))
-        textView.setPlaceholderColor(UIColor.blueColor())
-        textView.setPlaceholderOpacity(0.3)
-        textView.addMaxTextLengthWithMaxLength(140) { (text : BRPlaceholderTextView! ) in
+        textViews = BRPlaceholderTextView(frame: CGRect(x: 0, y: CGRectGetMaxY(fisrtCountLabel.frame) + 10, width: ScreenWidth, height: ScreenWidth/3))
+        textViews.placeholder = "例： \n   开始时间：20XX年XX月XX日 7：00-8：00\n   结束时间：20XX年XX月XX日 7：00-8：00\n   活动详情：交流 （140字内）"
+        textViews.font = UIFont.systemFontOfSize(14)
+        self.view.addSubview(textViews)
+        textViews.setPlaceholderFont(UIFont.systemFontOfSize(12))
+        textViews.setPlaceholderColor(UIColor.blueColor())
+        textViews.setPlaceholderOpacity(0.3)
+        textViews.addMaxTextLengthWithMaxLength(140) { (text : BRPlaceholderTextView! ) in
             
         }
-        textView.delegate = self
-        textView.tag = 200
+        textViews.delegate = self
+        textViews.tag = 200
+        secondCountLabel = UILabel(frame: CGRect(x:0, y: textViews.frame.maxY, width: ScreenWidth, height: 19))
+        secondCountLabel.font = UIFont.systemFontOfSize(14)
+        secondCountLabel.textColor = UIColor.lightGrayColor()
+        secondCountLabel.text = "0/140"
+        secondCountLabel.backgroundColor = UIColor.whiteColor()
+        secondCountLabel.textAlignment = .Right
+        self.view.addSubview(secondCountLabel)
         
-        let selectQZView = UIView(frame: CGRect(x: 0, y: CGRectGetMaxY(textView.frame) + 10, width: ScreenWidth, height: 30))
+        let selectQZView = UIView(frame: CGRect(x: 0, y: CGRectGetMaxY(secondCountLabel.frame) + 10, width: ScreenWidth, height: 30))
         selectQZView.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(selectQZView)
         
@@ -82,6 +99,67 @@ class HKFPostActivityVC: UIViewController,UITextViewDelegate,AMapLocationManager
     func selectQuanZiClick(){
 //        NSLog("点击了选择圈子")
         helper.getGeocodeAction()
+    }
+    
+    
+    
+    func textViewDidChange(textView: UITextView) {
+        
+        if textView.tag == 100 {
+            let wordCount = textView.text.characters.count
+            self.fisrtCountLabel.text = String(format: "%ld/20",wordCount)
+            wordLimit(textView)
+        }
+        
+        if textView.tag == 200 {
+            let wordCount = textView.text.characters.count
+            self.secondCountLabel.text = String(format: "%ld/140",wordCount)
+            wordLimit(textView)
+        }
+        
+        
+    }
+    
+    func wordLimit(textView:UITextView) {
+        
+        if textView.tag == 100 {
+            if (textView.text.characters.count <= 20) {
+                self.actName = textView.text
+                
+            }else{
+                //            self._textView.editable = false
+                let alert = UIAlertView(title: "提示", message: "字数超出限制", delegate: nil, cancelButtonTitle: "确定")
+                alert.show()
+            }
+        }
+        
+        if textView.tag == 200 {
+            if (textView.text.characters.count <= 140) {
+                self.actContent = textView.text
+                
+            }else{
+                //            self._textView.editable = false
+                let alert = UIAlertView(title: "提示", message: "字数超出限制", delegate: nil, cancelButtonTitle: "确定")
+                alert.show()
+            }
+        }
+        
+        
+        
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        
+        if textView.tag == 200{
+            textView.text = "开始时间：20XX年XX月XX日 7：00-8：00\r\n结束时间：20XX年XX月XX日 7：00-8：00\r\n活动详情：交流"//"招募目的：因队伍发展需要，现对外公开招募队员。\r\n招募要求：热爱球队，能与本队的队员进行交流。"
+            let wordCount = textView.text.characters.count
+            self.secondCountLabel.text = String(format: "%ld/140",wordCount)
+            wordLimit(textView)
+        }
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        textViews.resignFirstResponder()
     }
     
     

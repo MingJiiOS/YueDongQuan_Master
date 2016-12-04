@@ -32,7 +32,7 @@ class SearchController: UIViewController,UISearchBarDelegate,UIScrollViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.backgroundColor = UIColor.whiteColor()
         let title = ["圈子","场地"]
         let segement = UISegmentedControl(items: title)
         segement.frame = CGRect(x: ScreenWidth/4, y: 66, width: ScreenWidth/2, height: 34)
@@ -40,14 +40,15 @@ class SearchController: UIViewController,UISearchBarDelegate,UIScrollViewDelegat
         self.view.addSubview(segement)
         segement.addTarget(self, action: #selector(segementIndexValueChange(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
-        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 102, width: ScreenWidth, height: 30))
+        let searchBar = UISearchBar(frame: CGRect(x: 0, y: segement.frame.maxY + 4 , width: ScreenWidth, height: 30))
         searchBar.delegate = self
         searchBar.exclusiveTouch = true
         searchBar.placeholder = "请输入圈子或场地"
+        searchBar.contentMode = .ScaleAspectFill
         
         self.view.addSubview(searchBar)
         
-        searchContentView = UIScrollView(frame: CGRect(x: 0, y: 135, width: ScreenWidth, height: ScreenHeight - 135 - 49))
+        searchContentView = UIScrollView(frame: CGRect(x: 0, y: searchBar.frame.maxY + 4, width: ScreenWidth, height: ScreenHeight - 135 - 49 - 8))
         self.view.addSubview(searchContentView)
         searchContentView.showsVerticalScrollIndicator = false
         searchContentView.showsHorizontalScrollIndicator = false

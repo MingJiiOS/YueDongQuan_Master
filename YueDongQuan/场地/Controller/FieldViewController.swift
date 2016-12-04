@@ -11,7 +11,7 @@ import SnapKit
 import Alamofire
 import SwiftyJSON
 import SDWebImage
-
+import MJRefresh
 
 @objc(FieldViewController)
 class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationManagerDelegate ,UITableViewDelegate,UITableViewDataSource,SMCustomSegmentDelegate,NewFieldCellTableViewCellDelegate{
@@ -58,7 +58,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         super.viewDidLoad()
         self.edgesForExtendedLayout = .None
         setNav()
-        
+//        manger.startUpdatingLocation()
         FieldContentView = UIScrollView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight - 64 - 49))
         self.view.addSubview(FieldContentView)
         FieldContentView.showsVerticalScrollIndicator = false
@@ -120,7 +120,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         fieldTable.registerNib(cellNib, forCellReuseIdentifier: "NewFieldCellTableViewCell")
         fieldTable.delegate = self
         fieldTable.dataSource = self
-        
+        fieldTable.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(pullDownRefresh))
         weatherView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 30))
         weatherView.backgroundColor = UIColor ( red: 0.7802, green: 0.7584, blue: 0.7562, alpha: 0.92 )
         self.view.addSubview(weatherView)
@@ -220,15 +220,15 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        manger.startUpdatingLocation()
         
-        
-        
+        if self.userLocationData.coordinate.latitude != 0 {
+            pullDownRefresh()
+        }
     }
     
     func clickSearchBtn(){
         let searchVC = SearchController()
-        self.navigationController?.pushViewController(searchVC, animated: true)
+        self.navigationController?.pushViewController(searchVC, animated: false)
         
     }
     
@@ -273,6 +273,10 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         }
         
         return nil
+    }
+    
+    internal func pullDownRefresh(){
+        requestFieldData(self.userLocationData.coordinate.latitude, longitude: self.userLocationData.coordinate.longitude)
     }
     
     
@@ -366,6 +370,17 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let vc = FieldDetailController()
         let model = self.fieldModel[indexPath.row]
+        
+        if (model.endTime == nil && model.startTime != nil){
+            
+            let timeTemp = NSDate.init(timeIntervalSince1970: Double(model.startTime/1000))
+            
+            let timeInterval = timeTemp.timeIntervalSince1970
+            
+            let timer = NSDate().timeIntervalSince1970 - timeInterval
+            vc.getTempTime = Int(timer)
+        }
+        
         vc.firstModel = model
         vc.fieldSiteID = (model.id)!
         self.navigationController?.pushViewController(vc, animated: true)
