@@ -65,8 +65,8 @@ class TotalRankHeadCell: UITableViewCell {
         
         headImage.frame = CGRect(x: 0,
                                    y: 0,
-                                   width: ScreenWidth/5,
-                                   height: ScreenWidth/5)
+                                   width: kAutoStaticCellHeight-10,
+                                   height: kAutoStaticCellHeight-10)
         headImage.layer.cornerRadius = (headImage.bounds.size.width)/2
         headImage.layer.masksToBounds = true
         headImage.layer.borderWidth = 2

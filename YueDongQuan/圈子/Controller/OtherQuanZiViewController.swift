@@ -107,7 +107,11 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
             }
             mapView.delegate = self
             mapView.showsUserLocation = true
-            mapView.setZoomLevel(15.1, animated: false)
+//            mapView.setZoomLevel(15.1, animated: false)
+            mapView.userTrackingMode = .None
+            mapView.setZoomLevel(13, animated: true)
+//            _mapView?.scaleOrigin = CGPointMake(10, CGRectGetMaxY(_mapView!.frame) - 15)
+            mapView.showsCompass = false
         }else{
             mapView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
             self.view.addSubview(mapView)
@@ -236,7 +240,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     func addAnnotationsToMapView(annotation: MAAnnotation) {
         mapView.addAnnotation(annotation)
         mapView.selectAnnotation(annotation, animated: true)
-        mapView.setZoomLevel(15.1, animated: true)
+        mapView.setZoomLevel(13, animated: true)
         mapView.setCenterCoordinate(annotation.coordinate, animated: true)
         
     }
@@ -307,37 +311,14 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
             let greenReuseIndetifier = "greenReuseIndetifier"
             
             var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier)
-            let green = annotation as! MJGreenAnnotation
-//            greenAnnotation.sitsName = green.title
+            let orange = annotation as! MJGreenAnnotation
+            
             if greenAnnotation == nil {
-//                var greenAnnotation = greenAnnotation as! MJOrangeAnnotationView
+                    greenAnnotation = MJOrangeAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier,siteName: orange.title)
                 
-                    greenAnnotation = MJOrangeAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier, siteName: green.title)
-                 
-                
-                
-//                greenAnnotation.configOrangeAnnotion(green.title)
-//                greenAnnotation.setSelected(true, animated: true)
-               
-//            for item in self.circlesModel.data.array {
-//                greenAnnotation.calloutView?.siteName = item.name
-            }
-//                if green.title == nil {
-//                    let s =  SGAlertView(title: "nil", delegate: nil, contentTitle: nil, alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
-//                    s.show()
-//                }else{
-//                    let s =  SGAlertView(title: green.title, delegate: nil, contentTitle: nil, alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
-//                    s.show()
-////                    greenAnnotation.sitsName = green.title
-//                }
-//            }
-            
-            
-            
-//            greenAnnotation.calloutView?.siteName.text = annotation.title
-           
+            }        
             greenAnnotation.canShowCallout  = false
-//            greenAnnotation.draggable       = true
+
             return greenAnnotation
         }
         //红色的大头针
@@ -355,7 +336,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     }
 
     func mapView(mapView: MAMapView!, didSelectAnnotationView view: MAAnnotationView!) {
-        if view.isKindOfClass(MJOrangeAnnotationView) {
+        if view.isKindOfClass(MJGreenAnnotationView) {
             print("选中了绿色")
         }
         if view.isKindOfClass(MJRedAnnotationView) {

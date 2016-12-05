@@ -110,12 +110,14 @@ class SubPersonDataViewController: MainViewController,UITableViewDelegate,UITabl
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 10
     }
+ 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView .deselectRowAtIndexPath(indexPath, animated: true)
         
         if  indexPath.section == 0 {
             let mjAlertView =  MJAlertView(title: nil, message: nil, cancelButtonTitle: "拍照", sureButtonTitle: "手机选择")
             mjAlertView.show()
+   
             mjAlertView.clickIndexClosure({ (index) in
                 if index == 1{
                     //MARK:添加相机

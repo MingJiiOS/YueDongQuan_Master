@@ -48,6 +48,7 @@ class CircleHeadView: UIView,UITableViewDelegate,UITableViewDataSource {
             let array = ["附近的圈子","我的圈子"]
              let imageAry = ["img_newquanzi","img_myquanzi"]
              cell!.textLabel?.text = array[indexPath.row]
+            cell?.textLabel?.font = kAutoFontWithTop
             cell!.imageView?.image = UIImage(named: imageAry[indexPath.row])
         }
         return cell!

@@ -96,12 +96,9 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
                     MJNetWorkHelper().loginWithUserInfo(login,
                                                         userModel: dic,
                                                         success: { (responseDic, success) in
-                                                            let loginmodel = DataSource().getUserInfo(responseDic)
-                                                            //MARK:融云资料
-                                                            info.name = loginmodel.data.name
-                                                            info.userId = loginmodel.data.uid.description
-                                                            //                        info.portraitUri = loginmodel.data.thumbnailSrc
-                                                            info.portraitUri = "http://a.hiphotos.baidu.com/image/pic/item/a044ad345982b2b700e891c433adcbef76099bbf.jpg"
+//                                                            let loginmodel = DataSource().getUserInfo(responseDic)
+                                                            
+                                                         
                                                             RCIM.sharedRCIM().userInfoDataSource = self
                                                             RCIM.sharedRCIM().groupInfoDataSource = self
                                                             MJGetToken().requestTokenFromServeris(getToken

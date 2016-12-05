@@ -128,7 +128,7 @@ extension MineVC:UITableViewDelegate,UITableViewDataSource{
         case 3:
             let  cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
             cell.accessoryType = .DisclosureIndicator
-            cell.textLabel?.text = "设置"
+            cell.textLabel?.text = "系统设置"
             cell.textLabel?.font = kAutoFontWithTop
             cell.imageView?.image = UIImage(named: "ic_设置")
 
