@@ -12,7 +12,7 @@ import Alamofire
 import RealReachability
 //import RealmSwift
 //import Realm
-let AMAPAPIKEY = "cc7ada21dae93efe53c70dc7d6a46598"
+let AMAPAPIKEY = "41e15046fbc5e200df8374dc3b5c00dc"
 let RONGCLOUDAPPKEY = "uwd1c0sxug581"
 @UIApplicationMain
 class AppDelegate: UIResponder,
@@ -31,6 +31,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
 //    var consumeItems:Results<RLUserInfo>?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+         AMapServices.sharedServices().apiKey = AMAPAPIKEY
         self.window = UIWindow(frame: CGRect(x: 0,
                                              y: 0,
                                          width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
@@ -50,7 +51,7 @@ UIAlertViewDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMReceiveMe
         NSURLCache.setSharedURLCache(cache)
 
         //高德地图
-        AMapServices.sharedServices().apiKey = AMAPAPIKEY
+       
         CLLocationManager().requestAlwaysAuthorization()
         CLLocationManager().requestWhenInUseAuthorization()
         //融云

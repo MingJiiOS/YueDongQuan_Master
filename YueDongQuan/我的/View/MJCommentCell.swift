@@ -33,9 +33,10 @@ class MJCommentCell: UITableViewCell {
         self.contentLabel?.backgroundColor = UIColor.clearColor()
         self.contentLabel?.preferredMaxLayoutWidth = ScreenWidth - 10 - 40 - 20
         self.contentLabel?.numberOfLines = 0
-        self.contentLabel?.sizeToFit()
+        self.contentLabel?.font = UIFont.systemFontOfSize(kAuotoGapWithBaseGapTen)
         self.contentLabel?.snp_makeConstraints(closure: { (make) in
-            make.left.right.equalTo(0)
+            make.left.equalTo(5)
+            make.right.equalTo(0)
             make.top.equalTo(0).offset(3)
         })
         self.hyb_lastViewInCell = self.contentLabel
@@ -61,8 +62,8 @@ class MJCommentCell: UITableViewCell {
                 let str = String(format: "%@评论%@:%@",model.netName,reply,context)
                 let text = NSMutableAttributedString(string: str)
                 
-                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(0, model.netName.characters.count))
-                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: NSMakeRange(model.netName!.characters.count + 2, reply.characters.count))
+                text.addAttribute(NSForegroundColorAttributeName, value: kBlueColor, range: NSMakeRange(0, model.netName.characters.count))
+                text.addAttribute(NSForegroundColorAttributeName, value: kBlueColor, range: NSMakeRange(model.netName!.characters.count + 2, reply.characters.count))
                 self.contentLabel?.attributedText = text
             }
         }
