@@ -14,7 +14,11 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     var dataSource = [MJNoticeModel]()
     var tableView = UITableView(frame: CGRectZero, style: .Grouped)
     
-    var circleId : String?
+    var circleId : String?{
+        didSet{
+            loadCircleMemberInfoWithCircleId(self.circleId!)
+        }
+    }
     var circleinfoModel : CircleInfoModel?
     
     var memberModel : circleMemberModel?
@@ -42,7 +46,7 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
-        loadCircleMemberInfoWithCircleId(self.circleId!)
+        
         
         print(self.circleId)
     }
@@ -181,12 +185,12 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                 var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)as? MJLayerContentCell
                 cell?.accessoryType = .DisclosureIndicator
                 if cell == nil {
-                    
-                        cell = MJLayerContentCell(style: .Default,
+                    if self.memberModel != nil{
+                    cell = MJLayerContentCell(style: .Default,
                                                   reuseIdentifier: cellIdentifier,
-                                                  model:self.memberModel!)
+                                               model:self.memberModel!)
                   
-
+                            }
                 }
                 return cell!
             }

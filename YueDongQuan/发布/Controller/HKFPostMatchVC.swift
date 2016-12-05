@@ -32,7 +32,7 @@ class HKFPostMatchVC: UIViewController,AMapLocationManagerDelegate,UITextViewDel
         manager.delegate = self
         manager.startUpdatingLocation()
         let textView = BRPlaceholderTextView(frame: CGRect(x: 0, y: 5, width: ScreenWidth, height: ScreenWidth/2))
-        textView.placeholder = "例:\n   招募目的：因队伍发展需要，现对外公开招募队员。\n   招募要求：热爱球队，能与本队的队员进行交流。\n   有意者可电联 或 进入我们的圈子了解更多\n   (140字内)"
+        textView.placeholder = "例:\n   球队名：某某球队。\n   时间：2016年XX月XX日上午或下午。\n   地点：某某球场\n   要求：\n   联系人电话：187****0012(140字内)"
         textView.font = UIFont.systemFontOfSize(13)
         self.view.addSubview(textView)
         textView.setPlaceholderFont(UIFont.systemFontOfSize(12))
@@ -164,7 +164,7 @@ class HKFPostMatchVC: UIViewController,AMapLocationManagerDelegate,UITextViewDel
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        textView.text = "招募目的：因队伍发展需要，现对外公开招募队员。\r\n招募要求：热爱球队，能与本队的队员进行交流。"
+        textView.text = "球队名：\r\n时间：\r\n地点：\r\n要求：\r\n联系人电话："
         let wordCount = textView.text.characters.count
         self.wordCountLabel.text = String(format: "%ld/140",wordCount)
         wordLimit(textView)

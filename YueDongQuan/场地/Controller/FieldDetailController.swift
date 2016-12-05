@@ -16,7 +16,7 @@ class FieldDetailController: UIViewController,UITableViewDelegate,UITableViewDat
     private var detailTable : UITableView!
     var firstModel : FieldArray!
     var thirdModel = [ToDaySignArray]()
-    
+    private var QZ_IdModel : FieldDetailQZInfoData?
     private var secondCell_height : CGFloat = 0
     private var timer : XTimer!
     private var timeStr : Int = 0 //秒钟
@@ -90,7 +90,9 @@ class FieldDetailController: UIViewController,UITableViewDelegate,UITableViewDat
     }
 //MARK:点击排行版按钮，查看排行榜
     @objc private func clickRightBtnToRanking(){
-        
+        let rankingVC = SignRankingCOntroller()
+        rankingVC.siteId = self.fieldSiteID
+        self.navigationController?.pushViewController(rankingVC, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -225,6 +227,12 @@ class FieldDetailController: UIViewController,UITableViewDelegate,UITableViewDat
     
     //点击群聊圈子按钮
     func clickQZBtnInHeaderCell(sender: UIButton) {
+        let QZInfo_VC = QuanZiSettingViewController()
+        QZInfo_VC.circleId = self.QZ_IdModel?.id.description
+        QZInfo_VC.Circletitle = self.QZ_IdModel?.name
+        QZInfo_VC.thumbnailSrc = self.QZ_IdModel?.thumbnailSrc
+        
+        self.navigationController?.pushViewController(QZInfo_VC, animated: true)
         
     }
     
@@ -411,7 +419,7 @@ extension FieldDetailController {
                 let mysignModel = FieldDetailQZInfoModel.init(fromDictionary: dict)
                 
                 if mysignModel.code == "200" && mysignModel.flag == "1" {
-                    
+                    self.QZ_IdModel = mysignModel.data
                 }
                 
                 

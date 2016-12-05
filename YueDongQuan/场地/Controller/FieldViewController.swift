@@ -267,7 +267,7 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
             let redReuseIndetifier = "red"
             var redAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(redReuseIndetifier)
             if redAnnotation == nil {
-                redAnnotation = MJRedAnnotationView(annotation: annotation,reuseIdentifier: redReuseIndetifier)
+                redAnnotation = MJOrangeAnnotationView(annotation: annotation,reuseIdentifier: redReuseIndetifier)
             }
             return redAnnotation
         }
@@ -502,7 +502,7 @@ extension FieldViewController {
                     let model = FieldModel.init(fromDictionary: dict )
                     
                     self.fieldModel = model.data.array
-                    
+                    self.fieldTable.mj_header.endRefreshing()
                     let temp = self.fieldModel
                     
                     for item in temp {

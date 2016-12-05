@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import SRGMediaPlayer
+import Alamofire
+import SwiftyJSON
 
-class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSource,ChatKeyBoardDelegate,ChatKeyBoardDataSource,NewDiscoveryHeaderCellDelegate {
 
     private var DetailTable : UITableView!
     
@@ -16,17 +19,41 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
     var newDiscoveryOfZeroCommentArr = [DiscoveryCommentModel]()
     var newDiscoveryOfNoZeroCommentArr = [DiscoveryCommentModel]()
     
+    
+    lazy var keyboard:ChatKeyBoard = {
+        var keyboard = ChatKeyBoard(navgationBarTranslucent: true)
+        keyboard.delegate = self
+        keyboard.dataSource = self
+        keyboard.keyBoardStyle = KeyBoardStyle.Comment
+        keyboard.allowVoice = false
+        keyboard.allowMore = false
+        keyboard.allowSwitchBar = false
+        keyboard.placeHolder = "评论"
+        return keyboard
+        
+        
+    }()
+    internal func chatKeyBoardToolbarItems() -> [ChatToolBarItem]! {
+        let item1 = ChatToolBarItem(kind: BarItemKind.Face, normal: "face", high: "face_HL", select: "keyboard")
+        return [item1]
+    }
+    internal func chatKeyBoardFacePanelSubjectItems() -> [FaceThemeModel]! {
+        let model = FaceSourceManager.loadFaceSource() as! [FaceThemeModel]
+        return model
+    }
+    internal func chatKeyBoardMorePanelItems() -> [MoreItem]! {
+        let item1 = MoreItem(picName: "pinc", highLightPicName: "More_HL", itemName: "more")
+        return [item1]
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DetailTable = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-44-20), style: UITableViewStyle.Grouped)
-        DetailTable.delegate = self
-        DetailTable.dataSource = self
         
         
-        self.view.addSubview(DetailTable)
-        
-        
+        self.edgesForExtendedLayout = .None
         
 
         let newDisZeroArray = NSMutableArray()
@@ -44,20 +71,32 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
         self.newDiscoveryOfZeroCommentArr = newDisZeroArray.copy() as! [DiscoveryCommentModel]
         self.newDiscoveryOfNoZeroCommentArr = newDisNoZeroArray.copy() as! [DiscoveryCommentModel]
         
-        self.newDiscoveryOfZeroCommentArr.sortInPlace({ (num1:DiscoveryCommentModel, num2:DiscoveryCommentModel) -> Bool in
-            return num1.time > num2.time
-        })
+//        self.newDiscoveryOfZeroCommentArr.sortInPlace({ (num1:DiscoveryCommentModel, num2:DiscoveryCommentModel) -> Bool in
+//            return num1.time > num2.time
+//        })
         
         print(self.newDiscoveryArray!.comment.count)
         print(self.newDiscoveryOfNoZeroCommentArr.count)
         print(self.newDiscoveryOfZeroCommentArr.count)
         
+        
+        DetailTable = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-44-20), style: UITableViewStyle.Grouped)
+        DetailTable.delegate = self
+        DetailTable.dataSource = self
+        DetailTable.registerClass(NewDiscoveryCommentDeatilCell.self, forCellReuseIdentifier: "NewDiscoveryCommentDeatilCell")
+        
+        DetailTable.registerClass(NewDiscoveryHeaderCell.self, forCellReuseIdentifier: "NewDiscoveryHeaderCell")
+        self.view.addSubview(DetailTable)
         DetailTable.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.keyboard.keyboardDownForComment()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -96,12 +135,12 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
             })
             return h
             
-        }else{
+        }else {
             let h = NewDiscoveryCommentDeatilCell.hyb_heightForTableView(tableView,
-                                                          config: { (sourceCell:UITableViewCell!) in
-                                                            let cell = sourceCell as! NewDiscoveryCommentDeatilCell
-                                                            cell.newConfigPingLunCell(self.newDiscoveryOfZeroCommentArr,subModel:self.newDiscoveryOfNoZeroCommentArr,
-                                                                indexpath: indexPath)
+                                                                         config: { (sourceCell:UITableViewCell!) in
+                                                                            let cell = sourceCell as! NewDiscoveryCommentDeatilCell
+                                                                            cell.configPingLunCell(self.newDiscoveryOfZeroCommentArr,subModel:self.newDiscoveryOfNoZeroCommentArr,
+                                                                                indexpath: indexPath)
                 }, cache: { () -> [NSObject : AnyObject]! in
                     
                     return [kHYBCacheUniqueKey : (self.newDiscoveryArray?.id.description)!,
@@ -110,42 +149,162 @@ class NewDiscoveryDetailVC: UIViewController,UITableViewDelegate,UITableViewData
             })
             return h
         }
+        
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            var detailHeaderCell = tableView.dequeueReusableCellWithIdentifier("cell") as? NewDiscoveryHeaderCell
-            detailHeaderCell = NewDiscoveryHeaderCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+            var detailHeaderCell = tableView.dequeueReusableCellWithIdentifier("NewDiscoveryHeaderCell") as? NewDiscoveryHeaderCell
+            detailHeaderCell = NewDiscoveryHeaderCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NewDiscoveryHeaderCell")
+            detailHeaderCell?.testModel = self.newDiscoveryArray!
+            detailHeaderCell?.delegate = self
+            detailHeaderCell?.indexPath = indexPath
             detailHeaderCell?.configCellWithModelAndIndexPath(self.newDiscoveryArray!, indexPath: indexPath)
             return detailHeaderCell!
             
         }else{
-            var detailscommentCell = tableView.dequeueReusableCellWithIdentifier("cell") as? NewDiscoveryCommentDeatilCell
-            if detailscommentCell == nil{
-                detailscommentCell = NewDiscoveryCommentDeatilCell(style: .Default, reuseIdentifier: "cell")
-                detailscommentCell!.commentModelTemp = self.newDiscoveryOfZeroCommentArr[indexPath.row]
+            var detailscommentCell = tableView.dequeueReusableCellWithIdentifier("NewDiscoveryCommentDeatilCell") as? NewDiscoveryCommentDeatilCell
+                detailscommentCell = NewDiscoveryCommentDeatilCell(style: .Default, reuseIdentifier: "NewDiscoveryCommentDeatilCell")
+                detailscommentCell!.commentModel = self.newDiscoveryOfZeroCommentArr[indexPath.row]
                 
-            }
             
-            detailscommentCell!.newConfigPingLunCell(self.newDiscoveryOfZeroCommentArr,subModel:self.newDiscoveryOfNoZeroCommentArr, indexpath: indexPath)
+            detailscommentCell!.configPingLunCell(self.newDiscoveryOfZeroCommentArr,subModel:self.newDiscoveryOfNoZeroCommentArr, indexpath: indexPath)
             
-//            detailscommentCell?.commentBtnBlock({ (btn, indexpath,pingluntype) in
-//                
-//                self.keyboard.keyboardUpforComment()
-//            })
+            detailscommentCell?.commentBtnBlock({ (btn, indexpath,pingluntype) in
+                
+                self.keyboard.keyboardUpforComment()
+            })
             
             return detailscommentCell!
         }
         
     }
     
+    
+    //MARK:点击cell中的所有代理方法
+    //点击头像
+    func clickCellHeaderImageForToHeInfo(index: NSIndexPath, uid: String) {
+        let he_Uid = uid
+        let heInfoVC = HeInfoVC()
+        heInfoVC.userid = he_Uid
+        self.navigationController?.pushViewController(heInfoVC, animated: true)
+    }
+    //点赞
+    func clickDianZanBtnAtIndexPath(indexPath: NSIndexPath) {
+        requestDianZan(self.newDiscoveryArray!.id)
+    }
+    //点击举报
+    func clickJuBaoBtnAtIndexPath(foundId: Int, typeId: Int) {
+        requestJuBaoSay(foundId, typeId: typeId)
+    }
+    
+    
+    
+    
+    //点击超链接文本
+    func clickSuperLinkLabelURL(indexPath: NSIndexPath) {
+        let webVC = ActivityDetailWebVC()
+        webVC.urlStr = "http://www.ctyundong.com"
+        self.navigationController?.pushViewController(webVC, animated: true)
+    }
+    
+    func clickVideoBtn(indexPath: NSIndexPath) {
+        
+        let url = self.newDiscoveryArray!.compressUrl
+        //        "http://static.tripbe.com/videofiles/20121214/9533522808.f4v.mp4"
+        let moviePlayers = RTSMediaPlayerViewController(contentURL: NSURL(string: url)!)
+        
+        self.presentViewController(moviePlayers, animated: true, completion: nil)
+    }
+    
+    func clickActivityBtn(foundId: Int) {
+        requestActivityBaoMing(foundId)
+    }
+    
+    //请求点赞
+    @objc private func requestDianZan(foundId:Int){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":userInfo.uid.description,"foundId":foundId]
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/praise")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                _ = json.object
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    //举报请求
+    @objc private func requestJuBaoSay(foundId:Int,typeId:Int){
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":userInfo.uid.description,"foundId":foundId,"typeId":typeId]
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/report")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                let dict = (json.object) as! NSDictionary
+                
+                if ((dict["code"] as! String) == "200" && (dict["flag"] as! String) == "1") {
+                    //                    SVProgressHUD.showSuccessWithStatus("举报成功")
+                    //                    SVProgressHUD.dismissWithDelay(2)
+                }
+                
+            //               NSLog("举报=\(json)")
+            case .Failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    @objc private func requestActivityBaoMing(foundId:Int){
+        
+        
+        let v = NSObject.getEncodeString("20160901")
+        
+        let para = ["v":v,"uid":userInfo.uid.description,"foundId":foundId]
+        
+        Alamofire.request(.POST, NSURL(string: testUrl + "/atsignin")!, parameters: para as? [String : AnyObject]).responseString { response -> Void in
+            switch response.result {
+            case .Success:
+                let json = JSON(data: response.data!)
+                _ = json.object
+                
+            case .Failure(let error):
+                print(error)
+            }
+        }
+        
+    }
 
 }
 
-
+//MARK://headerCell代理方法
+protocol NewDiscoveryHeaderCellDelegate{
+    func clickDianZanBtnAtIndexPath(indexPath:NSIndexPath)
+    func clickJuBaoBtnAtIndexPath(foundId:Int,typeId:Int)
+    
+    func clickCellHeaderImageForToHeInfo(index:NSIndexPath,uid:String)//头像点击事件
+    
+    func clickVideoBtn(indexPath:NSIndexPath)//视频播放
+    
+    //点击超链接
+    func clickSuperLinkLabelURL(indexPath:NSIndexPath)
+    
+    func clickActivityBtn(foundId:Int)
+    
+}
 
 class NewDiscoveryHeaderCell: UITableViewCell {
     
+    var delegate : NewDiscoveryHeaderCellDelegate?
     private var titleLabel : UILabel?//name
     private var superLinkLabel : UILabel?
     private var descLabel : UILabel?//说说内容
@@ -155,6 +314,7 @@ class NewDiscoveryHeaderCell: UITableViewCell {
     private var timeStatus : UILabel?//时间
     private var distanceLabel : UILabel?//距离
     private var typeStatusView : UIImageView?//类型
+    private var BaoMingView : UIImageView?//报名类型and按钮
     private var displayView = PYPhotosView()//照片或者视频显示
     
     private var videoImage = UIImageView()//视频展示
@@ -218,7 +378,7 @@ class NewDiscoveryHeaderCell: UITableViewCell {
         self.headTypeView?.layer.borderWidth = 1
         self.headTypeView?.layer.borderColor = UIColor.whiteColor().CGColor
         self.headTypeView?.backgroundColor = UIColor.whiteColor()
-        
+        self.headTypeView?.hidden = true
         //昵称
         self.titleLabel = UILabel()
         self.contentView.addSubview(self.titleLabel!)
@@ -274,7 +434,25 @@ class NewDiscoveryHeaderCell: UITableViewCell {
         self.typeStatusView?.backgroundColor = UIColor.whiteColor()
         self.typeStatusView?.layer.masksToBounds = true
         self.typeStatusView?.layer.cornerRadius = 10
+        self.typeStatusView?.userInteractionEnabled = false
         
+        let tapType = UITapGestureRecognizer(target: self, action: #selector(clickTapType))
+        self.typeStatusView?.addGestureRecognizer(tapType)
+        /*
+        self.BaoMingView = UIImageView()
+        self.contentView.addSubview(self.BaoMingView!)
+        self.BaoMingView?.snp_makeConstraints(closure: { (make) in
+            make.top.equalTo(25)
+            make.right.equalTo((self.typeStatusView?.snp_left)!).offset(-3)
+            make.height.equalTo(20)
+            make.width.equalTo(40)
+        })
+ 
+        self.BaoMingView?.backgroundColor = UIColor.whiteColor()
+        self.BaoMingView?.layer.masksToBounds = true
+        self.BaoMingView?.layer.cornerRadius = 10
+        self.BaoMingView?.hidden = true
+        */
         self.superLinkLabel = UILabel()
         self.contentView.addSubview(self.superLinkLabel!)
         self.superLinkLabel!.snp_makeConstraints(closure: { (make) in
@@ -412,17 +590,47 @@ class NewDiscoveryHeaderCell: UITableViewCell {
     
     
     @objc private func clickHeader(){
-        
+        let uid = self.testModel?.uid
+        self.delegate?.clickCellHeaderImageForToHeInfo(self.indexPath!, uid: "\(uid!)")
     }
     
     @objc private func clickDianZanBtn(sender:UIButton){
         
+        self.delegate?.clickDianZanBtnAtIndexPath(self.indexPath!)
+        self.dianzanBtn.setImage(UIImage(named: "ic_zan_f13434"), forState: UIControlState.Normal)
     }
+    
+    @objc private func clickSuperLinkLabel(){
+        self.delegate?.clickSuperLinkLabelURL(self.indexPath!)
+    }
+    
+    @objc private func clickTapType(){
+        let id = self.testModel?.id
+        self.delegate?.clickActivityBtn(id!)
+    }
+    
     @objc private func clickPingLun(){
         
     }
     @objc private func clickJuBao(){
+        let titleArr = ["举报"]
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(myJubao))
+        
+        popView = SimplePopupView(frame: CGRect(x: 30, y: 50, width: 60, height: 30), andDirection: PopViewDirectionTop, andTitles: titleArr, andImages: nil, trianglePecent: 0.5)
+        popView.popTintColor  = UIColor.whiteColor()
+        popView.popColor = UIColor.blackColor()
+        popView.addGestureRecognizer(tap)
+        self.jubaoBtn.showPopView(popView, atPoint: CGPoint(x: 0.3, y: 1))
+        popView.show()
+    }
+    
+    internal func myJubao(){
+        //        print("我要举报\(self.indexPath)行")
+        let foundId = self.testModel?.id
+        let typeId = self.testModel?.typeId
+        self.delegate?.clickJuBaoBtnAtIndexPath(foundId!, typeId: typeId!)
+        popView.hide()
     }
     
     
@@ -481,6 +689,10 @@ class NewDiscoveryHeaderCell: UITableViewCell {
             self.superLinkLabel!.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(35)
             })
+            self.typeStatusView?.userInteractionEnabled = true
+            self.typeStatusView?.image = UIImage(named: "explain_JOIN")
+            
+            
             let temp = model.aname
             let attribStr = NSMutableAttributedString(string: temp)
             attribStr.addAttributes([NSForegroundColorAttributeName : UIColor.blueColor()], range: NSMakeRange(0, model.aname.characters.count))
@@ -498,6 +710,7 @@ class NewDiscoveryHeaderCell: UITableViewCell {
             self.superLinkLabel!.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(0)
             })
+            self.typeStatusView?.userInteractionEnabled = true
         }
         
         if subModel.address == ""{
@@ -581,9 +794,7 @@ class NewDiscoveryHeaderCell: UITableViewCell {
     }
     
     
-    @objc private func clickSuperLinkLabel(){
-        
-    }
+    
     
     @objc private func getTimeString(time:Int) -> String{
         
@@ -660,325 +871,7 @@ class NewDiscoveryHeaderCell: UITableViewCell {
     
 }
 
-class NewDiscoveryCommentDeatilCell: UITableViewCell,UITableViewDataSource,UITableViewDelegate {
-    
-    private var headImage : UIImageView?
-    private var userName : UILabel?
-    private var timeAgo : UILabel?
-    private var replyBtn : UIButton?
-    private var contentlabel : UILabel?
-    private var tableView : UITableView?
-    
-    var commentModelTemp : DiscoveryCommentModel?
-    private var NoZeroCommentAry = [DiscoveryCommentModel]()
-    private var smallModel : DiscoveryCommentModel?
-    //子评论行数
-    private var subCommentCount = 0
-    private var indexpath : NSIndexPath?
-    
-    private let ary = NSMutableArray()
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        
-        self.selectionStyle = .None
-        
-        headImage = UIImageView()
-        userName = UILabel()
-        timeAgo = UILabel()
-        replyBtn = UIButton()
-        contentlabel = UILabel()
-        self.contentView .addSubview(headImage!)
-        self.contentView .addSubview(userName!)
-        self.contentView .addSubview(timeAgo!)
-        self.contentView .addSubview(replyBtn!)
-        self.contentView .addSubview(contentlabel!)
-        
-        //头像
-        self.headImage = UIImageView()
-        self.headImage?.backgroundColor = UIColor.blueColor()
-        
-        self.contentView .addSubview(self.headImage!)
-        
-        self.headImage?.snp_makeConstraints(closure: { (make) in
-            make.left.top.equalTo(10)
-            make.width.height.equalTo(40)
-        })
-        
-        weak var WeakSelf = self
-        //昵称
-        self.userName = UILabel()
-        self.contentView .addSubview(self.userName!)
-        
-        self.userName?.textColor = UIColor(red: 54/255, green: 71/255, blue: 121/255, alpha: 0.9)
-        self.userName?.preferredMaxLayoutWidth = ScreenWidth - 10 - 40 - 30
-        self.userName?.numberOfLines = 0
-        self.userName?.font = kAutoFontWithTop
-        self.userName?.snp_makeConstraints(closure: { (make) in
-            make.left.equalTo((WeakSelf!.headImage!.snp_right)).offset(5)
-            make.top.equalTo((WeakSelf!.headImage!.snp_top))
-            make.right.equalTo(-10)
-            make.height.equalTo(15)
-        })
-        //MARK:回复按钮
-        replyBtn = UIButton(type: .Custom)
-        self.contentView .addSubview(replyBtn!)
-        replyBtn?.snp_makeConstraints(closure: { (make) in
-            make.right.equalTo(-10)
-            make.top.equalTo(10)
-            make.width.equalTo(40)
-            make.height.equalTo(20)
-        })
-        replyBtn?.layer.cornerRadius = 10
-        replyBtn?.layer.masksToBounds = true
-        replyBtn?.backgroundColor = kBlueColor
-        replyBtn?.addTarget(self, action: #selector(newDiscoveryReplySomeOne), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        // MARK:分钟数
-        self.timeAgo = UILabel()
-        self.timeAgo?.font = kAutoFontWithSmall
-        self.contentView .addSubview(self.timeAgo!)
-        self.timeAgo!.preferredMaxLayoutWidth = ScreenWidth-20 ;
-        self.timeAgo!.numberOfLines = 0;
-        //    self.descLabel!.font = UIFont.systemFontOfSize(kMidScaleOfFont)
-        self.timeAgo?.snp_makeConstraints(closure: { (make) in
-            make.left.equalTo((WeakSelf!.headImage!.snp_right)).offset(5)
-            make.right.equalTo(-10)
-            make.top.equalTo((WeakSelf?.userName?.snp_bottom)!).offset(10)
-        })
-        // MARK:内容
-        self.contentlabel = UILabel()
-        self.contentView .addSubview(self.contentlabel!)
-        self.contentlabel?.preferredMaxLayoutWidth = ScreenWidth - 20
-        self.contentlabel?.numberOfLines = 0
-        self.contentlabel!.font = kAutoFontWithTop
-        self.contentlabel?.snp_makeConstraints(closure: { (make) in
-            make.left.equalTo((headImage?.snp_right)!)
-            make.right.equalTo(-10)
-            make.top.equalTo((headImage?.snp_bottom)!).offset(5)
-        })
-        //MARK:子评论表格
-        self.tableView = UITableView()
-        self.tableView?.scrollEnabled = false
-        self.contentView .addSubview(self.tableView!)
-        self.tableView?.snp_makeConstraints(closure: { (make) in
-            make.left.equalTo(self.userName!)
-            make.top.equalTo((self.contentlabel?.snp_bottom)!).offset(5)
-            make.trailing.equalTo(-10)
-        })
-        
-//        self.tableView?.registerClass(NewDetailsCommentCell.self, forCellReuseIdentifier: "identtifier")
-        
-        self.tableView?.separatorStyle = .None
-        self.hyb_lastViewInCell = self.tableView
-        self.hyb_bottomOffsetToCell = 0
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc private func newDiscoveryReplySomeOne(){
-        
-    }
-    
-    
-    func newConfigPingLunCell(model:[DiscoveryCommentModel],subModel:[DiscoveryCommentModel],indexpath:NSIndexPath)  {
-        self.NoZeroCommentAry = subModel
-        self.commentModelTemp = model[indexpath.section - 1]
-        self.indexpath = indexpath
-        self.userName?.text = model[indexpath.section - 1].netName
-        let time = TimeStampToDate().getTimeString(model[indexpath.section - 1].time)
-        self.timeAgo?.text = time
-        self.replyBtn?.setTitle("回复", forState: UIControlState.Normal)
-        self.replyBtn?.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        self.contentlabel?.text = model[indexpath.section - 1].content
-        self.headImage?.image = UIImage(named: "默认头像")
-        //孙子级评论
-        var tableViewHeight = CGFloat()
-        self.tableView?.delegate = self
-        self.tableView?.dataSource = self
-        self.tableView?.registerClass(NewDetailsCommentCell.self,
-                                      forCellReuseIdentifier: "identtifier")
-        if subModel.count != 0 {
-            if subModel.count == 1 {
-                let cellheight = NewDetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
-                    
-                    let cell = sourceCell as! NewDetailsCommentCell
-                    cell.configSubCommentCellWithModel(subModel.first!)
-                    }, cache: { () -> [NSObject : AnyObject]! in
-                        return [kHYBCacheUniqueKey : "",
-                            kHYBCacheStateKey :"",
-                            kHYBRecalculateForStateKey:1]
-                })
-                tableViewHeight += cellheight;
-                self.tableView?.snp_updateConstraints(closure: { (make) in
-                    make.height.equalTo(tableViewHeight)
-                })
-                
-                self.tableView?.reloadData()
-                
-            }else{
-                for id in 1...subModel.count {
-                    
-                    let cellheight = NewDetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
-                        
-                        let cell = sourceCell as! NewDetailsCommentCell
-                        cell.configSubCommentCellWithModel(subModel[id - 1])
-                        }, cache: { () -> [NSObject : AnyObject]! in
-                            return [kHYBCacheUniqueKey : "",
-                                kHYBCacheStateKey :"",
-                                kHYBRecalculateForStateKey:1]
-                    })
-                    tableViewHeight += cellheight;
-                }
-                self.tableView?.snp_updateConstraints(closure: { (make) in
-                    make.height.equalTo(tableViewHeight)
-                })
-                self.tableView?.reloadData()
-            }
-            
-        }
-        
-        for id in self.NoZeroCommentAry{
-            if id.commentId == self.commentModelTemp!.id {
-                
-                ary.addObject(id)
-            }
-        }
-        
-        //self.tableView?.reloadData()
-        
-    }
-    
-    
-    //数据源
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        var cell = tableView.dequeueReusableCellWithIdentifier("identtifier",forIndexPath: indexPath) as! NewDetailsCommentCell
-        cell = NewDetailsCommentCell(style: .Default, reuseIdentifier: "identtifier")
-        //        if indexPath.row <= self.ary.count {
-        cell.configSubCommentCellWithModel(ary[indexPath.row] as! DiscoveryCommentModel)
-        //        }
-        
-        return cell
-    }
-    //确定行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.ary.count
-        
-    }
-    //计算高度
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        if self.ary.count != 0 {
-            let cell_height = NewDetailsCommentCell.hyb_heightForTableView(self.tableView, config: { (cell:UITableViewCell!) in
-                let cell = cell as! NewDetailsCommentCell
-                cell.configSubCommentCellWithModel(self.ary[indexPath.row] as! DiscoveryCommentModel)
-            }) { () -> [NSObject : AnyObject]! in
-                let cache = [kHYBCacheUniqueKey:userInfo.uid,
-                             kHYBCacheStateKey:"",
-                             kHYBRecalculateForStateKey:0]
-                return cache as [NSObject : AnyObject]
-            }
-            return cell_height
-        }else{
-            return 0
-        }
-        
-    }
-    //取消选中样式
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath,
-                                         animated: true)
-    }
-    
-    
-}
 
-
-class NewDetailsCommentCell: UITableViewCell {
-    
-    private var contentLabel : UILabel?
-    var subIndex : NSIndexPath?
-    
-    var allCommentAry : [DiscoveryCommentModel]?
-    
-    typealias allcommentClourse = (md:[DiscoveryCommentModel])->Void
-    var allcommentBlock : allcommentClourse?
-    func allComment(block:allcommentClourse?) {
-        allcommentBlock = block
-    }
-    
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func setSelected( selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.contentLabel = UILabel()
-        self.contentView .addSubview(self.contentLabel!)
-        self.contentLabel?.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        self.contentLabel?.preferredMaxLayoutWidth = ScreenWidth - 10 - 40 - 20
-        self.contentLabel?.numberOfLines = 0
-        self.contentLabel?.font = kAutoFontWithMid
-        self.contentLabel?.snp_makeConstraints(closure: { (make) in
-            make.left.right.equalTo(0)
-            make.top.equalTo(0).offset(3)
-        })
-        self.hyb_lastViewInCell = self.contentLabel
-        self.hyb_bottomOffsetToCell = 3
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    func getAllCommentData(model:[DiscoveryCommentModel])  {
-        self.allCommentAry = model
-    }
-    func configSubCommentCellWithModel(model:DiscoveryCommentModel)  {
-        
-        //           self.allComment { (md) in
-        //        if self.allCommentAry != nil {
-        
-        
-        
-        
-        let attributeString = NSMutableAttributedString(string: String(format: "%@回复:  %@", model.netName,model.content))
-        //从文本0开始6个字符字体HelveticaNeue-Bold,16号
-        
-        //设置字体颜色
-        attributeString.addAttribute(NSForegroundColorAttributeName,
-                                     value: kBlueColor,
-                                     range: NSMakeRange(0,
-                                        NSString(string:model.netName).length))
-        
-        
-        self.contentLabel?.attributedText = attributeString
-        
-        
-        
-        
-        
-        
-        //        }
-        
-        
-        //        }
-        
-        
-    }
-}
 
 
 
