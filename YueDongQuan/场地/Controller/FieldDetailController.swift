@@ -61,25 +61,32 @@ class FieldDetailController: UIViewController,UITableViewDelegate,UITableViewDat
         detailTable.showsVerticalScrollIndicator = false
         
         let bottomView = UIView(frame: CGRect(x: 30, y: detailTable.frame.maxY, width: ScreenWidth - 60, height: 49))
-        bottomView.backgroundColor = UIColor.whiteColor()
+        bottomView.backgroundColor = UIColor.redColor()
         self.view.addSubview(bottomView)
         self.view.bringSubviewToFront(bottomView)
+        bottomView.userInteractionEnabled = true
+        
+        let tap  = UITapGestureRecognizer(target: self, action: #selector(clickLeftBtnToDaoHang))
+        bottomView.addGestureRecognizer(tap)
         
         let leftBtn = UIButton(frame: CGRect(x: 2, y: 4, width: (bottomView.frame.size.width - 20)/2, height: 40))
         leftBtn.setTitle("去这里", forState: UIControlState.Normal)
         leftBtn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         leftBtn.addTarget(self, action: #selector(clickLeftBtnToDaoHang), forControlEvents: UIControlEvents.TouchUpInside)
-        bottomView.addSubview(leftBtn)
+//        bottomView.addSubview(leftBtn)
+//        bottomView.bringSubviewToFront(leftBtn)
+        
         let lineView = UIView(frame: CGRect(x: bottomView.frame.size.width/2 - 1, y: 4, width: 1, height: 40))
         lineView.backgroundColor = UIColor.lightGrayColor()
         bottomView.addSubview(lineView)
+        
         
         let rightBtn = UIButton(frame: CGRect(x: (bottomView.frame.size.width - 20)/2 + 10, y: 4, width: (bottomView.frame.size.width - 20)/2, height: 40))
         rightBtn.setTitle("排行榜", forState: UIControlState.Normal)
         rightBtn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         rightBtn.addTarget(self, action: #selector(clickRightBtnToRanking), forControlEvents: UIControlEvents.TouchUpInside)
-        bottomView.addSubview(rightBtn)
-        
+//        bottomView.addSubview(rightBtn)
+//        bottomView.bringSubviewToFront(rightBtn)
         
         
     }

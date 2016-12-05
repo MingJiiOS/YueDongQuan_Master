@@ -37,14 +37,18 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
     
     private var userLocationData = CLLocation()
     
-    private var fieldAnimation = [CLLocation](){
+    private var fieldAnimation = [FieldArray](){
         didSet{
+            let annoAry = NSMutableArray()
             let annotation = MJRedAnnotation()
             for item in fieldAnimation {
-                annotation.coordinate = item.coordinate
-                
-                _mapView?.addAnnotation(annotation)
-            }
+                let coor = CLLocation(latitude: CLLocationDegrees(item.latitude), longitude: CLLocationDegrees(item.longitude))
+                annotation.coordinate = coor.coordinate
+                annotation.title = item.name
+                annoAry.addObject(annotation)
+                }
+            _mapView?.addAnnotations(annoAry as [AnyObject])
+
         }
     }
     
@@ -266,13 +270,22 @@ class FieldViewController: MainViewController,MAMapViewDelegate,AMapLocationMana
         if annotation.isKindOfClass(MJRedAnnotation) {
             let redReuseIndetifier = "red"
             var redAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(redReuseIndetifier)
+            let red = annotation as! MJRedAnnotation
             if redAnnotation == nil {
-                redAnnotation = MJOrangeAnnotationView(annotation: annotation,reuseIdentifier: redReuseIndetifier)
+                redAnnotation = MJOrangeAnnotationView(annotation: annotation,reuseIdentifier: redReuseIndetifier,siteName: red.title)
+                
             }
+            redAnnotation.canShowCallout = false
+            
             return redAnnotation
         }
         
         return nil
+    }
+    func mapView(mapView: MAMapView!, didSelectAnnotationView view: MAAnnotationView!) {
+        if view.isKindOfClass(MJOrangeAnnotationView) {
+            view.backgroundColor = UIColor.grayColor()
+        }
     }
     
     internal func pullDownRefresh(){
@@ -506,8 +519,8 @@ extension FieldViewController {
                     let temp = self.fieldModel
                     
                     for item in temp {
-                        let loctionTemp = CLLocation(latitude: CLLocationDegrees(item.latitude), longitude: CLLocationDegrees(item.longitude))
-                        self.fieldAnimation.append(loctionTemp)
+//                        let loctionTemp = CLLocation(latitude: CLLocationDegrees(item.latitude), longitude: CLLocationDegrees(item.longitude))
+                        self.fieldAnimation.append(item)
                     }
                     
                     
