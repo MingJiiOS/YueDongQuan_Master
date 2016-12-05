@@ -43,6 +43,8 @@
 		5C27BB0A1DB761F2005A2F8D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BB061DB761F2005A2F8D /* MBProgressHUD.m */; };
 		5C27BB0C1DB7638D005A2F8D /* HKFPostPictureSayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C27BB0B1DB7638D005A2F8D /* HKFPostPictureSayVC.swift */; };
 		5C2822191DF42B0600D75C95 /* ActivityDetailWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2822181DF42B0600D75C95 /* ActivityDetailWebVC.swift */; };
+		5C28221B1DF456A900D75C95 /* NewDetaisCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C28221A1DF456A900D75C95 /* NewDetaisCommentCell.swift */; };
+		5C28221F1DF457AD00D75C95 /* NewDiscoveryDeatilCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C28221E1DF457AD00D75C95 /* NewDiscoveryDeatilCommentCell.swift */; };
 		5C2A955C1D8D1C56006D1462 /* dataTest.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 5C2A955B1D8D1C56006D1462 /* dataTest.geojson */; };
 		5C3439FE1D90E6EA0077BFDD /* SignRankingCOntroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3439FD1D90E6EA0077BFDD /* SignRankingCOntroller.swift */; };
 		5C343A001D90E8AB0077BFDD /* SignRankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3439FF1D90E8AB0077BFDD /* SignRankCell.swift */; };
@@ -741,6 +743,8 @@
 		5C27BB061DB761F2005A2F8D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		5C27BB0B1DB7638D005A2F8D /* HKFPostPictureSayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKFPostPictureSayVC.swift; sourceTree = "<group>"; };
 		5C2822181DF42B0600D75C95 /* ActivityDetailWebVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityDetailWebVC.swift; sourceTree = "<group>"; };
+		5C28221A1DF456A900D75C95 /* NewDetaisCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDetaisCommentCell.swift; sourceTree = "<group>"; };
+		5C28221E1DF457AD00D75C95 /* NewDiscoveryDeatilCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDiscoveryDeatilCommentCell.swift; sourceTree = "<group>"; };
 		5C2A955B1D8D1C56006D1462 /* dataTest.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dataTest.geojson; sourceTree = "<group>"; };
 		5C3439FD1D90E6EA0077BFDD /* SignRankingCOntroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignRankingCOntroller.swift; sourceTree = "<group>"; };
 		5C3439FF1D90E8AB0077BFDD /* SignRankCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignRankCell.swift; sourceTree = "<group>"; };
@@ -3646,6 +3650,8 @@
 				5C7C3A081DB5CECC00EA598B /* UIView+LQXkeyboard.m */,
 				5C7C3A091DB5CECC00EA598B /* YHMessageView.swift */,
 				5CC5F9451DAF8A600088A61E /* Extension_String.swift */,
+				5C28221E1DF457AD00D75C95 /* NewDiscoveryDeatilCommentCell.swift */,
+				5C28221A1DF456A900D75C95 /* NewDetaisCommentCell.swift */,
 				5CC5F9401DAF8A550088A61E /* HKFCommentCell.swift */,
 				5CC5F9411DAF8A550088A61E /* HKFTableViewCell.swift */,
 			);
@@ -4309,6 +4315,7 @@
 				BF2EEA291DF288CE0054DF4F /* CustomAnnotationView.swift in Sources */,
 				BFFCE0541DBF471A0045087A /* SubTotalRankCell.swift in Sources */,
 				BF071F351D9A0D68000551F7 /* HeaderView.swift in Sources */,
+				5C28221F1DF457AD00D75C95 /* NewDiscoveryDeatilCommentCell.swift in Sources */,
 				BFFE1A871DF006A300227F9F /* FieldDetailTwo_Cell.swift in Sources */,
 				BF5DB4CC1DF40A2B00A19940 /* MyVisitorsModel.swift in Sources */,
 				BFB44F651DC9731B0066D49F /* OfficialAccountToolbar.m in Sources */,
@@ -4356,6 +4363,7 @@
 				5C072B601D8F8D2500420F6D /* YoYoAlertView.swift in Sources */,
 				BFAF23C91DB8600800294988 /* uploadImageData.swift in Sources */,
 				BF66311B1DD1C42E00263F67 /* HeInfoData.swift in Sources */,
+				5C28221B1DF456A900D75C95 /* NewDetaisCommentCell.swift in Sources */,
 				BF071EF91D9A0D5F000551F7 /* NewQuanZiViewController.swift in Sources */,
 				5C913F9B1DBDEB0E00E567FB /* WeatherTemperature.swift in Sources */,
 				BF6FD5241D9BAF0D00F52C48 /* MJAnnotation.swift in Sources */,

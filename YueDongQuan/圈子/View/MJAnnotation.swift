@@ -20,3 +20,7 @@ class MJRedAnnotation: MAPointAnnotation {
    
   
 }
+class MJOrangeAnnotation: MAPointAnnotation {
+    
+    
+}

@@ -9,7 +9,7 @@
 import UIKit
 
 class MJCommentCell: UITableViewCell {
-
+     //子评论内容
      var contentLabel : UILabel?
     var subIndex : NSIndexPath?
    private var allMyfoundAry = [myFoundComment]()

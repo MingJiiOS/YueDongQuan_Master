@@ -85,6 +85,9 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
                 var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
                 if cell == nil {
                     cell = UITableViewCell(style:.Value1, reuseIdentifier: cellId)
+                    cell?.textLabel?.font = kAutoFontWithTop
+                    cell?.detailTextLabel?.font = kAutoFontWithMid
+
                 }
                let array = ["产品切换","大 V 认证","企业认证"]
             cell?.textLabel?.text = array[indexPath.row]
@@ -117,6 +120,7 @@ class SettingViewController: MainViewController,UITableViewDelegate,UITableViewD
                 var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
                 if cell == nil {
                     cell = UITableViewCell(style: .Default, reuseIdentifier: cellId)
+                    cell?.textLabel?.font = kAutoFontWithTop
                 }
                 cell?.accessoryType = .DisclosureIndicator
                 cell?.textLabel?.text = "退出登录"

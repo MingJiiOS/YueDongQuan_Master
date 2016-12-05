@@ -14,10 +14,10 @@ protocol MJMessageCellDelegate {
     func deleteSayContentFromMySayContent(index:NSIndexPath)
 //    func textfieldBecomeEdit(commentCell:MJCommentCell,messageCell:MJMessageCell,statusType:PingLunType)
 }
-
+//MARK:判断是否是本人查看
 enum sayFromUserType {
-    case local
-    case other
+    case local //本人
+    case other //别人
 }
 
 
@@ -28,7 +28,7 @@ class MJMessageCell: UITableViewCell,UITextFieldDelegate {
     
     var type : sayFromUserType?
     
-
+    //图片
     var displayView = PYPhotosView()
     var videoView = PYPhotosView()
     
@@ -37,18 +37,19 @@ class MJMessageCell: UITableViewCell,UITextFieldDelegate {
     var hefoundCommentModel = [HeFoundComment]()
     
     var myfoundArray : myFoundArray?
-    
+    //点击评论回调
     typealias CommentBtnClickBlock = (commentBtn:UIButton,indexPath:NSIndexPath,pingluntype:PingLunType,foundId:Int)->Void
     var commentBlock : CommentBtnClickBlock?
     func CommentBtnClick(block:CommentBtnClickBlock)  {
         commentBlock = block
     }
-    
+    //点击更多回调
     typealias MoreBtnClickBlock = (zanBtn:UIButton,indexPath:NSIndexPath)->Void
     var moreBlock : MoreBtnClickBlock?
     func MoreBtnClick(block:MoreBtnClickBlock)  {
         moreBlock = block
     }
+    
     typealias TapClourse = (index:Int,dataSource:NSArray,indexPath:NSIndexPath)->Void
     var tapBlock : TapClourse?
     func TapOnImage(block:TapClourse?)  {
@@ -60,13 +61,13 @@ class MJMessageCell: UITableViewCell,UITextFieldDelegate {
     func tapOnDesLabel(block:tapTextBlock?) {
         taptextBlock = block
     }
-    
+    //点击删除回调
     typealias deleteClourse = (isDelete:Bool)->Void
     var deleteBlock : deleteClourse?
     func sendDeleteEvent(block:deleteClourse?)  {
         deleteBlock = block
     }
-    
+    //评论框回调
     typealias commentFieldClourse = (editField:UITextField,indexpath:NSIndexPath,foundId:Int,pingtype:PingLunType,text:String)->Void
     var textfieldBlock : commentFieldClourse?
     func becomeEditField(block:commentFieldClourse?)  {
@@ -278,7 +279,7 @@ class MJMessageCell: UITableViewCell,UITextFieldDelegate {
     deleteBtn?.setTitleColor(kBlueColor, forState: UIControlState.Normal)
     deleteBtn?.addTarget(self, action: #selector(deleteSayContent), forControlEvents: UIControlEvents.TouchUpInside)
     
-    
+    //评论列表
     self.tableView = UITableView()
     self.tableView?.scrollEnabled = false
     self.contentView .addSubview(self.tableView!)
@@ -398,7 +399,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         }
 
     }
-    
+    //填充cell的方法
     func configCellWithModel(model:myFoundModel,indexpath:NSIndexPath)  {
         
         self.commentModel = model.data.array[indexpath.row].comment
@@ -460,7 +461,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         let data = resultStr1.dataUsingEncoding(NSUnicodeStringEncoding)
         let options = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
         let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
-        
+        //内容进行编码
 //        self.descLabel?.attributedText = html
            self.contentLabel?.text = html.string
         for imageModel in model.data.array[indexpath.row].images {
@@ -484,7 +485,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         
         
         var tableViewHeight = CGFloat()
-        
+        //计算高度
         for model in self.commentModel {
             let cellheight = MJCommentCell.hyb_heightForTableView(self.tableView, config: { (sourceCell:UITableViewCell!) in
                 
@@ -754,6 +755,7 @@ extension MJMessageCell{
         let options = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
         let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
         self.contentLabel?.attributedText = html
+        //这里的位置数据是写的死的 需要根据model重新获取
         self.location?.setTitle("重庆市渝中区南区公园路靠近国家电网重庆市电力公司", forState: UIControlState.Normal)
         self.location?.titleLabel?.font = kAutoFontWithMid
         self.location?.setImage(UIImage(named: "location"), forState: UIControlState.Normal)

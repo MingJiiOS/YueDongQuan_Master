@@ -68,7 +68,7 @@ class MineCell: UITableViewCell {
             //            make.width.equalTo(size.width + 10)
             make.width.equalTo(0)
         }
-        name.sizeToFit()
+        name.font = kAutoFontWithTop
         
         let bigv = UIImageView()
         self.contentView.addSubview(bigv)

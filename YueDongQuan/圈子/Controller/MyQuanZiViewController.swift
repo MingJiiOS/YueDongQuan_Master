@@ -67,6 +67,7 @@ class MyQuanZiViewController: MainViewController,UITableViewDelegate,UITableView
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .None
         self.view .addSubview(tableView)
        
         
@@ -328,7 +329,7 @@ extension MyQuanZiViewController {
                 let nonedataView = UIImageView()
                 nonedataView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenWidth)
                 nonedataView.center = self.view.center
-                nonedataView.backgroundColor = UIColor.blackColor()
+                nonedataView.backgroundColor = UIColor.whiteColor()
                 nonedataView.image = UIImage(named: "img_wushuju2")
                         
                 self.view.addSubview(nonedataView)

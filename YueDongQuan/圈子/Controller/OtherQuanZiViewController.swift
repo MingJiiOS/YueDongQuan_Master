@@ -107,7 +107,11 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
             }
             mapView.delegate = self
             mapView.showsUserLocation = true
-            mapView.setZoomLevel(15.1, animated: false)
+//            mapView.setZoomLevel(15.1, animated: false)
+            mapView.userTrackingMode = .None
+            mapView.setZoomLevel(13, animated: true)
+//            _mapView?.scaleOrigin = CGPointMake(10, CGRectGetMaxY(_mapView!.frame) - 15)
+            mapView.showsCompass = false
         }else{
             mapView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
             self.view.addSubview(mapView)
@@ -236,7 +240,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     func addAnnotationsToMapView(annotation: MAAnnotation) {
         mapView.addAnnotation(annotation)
         mapView.selectAnnotation(annotation, animated: true)
-        mapView.setZoomLevel(15.1, animated: true)
+        mapView.setZoomLevel(13, animated: true)
         mapView.setCenterCoordinate(annotation.coordinate, animated: true)
         
     }
@@ -283,8 +287,19 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         notice.circleId = String(self.circlesModel.data.array[indexPath.row].id)
         notice.Circletitle = self.title
         notice.thumbnailSrc = self.circlesModel.data.array[indexPath.row].thumbnailSrc
-         self.push(notice)
-      
+        
+        let v = NSObject.getEncodeString("20160901")
+        let circleid = String(self.circlesModel.data.array[indexPath.row].id)
+        let dict = ["v":v,"circleId":circleid]
+        MJNetWorkHelper().circlemember(circlemember,
+                                       circlememberModel: dict,
+                                       success: { (responseDic, success) in
+                                        let model = DataSource().getcirclememberData(responseDic)
+                                        notice.memberModel = model
+                                        self.push(notice)
+        }) { (error) in
+            
+        }
     }
     
     
@@ -296,11 +311,13 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
             let greenReuseIndetifier = "greenReuseIndetifier"
             
             var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier)
+            let orange = annotation as! MJGreenAnnotation
+            
             if greenAnnotation == nil {
-                    greenAnnotation = MJGreenAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier)
+                    greenAnnotation = MJOrangeAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier,siteName: orange.title)
                 
             }        
-            greenAnnotation.canShowCallout  = true
+            greenAnnotation.canShowCallout  = false
 
             return greenAnnotation
         }

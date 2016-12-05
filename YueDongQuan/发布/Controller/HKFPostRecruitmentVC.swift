@@ -216,7 +216,7 @@ class HKFPostRecruitmentVC: UIViewController,AMapLocationManagerDelegate,UITextV
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        textView.text = "招募目的：因队伍发展需要，现对外公开招募队员。\r\n招募要求：热爱球队，能与本队的队员进行交流。"
+        textView.text = "年龄：\r\n身高：\r\n体重：\r\n优点:\r\n:。"
         let wordCount = textView.text.characters.count
         self.wordCountLabel.text = String(format: "%ld/140",wordCount)
         wordLimit(textView)

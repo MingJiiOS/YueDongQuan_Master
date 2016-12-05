@@ -443,15 +443,12 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             self.displayView.hidden = true
         }
         
-        //        NSLog("videoURL = \(model.compressUrl)")
         if subModel.compressUrl != "" {
             self.videoImage.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(ScreenHeight/4)
             })
             self.videoImage.hidden = false
             
-            
-            //            self.videoImage.sd_setImageWithURL(NSURL(string: model.compressUrl), placeholderImage: nil)
             self.videoImage.sd_setImageWithURL(NSURL(string: subModel.vPreviewThu), placeholderImage: UIImage(named: ""))
             
             
@@ -475,14 +472,6 @@ class HKFTableViewCell: UITableViewCell,UITableViewDelegate,UITableViewDataSourc
             displayView.originalUrls = originalImageUrls
         }
         
-        
-        
-        
-        //        if model.address == "" {
-        //            self.locationView.snp_updateConstraints(closure: { (make) in
-        //                make.height.equalTo(0)
-        //            })
-        //        }
         
         
         var tableViewHeight :CGFloat = 0
