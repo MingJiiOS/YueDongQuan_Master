@@ -76,7 +76,7 @@ class DetailsSayCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource 
             make.left.top.equalTo(10)
             make.width.height.equalTo(40)
         })
-        
+        self.headImage?.image = UIImage(named: "默认头像")
         weak var WeakSelf = self
         //昵称
         self.userName = UILabel()

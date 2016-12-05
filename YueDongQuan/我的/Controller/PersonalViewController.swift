@@ -142,7 +142,7 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
                 
             
             
-//            requestCommentSay("", content: text, foundId: self.commentSayId!,mainid: 0)
+            requestCommentSay(0, content: text, foundId: self.commentSayId!,mainid: 0)
             
         case .selectCell :
             let model = myFoundComment()
@@ -157,14 +157,13 @@ class PersonalViewController: MainViewController,ChatKeyBoardDelegate,ChatKeyBoa
             model.mainId = self.commentModel?.id
           
                 self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!].comment.append(model)
-                let lastestModel  =  self.myfoundmodel?.data.array[(self.commentSayIndex?.row)!]
-                reloadCellHeightForModelAndAtIndexPath(lastestModel!, indexPath: self.commentSayIndex!)
+                let lastestModel  =  self.myfoundmodel?.data.array[(commentSayIndex?.row)!];                reloadCellHeightForModelAndAtIndexPath(lastestModel!, indexPath: self.commentSayIndex!)
             
-//            self.reloadCellHeightForModel(self.myfoundmodel!, indexpath: (self.commentSayIndex)!)
-//            requestCommentSay((self.commentModel?.id.description)!,
-//                              content: text,
-//                              foundId: self.commentSayId!,
-//                              mainid: (self.commentModel?.id)!)
+            self.reloadCellHeightForModel(self.myfoundmodel!, indexpath: (self.commentSayIndex)!)
+            requestCommentSay((self.commentModel?.id)!,
+                              content: text,
+                              foundId: self.commentSayId!,
+                              mainid: (self.commentModel?.id)!)
             
         }
         
@@ -365,7 +364,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                                         commentCell: MJCommentCell,
                                         messageCell: MJMessageCell,
                                         statustype:PingLunType) {
-        self.commentSayIndex = indexP
+        self.commentSayIndex = messageCell.indexPath
         self.typeStatus = statustype
         self.commentSayId = commentModel.foundId
         self.commentModel = commentModel
@@ -568,7 +567,8 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
                     self.needUpdateOffset = true
                     self.history_Y_offset = editField.convertRect(editField.bounds, toView: weakWindow).origin.y
                     weakSelf.currentIndexPath = indexPath
-//                    weakSelf.keyboard.keyboardUpforComment()
+                    weakSelf.keyboard.keyboardUpforComment()
+                    
                     if text != ""{
                         self.sendMsg(text)
                     }
@@ -640,7 +640,7 @@ extension PersonalViewController : MJMessageCellDelegate,UITableViewDelegate,UIT
 extension PersonalViewController {
     //MARK:评论说说
     //评论说说
-    func requestCommentSay(commentId: String,content:String,foundId:Int,mainid:Int){
+    func requestCommentSay(commentId: Int,content:String,foundId:Int,mainid:Int){
         let v = NSObject.getEncodeString("20160901")
         let para = ["v":v,
                     "uid":userInfo.uid.description,

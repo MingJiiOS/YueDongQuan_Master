@@ -54,6 +54,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         //MARK:自定义经纬度
         annotations = NSMutableArray()
         if self.fieldData.count != 0 {
@@ -303,19 +304,40 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     func mapView(mapView: MAMapView!, viewForAnnotation annotation: MAAnnotation!) -> MAAnnotationView! {
         //绿色的大头针
         if annotation.isKindOfClass(MJGreenAnnotation) {
-            let greenReuseIndetifier = "green"
+            let greenReuseIndetifier = "greenReuseIndetifier"
             
-            var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier);             if greenAnnotation == nil {
-                greenAnnotation = MJGreenAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier)
+            var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier)
+            let green = annotation as! MJGreenAnnotation
+//            greenAnnotation.sitsName = green.title
+            if greenAnnotation == nil {
+//                var greenAnnotation = greenAnnotation as! MJOrangeAnnotationView
+                
+                    greenAnnotation = MJOrangeAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier, siteName: green.title)
+                 
+                
+                
+//                greenAnnotation.configOrangeAnnotion(green.title)
 //                greenAnnotation.setSelected(true, animated: true)
-    
+               
 //            for item in self.circlesModel.data.array {
 //                greenAnnotation.calloutView?.siteName = item.name
+            }
+//                if green.title == nil {
+//                    let s =  SGAlertView(title: "nil", delegate: nil, contentTitle: nil, alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
+//                    s.show()
+//                }else{
+//                    let s =  SGAlertView(title: green.title, delegate: nil, contentTitle: nil, alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
+//                    s.show()
+////                    greenAnnotation.sitsName = green.title
+//                }
 //            }
             
-            }
-            greenAnnotation.canShowCallout  = true
-            greenAnnotation.draggable       = true
+            
+            
+//            greenAnnotation.calloutView?.siteName.text = annotation.title
+           
+            greenAnnotation.canShowCallout  = false
+//            greenAnnotation.draggable       = true
             return greenAnnotation
         }
         //红色的大头针
@@ -501,7 +523,7 @@ extension OtherQuanZiViewController {
 //                        let street = ary![0].thoroughfare
 //                        let substreet = ary![0].subThoroughfare
                         green.title = String(circleModel.name)
-                                                                
+                  
                 })
                     
             }

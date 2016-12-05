@@ -349,7 +349,11 @@ class MJMessageCell: UITableViewCell,UITextFieldDelegate {
     }
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if (self.textfieldBlock != nil ) {
-            self.textfieldBlock! (editField:textField,indexpath:self.indexPath,foundId:(self.myfoundArray?.id)!,pingtype:.pinglun,text:textField.text!)
+            self.textfieldBlock! (editField:textField,
+                                  indexpath:self.indexPath,
+                                  foundId:(self.myfoundArray?.id)!,
+                                  pingtype:.pinglun,
+                                  text:textField.text!)
         }
         return true
     }
@@ -456,8 +460,9 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         let data = resultStr1.dataUsingEncoding(NSUnicodeStringEncoding)
         let options = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
         let html =  try! NSAttributedString(data: data!, options: options, documentAttributes: nil)
+        
 //        self.descLabel?.attributedText = html
-           self.contentLabel?.attributedText = html
+           self.contentLabel?.text = html.string
         for imageModel in model.data.array[indexpath.row].images {
             
             thImageStr.append(imageModel.thumbnailSrc)

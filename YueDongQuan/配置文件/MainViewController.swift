@@ -101,37 +101,45 @@ class MainViewController: UIViewController {
         HUDView.alpha = 0.7
         self.view.addSubview(HUDView)
         if startY == nil {
+             let size = message.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop])
             HUDView.snp_makeConstraints { (make) in
-                make.left.equalTo((ScreenWidth-ScreenWidth*0.7)/2)
+                make.left.equalTo((ScreenWidth - size.width - 20) / 2)
                 make.top.equalTo(0)
-                make.width.equalTo(0)
+                make.width.equalTo(size.width  + 20)
                 make.height.equalTo(40)
             }
+            
+            let subLabel = UILabel(frame: CGRectMake(10, 5, CGRectGetWidth(HUDView.frame), 30))
+            subLabel.text = message as String
+            subLabel.textColor = UIColor.whiteColor()
+            subLabel.textAlignment = .Center
+            subLabel.font = kAutoFontWithTop
+            HUDView .addSubview(subLabel)
+            subLabel.adjustsFontSizeToFitWidth = true
+
         }else{
+             let size = message.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop])
             HUDView.snp_makeConstraints { (make) in
-                make.left.equalTo(0)
+                make.left.equalTo((ScreenWidth - size.width - 20) / 2)
                 make.top.equalTo(startY!)
-                make.width.equalTo(0)
+                make.width.equalTo(size.width  + 20)
                 make.height.equalTo(40)
             }
+            
+            let subLabel = UILabel(frame: CGRectMake(10, 5, CGRectGetWidth(HUDView.frame), 30))
+            subLabel.text = message as String
+            subLabel.textColor = UIColor.whiteColor()
+            subLabel.textAlignment = .Center
+            subLabel.font = kAutoFontWithTop
+            HUDView .addSubview(subLabel)
+            subLabel.adjustsFontSizeToFitWidth = true
+
         }
        
        
-        let size = message.sizeWithAttributes([NSFontAttributeName : kAutoFontWithTop])
        
-        
-        HUDView.snp_updateConstraints { (make) in
-            make.width.equalTo(size.width  + 20)
-            make.left.equalTo((ScreenWidth - size.width - 20) / 2)
-        }
-        
-        let subLabel = UILabel(frame: CGRectMake(10, 5, CGRectGetWidth(HUDView.frame), 30))
-        subLabel.text = message as String
-        subLabel.textColor = UIColor.whiteColor()
-        subLabel.textAlignment = .Center
-        subLabel.font = kAutoFontWithTop
-        HUDView .addSubview(subLabel)
-        subLabel.adjustsFontSizeToFitWidth = true
+       
+       
         
         func shakeToUpShow(aView: UIView) {
             let animation = CAKeyframeAnimation(keyPath: "transform");
