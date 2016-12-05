@@ -43,7 +43,7 @@ class HKFCommentCell: UITableViewCell {
         
         
             
-        if model.beUserName != nil {
+        if model.beUserName != nil && model.commentId != 0 {
             
                 
                 let context = model.content.stringByReplacingEmojiCheatCodesWithUnicode()

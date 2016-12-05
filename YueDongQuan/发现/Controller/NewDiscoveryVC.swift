@@ -118,22 +118,51 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     @objc private func clickAddBtn(sender:UIBarButtonItem,event:UIEvent){
-        FTPopOverMenu.showFromEvent(event, withMenu: ["二维码","上传场地","新建圈子"], imageNameArray: ["ic_erweima","ic_shangchuan","ic_xinjianquanzi"], doneBlock: { (index:Int) in
-            
+        
+        let righttable = CustomTable(frame: CGRect(x: 0,
+            y: 0,
+            width: 130,
+            height: 132))
+        righttable.titleLext =  ["扫一扫","上传场地","新建圈子"]
+        righttable.rowNumber = 3
+        righttable.rowHeight = 44
+        righttable.titleImage = ["ic_erweima","ic_shangchuan","ic_xinjianquanzi"]
+        let popview = WJPopoverViewController(showView: righttable)
+        popview.borderWidth = 0
+        popview.showPopoverWithBarButtonItemTouch(event,
+                                                  animation: true)
+        
+        righttable.sendVlaueBack({ (index) in
+            popview.dissPopoverViewWithAnimation(true)
             switch index {
             case 0:
-                NSLog("indext = \(index)")
+                
+                let device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+                if device != nil{
+                    let VC = SGScanningQRCodeVC()
+                    self.navigationController?.pushViewController(VC, animated: true)
+                }else{
+                    let alert = SGAlertView(title: "⚠️ 警告", delegate: nil, contentTitle: "未检测到您的摄像头", alertViewBottomViewType: (SGAlertViewBottomViewTypeOne))
+                    alert.show()
+                }
+                
+                break
             case 1:
-                NSLog("indext = \(index)")
+                let post = HKFPostField_OneVC()
+                let nav = CustomNavigationBar(rootViewController: post)
+                self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+                
+                break
             case 2:
-                NSLog("indext = \(index)")
+                let newCircle = NewQuanZiViewController()
+                let nav = CustomNavigationBar(rootViewController: newCircle)
+                nav.navigationBar.tintColor = UIColor.whiteColor()
+                self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+                break
             default:
                 break
             }
-            
-            }) { 
-                
-        }
+        })
     }
 
     override func viewDidLoad() {
@@ -263,7 +292,7 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     @objc private func addTableViewToScrollView(withScrollView scrollView:UIScrollView,withCount pageCount:Int,WithFrame frame:CGRect){
         
         for i in 0..<pageCount {
-            let tableView = UITableView(frame: CGRect(x: ScreenWidth*CGFloat(i), y: 0, width: ScreenWidth, height: ScreenHeight - TopMenuView.frame.size.height - 64 - 49),style: UITableViewStyle.Grouped)
+            let tableView = UITableView(frame: CGRect(x: ScreenWidth*CGFloat(i), y: 0, width: ScreenWidth, height: ScreenHeight - TopMenuView.frame.size.height - 64 - 49),style: UITableViewStyle.Plain)
             
             tableView.tag = i
             tableView.delegate = self
@@ -326,16 +355,14 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         
     }
 //MARK:UITableViewDataSource和UITableViewDelegate
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AllModelData.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1//AllModelData.count
-    }
-    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let model = self.AllModelData[indexPath.section]
+        let model = self.AllModelData[indexPath.row]
         let h : CGFloat = HKFTableViewCell.hyb_heightForTableView(tableView, config: { (sourceCell:UITableViewCell!) in
             let cell = sourceCell as! HKFTableViewCell
             cell.configCellWithModelAndIndexPath(model, indexPath: indexPath)
@@ -344,7 +371,7 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             model.shouldUpdateCache = false
             return cache as [NSObject:AnyObject]
         }
-        return h
+        return h + 5
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -357,35 +384,24 @@ class NewDiscoveryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
 
         cell!.delegate = self
         cell!.headTypeView?.hidden = true
-        let model = self.AllModelData[indexPath.section]
+        let model = self.AllModelData[indexPath.row]
         cell!.configCellWithModelAndIndexPath(model , indexPath: indexPath)
-        cell?.playVideoBtn.tag = indexPath.section
+        cell?.playVideoBtn.tag = indexPath.row
 
         return cell!
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let newDiscoveryDetailVC = NewDiscoveryDetailVC()
-        newDiscoveryDetailVC.newDiscoveryArray  = self.AllModelData[indexPath.section]
+        newDiscoveryDetailVC.newDiscoveryArray  = self.AllModelData[indexPath.row]
         self.navigationController?.pushViewController(newDiscoveryDetailVC, animated: true)
         
     }
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 5
-    }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView()
-        footer.backgroundColor = UIColor.whiteColor()
-        return footer
-    }
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.0001
-    }
     
     func clickVideoBtn(indexPath: NSIndexPath) {
         
-        let url = self.AllModelData[indexPath.section].compressUrl
+        let url = self.AllModelData[indexPath.row].compressUrl
 //        "http://static.tripbe.com/videofiles/20121214/9533522808.f4v.mp4"
         moviePlayers = RTSMediaPlayerViewController(contentURL: NSURL(string: url)!)
         
@@ -533,6 +549,8 @@ extension NewDiscoveryVC {
             model.id = (self.commentSayIndex?.row)! + 1
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
+            model.beUserName = nil
+            model.beUid = 0
             
             self.AllModelData[(self.commentSayIndex?.row)!].comment.append(model)
             let modelss  =  self.AllModelData[(self.commentSayIndex?.row)!]
@@ -548,6 +566,8 @@ extension NewDiscoveryVC {
             model.id = (self.commentModel?.id)! + 1
             model.time = Int(NSDate().timeIntervalSince1970)
             model.uid = userInfo.uid
+            model.beUserName = self.commentModel?.netName
+            model.beUid = nil
             
             self.AllModelData[(self.commentSayIndex?.row)!].comment.append(model)
             let modelss  =  self.AllModelData[(self.commentSayIndex?.row)!]
