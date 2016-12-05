@@ -283,19 +283,8 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
         notice.circleId = String(self.circlesModel.data.array[indexPath.row].id)
         notice.Circletitle = self.title
         notice.thumbnailSrc = self.circlesModel.data.array[indexPath.row].thumbnailSrc
-        
-        let v = NSObject.getEncodeString("20160901")
-        let circleid = String(self.circlesModel.data.array[indexPath.row].id)
-        let dict = ["v":v,"circleId":circleid]
-        MJNetWorkHelper().circlemember(circlemember,
-                                       circlememberModel: dict,
-                                       success: { (responseDic, success) in
-                                        let model = DataSource().getcirclememberData(responseDic)
-                                        notice.memberModel = model
-                                        self.push(notice)
-        }) { (error) in
-            
-        }
+         self.push(notice)
+      
     }
     
     
@@ -307,37 +296,12 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
             let greenReuseIndetifier = "greenReuseIndetifier"
             
             var greenAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(greenReuseIndetifier)
-            let green = annotation as! MJGreenAnnotation
-//            greenAnnotation.sitsName = green.title
             if greenAnnotation == nil {
-//                var greenAnnotation = greenAnnotation as! MJOrangeAnnotationView
+                    greenAnnotation = MJGreenAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier)
                 
-                    greenAnnotation = MJOrangeAnnotationView(annotation: annotation, reuseIdentifier: greenReuseIndetifier, siteName: green.title)
-                 
-                
-                
-//                greenAnnotation.configOrangeAnnotion(green.title)
-//                greenAnnotation.setSelected(true, animated: true)
-               
-//            for item in self.circlesModel.data.array {
-//                greenAnnotation.calloutView?.siteName = item.name
-            }
-//                if green.title == nil {
-//                    let s =  SGAlertView(title: "nil", delegate: nil, contentTitle: nil, alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
-//                    s.show()
-//                }else{
-//                    let s =  SGAlertView(title: green.title, delegate: nil, contentTitle: nil, alertViewBottomViewType: SGAlertViewBottomViewTypeOne)
-//                    s.show()
-////                    greenAnnotation.sitsName = green.title
-//                }
-//            }
-            
-            
-            
-//            greenAnnotation.calloutView?.siteName.text = annotation.title
-           
-            greenAnnotation.canShowCallout  = false
-//            greenAnnotation.draggable       = true
+            }        
+            greenAnnotation.canShowCallout  = true
+
             return greenAnnotation
         }
         //红色的大头针
@@ -355,7 +319,7 @@ class OtherQuanZiViewController: MainViewController,UITableViewDelegate,UITableV
     }
 
     func mapView(mapView: MAMapView!, didSelectAnnotationView view: MAAnnotationView!) {
-        if view.isKindOfClass(MJOrangeAnnotationView) {
+        if view.isKindOfClass(MJGreenAnnotationView) {
             print("选中了绿色")
         }
         if view.isKindOfClass(MJRedAnnotationView) {

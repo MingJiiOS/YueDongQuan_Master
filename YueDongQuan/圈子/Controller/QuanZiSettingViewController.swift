@@ -181,10 +181,12 @@ class QuanZiSettingViewController: MainViewController,UITableViewDelegate,UITabl
                 var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)as? MJLayerContentCell
                 cell?.accessoryType = .DisclosureIndicator
                 if cell == nil {
-                    
+                    if self.memberModel != nil {
                         cell = MJLayerContentCell(style: .Default,
                                                   reuseIdentifier: cellIdentifier,
                                                   model:self.memberModel!)
+                    }
+                    
                   
 
                 }

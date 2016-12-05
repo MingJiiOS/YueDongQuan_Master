@@ -181,7 +181,7 @@ class MJMessageCell: UITableViewCell,UITextFieldDelegate {
     self.contentView .addSubview(self.contentLabel!)
     self.contentLabel?.preferredMaxLayoutWidth = ScreenWidth - 20
     self.contentLabel?.numberOfLines = 0
-    self.contentLabel!.font = kAutoFontWithTop
+    self.contentLabel!.font = kAutoFontWithMid
     self.contentLabel?.snp_makeConstraints(closure: { (make) in
         make.left.equalTo(10)
         make.right.equalTo(-10)
@@ -426,7 +426,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
         self.myfoundModel = model
 
         let attrString = NSMutableAttributedString(string:  model.data.array[indexpath.row].content)
-        //
+      
         if self.commentModel.count < 5 {
             moreBtn?.snp_updateConstraints(closure: { (make) in
                 make.height.equalTo(1)
@@ -436,7 +436,7 @@ extension MJMessageCell:UITableViewDelegate,UITableViewDataSource{
                 make.top.equalTo((tableView?.snp_bottom)!).offset(20)
             })
         }
-        //没有图片的情况
+       //没有图片的情况
         if model.data.array[indexpath.row].images.count != 0 {
            let h1 = cellHeightByData1(model.data.array[indexpath.row].images.count)
             
