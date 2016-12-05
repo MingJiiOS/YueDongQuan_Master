@@ -10,13 +10,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YueDongQuan/&#x6211;&#x7684;/Controller/PersonalViewController.swift"
-            timestampString = "502542212.155061"
+            timestampString = "502547549.334186"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "sendMsg(_:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YueDongQuan.PersonalViewController.sendMsg (Swift.String) -&gt; ()"
+                  moduleName = "YueDongQuan"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HFG/Desktop/%E5%A5%BD%E7%90%83%E7%83%AD%E6%96%87%E4%BB%B6%E5%A4%B9/develop/20161020/YueDongQuan_Master/YueDongQuan/%E6%88%91%E7%9A%84/Controller/PersonalViewController.swift"
+                  timestampString = "502595841.864764"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "145"
+                  endingLineNumber = "145"
+                  offsetFromSymbolStart = "2724">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YueDongQuan.PersonalViewController.sendMsg (Swift.String) -&gt; ()"
+                  moduleName = "YueDongQuan"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HFG/Desktop/%E5%A5%BD%E7%90%83%E7%83%AD%E6%96%87%E4%BB%B6%E5%A4%B9/develop/20161020/YueDongQuan_Master/YueDongQuan/%E6%88%91%E7%9A%84/Controller/PersonalViewController.swift"
+                  timestampString = "502595841.86682"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "145"
+                  endingLineNumber = "145"
+                  offsetFromSymbolStart = "2900">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

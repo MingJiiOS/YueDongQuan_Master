@@ -321,6 +321,7 @@ extension MyQuanZiViewController {
                         }
                     }
                 }
+                
                  self.tableView.reloadData()
             }else{
                 self.tableView.removeFromSuperview()
